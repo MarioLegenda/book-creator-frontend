@@ -1,5 +1,14 @@
-.work-area {
-  height: 1000px;
+@import '../../../../styles/_variables.scss';
 
-  border: 1px solid red;
+.work-area {
+  .page {
+    width: 850px;
+    height: 900px;
+
+    margin: 10% auto;
+
+    background-color: white;
+
+    border: 1px solid $lightestGray;
+  }
 }
