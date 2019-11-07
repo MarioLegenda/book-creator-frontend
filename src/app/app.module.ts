@@ -14,6 +14,7 @@ import {CmsComponent} from "./components/cms/cms.component";
 import { StoreModule } from '@ngrx/store';
 import { menuReducer } from './store/reducers';
 import {WorkAreaComponent} from "./components/cms/work-area.component";
+import {TextBlockComponent} from "./components/cms/blocks/text-block.component";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {WorkAreaComponent} from "./components/cms/work-area.component";
     MenuButtonComponent,
     CmsComponent,
     WorkAreaComponent,
+    TextBlockComponent,
   ],
   imports: [
     BrowserModule,
