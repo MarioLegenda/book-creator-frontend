@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
-import { textBlockMenuClicked } from '../../store/actions';
+import { textBlockMenuClicked } from '../../../store/actions';
 
 @Component({
   selector: 'cms-menu',

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
-import {actionTypes} from '../../../store/actions';
+import {actionTypes} from '../../../../store/actions';
 
 @Component({
   selector: 'cms-block-selector',
-  styleUrls: ['./../scss/blocks/block-selector.component.scss'],
-  templateUrl: './../html/blocks/block-selector.component.html',
+  styleUrls: ['../scss/blocks/block-selector.component.scss'],
+  templateUrl: '../html/blocks/block-selector.component.html',
 })
 export class BlockSelectorComponent {
   menuSelection: Observable<{type: string}>;
