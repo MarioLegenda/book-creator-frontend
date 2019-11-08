@@ -1,4 +1,4 @@
-@import '../../../../../../styles/variables';
+@import '../../../../styles/variables';
 
 .text-block {
   position: relative;
@@ -12,6 +12,9 @@
 
     font-size: 0.8em;
     color: $lightestGray;
+  }
 
+  .component-metadata-focused {
+    color: $textColor;
   }
 }

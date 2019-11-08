@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import {textBlockCreated, textBlockMenuClicked} from '../../../../../store/actions';
-import {ComponentType} from "../../../../../services/tracking/ComponentType";
+import {textBlockCreated, textBlockMenuClicked} from '../../../../store/actions';
+import {ComponentType} from "../../../../logic/pageComponent/ComponentType";
 
 @Component({
   selector: 'cms-create-text-block',
-  styleUrls: ['../../scss/blocks/text-block-create.component.scss'],
-  templateUrl: '../../html/blocks/create/text-block.component.html',
+  styleUrls: ['../../../../web/styles/blocks/text-block-create.component.scss'],
+  templateUrl: '../../../../web/templates/blocks/create/text-block.component.html',
 })
 export class TextBlockComponent {
   constructor(private store: Store<any>) {}

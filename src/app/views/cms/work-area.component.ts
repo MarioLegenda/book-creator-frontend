@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ComponentTracker} from "../../../services/tracking/ComponentTracker";
-import {ComponentFactory} from "../../../services/tracking/ComponentFactory";
+import {ComponentTracker} from "../../logic/pageComponent/ComponentTracker";
+import {ComponentFactory} from "../../logic/pageComponent/ComponentFactory";
 import {Observable} from "rxjs";
 
 @Component({
   selector: 'cms-work-area',
-  styleUrls: ['./scss/work-area.component.scss'],
-  templateUrl: './html/work-area.component.html',
+  styleUrls: ['../../web/styles/work-area.component.scss'],
+  templateUrl: '../../web/templates/work-area.component.html',
 })
 export class WorkAreaComponent implements OnInit{
   private textBlockActions: Observable<any>;

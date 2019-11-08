@@ -1,0 +1,13 @@
+<div class="text-block">
+  <div class="component-metadata" [ngClass]="{'component-metadata': true, 'component-metadata-focused': componentState.focused}">
+    {{componentData.value.internalName}}
+  </div>
+  <ckeditor
+    (focus)="componentState.focused = true"
+    (blur)="componentState.focused = false"
+    [editor]="Editor"
+    required
+    data=""
+    name="text">
+  </ckeditor>
+</div>

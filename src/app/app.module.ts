@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import {menuReducer, textBlockReducer} from './store/reducers';
-import {ComponentTracker} from "./services/tracking/ComponentTracker";
-import {CmsModule} from "./modules/cms.module";
+import {ComponentTracker} from "./logic/pageComponent/ComponentTracker";
+import {CmsModule} from "./views/cms.module";
 
 @NgModule({
   declarations: [

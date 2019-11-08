@@ -8,20 +8,20 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 
-import {MenuComponent} from "./components/cms/menu.component";
-import {MenuButtonComponent} from "./components/cms/menu-button.component";
-import {CmsComponent} from "./components/cms/cms.component";
-import {WorkAreaComponent} from "./components/cms/work-area.component";
-import {TextBlockComponent as ViewTextBlockComponent} from "./components/cms/blocks/view/text-block.component";
-import {TextBlockComponent as CreateTextBlockComponent} from "./components/cms/blocks/create/text-block.component";
-import {SelectionAreaComponent} from "./components/cms/selection-area.component";
-import {BlockSelectorComponent} from "./components/cms/blocks/block-selector.component";
+import {MenuComponent} from "./cms/menu.component";
+import {MenuButtonComponent} from "./cms/menu-button.component";
+import {MainComponent} from "./cms/main.component";
+import {WorkAreaComponent} from "./cms/work-area.component";
+import {TextBlockComponent as ViewTextBlockComponent} from "./cms/blocks/view/text-block.component";
+import {TextBlockComponent as CreateTextBlockComponent} from "./cms/blocks/create/text-block.component";
+import {SelectionAreaComponent} from "./cms/selection-area.component";
+import {BlockSelectorComponent} from "./cms/blocks/block-selector.component";
 
-import {ComponentTracker} from "../services/tracking/ComponentTracker";
+import {ComponentTracker} from "../logic/pageComponent/ComponentTracker";
 
 @NgModule({
   declarations: [
-    CmsComponent,
+    MainComponent,
     MenuComponent,
     MenuButtonComponent,
     WorkAreaComponent,
@@ -44,9 +44,9 @@ import {ComponentTracker} from "../services/tracking/ComponentTracker";
   providers: [
     {provide: ComponentTracker, useClass: ComponentTracker}
   ],
-  bootstrap: [CmsComponent],
+  bootstrap: [MainComponent],
   exports: [
-    CmsComponent,
+    MainComponent,
   ]
 })
 export class CmsModule { }

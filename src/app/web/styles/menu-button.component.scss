@@ -1,4 +1,4 @@
-@import '../../../../../styles/variables';
+@import '../../../styles/variables';
 
 /* Ripple effect */
 .ripple {
@@ -22,7 +22,7 @@
   font-size: 14px;
   border: none;
   border-radius: 2px;
-  color: $lightGray;
+  color: $textColor;
   background-color: white;
   outline: none;
   font-weight: normal;
