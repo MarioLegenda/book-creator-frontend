@@ -1,0 +1,17 @@
+@import '../../../../../../styles/variables';
+
+.text-block {
+  position: relative;
+  border: 1px dashed $lightestGray;
+
+  border-radius: 5px;
+
+  .component-metadata {
+    top: -18px; left: 0;
+    position: absolute;
+
+    font-size: 0.8em;
+    color: $lightestGray;
+
+  }
+}

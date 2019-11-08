@@ -1,33 +1,31 @@
-import {AfterContentInit, AfterViewInit, Component, ContentChild, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
+import {ComponentTracker} from "../../../services/tracking/ComponentTracker";
+import {ComponentFactory} from "../../../services/tracking/ComponentFactory";
 import {Observable} from "rxjs";
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 
 @Component({
   selector: 'cms-work-area',
   styleUrls: ['./scss/work-area.component.scss'],
   templateUrl: './html/work-area.component.html',
 })
-export class WorkAreaComponent implements OnInit, AfterViewInit {
-  textBlockActions: Observable<{internalName: string, shortDescription: string}>;
+export class WorkAreaComponent implements OnInit{
+  private textBlockActions: Observable<any>;
 
-  Editor = BalloonEditor;
-  @ViewChild('workAreaEditor', {static: false}) workAreaEditor;
+  components = this.componentTracker.components;
 
-  constructor(private store: Store<any>) {
+  constructor(
+    private store: Store<any>,
+    private componentTracker: ComponentTracker
+  ) {
     this.textBlockActions = store.pipe(select('textBlockActions'));
   }
 
-  ngAfterViewInit(): void {
-    const editorElement = this.workAreaEditor.editorElement;
-
-    editorElement.style.border = '1px dashed #d3d3d3';
-    editorElement.style['border-radius'] = '5px';
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.textBlockActions.subscribe((action) => {
-      console.log(action);
+      if (!action) return;
+
+      this.componentTracker.add(ComponentFactory.createComponent(action));
     });
   }
 }

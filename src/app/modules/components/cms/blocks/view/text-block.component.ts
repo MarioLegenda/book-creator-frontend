@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Store} from '@ngrx/store';
-import {textBlockCreated, textBlockMenuClicked} from '../../../../../store/actions';
+import {Component, Input, OnInit} from '@angular/core';
+import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import {IComponent} from "../../../../../services/tracking/IComponent";
 
 @Component({
   selector: 'cms-view-text-block',
-  styleUrls: ['../../scss/blocks/text-block.component.scss'],
-  templateUrl: '../../html/blocks/create/text-block.component.html',
+  styleUrls: ['../../scss/blocks/text-block-view.component.scss'],
+  templateUrl: '../../html/blocks/view/text-block.component.html',
 })
 export class TextBlockComponent {
-  constructor(private store: Store<any>) {}
+  Editor = BalloonEditor;
+  @Input() componentData: IComponent;
 }

@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {textBlockCreated, textBlockMenuClicked} from '../../../../../store/actions';
+import {ComponentType} from "../../../../../services/tracking/ComponentType";
 
 @Component({
   selector: 'cms-create-text-block',
-  styleUrls: ['../../scss/blocks/text-block.component.scss'],
+  styleUrls: ['../../scss/blocks/text-block-create.component.scss'],
   templateUrl: '../../html/blocks/create/text-block.component.html',
 })
 export class TextBlockComponent {
@@ -20,6 +21,9 @@ export class TextBlockComponent {
 
   onSubmit() {
     this.store.dispatch(textBlockMenuClicked());
-    this.store.dispatch(textBlockCreated(this.textBlockForm.value));
+    this.store.dispatch(textBlockCreated({
+      ...this.textBlockForm.value,
+      ...{componentType: ComponentType.TEXT_BLOCK_TYPE}
+    }));
   }
 }
