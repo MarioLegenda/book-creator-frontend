@@ -6,7 +6,7 @@ import {textBlockCreated, textBlockMenuClicked} from '../../../store/actions';
 @Component({
   selector: 'cms-text-block',
   styleUrls: ['./../scss/blocks/text-block.component.scss'],
-  templateUrl: './../html/blocks/text-block.component.html',
+  templateUrl: '../html/blocks/create/text-block.component.html',
 })
 export class TextBlockComponent {
   constructor(private store: Store<any>) {}
