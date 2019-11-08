@@ -1,7 +1,9 @@
+import {IComponent} from "./IComponent";
+
 export class ComponentTracker {
   components = [];
 
-  add(component) {
+  add(component: IComponent) {
     this.components.push(component);
   }
 }

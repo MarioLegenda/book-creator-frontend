@@ -21,7 +21,8 @@ import {CmsComponent} from "./components/cms/cms.component";
 import { StoreModule } from '@ngrx/store';
 import {menuReducer, textBlockReducer} from './store/reducers';
 import {WorkAreaComponent} from "./components/cms/work-area.component";
-import {TextBlockComponent} from "./components/cms/blocks/text-block.component";
+import {TextBlockComponent as CreateTextBlockComponent} from "./components/cms/blocks/create/text-block.component";
+import {TextBlockComponent as ViewTextBlockComponent} from "./components/cms/blocks/view/text-block.component";
 import {SelectionAreaComponent} from "./components/cms/selection-area.component";
 import {BlockSelectorComponent} from "./components/cms/blocks/block-selector.component";
 
@@ -32,7 +33,8 @@ import {BlockSelectorComponent} from "./components/cms/blocks/block-selector.com
     MenuButtonComponent,
     CmsComponent,
     WorkAreaComponent,
-    TextBlockComponent,
+    CreateTextBlockComponent,
+    ViewTextBlockComponent,
     SelectionAreaComponent,
     BlockSelectorComponent,
   ],
