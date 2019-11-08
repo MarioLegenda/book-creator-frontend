@@ -2,13 +2,18 @@
 
 .work-area {
   .page {
-    width: 850px;
-    height: 900px;
+    width: 900px;
+    height: 1000px;
 
     margin: 10% auto;
+    padding: 4%;
 
     background-color: white;
 
     border: 1px solid $lightestGray;
   }
+}
+
+.work-area-class div {
+  border: 1px dotted black !important;
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
-import { addTextBlock } from '../../store/actions';
+import { textBlockMenuClicked } from '../../store/actions';
 
 @Component({
   selector: 'cms-menu',
@@ -11,6 +11,6 @@ export class MenuComponent {
   constructor(private store: Store<{menu: string}>) {}
 
   onClick() {
-    this.store.dispatch(addTextBlock());
+    this.store.dispatch(textBlockMenuClicked());
   }
 }

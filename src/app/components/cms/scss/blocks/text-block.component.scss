@@ -1,0 +1,16 @@
+@import '../../../../../styles/_variables.scss';
+
+.text-block-wrapper {
+  margin: 25px 0 25px 0;
+
+  .input-field {
+    margin-right: 1%;
+    margin-bottom: 5%;
+  }
+
+  .create-button {
+    button {
+      float: right;
+    }
+  }
+}

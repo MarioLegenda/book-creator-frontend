@@ -1,16 +1,21 @@
 import { createReducer, on } from '@ngrx/store';
-import { addTextBlock } from './actions';
-
-export const actionTypes = {
-  ADD_TEXT_BLOCK: 'add_text_block'
-};
+import { textBlockMenuClicked, textBlockCreated, actionTypes } from './actions';
+import deepcopy from 'deepcopy';
 
 const reactToMenuReducer = createReducer(null,
-  on(addTextBlock, state => {
-    return {type: actionTypes.ADD_TEXT_BLOCK};
+  on(textBlockMenuClicked, state => {
+    return deepcopy({type: actionTypes.ADD_TEXT_BLOCK});
   }),
+);
+
+const textBlockActionsReducer = createReducer(null,
+  on(textBlockCreated, (state, textBlockAction) => deepcopy(textBlockAction))
 );
 
 export function menuReducer(state, action) {
   return reactToMenuReducer(state, action);
+}
+
+export function textBlockReducer(state, action) {
+  return textBlockActionsReducer(state, action);
 }
