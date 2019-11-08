@@ -25,6 +25,7 @@ import {TextBlockComponent as CreateTextBlockComponent} from "./components/cms/b
 import {TextBlockComponent as ViewTextBlockComponent} from "./components/cms/blocks/view/text-block.component";
 import {SelectionAreaComponent} from "./components/cms/selection-area.component";
 import {BlockSelectorComponent} from "./components/cms/blocks/block-selector.component";
+import {ComponentTracker} from "./services/tracking/ComponentTracker";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,9 @@ import {BlockSelectorComponent} from "./components/cms/blocks/block-selector.com
     ReactiveFormsModule,
     CKEditorModule,
   ],
-  providers: [],
+  providers: [
+    {provide: ComponentTracker, useClass: ComponentTracker}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
