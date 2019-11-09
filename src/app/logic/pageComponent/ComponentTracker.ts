@@ -5,10 +5,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ComponentTracker {
-  components = [];
+  components = {};
 
-  add(component: IComponent) {
-    this.components.push(component);
+  add(name: string, component: IComponent): void {
+    this.components[name] = component;
+  }
+
+  has(name: string): boolean {
+    return Object.keys(this.components).includes(name);
   }
 }
-

@@ -9,7 +9,7 @@ import {Observable} from "rxjs";
   styleUrls: ['../../web/styles/work-area.component.scss'],
   templateUrl: '../../web/templates/work-area.component.html',
 })
-export class WorkAreaComponent implements OnInit{
+export class WorkAreaComponent implements OnInit {
   private textBlockActions: Observable<any>;
 
   components = this.componentTracker.components;
@@ -23,9 +23,15 @@ export class WorkAreaComponent implements OnInit{
 
   ngOnInit(): void {
     this.textBlockActions.subscribe((action) => {
-      if (!action) return;
+      if (!action) {
+        return;
+      }
 
-      this.componentTracker.add(ComponentFactory.createComponent(action));
+      console.log(action);
+
+      const name: string = action.internalName;
+
+      this.componentTracker.add(name, ComponentFactory.createComponent(action));
     });
   }
 }

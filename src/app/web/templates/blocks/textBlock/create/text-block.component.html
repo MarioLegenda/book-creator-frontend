@@ -4,6 +4,7 @@
       <input matInput formControlName="internalName" placeholder="Internal name">
       <mat-error *ngIf="textBlockForm.controls.internalName.errors?.minlength">Minimum number of characters is {{textBlockForm.controls.internalName.errors?.minlength.requiredLength}}</mat-error>
       <mat-error *ngIf="textBlockForm.controls.internalName.errors?.maxlength">Maximum number of characters is {{textBlockForm.controls.internalName.errors?.maxlength.requiredLength}}</mat-error>
+      <mat-error *ngIf="textBlockForm.controls.internalName.errors?.internalNameUnique && textBlockForm.controls.internalName.dirty">Internal name already exists but it has to be unique for this page</mat-error>
 
       <mat-hint>
         A name to associate to this text block. This name is only for internal use and is not used in the
