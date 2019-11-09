@@ -28,6 +28,9 @@ export class TextBlockComponent implements AfterViewInit {
     });
   }
 
+  remove(internalName: string) {
+  }
+
   onUpdateWanted() {
     this.componentState.updateWanted = !this.componentState.updateWanted;
   }
