@@ -2,6 +2,8 @@
   <div class="component-metadata" [ngClass]="{'component-metadata': true, 'component-metadata-focused': componentState.focused}">
     {{componentData.value.internalName}}
   </div>
+
+  <cms-update-text-block></cms-update-text-block>
   <ckeditor
     (focus)="componentState.focused = true"
     (blur)="componentState.focused = false"
