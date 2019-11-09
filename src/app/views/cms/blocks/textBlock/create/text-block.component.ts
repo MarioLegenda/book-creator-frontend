@@ -4,6 +4,7 @@ import {Store} from '@ngrx/store';
 import {textBlockCreated, textBlockMenuClicked} from '../../../../../store/actions';
 import {ComponentType} from "../../../../../logic/pageComponent/ComponentType";
 import {ComponentTracker} from "../../../../../logic/pageComponent/ComponentTracker";
+import {ComponentFactory} from "../../../../../logic/pageComponent/ComponentFactory";
 
 @Component({
   selector: 'cms-create-text-block',
@@ -30,10 +31,12 @@ export class TextBlockComponent {
   });
 
   onSubmit() {
-    this.store.dispatch(textBlockMenuClicked());
-    this.store.dispatch(textBlockCreated({
+    const component = {
       ...this.textBlockForm.value,
       ...{componentType: ComponentType.TEXT_BLOCK_TYPE}
-    }));
+    };
+
+    this.store.dispatch(textBlockMenuClicked());
+    this.store.dispatch(textBlockCreated(component));
   }
 }

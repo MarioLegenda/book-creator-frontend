@@ -1,7 +1,7 @@
 <div class="container-fluid work-area">
   <div class="container row page">
     <div *ngFor="let item of components | keyvalue">
-      <cms-view-text-block *ngIf="item.value.type == 'text_block'" [componentData]="item.value"></cms-view-text-block>
+      <cms-view-text-block *ngIf="item.value.componentType == 'text_block'" [componentData]="item.value"></cms-view-text-block>
     </div>
   </div>
 </div>

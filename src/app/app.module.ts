@@ -25,9 +25,7 @@ import {CmsModule} from "./views/cms.module";
     HttpClientModule,
     CmsModule
   ],
-  providers: [
-    {provide: ComponentTracker, useClass: ComponentTracker}
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

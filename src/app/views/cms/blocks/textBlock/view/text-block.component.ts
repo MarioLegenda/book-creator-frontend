@@ -2,6 +2,8 @@ import {AfterViewInit, Component, Input} from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../../logic/pageComponent/IComponent";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Store} from "@ngrx/store";
+import {textBlockRemoved} from "../../../../../store/actions";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -19,6 +21,8 @@ export class TextBlockComponent implements AfterViewInit {
   Editor = BalloonEditor;
   @Input() componentData: IComponent;
 
+  constructor(private store: Store<any>) {}
+
   ngAfterViewInit(): void {
     this.textBlockForm = new FormGroup({
       internalName: new FormControl(this.componentData.value.internalName,{
@@ -28,11 +32,12 @@ export class TextBlockComponent implements AfterViewInit {
     });
   }
 
-  remove(internalName: string) {
-  }
-
   onUpdateWanted() {
     this.componentState.updateWanted = !this.componentState.updateWanted;
+  }
+
+  remove() {
+    this.store.dispatch(textBlockRemoved(this.componentData));
   }
 
   onMouseEnter() {

@@ -1,4 +1,4 @@
 export interface IComponent {
-  type: string;
+  componentType: string;
   value: any;
 }

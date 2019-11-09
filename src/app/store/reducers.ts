@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { textBlockMenuClicked, textBlockCreated, actionTypes } from './actions';
+import { textBlockMenuClicked, textBlockCreated, textBlockRemoved, actionTypes } from './actions';
 import deepcopy from 'deepcopy';
 
 const reactToMenuReducer = createReducer(null,
@@ -9,7 +9,8 @@ const reactToMenuReducer = createReducer(null,
 );
 
 const textBlockActionsReducer = createReducer(null,
-  on(textBlockCreated, (state, textBlockAction) => deepcopy(textBlockAction))
+  on(textBlockCreated, (state, textBlockAction) => deepcopy(textBlockAction)),
+  on(textBlockRemoved, (state, textBlockAction) => deepcopy(textBlockAction)),
 );
 
 export function menuReducer(state, action) {
