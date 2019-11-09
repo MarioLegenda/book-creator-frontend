@@ -21,7 +21,9 @@ export class TextBlockComponent implements AfterViewInit {
   Editor = BalloonEditor;
   @Input() componentData: IComponent;
 
-  constructor(private store: Store<any>) {}
+  constructor(
+    private store: Store<any>,
+  ) {}
 
   ngAfterViewInit(): void {
     this.textBlockForm = new FormGroup({

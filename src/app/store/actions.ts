@@ -11,11 +11,7 @@ export const textBlockMenuClicked = createAction(actionTypes.ADD_TEXT_BLOCK);
 
 export const textBlockCreated = createAction(
   actionTypes.TEXT_BLOCK_CREATED,
-  props<{
-    internalName: string;
-    shortDescription: string;
-    componentType: string;
-  }>()
+  props<object>()
 );
 
 export const textBlockRemoved = createAction(

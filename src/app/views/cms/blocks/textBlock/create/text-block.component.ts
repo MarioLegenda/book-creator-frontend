@@ -20,7 +20,7 @@ export class TextBlockComponent {
   textBlockForm = new FormGroup({
     internalName: new FormControl('',{
       validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255), (control: AbstractControl) => {
-        if (this.componentTracker.has(control.value)) {
+        if (this.componentTracker.hasBy(value => value.internalName === control.value)) {
           return {internalNameUnique: true};
         }
 
