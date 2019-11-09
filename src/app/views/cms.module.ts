@@ -14,7 +14,6 @@ import {MainComponent} from "./cms/main.component";
 import {WorkAreaComponent} from "./cms/work-area.component";
 import {TextBlockComponent as ViewTextBlockComponent} from "./cms/blocks/textBlock/view/text-block.component";
 import {TextBlockComponent as CreateTextBlockComponent} from "./cms/blocks/textBlock/create/text-block.component";
-import {TextBlockComponent as UpdateTextBlockComponent} from "./cms/blocks/textBlock/update/text-block.component";
 import {SelectionAreaComponent} from "./cms/selection-area.component";
 import {BlockSelectorComponent} from "./cms/blocks/block-selector.component";
 
@@ -30,7 +29,6 @@ import {ComponentTracker} from "../logic/pageComponent/ComponentTracker";
     ViewTextBlockComponent,
     SelectionAreaComponent,
     BlockSelectorComponent,
-    UpdateTextBlockComponent,
   ],
   imports: [
     MatCardModule,

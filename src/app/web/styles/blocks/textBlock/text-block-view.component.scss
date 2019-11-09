@@ -1,20 +1,68 @@
 @import '../../../../../styles/variables';
 
-.text-block {
-  position: relative;
-  border: 1px dashed $lightestGray;
-
-  border-radius: 5px;
-
-  .component-metadata {
-    top: -18px; left: 0;
-    position: absolute;
-
-    font-size: 0.8em;
-    color: $lightestGray;
+.text-block-wrapper {
+  .block-actions {
+    display: block;
+    float: left;
   }
 
-  .component-metadata-focused {
-    color: $textColor;
+  .block-action {
+    color: $lightestGray;
+    font-size: 0.8em;
+  }
+
+  .text-block {
+    border-radius: 5px;
+    border: 1px dashed $lightestGray;
+  }
+
+  .internal-name {
+    position: relative;
+
+    .text {
+      position: absolute;
+      top: 11px; left: 0;
+    }
+
+    .on-component-focused {
+      color: $textColor;
+    }
+  }
+
+  .block-update {
+    font-size: 0.8em;
+
+    margin: 20px 0 20px 0;
+
+    .update-button {
+      float: right;
+      font-size: 1em;
+    }
+
+    .input-field {
+      margin-right: 15px;
+    }
+  }
+
+  .text-block-update {
+    float: right;
+    position: relative;
+
+    .icon {
+      float: right;
+      font-size: 1.8em;
+      margin-left: 5px;
+
+      &:hover {
+        cursor: pointer;
+        color: $textColor;
+      }
+    }
+
+    .remove-icon {
+      &:hover {
+        color: $dangerRed;
+      }
+    }
   }
 }
