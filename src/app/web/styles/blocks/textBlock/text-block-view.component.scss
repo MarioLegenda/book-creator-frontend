@@ -1,6 +1,23 @@
 @import '../../../../../styles/variables';
 
 .text-block-wrapper {
+  position: relative;
+
+  .dragAndDropIcon {
+    position: absolute;
+
+    top: 43px; left: -30px;
+
+    font-size: 1.5em;
+
+    color: $lightestGray;
+
+    &:hover {
+      color: $textColor;
+      cursor: grab;
+    }
+  }
+
   .block-actions {
     display: block;
     float: left;

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ComponentTracker} from "../../logic/pageComponent/ComponentTracker";
+import {CdkDragDrop} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'cms-work-area',
@@ -12,4 +13,8 @@ export class WorkAreaComponent {
   constructor(
     private componentTracker: ComponentTracker
   ) {}
+
+  drop(event: CdkDragDrop<any>) {
+    console.log(event);
+  }
 }

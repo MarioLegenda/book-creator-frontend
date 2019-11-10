@@ -1,7 +1,12 @@
 <div class="container-fluid work-area">
-  <div class="container row page">
-    <div *ngFor="let item of components | keyvalue">
-      <cms-view-text-block *ngIf="item.value.componentType == 'text_block'" [componentData]="item.value"></cms-view-text-block>
+  <div cdkDropList class="container row page" (cdkDropListDropped)="drop($event)">
+    <div
+      *ngFor="let item of components | keyvalue"
+      class="col-xs-12 col-lg-12 col-md-12"
+      cdkDrag>
+      <cms-view-text-block
+        *ngIf="item.value.componentType == 'text_block'" [componentData]="item.value">
+      </cms-view-text-block>
     </div>
   </div>
 </div>

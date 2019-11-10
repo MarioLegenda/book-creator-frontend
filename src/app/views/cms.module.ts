@@ -7,6 +7,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 import {MenuComponent} from "./cms/menu.component";
 import {MenuButtonComponent} from "./cms/menu-button.component";
@@ -35,6 +36,7 @@ import {ComponentTracker} from "../logic/pageComponent/ComponentTracker";
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    DragDropModule,
 
     AngularFontAwesomeModule,
     BrowserModule,
