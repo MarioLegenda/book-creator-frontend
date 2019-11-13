@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import {menuReducer, textBlockReducer} from './store/reducers';
-import {CmsModule} from "./views/cms.module";
+import {CmsModule} from "./views/cms/module/cms.module";
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {CmsModule} from "./views/cms.module";
     HttpClientModule,
     CmsModule
   ],
-  providers: [],
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

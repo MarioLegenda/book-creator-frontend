@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import {BrowserModule} from "@angular/platform-browser";
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
@@ -9,16 +8,19 @@ import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 
-import {MenuComponent} from "./cms/menu.component";
-import {MenuButtonComponent} from "./cms/menu-button.component";
-import {MainComponent} from "./cms/main.component";
-import {WorkAreaComponent} from "./cms/work-area.component";
-import {TextBlockComponent as ViewTextBlockComponent} from "./cms/blocks/textBlock/view/text-block.component";
-import {TextBlockComponent as CreateTextBlockComponent} from "./cms/blocks/textBlock/create/text-block.component";
-import {SelectionAreaComponent} from "./cms/selection-area.component";
-import {BlockSelectorComponent} from "./cms/blocks/block-selector.component";
+import {MenuComponent} from "../menu/menu.component";
+import {MenuButtonComponent} from "../menu/menu-button.component";
+import {MainComponent} from "../main.component";
+import {WorkAreaComponent} from "../work-area.component";
+import {TextBlockComponent as ViewTextBlockComponent} from "../blocks/textBlock/view/text-block.component";
+import {TextBlockComponent as CreateTextBlockComponent} from "../blocks/textBlock/create/text-block.component";
+import {SelectionAreaComponent} from "../selection-area.component";
+import {BlockSelectorComponent} from "../blocks/block-selector.component";
+import {CmsRoutingModule} from "./cms-routing.module";
 
-import {ComponentTracker} from "../logic/pageComponent/ComponentTracker";
+import {ComponentTracker} from "../../../logic/pageComponent/ComponentTracker";
+import {CommonModule} from "@angular/common";
+import {MultimediaButtonComponent} from "../menu/multimedia-button.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import {ComponentTracker} from "../logic/pageComponent/ComponentTracker";
     MenuButtonComponent,
     WorkAreaComponent,
     CreateTextBlockComponent,
+    MultimediaButtonComponent,
     ViewTextBlockComponent,
     SelectionAreaComponent,
     BlockSelectorComponent,
@@ -38,17 +41,15 @@ import {ComponentTracker} from "../logic/pageComponent/ComponentTracker";
     MatFormFieldModule,
     DragDropModule,
 
+    CommonModule,
     AngularFontAwesomeModule,
-    BrowserModule,
     CKEditorModule,
     ReactiveFormsModule,
+
+    CmsRoutingModule,
   ],
   providers: [
     {provide: ComponentTracker, useClass: ComponentTracker}
   ],
-  bootstrap: [MainComponent],
-  exports: [
-    MainComponent,
-  ]
 })
 export class CmsModule { }

@@ -6,7 +6,7 @@ import {actionTypes} from '../../../store/actions';
 @Component({
   selector: 'cms-block-selector',
   styleUrls: ['../../../web/styles/blocks/block-selector.component.scss'],
-  templateUrl: '../../../web/templates/blocks/block-selector.component.html',
+  templateUrl: '../../../web/templates/cms/blocks/block-selector.component.html',
 })
 export class BlockSelectorComponent {
   menuSelection: Observable<{type: string}>;

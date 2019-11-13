@@ -1,0 +1,77 @@
+@import '../../../styles/variables';
+
+/* Ripple effect */
+.ripple {
+  background-position: center;
+  transition: background 0.8s;
+}
+
+.ripple:active {
+  background-color: $backgroundColor;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+.button-wrapper {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+/* Button style */
+.empty-button {
+  font-size: 14px;
+  border: none;
+  border-radius: 2px;
+  color: $textColor;
+  background-color: white;
+  outline: none;
+  font-weight: normal;
+
+  position: relative;
+  padding: 15px;
+
+  font-family: 'Open Sans', sans-serif;
+
+  &:hover {
+    color: black;
+  }
+
+  .button-icon {
+    position: absolute;
+    top: 40%; left: 5px;
+    color: black;
+  }
+
+  .button-icon:first-child {
+    top: 10%;
+  }
+}
+
+.wrapper-width-100 {
+  width: 100px;
+}
+
+.wrapper-width-110 {
+  width: 110px;
+}
+
+.wrapper-width-120 {
+  width: 120px;
+}
+
+.wrapper-width-130 {
+  width: 130px;
+}
+
+.wrapper-width-140 {
+  width: 140px;
+}
+
+.wrapper-width-150 {
+  width: 150px;
+}
+
+.col-xs-2 {
+  padding: 0;
+  margin: 0;
+}

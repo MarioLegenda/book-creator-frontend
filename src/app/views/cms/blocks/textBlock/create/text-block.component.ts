@@ -9,7 +9,7 @@ import {ComponentFactory} from "../../../../../logic/pageComponent/ComponentFact
 @Component({
   selector: 'cms-create-text-block',
   styleUrls: ['../../../../../web/styles/blocks/textBlock/text-block-create.component.scss'],
-  templateUrl: '../../../../../web/templates/blocks/textBlock/create/text-block.component.html',
+  templateUrl: '../../../../../web/templates/cms/blocks/textBlock/create/text-block.component.html',
 })
 export class TextBlockComponent {
   constructor(

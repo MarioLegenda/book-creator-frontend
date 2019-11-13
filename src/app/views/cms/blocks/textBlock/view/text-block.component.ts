@@ -8,7 +8,7 @@ import {textBlockRemoved} from "../../../../../store/actions";
 @Component({
   selector: 'cms-view-text-block',
   styleUrls: ['../../../../../web/styles/blocks/textBlock/text-block-view.component.scss'],
-  templateUrl: '../../../../../web/templates/blocks/textBlock/view/text-block.component.html',
+  templateUrl: '../../../../../web/templates/cms/blocks/textBlock/view/text-block.component.html',
 })
 export class TextBlockComponent implements AfterViewInit {
   textBlockForm: FormGroup;
