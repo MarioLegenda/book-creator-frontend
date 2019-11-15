@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  protocol: 'http',
+  baseUrl: '11.11.11.12',
+  port: 8080,
+
+  composeBaseUrl(): string {
+    return `${environment.protocol}://${environment.baseUrl}:${environment.port}`;
+  }
 };
 
 /*

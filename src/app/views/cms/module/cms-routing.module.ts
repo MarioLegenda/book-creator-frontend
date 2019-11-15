@@ -4,9 +4,8 @@ import {MainComponent} from "../main.component";
 
 const routes: Routes = [
   {
-    path: '',
-    component: MainComponent,
-    pathMatch: 'full'
+    path: 'page/:pageUuid',
+    component: MainComponent
   }
 ];
 

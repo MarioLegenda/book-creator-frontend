@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  scheme: 'https',
+  baseUrl: '11.11.11.12'
 };

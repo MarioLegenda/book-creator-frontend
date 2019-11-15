@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from "./app.component";
 
-
 const routes: Routes = [
   {
-    path: 'cms',
+    path: '',
     loadChildren: () => import('./views/cms/module/cms.module').then((m) => {
       return m.CmsModule
     })
@@ -15,7 +14,7 @@ const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full',
     component: AppComponent
-  }
+  },
 ];
 
 @NgModule({

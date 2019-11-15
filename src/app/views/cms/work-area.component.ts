@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ComponentTracker} from "../../logic/pageComponent/ComponentTracker";
+import {ComponentTracker} from "../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
 
 @Component({

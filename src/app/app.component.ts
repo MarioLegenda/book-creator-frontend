@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {PageContextService} from "./logic/pageComponent/context/PageContextService";
+import {PageContextService} from "./logic/PageComponent/context/PageContextService";
 
 @Component({
   selector: 'app-root',

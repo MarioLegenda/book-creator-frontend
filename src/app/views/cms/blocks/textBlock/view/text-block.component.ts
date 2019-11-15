@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input} from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import {IComponent} from "../../../../../logic/pageComponent/IComponent";
+import {IComponent} from "../../../../../logic/PageComponent/IComponent";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {textBlockRemoved} from "../../../../../store/actions";

@@ -18,7 +18,7 @@ import {SelectionAreaComponent} from "../selection-area.component";
 import {BlockSelectorComponent} from "../blocks/block-selector.component";
 import {CmsRoutingModule} from "./cms-routing.module";
 
-import {ComponentTracker} from "../../../logic/pageComponent/ComponentTracker";
+import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CommonModule} from "@angular/common";
 import {MultimediaButtonComponent} from "../menu/multimedia-button.component";
 
