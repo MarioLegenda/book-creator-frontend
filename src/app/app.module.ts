@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import {menuReducer, textBlockReducer} from './store/reducers';
+import {viewActionReducer} from "./store/viewReducers";
 import {CmsModule} from "./views/cms/module/cms.module";
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
@@ -19,8 +19,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
     AppRoutingModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({
-      menuSelection: menuReducer,
-      textBlockActions: textBlockReducer,
+      viewActions: viewActionReducer
     }),
     HttpClientModule,
     CmsModule

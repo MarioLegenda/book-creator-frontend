@@ -1,11 +1,13 @@
 @import '../../../styles/variables';
 
 .work-area {
+  position: relative;
+
   .page {
     width: 900px;
     height: 1000px;
 
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 4%;
 
     background-color: white;

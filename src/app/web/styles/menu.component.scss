@@ -1,7 +1,11 @@
 @import '../../../styles/variables';
 
 .menu-wrapper {
-  background-color: white;
+  position: absolute;
 
-  padding: 20px;
+  z-index: 1000;
+  top: 5%;
+  left: 0;
+
+  background-color: white;
 }

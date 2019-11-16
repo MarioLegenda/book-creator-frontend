@@ -12,32 +12,13 @@
       <div [style.visibility]="(componentState.focused) ? 'visible' : 'hidden'" class="block-action text-block-update col-lg-5 col-md-5 col-xs-5">
         <div class="icon-group">
           <fa (click)="remove()" class="icon remove-icon" name="trash"></fa>
-          <fa (click)="onUpdateWanted()" class="icon" name="edit"></fa>
         </div>
       </div>
     </div>
-
-    <div *ngIf="componentState.updateWanted" class="block-update col-lg-12 col-md-12 col-xs-12">
-      <form [formGroup]="textBlockForm" novalidate>
-        <mat-form-field class="input-field">
-          <input matInput formControlName="internalName" placeholder="Internal name">
-        </mat-form-field>
-
-        <mat-form-field class="input-field">
-          <textarea formControlName="shortDescription" matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 placeholder="A short description"></textarea>
-        </mat-form-field>
-
-        <div>
-          <button type="submit" mat-flat-button color="primary" class="update-button">Update</button>
-        </div>
-      </form>
-    </div>
-
   </div>
 
   <div class="text-block col-lg-12 col-md-12 col-xs-12">
     <ckeditor
-      (blur)="onTextBlur()"
       [editor]="Editor"
       [(ngModel)]="componentData.value.text"
       required

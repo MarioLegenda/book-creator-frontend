@@ -12,15 +12,11 @@ import {MenuComponent} from "../menu/menu.component";
 import {MenuButtonComponent} from "../menu/menu-button.component";
 import {BootstrapComponent} from "../bootstrap.component";
 import {WorkAreaComponent} from "../work-area.component";
-import {TextBlockComponent as ViewTextBlockComponent} from "../blocks/textBlock/view/text-block.component";
-import {TextBlockComponent as CreateTextBlockComponent} from "../blocks/textBlock/create/text-block.component";
-import {SelectionAreaComponent} from "../selection-area.component";
-import {BlockSelectorComponent} from "../blocks/block-selector.component";
+import {TextBlockComponent} from "../blocks/textBlock/text-block.component";
 import {CmsRoutingModule} from "./cms-routing.module";
 
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CommonModule} from "@angular/common";
-import {MultimediaButtonComponent} from "../menu/multimedia-button.component";
 
 @NgModule({
   declarations: [
@@ -28,11 +24,7 @@ import {MultimediaButtonComponent} from "../menu/multimedia-button.component";
     MenuComponent,
     MenuButtonComponent,
     WorkAreaComponent,
-    CreateTextBlockComponent,
-    MultimediaButtonComponent,
-    ViewTextBlockComponent,
-    SelectionAreaComponent,
-    BlockSelectorComponent,
+    TextBlockComponent,
   ],
   imports: [
     MatCardModule,
