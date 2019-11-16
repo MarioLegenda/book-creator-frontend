@@ -5,9 +5,7 @@ import {AppComponent} from "./app.component";
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./views/cms/module/cms.module').then((m) => {
-      return m.CmsModule
-    })
+    loadChildren: () => import('./views/cms/module/cms.module').then(m => m.CmsModule)
   },
   {
     path: '',

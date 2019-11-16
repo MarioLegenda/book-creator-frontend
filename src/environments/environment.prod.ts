@@ -1,5 +1,10 @@
 export const environment = {
   production: true,
-  scheme: 'https',
-  baseUrl: '11.11.11.12'
+  protocol: 'http',
+  baseUrl: '11.11.11.12',
+  port: 8080,
+
+  composeBaseUrl(): string {
+    return `${environment.protocol}://${environment.baseUrl}:${environment.port}`;
+  }
 };

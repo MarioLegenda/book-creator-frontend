@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MainComponent} from "../main.component";
+import {BootstrapComponent} from "../bootstrap.component";
 
 const routes: Routes = [
   {
     path: 'page/:pageUuid',
-    component: MainComponent
+    component: BootstrapComponent
   }
 ];
 

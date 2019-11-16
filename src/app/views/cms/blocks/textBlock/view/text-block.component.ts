@@ -3,7 +3,9 @@ import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../../logic/PageComponent/IComponent";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
-import {textBlockRemoved} from "../../../../../store/actions";
+import {textBlockRemoved, textBlockUpdated} from "../../../../../store/actions";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -36,6 +38,9 @@ export class TextBlockComponent implements AfterViewInit {
 
   onUpdateWanted() {
     this.componentState.updateWanted = !this.componentState.updateWanted;
+  }
+
+  onTextBlur() {
   }
 
   remove() {

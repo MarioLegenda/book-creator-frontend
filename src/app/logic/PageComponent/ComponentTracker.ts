@@ -2,9 +2,8 @@ import {IComponent} from "./IComponent";
 import { Injectable } from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {actionTypes} from "../../store/actions";
-import {ComponentFactory} from "./ComponentFactory";
 import {AutoIncrementIndexFactory} from "../../library/AutoIncrementIndexFactory";
+import {ActionSubscriber} from "./ActionSubscriber";
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +13,11 @@ export class ComponentTracker {
 
   private textBlockActions: Observable<{
     internalName: string;
+    text: string;
     shortDescription: string;
     componentType: string;
-    type: string
+    uuid: string;
+    type: string;
   }>;
 
   constructor(
@@ -25,31 +26,12 @@ export class ComponentTracker {
   ) {
     this.indexFactory.update(this.componentsLen());
 
-    this.textBlockActions = store.pipe(select('textBlockActions'));
+    const actionSubscriber = new ActionSubscriber();
 
-    this.textBlockActions.subscribe((action: any) => {
-      if (!action) {
-        return;
-      }
-
-      switch (action.type) {
-        case actionTypes.TEXT_BLOCK_CREATED: {
-          const component: IComponent = ComponentFactory.createComponent(action);
-
-          this.add(component);
-
-          break;
-        }
-
-        case actionTypes.TEXT_BLOCK_REMOVED: {
-          if (this.has(action.value.$index)) {
-            this.remove(action.value.$index);
-          }
-
-          break;
-        }
-      }
-    });
+    actionSubscriber.textBlockCreatedSubscriber(
+      this.textBlockActions = this.store.pipe(select('textBlockActions')),
+      this
+    );
   }
 
   add(component: IComponent): void {
@@ -84,6 +66,10 @@ export class ComponentTracker {
     if (this.componentsLen() === 0) {
       this.indexFactory.reset();
     }
+  }
+
+  reset() {
+    this.components = {};
   }
 
   private componentsLen(): number {

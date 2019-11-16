@@ -11,10 +11,8 @@ export class ComponentFactory {
         return {
           componentType: ComponentType.TEXT_BLOCK_TYPE,
           value: {
-            componentType: ComponentType.TEXT_BLOCK_TYPE,
-            type: d.type,
-            internalName: d.internalName,
-            shortDescription: d.shortDescription,
+            ...{componentType: ComponentType.TEXT_BLOCK_TYPE},
+            ...d
           },
         };
       }

@@ -51,7 +51,7 @@ export class TextBlockComponent {
 
       this.httpClient.put(url, model).subscribe((res: any) => {
         const component = {
-          ...{internalName: res.data.internalName, shortDescription: res.data.shortDescription},
+          ...model.data,
           ...{componentType: ComponentType.TEXT_BLOCK_TYPE}
         };
 

@@ -37,7 +37,9 @@
 
   <div class="text-block col-lg-12 col-md-12 col-xs-12">
     <ckeditor
+      (blur)="onTextBlur()"
       [editor]="Editor"
+      [(ngModel)]="componentData.value.text"
       required
       data=""
       name="text">

@@ -1,10 +1,12 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {IContext} from "./IContext";
 import {Store} from "@ngrx/store";
 import {PageContext} from "./PageContext";
 import {environment} from "../../../../environments/environment";
+import {textBlockCreated} from "../../../store/actions";
+import {ComponentType} from "../ComponentType";
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,7 @@ export class PageContextService {
 
   constructor(
     private httpClient: HttpClient,
-    store: Store<any>
+    private store: Store<any>
   ) {}
 
   isValidContext(): boolean {
@@ -37,8 +39,15 @@ export class PageContextService {
 
     const url = `${environment.composeBaseUrl()}/api/v1/pages/get-by-uuid/${pageUuid}`;
 
-    this.httpClient.get(url).subscribe((res) => {
-      console.log(res);
+    this.httpClient.get(url).subscribe((res: object) => {
+      // @ts-ignore
+      const blocks = res.data.blocks;
+
+      for (const [_, block] of Object.entries(blocks)) {
+        (block as any).componentType = ComponentType.TEXT_BLOCK_TYPE;
+
+        this.store.dispatch(textBlockCreated(block as object));
+      }
     });
 
     this.contextInitiated = true;

@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {AngularFontAwesomeModule} from "angular-font-awesome";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
@@ -10,7 +10,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 
 import {MenuComponent} from "../menu/menu.component";
 import {MenuButtonComponent} from "../menu/menu-button.component";
-import {MainComponent} from "../main.component";
+import {BootstrapComponent} from "../bootstrap.component";
 import {WorkAreaComponent} from "../work-area.component";
 import {TextBlockComponent as ViewTextBlockComponent} from "../blocks/textBlock/view/text-block.component";
 import {TextBlockComponent as CreateTextBlockComponent} from "../blocks/textBlock/create/text-block.component";
@@ -24,7 +24,7 @@ import {MultimediaButtonComponent} from "../menu/multimedia-button.component";
 
 @NgModule({
   declarations: [
-    MainComponent,
+    BootstrapComponent,
     MenuComponent,
     MenuButtonComponent,
     WorkAreaComponent,
@@ -47,6 +47,7 @@ import {MultimediaButtonComponent} from "../menu/multimedia-button.component";
     ReactiveFormsModule,
 
     CmsRoutingModule,
+    FormsModule,
   ],
   providers: [
     {provide: ComponentTracker, useClass: ComponentTracker}

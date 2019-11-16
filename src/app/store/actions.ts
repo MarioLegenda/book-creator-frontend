@@ -19,4 +19,7 @@ export const textBlockRemoved = createAction(
   props<object>()
 );
 
-export const textBlockUpdated = createAction(actionTypes.TEXT_BLOCK_UPDATED);
+export const textBlockUpdated = createAction(
+  actionTypes.TEXT_BLOCK_UPDATED,
+  props<object>()
+);
