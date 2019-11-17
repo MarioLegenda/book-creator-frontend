@@ -22,10 +22,15 @@
     </div>
   </div>
 
-  <div class="text-block col-lg-12 col-md-12 col-xs-12">
+  <div
+    class="text-block col-lg-12 col-md-12 col-xs-12 text-editor-wrapper"
+    (click)="createEditor()"
+    [ngClass]="{'editor-not-created': !editorCreated}">
     <ckeditor
-      [editor]="Editor"
+      *ngIf="editorCreated"
+      [editor]="editor"
       [(ngModel)]="componentData.value.text"
+      (ready)="onEditorReady($event)"
       required
       data=""
       name="text">

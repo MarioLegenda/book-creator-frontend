@@ -16,5 +16,6 @@ export const viewTextBlockUpdated = createAction(
 );
 
 export const viewTextBlockRemoved = createAction(
-  actionTypes.VIEW_TEXT_BLOCK_REMOVED
+  actionTypes.VIEW_TEXT_BLOCK_REMOVED,
+  props<{}>()
 );

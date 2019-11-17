@@ -30,7 +30,7 @@ export class ViewActionSubscriber {
           break;
         }
 
-        case actionTypes.VIEW_ADD_TEXT_BLOCK: {
+        case actionTypes.VIEW_TEXT_BLOCK_REMOVED: {
           if (this.componentTracker.has(action.value.$index)) {
             this.componentTracker.remove(action.value.$index);
           }

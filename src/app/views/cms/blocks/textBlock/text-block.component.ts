@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../logic/PageComponent/IComponent";
-import {FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
+import {viewTextBlockRemoved} from "../../../../store/viewActions";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -15,21 +15,25 @@ export class TextBlockComponent {
     updateWanted: false
   };
 
-  Editor = BalloonEditor;
+  editorCreated = false;
+
+  editor = BalloonEditor;
   @Input() componentData: IComponent;
 
   constructor(
     private store: Store<any>,
   ) {}
 
-  onUpdateWanted() {
-    this.componentState.updateWanted = !this.componentState.updateWanted;
+  createEditor() {
+    this.editorCreated = true;
   }
 
-  onTextBlur() {
+  onEditorReady($event: any) {
+    $event.editing.view.focus();
   }
 
   remove() {
+    this.store.dispatch(viewTextBlockRemoved(this.componentData));
   }
 
   onMouseEnter() {
