@@ -15,6 +15,5 @@ export class WorkAreaComponent {
   ) {}
 
   drop(event: CdkDragDrop<any>) {
-    console.log(event);
   }
 }

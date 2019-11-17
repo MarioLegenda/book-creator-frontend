@@ -5,9 +5,7 @@ import {Observable} from "rxjs";
 import {AutoIncrementIndexFactory} from "../../library/AutoIncrementIndexFactory";
 import {ActionSubscriber} from "./ActionSubscriber";
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ComponentTracker {
   components = {};
 

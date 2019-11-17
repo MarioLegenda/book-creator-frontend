@@ -1,4 +1,4 @@
-import { createAction, props } from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 
 export const actionTypes = {
   VIEW_ADD_TEXT_BLOCK: '[View] Create text block',
@@ -8,15 +8,13 @@ export const actionTypes = {
 
 export const viewAddTextBlock = createAction(
   actionTypes.VIEW_ADD_TEXT_BLOCK,
-  props<object>()
+  props<{}>(),
 );
 
 export const viewTextBlockUpdated = createAction(
-  actionTypes.VIEW_TEXT_BLOCK_UPDATED,
-  props<object>()
+  actionTypes.VIEW_TEXT_BLOCK_UPDATED
 );
 
 export const viewTextBlockRemoved = createAction(
-  actionTypes.VIEW_TEXT_BLOCK_REMOVED,
-  props<object>()
+  actionTypes.VIEW_TEXT_BLOCK_REMOVED
 );

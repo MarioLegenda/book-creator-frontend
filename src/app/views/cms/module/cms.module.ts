@@ -17,6 +17,7 @@ import {CmsRoutingModule} from "./cms-routing.module";
 
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CommonModule} from "@angular/common";
+import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscriber";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {CommonModule} from "@angular/common";
     FormsModule,
   ],
   providers: [
-    {provide: ComponentTracker, useClass: ComponentTracker}
+    {provide: ComponentTracker, useClass: ComponentTracker},
+    {provide: ViewActionSubscriber, useClass: ViewActionSubscriber}
   ],
 })
 export class CmsModule { }

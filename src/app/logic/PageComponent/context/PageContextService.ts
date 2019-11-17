@@ -39,7 +39,7 @@ export class PageContextService {
 
     const url = `${environment.composeBaseUrl()}/api/v1/pages/get-by-uuid/${pageUuid}`;
 
-    this.httpClient.get(url).subscribe((res: object) => {
+/*    this.httpClient.get(url).subscribe((res: object) => {
       // @ts-ignore
       const blocks = res.data.blocks;
 
@@ -48,7 +48,7 @@ export class PageContextService {
 
         this.store.dispatch(textBlockCreated(block as object));
       }
-    });
+    });*/
 
     this.contextInitiated = true;
   }

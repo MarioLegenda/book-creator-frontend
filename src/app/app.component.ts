@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {PageContextService} from "./logic/PageComponent/context/PageContextService";
 
 @Component({
   selector: 'app-root',
@@ -7,7 +6,7 @@ import {PageContextService} from "./logic/PageComponent/context/PageContextServi
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(pageContextService: PageContextService) {}
+  constructor() {}
 
   title = 'frontend';
 }

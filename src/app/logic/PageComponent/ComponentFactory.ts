@@ -1,11 +1,12 @@
 import {ComponentType} from "./ComponentType";
 import {IComponent} from "./IComponent";
+import {actionTypes} from "../../store/viewActions";
 import deepcopy from 'deepcopy';
 
 export class ComponentFactory {
   public static createComponent(data): IComponent {
-    switch (data.componentType) {
-      case ComponentType.TEXT_BLOCK_TYPE: {
+    switch (data.type) {
+      case actionTypes.VIEW_ADD_TEXT_BLOCK: {
         const d = deepcopy(data);
 
         return {
