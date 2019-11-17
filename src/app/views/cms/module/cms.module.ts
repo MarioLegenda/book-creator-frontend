@@ -19,6 +19,8 @@ import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CommonModule} from "@angular/common";
 import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscriber";
 import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadata-placeholder.component";
+import {InternalNameComponent} from "../blocks/textBlock/internal-name.component";
+import {ShortDescriptionComponent} from "../blocks/textBlock/short-description.component";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadata-placeho
     WorkAreaComponent,
     TextBlockComponent,
     MetadataPlaceholderComponent,
+    InternalNameComponent,
+    ShortDescriptionComponent,
   ],
   imports: [
     MatCardModule,

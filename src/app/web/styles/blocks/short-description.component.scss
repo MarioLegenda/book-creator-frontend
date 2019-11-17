@@ -1,0 +1,23 @@
+@import '../../../../styles/variables';
+
+.mat-form-field {
+  font-size: 0.9em;
+}
+
+.short-description {
+  .input-field {
+    position: relative;
+
+    .icon {
+      position: absolute;
+      color: $lightGray;
+
+      top: 15px; right: -5px;
+
+      &:hover {
+        cursor: pointer;
+        color: $dangerRed;
+      }
+    }
+  }
+}
