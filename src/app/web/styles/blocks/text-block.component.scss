@@ -3,20 +3,7 @@
 .text-block-wrapper {
   position: relative;
 
-  .dragAndDropIcon {
-    position: absolute;
-
-    top: 43px; left: -30px;
-
-    font-size: 1.5em;
-
-    color: $lightestGray;
-
-    &:hover {
-      color: $textColor;
-      cursor: grab;
-    }
-  }
+  padding: 20px;
 
   .block-actions {
     display: block;
@@ -26,42 +13,7 @@
   .block-action {
     color: $lightestGray;
     font-size: 0.8em;
-  }
 
-  .text-block {
-    border-radius: 5px;
-    border: 1px dashed $lightestGray;
-  }
-
-  .internal-name {
-    position: relative;
-
-    .text {
-      position: absolute;
-      top: 11px; left: 0;
-    }
-
-    .on-component-focused {
-      color: $textColor;
-    }
-  }
-
-  .block-update {
-    font-size: 0.8em;
-
-    margin: 20px 0 20px 0;
-
-    .update-button {
-      float: right;
-      font-size: 1em;
-    }
-
-    .input-field {
-      margin-right: 15px;
-    }
-  }
-
-  .text-block-update {
     float: right;
     position: relative;
 
@@ -81,5 +33,13 @@
         color: $dangerRed;
       }
     }
+  }
+
+  .text-block {
+    border-radius: 5px;
+    border: 1px dashed $lightestGray;
+  }
+
+  .text-block-update {
   }
 }

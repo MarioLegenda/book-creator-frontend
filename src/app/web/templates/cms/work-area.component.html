@@ -6,6 +6,11 @@
       *ngFor="let item of components | keyvalue"
       class="col-xs-12 col-lg-12 col-md-12 component-wrapper"
       cdkDrag>
+
+      <div class="dragAndDropHandle" cdkDragHandle>
+        <fa name="list"></fa>
+      </div>
+
       <cms-view-text-block
         *ngIf="item.value.componentType == 'text_block'" [componentData]="item.value">
       </cms-view-text-block>

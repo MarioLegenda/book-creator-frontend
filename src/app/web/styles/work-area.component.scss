@@ -16,6 +16,25 @@
   }
 }
 
+.dragAndDropHandle {
+  position: absolute;
+
+  top: 46px; left: -30px;
+
+  font-size: 1.5em;
+
+  color: $lightestGray;
+
+  &:hover {
+    color: $textColor;
+    cursor: grab;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;

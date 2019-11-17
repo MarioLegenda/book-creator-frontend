@@ -9,8 +9,4 @@ import { viewAddTextBlock } from '../../../store/viewActions';
 })
 export class MenuComponent {
   constructor(private store: Store<{menu: string}>) {}
-
-  onClick() {
-    this.store.dispatch(viewAddTextBlock());
-  }
 }

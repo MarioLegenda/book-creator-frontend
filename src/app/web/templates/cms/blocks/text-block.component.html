@@ -1,18 +1,23 @@
-<div (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" class="text-block-wrapper col-lg-12 col-md-12 col-xs-12">
-  <div class="dragAndDropIcon" cdkDragHandle>
-    <fa name="list"></fa>
-  </div>
+<div
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  class="text-block-wrapper col-lg-12 col-md-12 col-xs-12">
 
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
-      <div class="block-action internal-name col-lg-5 col-md-5 col-xs-5">
-        <span [ngClass]="{'text': true, 'on-component-focused': componentState.focused}">{{componentData.value.internalName}}</span>
+      <div>
+        <cms-metadata-placeholder [type]="'internal-name'"></cms-metadata-placeholder>
+        <cms-metadata-placeholder [type]="'short-description'"></cms-metadata-placeholder>
       </div>
 
-      <div [style.visibility]="(componentState.focused) ? 'visible' : 'hidden'" class="block-action text-block-update col-lg-5 col-md-5 col-xs-5">
+      <div
+        [style.visibility]="(componentState.focused) ? 'visible' : 'hidden'"
+        class="block-action col-lg-5 col-md-5 col-xs-5">
+
         <div class="icon-group">
           <fa (click)="remove()" class="icon remove-icon" name="trash"></fa>
         </div>
+
       </div>
     </div>
   </div>

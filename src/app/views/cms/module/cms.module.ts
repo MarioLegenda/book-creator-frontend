@@ -18,6 +18,7 @@ import {CmsRoutingModule} from "./cms-routing.module";
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CommonModule} from "@angular/common";
 import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscriber";
+import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadata-placeholder.component";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscrib
     MenuButtonComponent,
     WorkAreaComponent,
     TextBlockComponent,
+    MetadataPlaceholderComponent,
   ],
   imports: [
     MatCardModule,
