@@ -6,7 +6,9 @@ import {CreateTextBlockModel} from "../../model/http/CreateTextBlockModel";
 import {PageContextInitializer} from "../PageComponent/context/PageContextInitializer";
 import {IRequestModel} from "../../model/http/IRequestModel";
 import {PageRepository} from "../../repository/PageRepository";
-import {viewAddTextBlock} from "../../store/viewActions";
+import {viewAddTextBlock, viewTextBlockRemoved} from "../../store/viewActions";
+import {TextBlockModel} from "../../model/http/TextBlockModel";
+import {RemoveBlockModel} from "../../model/http/RemoveBlockModel";
 
 @Injectable({
   providedIn: 'root',
@@ -47,12 +49,23 @@ export class HttpActionSubscriber {
 
     const model: IRequestModel = CreateTextBlockModel.create(pageUuid);
 
-    this.pageRepository.addTextBlock(model).subscribe((model: CreateTextBlockModel) => {
+    this.pageRepository.addTextBlock(model).subscribe((model: TextBlockModel) => {
       this.store.dispatch(httpCreateTextBlockFinished());
       this.store.dispatch(viewAddTextBlock(model.convertToViewModel()));
     });
   }
 
   private removeTextBlock(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().uuid;
+    const blockUuid: string = action.value.blockUuid;
+
+    const model: IRequestModel = new RemoveBlockModel(
+      pageUuid,
+      blockUuid
+    );
+
+    this.pageRepository.removeBlock(model).subscribe(() => {
+      this.store.dispatch(viewTextBlockRemoved(action));
+    })
   }
 }

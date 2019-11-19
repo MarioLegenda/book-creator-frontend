@@ -8,13 +8,18 @@ export class RouteResolver {
   private readonly routes = {
     addNewTextBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/add-new-block`,
     getPageByUuid: `${environment.composeBaseUrl()}/api/v1/pages/get-by-uuid/:pageUuid`,
+    removeBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/remove`,
   };
 
-  addNewTextBlock() {
+  addNewTextBlock(): string {
     return this.routes.addNewTextBlock;
   }
 
-  getPageByUuid(pageUuid: string) {
+  getPageByUuid(pageUuid: string): string {
     return this.routes.getPageByUuid.replace(/:pageUuid/, pageUuid);
+  }
+
+  removeBlock(): string {
+    return this.routes.removeBlock;
   }
 }

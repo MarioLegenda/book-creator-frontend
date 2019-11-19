@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../logic/PageComponent/IComponent";
 import {Store} from "@ngrx/store";
-import {viewTextBlockRemoved} from "../../../../store/viewActions";
+import {httpRemoveTextBlock} from "../../../../store/httpActions";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -33,7 +33,7 @@ export class TextBlockComponent {
   }
 
   remove() {
-    this.store.dispatch(viewTextBlockRemoved(this.componentData));
+    this.store.dispatch(httpRemoveTextBlock(this.componentData));
   }
 
   onMouseEnter() {

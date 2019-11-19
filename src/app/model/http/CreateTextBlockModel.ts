@@ -6,12 +6,7 @@ export class CreateTextBlockModel implements IRequestModel{
   data: any = {};
 
   public convertToViewModel(): IViewModel {
-    return new ViewTextBlockModel(
-      this.data.blockUuid,
-      this.data.internalName,
-      this.data.shortDescription,
-      this.data.text
-    );
+    throw new Error('Internal error. CreateTextBlockModel cannot be converted to a view model');
   }
 
   public static create(
@@ -22,10 +17,10 @@ export class CreateTextBlockModel implements IRequestModel{
   ): CreateTextBlockModel {
     const model = new CreateTextBlockModel();
 
+    model.data.pageUuid = pageUuid;
     model.data.text = (!text) ? '' : text;
     model.data.internalName = (!internalName) ? '' : internalName;
     model.data.shortDescription = (!shortDescription) ? '' : shortDescription;
-    model.data.pageUuid = (!pageUuid) ? '' : pageUuid;
 
     return model;
   }

@@ -5,6 +5,7 @@ import {reduce} from "rxjs/operators";
 import {RouteResolver} from "../library/RouteResolver";
 import {CreateTextBlockModel} from "../model/http/CreateTextBlockModel";
 import {TextBlockModel} from "../model/http/TextBlockModel";
+import {RemoveBlockModel} from "../model/http/RemoveBlockModel";
 
 @Injectable({
   providedIn: 'root',
@@ -22,12 +23,13 @@ export class PageRepository {
           const body: any = res.body;
           const data = (body as any).data;
 
-          return CreateTextBlockModel.create(
-            (model as any).pageUuid,
+          return TextBlockModel.create(
+            (model as any).data.pageUuid,
+            data.uuid,
             data.internalName,
             data.shortDescription,
             data.text,
-          )
+          );
         }, {})
       );
   }
@@ -62,5 +64,9 @@ export class PageRepository {
           };
         }, {}),
       );
+  }
+
+  removeBlock(model: IRequestModel) {
+    return this.httpClient.post(this.routeResolver.removeBlock(), model);
   }
 }

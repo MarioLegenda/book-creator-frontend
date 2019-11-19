@@ -10,7 +10,7 @@ export class TextBlockModel implements IRequestModel{
       this.data.blockUuid,
       this.data.internalName,
       this.data.shortDescription,
-      this.data.text
+      this.data.text,
     );
   }
 
@@ -23,10 +23,11 @@ export class TextBlockModel implements IRequestModel{
   ): TextBlockModel {
     const model = new TextBlockModel();
 
+    model.data.pageUuid = pageUuid;
+    model.data.blockUuid = blockUuid;
     model.data.text = (!text) ? '' : text;
     model.data.internalName = (!internalName) ? '' : internalName;
     model.data.shortDescription = (!shortDescription) ? '' : shortDescription;
-    model.data.pageUuid = (!pageUuid) ? '' : pageUuid;
 
     return model;
   }
