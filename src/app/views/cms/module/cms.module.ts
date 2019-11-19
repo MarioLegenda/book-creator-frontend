@@ -21,6 +21,11 @@ import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscrib
 import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadata-placeholder.component";
 import {InternalNameComponent} from "../blocks/textBlock/internal-name.component";
 import {ShortDescriptionComponent} from "../blocks/textBlock/short-description.component";
+import {HttpActionSubscriber} from "../../../logic/Subscriber/HttpActionSubscriber";
+import {PageRepository} from "../../../repository/PageRepository";
+import {RouteResolver} from "../../../library/RouteResolver";
+import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
+import {PageContext} from "../../../logic/PageComponent/context/PageContext";
 
 @NgModule({
   declarations: [
@@ -48,9 +53,6 @@ import {ShortDescriptionComponent} from "../blocks/textBlock/short-description.c
     CmsRoutingModule,
     FormsModule,
   ],
-  providers: [
-    {provide: ComponentTracker, useClass: ComponentTracker},
-    {provide: ViewActionSubscriber, useClass: ViewActionSubscriber}
-  ],
+  providers: [],
 })
 export class CmsModule { }

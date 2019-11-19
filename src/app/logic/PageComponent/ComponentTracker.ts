@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {AutoIncrementIndexFactory} from "../../library/AutoIncrementIndexFactory";
-import {ActionSubscriber} from "./ActionSubscriber";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ComponentTracker {
   components = {};
 
@@ -23,13 +24,6 @@ export class ComponentTracker {
     private indexFactory: AutoIncrementIndexFactory
   ) {
     this.indexFactory.update(this.componentsLen());
-
-    const actionSubscriber = new ActionSubscriber();
-
-    actionSubscriber.textBlockCreatedSubscriber(
-      this.textBlockActions = this.store.pipe(select('textBlockActions')),
-      this
-    );
   }
 
   add(component: IComponent): void {

@@ -1,3 +1,6 @@
+import {IViewModel} from "../app/IViewModel";
+
 export interface IRequestModel {
-  data: any
+  data: any,
+  convertToViewModel(): IViewModel,
 }

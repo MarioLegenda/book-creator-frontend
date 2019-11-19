@@ -1,7 +1,10 @@
-import {IContext} from "./IContext";
+export class PageContext {
+  constructor(
+    public uuid: string,
+    public shortId: string,
+    public internalName: string = '',
+    public shortDescription: string = '',
+  ) {
 
-export class PageContext implements IContext {
-  internalName: string = null;
-  uuid: string = null;
-  shortId: string = null;
+  }
 }
