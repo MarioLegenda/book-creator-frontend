@@ -3,7 +3,7 @@
 
   <div cdkDropList class="container row page" (cdkDropListDropped)="drop($event)">
     <div
-      *ngFor="let item of components | keyvalue"
+      *ngFor="let item of components | keyvalue; let i = index; trackBy: trackByFn"
       class="col-xs-12 col-lg-12 col-md-12 component-wrapper"
       cdkDrag>
 
@@ -12,7 +12,11 @@
       </div>
 
       <cms-view-text-block
-        *ngIf="item.value.componentType == 'text_block'" [componentData]="item.value">
+        (click)="onTextBlockFocus(i)"
+        *ngIf="item.value.componentType == 'text_block'"
+        [focusTrackerEvent]="focusTrackerEvent"
+        [index]="i"
+        [componentData]="item.value">
       </cms-view-text-block>
     </div>
   </div>

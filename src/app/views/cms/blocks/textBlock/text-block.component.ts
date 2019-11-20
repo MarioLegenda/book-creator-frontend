@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, ViewChild} from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../logic/PageComponent/IComponent";
 import {Store} from "@ngrx/store";
@@ -12,8 +12,8 @@ import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 })
 export class TextBlockComponent {
   componentState = {
-    focused: false,
-    updateWanted: false
+    hovered: false,
+    updateWanted: false,
   };
 
   editorCreated = false;
@@ -22,11 +22,26 @@ export class TextBlockComponent {
 
   // @ts-ignore
   @ViewChild('editorComponent') editorComponent: CKEditorComponent;
-  @Input() componentData: IComponent;
+
+  @Input('focusTrackerEvent') focusTrackerEvent: EventEmitter<string>;
+  @Input('index') index: number;
+  @Input('componentData') componentData: IComponent;
 
   constructor(
     private store: Store<any>,
   ) {}
+
+  ngOnInit() {
+    this.focusTrackerEvent.subscribe((index) => {
+      if (this.index === index) {
+        const model = this.createTextModel();
+
+        this.store.dispatch(httpUpdateTextBlock(model));
+
+        this.editorCreated = false;
+      }
+    })
+  }
 
   createEditor() {
     this.editorCreated = true;
@@ -38,12 +53,8 @@ export class TextBlockComponent {
     this.editorComponent.editorInstance.setData(this.componentData.value.text);
   }
 
-  onEditorBlur() {
-    const model: any = {};
-    model.blockUuid = this.componentData.value.blockUuid;
-    model.text = this.componentData.value.text;
-
-    this.editorComponent.editorInstance.setData(this.componentData.value.text);
+  saveText() {
+    const model = this.createTextModel();
 
     this.store.dispatch(httpUpdateTextBlock(model));
   }
@@ -52,11 +63,19 @@ export class TextBlockComponent {
     this.store.dispatch(httpRemoveTextBlock(this.componentData));
   }
 
-  focusComponent() {
-    this.componentState.focused = true;
+  componentHovered() {
+    this.componentState.hovered = true;
   }
 
-  unFocusComponent() {
-    this.componentState.focused = false;
+  componentUnHovered() {
+    this.componentState.hovered = false;
+  }
+
+  private createTextModel(): any {
+    const model: any = {};
+    model.blockUuid = this.componentData.value.blockUuid;
+    model.text = this.componentData.value.text;
+
+    return model;
   }
 }

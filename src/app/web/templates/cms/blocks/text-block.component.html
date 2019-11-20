@@ -1,6 +1,6 @@
 <div
-  (mouseenter)="focusComponent()"
-  (mouseleave)="unFocusComponent()"
+  (mouseenter)="componentHovered()"
+  (mouseleave)="componentUnHovered()"
   class="text-block-wrapper col-lg-12 col-md-12 col-xs-12">
 
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
@@ -24,7 +24,7 @@
       </div>
 
       <div
-        [style.visibility]="(componentState.focused) ? 'visible' : 'hidden'"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
@@ -39,17 +39,27 @@
     class="text-block col-lg-12 col-md-12 col-xs-12 text-editor-wrapper"
     (click)="createEditor()"
     [ngClass]="{'editor-not-created': !editorCreated}">
+
+    <p class="editor-not-created-text" *ngIf="!editorCreated">Click to view text</p>
+
     <ckeditor
       #editorComponent
       *ngIf="editorCreated"
       [editor]="editor"
       [(ngModel)]="componentData.value.text"
       (ready)="onEditorReady($event)"
-      (blur)="onEditorBlur()"
       required
       data="componentData.value.text"
       name="text">
     </ckeditor>
   </div>
+
+  <button
+    *ngIf="editorCreated"
+    mat-flat-button
+    class="text-save-button"
+    (click)="saveText()">
+    Save
+  </button>
 
 </div>
