@@ -1,8 +1,8 @@
-<div class="col-xs-12 col-md-3 col-lg-3 internal-name metadata-action">
+<div class="col-xs-12 col-md-4 col-lg-4 block-input metadata-action">
   <cms-metadata-placeholder
     [text]="(value) ? value : initialText"
     (click)="showInputField()"
-    [type]="'internal-name'"
+    [type]="type"
     *ngIf="!toggleInputField">
   </cms-metadata-placeholder>
 
@@ -10,8 +10,9 @@
     class="col-xs-12 col-md-12 col-lg-12 input-field"
     *ngIf="toggleInputField">
     <mat-form-field>
-      <mat-label>Internal name</mat-label>
-      <input matInput (blur)="onBlur()" [(ngModel)]="value"/>
+      <mat-label>{{label}}</mat-label>
+      <input *ngIf="type == 'internal-name'" matInput (blur)="onBlur()" [(ngModel)]="value"/>
+      <textarea *ngIf="type == 'short-description'" matInput (blur)="onBlur()" [(ngModel)]="value"></textarea>
     </mat-form-field>
 
     <fa (click)="hideInputField()" class="icon" name="times"></fa>

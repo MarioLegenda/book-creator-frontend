@@ -15,17 +15,9 @@ import {WorkAreaComponent} from "../work-area.component";
 import {TextBlockComponent} from "../blocks/textBlock/text-block.component";
 import {CmsRoutingModule} from "./cms-routing.module";
 
-import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CommonModule} from "@angular/common";
-import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscriber";
 import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadata-placeholder.component";
-import {InternalNameComponent} from "../blocks/textBlock/internal-name.component";
-import {ShortDescriptionComponent} from "../blocks/textBlock/short-description.component";
-import {HttpActionSubscriber} from "../../../logic/Subscriber/HttpActionSubscriber";
-import {PageRepository} from "../../../repository/PageRepository";
-import {RouteResolver} from "../../../library/RouteResolver";
-import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
-import {PageContext} from "../../../logic/PageComponent/context/PageContext";
+import {BlockInputComponent} from "../blocks/textBlock/block-input.component";
 
 @NgModule({
   declarations: [
@@ -35,8 +27,7 @@ import {PageContext} from "../../../logic/PageComponent/context/PageContext";
     WorkAreaComponent,
     TextBlockComponent,
     MetadataPlaceholderComponent,
-    InternalNameComponent,
-    ShortDescriptionComponent,
+    BlockInputComponent,
   ],
   imports: [
     MatCardModule,

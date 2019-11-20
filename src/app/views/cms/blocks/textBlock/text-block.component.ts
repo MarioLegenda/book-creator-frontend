@@ -24,6 +24,10 @@ export class TextBlockComponent {
     private store: Store<any>,
   ) {}
 
+  ngOnInit() {
+    console.log(this.componentData);
+  }
+
   createEditor() {
     this.editorCreated = true;
   }

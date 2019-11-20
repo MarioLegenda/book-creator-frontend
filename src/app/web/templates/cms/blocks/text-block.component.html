@@ -6,13 +6,26 @@
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
       <div>
-        <cms-internal-name></cms-internal-name>
-        <cms-short-description></cms-short-description>
+        <cms-block-input
+          [value]="componentData.value.internalName"
+          [type]="'internal-name'"
+          [label]="'Internal name'"
+          [initialText]="'Click to add internal name...'"
+          [blockUuid]="componentData.value.blockUuid">
+        </cms-block-input>
+
+        <cms-block-input
+          [value]="componentData.value.shortDescription"
+          [initialText]="'Click to add a description...'"
+          [label]="'Short description'"
+          [type]="'short-description'"
+          [blockUuid]="componentData.value.blockUuid">
+        </cms-block-input>
       </div>
 
       <div
         [style.visibility]="(componentState.focused) ? 'visible' : 'hidden'"
-        class="block-action col-lg-5 col-md-5 col-xs-5">
+        class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
           <fa (click)="remove()" class="icon remove-icon" name="trash"></fa>

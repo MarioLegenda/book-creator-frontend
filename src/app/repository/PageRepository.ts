@@ -69,4 +69,8 @@ export class PageRepository {
   removeBlock(model: IRequestModel) {
     return this.httpClient.post(this.routeResolver.removeBlock(), model);
   }
+
+  updateTextBlock(model: IRequestModel) {
+    return this.httpClient.post(this.routeResolver.updateBlock(), model);
+  }
 }

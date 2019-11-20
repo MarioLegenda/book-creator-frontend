@@ -9,6 +9,7 @@ export class RouteResolver {
     addNewTextBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/add-new-block`,
     getPageByUuid: `${environment.composeBaseUrl()}/api/v1/pages/get-by-uuid/:pageUuid`,
     removeBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/remove`,
+    updateBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/update-block`,
   };
 
   addNewTextBlock(): string {
@@ -21,5 +22,9 @@ export class RouteResolver {
 
   removeBlock(): string {
     return this.routes.removeBlock;
+  }
+
+  updateBlock(): string {
+    return this.routes.updateBlock;
   }
 }

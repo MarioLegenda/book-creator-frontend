@@ -9,6 +9,7 @@ import {PageRepository} from "../../repository/PageRepository";
 import {viewAddTextBlock, viewTextBlockRemoved} from "../../store/viewActions";
 import {TextBlockModel} from "../../model/http/TextBlockModel";
 import {RemoveBlockModel} from "../../model/http/RemoveBlockModel";
+import {UpdateTextBlock} from "../../model/http/UpdateTextBlock";
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,10 @@ export class HttpActionSubscriber {
 
           break;
         }
+
+        case actionTypes.HTTP_UPDATE_TEXT_BLOCK: {
+          this.updateTextBlock(action);
+        }
       }
     });
   }
@@ -67,5 +72,22 @@ export class HttpActionSubscriber {
     this.pageRepository.removeBlock(model).subscribe(() => {
       this.store.dispatch(viewTextBlockRemoved(action));
     })
+  }
+
+  private updateTextBlock(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().uuid;
+    const blockUuid = action.blockUuid;
+
+    const model: IRequestModel = UpdateTextBlock.create(
+      pageUuid,
+      blockUuid,
+      (action.internalName) ? action.internalName : '',
+      (action.shortDescription) ? action.shortDescription : '',
+      (action.text) ? action.text : '',
+    );
+
+    this.pageRepository.updateTextBlock(model).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

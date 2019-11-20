@@ -9,7 +9,6 @@ import { StoreModule } from '@ngrx/store';
 import {viewActionReducer} from "./store/viewReducers";
 import {httpActionReducer} from "./store/httpReducers";
 import {CmsModule} from "./views/cms/module/cms.module";
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
