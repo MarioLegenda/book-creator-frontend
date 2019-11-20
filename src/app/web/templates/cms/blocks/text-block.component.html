@@ -1,6 +1,6 @@
 <div
-  (mouseenter)="onMouseEnter()"
-  (mouseleave)="onMouseLeave()"
+  (mouseenter)="focusComponent()"
+  (mouseleave)="unFocusComponent()"
   class="text-block-wrapper col-lg-12 col-md-12 col-xs-12">
 
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
@@ -40,12 +40,14 @@
     (click)="createEditor()"
     [ngClass]="{'editor-not-created': !editorCreated}">
     <ckeditor
+      #editorComponent
       *ngIf="editorCreated"
       [editor]="editor"
       [(ngModel)]="componentData.value.text"
       (ready)="onEditorReady($event)"
+      (blur)="onEditorBlur()"
       required
-      data=""
+      data="componentData.value.text"
       name="text">
     </ckeditor>
   </div>

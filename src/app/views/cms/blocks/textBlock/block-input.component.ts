@@ -32,10 +32,13 @@ export class BlockInputComponent {
   }
 
   onBlur() {
-    this.store.dispatch(httpUpdateTextBlock({
-      blockUuid: this.blockUuid,
-      internalName: this.value,
-    }));
+    const model: any = {};
+    model.blockUuid = this.blockUuid;
+
+    if (this.type === 'internal-name') model.internalName = this.value;
+    if (this.type === 'short-description') model.shortDescription = this.value;
+
+    this.store.dispatch(httpUpdateTextBlock(model));
 
     this.hideInputField();
   }

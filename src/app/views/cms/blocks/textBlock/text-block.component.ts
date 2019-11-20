@@ -1,8 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../logic/PageComponent/IComponent";
 import {Store} from "@ngrx/store";
-import {httpRemoveTextBlock} from "../../../../store/httpActions";
+import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/httpActions";
+import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -18,15 +19,14 @@ export class TextBlockComponent {
   editorCreated = false;
 
   editor = BalloonEditor;
+
+  // @ts-ignore
+  @ViewChild('editorComponent') editorComponent: CKEditorComponent;
   @Input() componentData: IComponent;
 
   constructor(
     private store: Store<any>,
   ) {}
-
-  ngOnInit() {
-    console.log(this.componentData);
-  }
 
   createEditor() {
     this.editorCreated = true;
@@ -34,17 +34,29 @@ export class TextBlockComponent {
 
   onEditorReady($event: any) {
     $event.editing.view.focus();
+
+    this.editorComponent.editorInstance.setData(this.componentData.value.text);
+  }
+
+  onEditorBlur() {
+    const model: any = {};
+    model.blockUuid = this.componentData.value.blockUuid;
+    model.text = this.componentData.value.text;
+
+    this.editorComponent.editorInstance.setData(this.componentData.value.text);
+
+    this.store.dispatch(httpUpdateTextBlock(model));
   }
 
   remove() {
     this.store.dispatch(httpRemoveTextBlock(this.componentData));
   }
 
-  onMouseEnter() {
+  focusComponent() {
     this.componentState.focused = true;
   }
 
-  onMouseLeave() {
+  unFocusComponent() {
     this.componentState.focused = false;
   }
 }

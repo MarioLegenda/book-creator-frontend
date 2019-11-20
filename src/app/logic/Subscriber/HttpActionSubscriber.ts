@@ -86,8 +86,10 @@ export class HttpActionSubscriber {
       (action.text) ? action.text : '',
     );
 
-    this.pageRepository.updateTextBlock(model).subscribe((res) => {
-      console.log(res);
+    console.log(model);
+
+    this.pageRepository.updateTextBlock(model).subscribe(() => {
+
     });
   }
 }
