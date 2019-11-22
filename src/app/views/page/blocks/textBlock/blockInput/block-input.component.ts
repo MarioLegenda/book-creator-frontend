@@ -6,7 +6,7 @@ import {httpUpdateTextBlock} from "../../../../../store/httpActions";
   selector: 'cms-block-input',
   styleUrls: [
     './block-input.component.scss',
-    './../metadataPlaceholder/metadata-action.component.scss',
+    '../metadataPlaceholder/metadata-action.component.scss',
   ],
   templateUrl: './block-input.component.html',
 })

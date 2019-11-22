@@ -6,9 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import {viewActionReducer} from "./store/viewReducers";
-import {httpActionReducer} from "./store/httpReducers";
-import {CmsModule} from "./views/cms/module/cms.module";
+import {viewActionReducer} from "../store/viewReducers";
+import {httpActionReducer} from "../store/httpReducers";
+import {CmsModule} from "../views/page/module/cms.module";
 
 @NgModule({
   declarations: [
