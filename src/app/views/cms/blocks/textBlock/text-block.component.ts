@@ -7,8 +7,8 @@ import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 
 @Component({
   selector: 'cms-view-text-block',
-  styleUrls: ['../../../../web/styles/blocks/text-block.component.scss'],
-  templateUrl: '../../../../web/templates/cms/blocks/text-block.component.html',
+  styleUrls: ['./text-block.component.scss'],
+  templateUrl: './text-block.component.html',
 })
 export class TextBlockComponent {
   componentState = {

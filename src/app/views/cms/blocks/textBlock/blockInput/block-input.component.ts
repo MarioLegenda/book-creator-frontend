@@ -1,14 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpUpdateTextBlock} from "../../../../store/httpActions";
+import {httpUpdateTextBlock} from "../../../../../store/httpActions";
 
 @Component({
   selector: 'cms-block-input',
   styleUrls: [
-    '../../../../web/styles/blocks/block-input.component.scss',
-    '../../../../web/styles/blocks/metadata-action.component.scss',
+    './block-input.component.scss',
+    './../metadataPlaceholder/metadata-action.component.scss',
   ],
-  templateUrl: '../../../../web/templates/cms/blocks/textBlock/block-input.component.html',
+  templateUrl: './block-input.component.html',
 })
 export class BlockInputComponent {
   toggleInputField: boolean;

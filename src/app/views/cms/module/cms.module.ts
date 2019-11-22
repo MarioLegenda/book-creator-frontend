@@ -10,14 +10,14 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 
 import {MenuComponent} from "../menu/menu.component";
 import {MenuButtonComponent} from "../menu/menu-button.component";
-import {BootstrapComponent} from "../bootstrap.component";
-import {WorkAreaComponent} from "../work-area.component";
+import {BootstrapComponent} from "../bootstrap/bootstrap.component";
+import {WorkAreaComponent} from "../workArea/work-area.component";
 import {TextBlockComponent} from "../blocks/textBlock/text-block.component";
 import {CmsRoutingModule} from "./cms-routing.module";
 
 import {CommonModule} from "@angular/common";
-import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadata-placeholder.component";
-import {BlockInputComponent} from "../blocks/textBlock/block-input.component";
+import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlaceholder/metadata-placeholder.component";
+import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.component";
 
 @NgModule({
   declarations: [

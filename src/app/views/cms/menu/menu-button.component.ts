@@ -6,8 +6,8 @@ import {httpCreateTextBlock} from "../../../store/httpActions";
 
 @Component({
   selector: 'cms-menu-button',
-  styleUrls: ['../../../web/styles/menu-button.component.scss'],
-  templateUrl: '../../../web/templates/cms/menu-button.component.html',
+  styleUrls: ['./menu-button.component.scss'],
+  templateUrl: './menu-button.component.html',
 })
 export class MenuButtonComponent {
   @Input() icon = '';

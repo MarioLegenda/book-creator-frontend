@@ -2,8 +2,8 @@ import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'cms-metadata-placeholder',
-  styleUrls: ['../../../../web/styles/blocks/metadata-placeholder.components.scss'],
-  templateUrl: '../../../../web/templates/cms/blocks/textBlock/metadata-placeholder.component.html',
+  styleUrls: ['./metadata-placeholder.components.scss'],
+  templateUrl: './metadata-placeholder.component.html',
 })
 export class MetadataPlaceholderComponent {
   @Input('type') type: string;

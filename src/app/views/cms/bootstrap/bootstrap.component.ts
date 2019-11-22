@@ -1,15 +1,15 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {PageContextInitializer} from "../../logic/PageComponent/context/PageContextInitializer";
-import {ViewActionSubscriber} from "../../logic/Subscriber/ViewActionSubscriber";
-import {ComponentTracker} from "../../logic/PageComponent/ComponentTracker";
-import {HttpActionSubscriber} from "../../logic/Subscriber/HttpActionSubscriber";
-import {PageContext} from "../../logic/PageComponent/context/PageContext";
+import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
+import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscriber";
+import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
+import {HttpActionSubscriber} from "../../../logic/Subscriber/HttpActionSubscriber";
+import {PageContext} from "../../../logic/PageComponent/context/PageContext";
 
 @Component({
   selector: 'cms-component',
-  styleUrls: ['../../web/styles/cms.component.scss'],
-  templateUrl: '../../web/templates/cms/cms.component.html',
+  styleUrls: ['./bootstrap.component.scss'],
+  templateUrl: './bootstrap.component.html',
   providers: [
     {
       provide: PageContext,

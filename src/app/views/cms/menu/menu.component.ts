@@ -4,8 +4,8 @@ import { viewAddTextBlock } from '../../../store/viewActions';
 
 @Component({
   selector: 'cms-menu',
-  styleUrls: ['../../../web/styles/menu.component.scss'],
-  templateUrl: '../../../web/templates/cms/menu.component.html',
+  styleUrls: ['./menu.component.scss'],
+  templateUrl: './menu.component.html',
 })
 export class MenuComponent {
   constructor(private store: Store<{menu: string}>) {}

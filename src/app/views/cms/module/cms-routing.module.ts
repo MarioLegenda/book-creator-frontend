@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {BootstrapComponent} from "../bootstrap.component";
+import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 
 const routes: Routes = [
   {

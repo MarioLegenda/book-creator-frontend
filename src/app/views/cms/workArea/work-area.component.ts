@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnDestroy} from '@angular/core';
-import {ComponentTracker} from "../../logic/PageComponent/ComponentTracker";
+import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'cms-work-area',
-  styleUrls: ['../../web/styles/work-area.component.scss'],
-  templateUrl: '../../web/templates/cms/work-area.component.html',
+  styleUrls: ['./work-area.component.scss'],
+  templateUrl: './work-area.component.html',
 })
 export class WorkAreaComponent implements OnDestroy {
   components = this.componentTracker.components;
