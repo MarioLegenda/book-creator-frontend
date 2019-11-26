@@ -7,6 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatDialogModule} from "@angular/material/dialog";
 
 import {MenuComponent} from "../menu/menu.component";
 import {MenuButtonComponent} from "../menu/menu-button.component";
@@ -35,6 +36,7 @@ import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.co
     MatInputModule,
     MatFormFieldModule,
     DragDropModule,
+    MatDialogModule,
 
     CommonModule,
     AngularFontAwesomeModule,

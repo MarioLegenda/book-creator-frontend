@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   protocol: 'http',
   baseUrl: '11.11.11.12',
-  port: 8080,
+  port:80,
 
   composeBaseUrl(): string {
     return `${environment.protocol}://${environment.baseUrl}:${environment.port}`;

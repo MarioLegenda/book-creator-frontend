@@ -4,6 +4,7 @@ import {IComponent} from "../../../../logic/PageComponent/IComponent";
 import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/httpActions";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -29,6 +30,7 @@ export class TextBlockComponent {
 
   constructor(
     private store: Store<any>,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
