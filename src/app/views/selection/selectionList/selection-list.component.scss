@@ -1,15 +1,6 @@
 @import '../../../../styles/variables';
 
 .selection-list {
-  margin: 0 auto;
-  overflow: hidden;
-
-  margin-top: 10%;
-  padding: 20px;
-
-  background-color: white;
-  border-radius: 5px;
-
   .question {
     border-bottom: 1px solid $lightestGray;
     color: $textColor;

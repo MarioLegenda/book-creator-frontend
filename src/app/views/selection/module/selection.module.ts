@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SelectionRoutingModule} from "./selection-routing.module";
 
 import {CommonModule} from "@angular/common";
@@ -10,10 +10,12 @@ import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatDialogModule} from "@angular/material/dialog";
+import {PresentationCreateComponent} from "../presentation/create/presentation-create.component";
 
 @NgModule({
   declarations: [
-    SelectionListComponent
+    SelectionListComponent,
+    PresentationCreateComponent,
   ],
   imports: [
     MatCardModule,
@@ -26,6 +28,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     CommonModule,
     SelectionRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
 })
