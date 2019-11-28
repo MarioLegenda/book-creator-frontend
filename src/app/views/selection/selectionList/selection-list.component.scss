@@ -1,0 +1,35 @@
+@import '../../../../styles/variables';
+
+.selection-list {
+  margin: 0 auto;
+  overflow: hidden;
+
+  margin-top: 10%;
+  padding: 20px;
+
+  background-color: white;
+  border-radius: 5px;
+
+  .question {
+    border-bottom: 1px solid $lightestGray;
+    color: $textColor;
+  }
+
+  .button-wrapper {
+    width: 100%;
+    float: left;
+
+    margin-bottom: 10px;
+  }
+
+  .button {
+    width: 100%;
+    color: $textColor;
+    font-weight: normal;
+    font-size: 1.1em;
+  }
+}
+
+.col-xs-12, .col-md-12, .col-lg-6 {
+  float: none;
+}

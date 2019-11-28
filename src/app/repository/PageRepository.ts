@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {IRequestModel} from "../model/http/IRequestModel";
 import {Injectable} from "@angular/core";
 import {reduce} from "rxjs/operators";
-import {RouteResolver} from "../library/RouteResolver";
+import {RouteResolver} from "../logic/RouteResolver";
 import {CreateTextBlockModel} from "../model/http/CreateTextBlockModel";
 import {TextBlockModel} from "../model/http/TextBlockModel";
 import {RemoveBlockModel} from "../model/http/RemoveBlockModel";

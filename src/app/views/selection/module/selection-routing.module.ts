@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {BootstrapComponent} from "../bootstrap/bootstrap.component";
+import {SelectionListComponent} from "../selectionList/selection-list.component";
 
 const routes: Routes = [
   {
-    path: ':pageUuid',
-    component: BootstrapComponent
+    path: '',
+    component: SelectionListComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CmsRoutingModule { }
+export class SelectionRoutingModule { }

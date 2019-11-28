@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import {viewActionReducer} from "../store/viewReducers";
 import {httpActionReducer} from "../store/httpReducers";
-import {CmsModule} from "../views/page/module/cms.module";
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import {CmsModule} from "../views/page/module/cms.module";
       httpActions: httpActionReducer,
     }),
     HttpClientModule,
-    CmsModule
   ],
   bootstrap: [AppComponent]
 })
