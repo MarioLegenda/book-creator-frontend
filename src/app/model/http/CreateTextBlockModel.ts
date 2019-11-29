@@ -1,5 +1,4 @@
 import {IRequestModel} from "./IRequestModel";
-import {TextBlockModel as ViewTextBlockModel} from "../app/TextBlockModel";
 import {IViewModel} from "../app/IViewModel";
 
 export class CreateTextBlockModel implements IRequestModel{

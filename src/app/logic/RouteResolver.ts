@@ -10,6 +10,7 @@ export class RouteResolver {
     getPageByUuid: `${environment.composeBaseUrl()}/api/v1/pages/get-by-uuid/:pageUuid`,
     removeBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/remove`,
     updateBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/update-block`,
+    createPresentation: `${environment.composeBaseUrl()}/api/v1/presentation/create`,
   };
 
   addNewTextBlock(): string {
@@ -26,5 +27,9 @@ export class RouteResolver {
 
   updateBlock(): string {
     return this.routes.updateBlock;
+  }
+
+  createPresentation(): string {
+    return this.routes.createPresentation;
   }
 }

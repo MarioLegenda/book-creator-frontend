@@ -6,16 +6,20 @@ import {
   httpUpdateTextBlockFinished,
   httpRemoveTextBlock,
   httpRemoveTextBlockFinished,
+  httpCreatePresentation,
+  httpCreatePresentationFinished,
 } from './httpActions';
 import deepcopy from 'deepcopy';
 
 const httpActionsReducers = createReducer(null,
-  on(httpCreateTextBlock, (state, textBlockAction) => deepcopy(textBlockAction)),
-  on(httpUpdateTextBlock, (state, textBlockAction) => deepcopy(textBlockAction)),
-  on(httpRemoveTextBlock, (state, textBlockAction) => deepcopy(textBlockAction)),
-  on(httpCreateTextBlockFinished, (state, textBlockAction) => deepcopy(textBlockAction)),
-  on(httpUpdateTextBlockFinished, (state, textBlockAction) => deepcopy(textBlockAction)),
-  on(httpRemoveTextBlockFinished, (state, textBlockAction) => deepcopy(textBlockAction)),
+  on(httpCreateTextBlock, (state, action) => deepcopy(action)),
+  on(httpUpdateTextBlock, (state, action) => deepcopy(action)),
+  on(httpRemoveTextBlock, (state, action) => deepcopy(action)),
+  on(httpCreateTextBlockFinished, (state, action) => deepcopy(action)),
+  on(httpUpdateTextBlockFinished, (state, action) => deepcopy(action)),
+  on(httpRemoveTextBlockFinished, (state, action) => deepcopy(action)),
+  on(httpCreatePresentation, (state, action) => deepcopy(action)),
+  on(httpCreatePresentationFinished, (state, action) => deepcopy(action)),
 );
 
 export function httpActionReducer(state, action) {

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {BookRepository} from "../../../repository/BookRepository";
+import {PresentationRepository} from "../../../repository/PresentationRepository";
 
 @Component({
   selector: 'create-book-component',

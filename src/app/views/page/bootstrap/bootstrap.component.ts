@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
 import {ViewActionSubscriber} from "../../../logic/Subscriber/ViewActionSubscriber";
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
-import {HttpActionSubscriber} from "../../../logic/Subscriber/HttpActionSubscriber";
+import {PageHttpActionSubscriber} from "../../../logic/Subscriber/PageHttpActionSubscriber";
 import {PageContext} from "../../../logic/PageComponent/context/PageContext";
 
 @Component({
@@ -26,7 +26,7 @@ export class BootstrapComponent implements OnDestroy {
     private pageContext: PageContextInitializer,
     private componentTracker: ComponentTracker,
     private viewActionSubscriber: ViewActionSubscriber,
-    private httpActionsSubscriber: HttpActionSubscriber,
+    private httpActionsSubscriber: PageHttpActionSubscriber,
   ) {
     pageContext.initContext(activatedRoute);
   }

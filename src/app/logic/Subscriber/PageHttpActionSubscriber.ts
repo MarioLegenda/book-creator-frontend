@@ -14,7 +14,7 @@ import {UpdateTextBlock} from "../../model/http/UpdateTextBlock";
 @Injectable({
   providedIn: 'root',
 })
-export class HttpActionSubscriber {
+export class PageHttpActionSubscriber {
   constructor(
     private store: Store<any>,
     private pageContextInitializer: PageContextInitializer,
@@ -44,9 +44,19 @@ export class HttpActionSubscriber {
 
         case actionTypes.HTTP_UPDATE_TEXT_BLOCK: {
           this.updateTextBlock(action);
+
+          break;
+        }
+
+        case actionTypes.HTTP_CREATE_PRESENTATION: {
+          this.createPresentation(action);
         }
       }
     });
+  }
+
+  private createPresentation(action) {
+    console.log(action);
   }
 
   private addTextBlock() {

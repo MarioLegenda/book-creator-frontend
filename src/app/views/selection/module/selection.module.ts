@@ -32,4 +32,5 @@ import {PresentationCreateComponent} from "../presentation/create/presentation-c
   ],
   providers: [],
 })
-export class SelectionModule { }
+export class SelectionModule {
+}

@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'presentation/create',
-    component: PresentationCreateComponent
+    component: PresentationCreateComponent,
   }
 ];
 

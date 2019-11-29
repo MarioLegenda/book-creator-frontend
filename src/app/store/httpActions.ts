@@ -7,7 +7,18 @@ export const actionTypes = {
   HTTP_UPDATE_TEXT_BLOCK_FINISHED: '[Http] Update text block finished',
   HTTP_REMOVE_TEXT_BLOCK: '[Http] Remove text block',
   HTTP_REMOVE_TEXT_BLOCK_FINISHED: '[Http] Remove text block finished',
+  HTTP_CREATE_PRESENTATION: '[Http] Create presentation',
+  HTTP_CREATE_PRESENTATION_FINISHED: '[Http] Create presentation finished',
 };
+
+export const httpCreatePresentation = createAction(
+  actionTypes.HTTP_CREATE_PRESENTATION,
+  props<{}>()
+);
+
+export const httpCreatePresentationFinished = createAction(
+  actionTypes.HTTP_CREATE_PRESENTATION_FINISHED
+);
 
 export const httpCreateTextBlock = createAction(
   actionTypes.HTTP_CREATE_TEXT_BLOCK,
