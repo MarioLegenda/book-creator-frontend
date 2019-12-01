@@ -47,19 +47,12 @@ export class PageHttpActionSubscriber {
 
           break;
         }
-
-        case actionTypes.HTTP_CREATE_PRESENTATION: {
-          this.createPresentation(action);
-        }
       }
     });
   }
 
-  private createPresentation(action) {
-  }
-
   private addTextBlock() {
-    const pageUuid: string = this.pageContextInitializer.getContext().uuid;
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
 
     const model: IRequestModel = CreateTextBlockModel.create(pageUuid);
 
@@ -70,7 +63,7 @@ export class PageHttpActionSubscriber {
   }
 
   private removeTextBlock(action) {
-    const pageUuid: string = this.pageContextInitializer.getContext().uuid;
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.value.blockUuid;
 
     const model: IRequestModel = new RemoveBlockModel(
@@ -84,7 +77,7 @@ export class PageHttpActionSubscriber {
   }
 
   private updateTextBlock(action) {
-    const pageUuid: string = this.pageContextInitializer.getContext().uuid;
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid = action.blockUuid;
 
     const model: IRequestModel = UpdateTextBlock.create(

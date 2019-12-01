@@ -16,11 +16,11 @@ export class PresentationRepository {
     return this.httpClient.put(this.routeResolver.createPresentation(), model);
   }
 
-  findByShortId(shortId: string) {
-
+  findUuidByShortId(shortId: string) {
+    return this.httpClient.get(this.routeResolver.getPresentationUuid(shortId));
   }
 
-  private getPresentationByShortId(shortId: string) {
-
+  getPresentation(uuid: string) {
+    return this.httpClient.get(this.routeResolver.getPresentation(uuid));
   }
 }

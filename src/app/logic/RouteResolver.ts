@@ -13,6 +13,8 @@ export class RouteResolver {
     createPresentation: `${environment.composeBaseUrl()}/api/v1/presentation/create`,
     createEmptyPage: `${environment.composeBaseUrl()}/api/v1/pages/create/empty-page`,
     findUuidByShortId: `${environment.composeBaseUrl()}/api/v1/pages/get-uuid-by-shortId`,
+    getPresentationUuidByShortId: `${environment.composeBaseUrl()}/api/v1/presentation/get-presentation-uuid`,
+    getPresentation: `${environment.composeBaseUrl()}/api/v1/presentation/get-presentation`,
   };
 
   addNewTextBlock(): string {
@@ -39,7 +41,15 @@ export class RouteResolver {
     return this.routes.createEmptyPage;
   }
 
-  findUuidByShortId(shortId) {
+  findUuidByShortId(shortId: string) {
     return `${this.routes.findUuidByShortId}/${shortId}`;
+  }
+
+  getPresentationUuid(shortId: string) {
+    return `${this.routes.getPresentationUuidByShortId}/${shortId}`;
+  }
+
+  getPresentation(uuid: string) {
+    return `${this.routes.getPresentation}/${uuid}`;
   }
 }

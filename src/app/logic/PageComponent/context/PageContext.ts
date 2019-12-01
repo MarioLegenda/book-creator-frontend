@@ -1,10 +1,9 @@
+import {IKnowledgeSource} from "./IKnowledgeSource";
+import {IPage} from "./IPage";
+
 export class PageContext {
   constructor(
-    public uuid: string,
-    public shortId: string,
-    public internalName: string = '',
-    public shortDescription: string = '',
-  ) {
-
-  }
+    public knowledgeSource: IKnowledgeSource,
+    public page: IPage,
+  ) {}
 }
