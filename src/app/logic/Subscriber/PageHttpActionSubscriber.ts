@@ -56,7 +56,6 @@ export class PageHttpActionSubscriber {
   }
 
   private createPresentation(action) {
-    console.log(action);
   }
 
   private addTextBlock() {

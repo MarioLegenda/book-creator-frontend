@@ -1,33 +1,38 @@
 import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
-import {Observable} from "rxjs";
 import {actionTypes} from "../../store/viewActions";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class GenericViewActionSubscriber {
+  private observable;
+
   constructor(
     private store: Store<any>,
     private router: Router,
   ) {
-    this.subscribeToHttpActions(store.pipe(select('viewActions')));
+    this.subscribeToViewActions(store.pipe(select('viewActions')));
   }
 
-  private subscribeToHttpActions(observable: Observable<any>) {
-    observable.subscribe((action: any) => {
+  private subscribeToViewActions(observable: Observable<any>) {
+    this.observable = observable.subscribe((action: any) => {
       if (!action) {
         return;
       }
 
       switch (action.type) {
         case actionTypes.VIEW_PRESENTATION_CREATE: {
-          this.router.navigate(['/page', action.uuid]);
-          
+          this.router.navigate(['/page', action.presentation.shortId, action.emptyPage.shortId]);
           break;
         }
       }
     });
+  }
+
+  destroy() {
+    this.observable.unsubscribe();
   }
 }

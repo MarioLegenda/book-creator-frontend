@@ -15,4 +15,12 @@ export class PresentationRepository {
   createPresentation(model: IRequestModel) {
     return this.httpClient.put(this.routeResolver.createPresentation(), model);
   }
+
+  findByShortId(shortId: string) {
+
+  }
+
+  private getPresentationByShortId(shortId: string) {
+
+  }
 }

@@ -3,12 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'books',
-    loadChildren: () => import('../views/book/module/book.module').then(m => m.BookModule)
-  },
-  {
     path: 'page',
-    loadChildren: () => import('../views/page/module/cms.module').then(m => m.CmsModule)
+    loadChildren: () => import('../views/page/module/page.module').then(m => m.PageModule)
   },
   {
     path: 'cms/selection',

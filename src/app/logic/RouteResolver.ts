@@ -11,6 +11,8 @@ export class RouteResolver {
     removeBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/remove`,
     updateBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/update-block`,
     createPresentation: `${environment.composeBaseUrl()}/api/v1/presentation/create`,
+    createEmptyPage: `${environment.composeBaseUrl()}/api/v1/pages/create/empty-page`,
+    findUuidByShortId: `${environment.composeBaseUrl()}/api/v1/pages/get-uuid-by-shortId`,
   };
 
   addNewTextBlock(): string {
@@ -31,5 +33,13 @@ export class RouteResolver {
 
   createPresentation(): string {
     return this.routes.createPresentation;
+  }
+
+  createEmptyPage(): string {
+    return this.routes.createEmptyPage;
+  }
+
+  findUuidByShortId(shortId) {
+    return `${this.routes.findUuidByShortId}/${shortId}`;
   }
 }

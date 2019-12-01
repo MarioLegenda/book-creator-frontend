@@ -20,17 +20,17 @@ export class PageContextInitializer {
   ) {}
 
   initContext(activatedRoute: ActivatedRoute) {
-    const pageUuid = activatedRoute.snapshot.paramMap.get('pageUuid');
+    const pageShortId = activatedRoute.snapshot.paramMap.get('pageShortId');
 
-    this.pageRepository.getPageByUuid(pageUuid).subscribe((res) => {
+    this.getPageByShortId(pageShortId).then((page) => {
       this.context = new PageContext(
-        res.uuid,
-        res.shortId,
-        res.internalName,
-        res.shortDescription,
+        page.uuid,
+        page.shortId,
+        page.internalName,
+        page.shortDescription,
       );
 
-      const blocks: TextBlockModel[] = res.blocks;
+      const blocks: TextBlockModel[] = page.blocks;
 
       for (const block of blocks) {
         this.store.dispatch(viewAddTextBlock({
@@ -45,5 +45,11 @@ export class PageContextInitializer {
 
   getContext(): PageContext {
     return this.context;
+  }
+
+  private async getPageByShortId(shortId: string) {
+    const uuidModel: any = await this.pageRepository.findUuidByShortId(shortId).toPromise();
+
+    return await this.pageRepository.getPageByUuid(uuidModel.data.uuid).toPromise();
   }
 }

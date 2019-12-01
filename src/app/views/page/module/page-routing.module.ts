@@ -4,7 +4,7 @@ import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 
 const routes: Routes = [
   {
-    path: ':pageUuid',
+    path: ':sourceShortId/:pageShortId',
     component: BootstrapComponent
   }
 ];
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CmsRoutingModule { }
+export class PageRoutingModule { }

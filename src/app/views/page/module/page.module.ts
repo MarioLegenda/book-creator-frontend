@@ -14,7 +14,7 @@ import {MenuButtonComponent} from "../menu/menu-button.component";
 import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 import {WorkAreaComponent} from "../workArea/work-area.component";
 import {TextBlockComponent} from "../blocks/textBlock/text-block.component";
-import {CmsRoutingModule} from "./cms-routing.module";
+import {PageRoutingModule} from "./page-routing.module";
 
 import {CommonModule} from "@angular/common";
 import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlaceholder/metadata-placeholder.component";
@@ -43,9 +43,9 @@ import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.co
     CKEditorModule,
     ReactiveFormsModule,
 
-    CmsRoutingModule,
+    PageRoutingModule,
     FormsModule,
   ],
   providers: [],
 })
-export class CmsModule { }
+export class PageModule { }

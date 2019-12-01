@@ -5,7 +5,6 @@ import {reduce} from "rxjs/operators";
 import {RouteResolver} from "../logic/RouteResolver";
 import {CreateTextBlockModel} from "../model/http/CreateTextBlockModel";
 import {TextBlockModel} from "../model/http/TextBlockModel";
-import {RemoveBlockModel} from "../model/http/RemoveBlockModel";
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +14,14 @@ export class PageRepository {
     private routeResolver: RouteResolver,
     private httpClient: HttpClient
   ) {}
+
+  createEmptyPage() {
+    return this.httpClient.put(this.routeResolver.createEmptyPage(), {});
+  }
+
+  findUuidByShortId(shortId: string) {
+    return this.httpClient.get(this.routeResolver.findUuidByShortId(shortId));
+  }
 
   addTextBlock(model: IRequestModel) {
     return this.httpClient.put(this.routeResolver.addNewTextBlock(), model, {observe: 'response'})
