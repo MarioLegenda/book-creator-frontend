@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
-import { viewAddTextBlock } from '../../../store/viewActions';
+import {httpCreateTextBlock} from "../../../store/httpActions";
 
 @Component({
   selector: 'cms-menu',
@@ -9,4 +9,8 @@ import { viewAddTextBlock } from '../../../store/viewActions';
 })
 export class MenuComponent {
   constructor(private store: Store<{menu: string}>) {}
+
+  appendBlock() {
+    this.store.dispatch(httpCreateTextBlock());
+  }
 }
