@@ -18,6 +18,9 @@
     -webkit-box-shadow: 7px 7px 17px -1px rgba(189,189,189,1);
     -moz-box-shadow: 7px 7px 17px -1px rgba(189,189,189,1);
     box-shadow: 7px 7px 17px -1px rgba(189,189,189,1);
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 
   .transition-animation {
@@ -39,8 +42,5 @@
   .expanded-menu {
     width: 300px;
     overflow: hidden;
-
-    border-radius-top-right: 5px;
-    border-radius-bottom-right: 5px;
   }
 }
