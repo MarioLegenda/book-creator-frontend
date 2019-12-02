@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class MenuButtonComponent {
   @Input('icon') icon = '';
   @Input('title') title = false;
+  @Input('isOffPage') isOffPage = false;
 }
