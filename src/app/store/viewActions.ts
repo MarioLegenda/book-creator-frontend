@@ -5,11 +5,11 @@ export const actionTypes = {
   VIEW_TEXT_BLOCK_UPDATED: '[View] Text block updated',
   VIEW_TEXT_BLOCK_REMOVED: '[View] Text block removed',
   VIEW_PRESENTATION_CREATE: '[View] Presentation create',
-  VIEW_CREATE_CODE_BLOCK: '[View] Create code block',
+  VIEW_ADD_CODE_BLOCK: '[View] Create code block',
 };
 
 export const viewCreateCodeBlock = createAction(
-  actionTypes.VIEW_CREATE_CODE_BLOCK,
+  actionTypes.VIEW_ADD_CODE_BLOCK,
   props<{}>(),
 );
 

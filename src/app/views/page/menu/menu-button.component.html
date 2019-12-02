@@ -1,5 +1,8 @@
-<div class="button-wrapper">
-  <button class="empty-button ripple">
-    <fa class="button-icon" name="{{icon}}"></fa>
-  </button>
+<div class="menu-entry">
+  <p *ngIf="title" class="title">{{title}}</p>
+  <div class="button-wrapper">
+    <button class="empty-button ripple">
+      <fa class="button-icon" name="{{icon}}"></fa>
+    </button>
+  </div>
 </div>

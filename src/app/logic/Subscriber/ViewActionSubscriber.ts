@@ -35,8 +35,20 @@ export class ViewActionSubscriber {
 
           break;
         }
+
+        case actionTypes.VIEW_ADD_CODE_BLOCK: {
+          this.addCodeBlock(action);
+
+          break;
+        }
       }
     });
+  }
+
+  private addCodeBlock(action) {
+    const component: IComponent = ComponentFactory.createComponent(action);
+
+    this.componentTracker.add(component);
   }
 
   private addTextBlock(action) {

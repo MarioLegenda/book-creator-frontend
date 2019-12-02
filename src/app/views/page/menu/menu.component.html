@@ -1,9 +1,36 @@
 <div class="menu-wrapper">
-  <div>
-      <cms-menu-button (mouseup)="appendBlock()" [icon]="'paragraph'"></cms-menu-button>
-      <cms-menu-button [icon]="'image'"></cms-menu-button>
-      <cms-menu-button [icon]="'sticky-note'"></cms-menu-button>
-      <cms-menu-button [icon]="'code'"></cms-menu-button>
-      <cms-menu-button [icon]="'wpforms'"></cms-menu-button>
+  <cms-menu-button (click)="expandMenu()" [icon]="'bars'"></cms-menu-button>
+
+  <div class="concrete-menu transition-animation" [ngClass]="{'move-right': menuExpanded == true, 'move-left': menuExpanded == false}">
+      <div class="expanded-menu">
+
+        <cms-menu-button
+          (mouseup)="appendTextBlock()"
+          [icon]="'paragraph'"
+          [title]="'Add text block'">
+        </cms-menu-button>
+
+        <cms-menu-button
+          [icon]="'image'"
+          [title]="'Add multimedia'">
+        </cms-menu-button>
+
+        <cms-menu-button
+          (mouseup)="appendCodeBlock()"
+          [icon]="'code'"
+          [title]="'Add code block'">
+        </cms-menu-button>
+
+        <cms-menu-button
+          [icon]="'wpforms'"
+          [title]="'Add dynamic form'">
+        </cms-menu-button>
+
+        <cms-menu-button
+          [icon]="'sticky-note'"
+          [title]="'Add footnote'">
+        </cms-menu-button>
+
+      </div>
   </div>
 </div>

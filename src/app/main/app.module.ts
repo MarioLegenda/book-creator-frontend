@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import {httpActionReducer} from "../store/httpReducers";
       httpActions: httpActionReducer,
     }),
     HttpClientModule,
+    MonacoEditorModule.forRoot(),
   ],
   bootstrap: [AppComponent]
 })

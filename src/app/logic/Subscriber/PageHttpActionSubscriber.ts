@@ -6,10 +6,11 @@ import {CreateTextBlockModel} from "../../model/http/CreateTextBlockModel";
 import {PageContextInitializer} from "../PageComponent/context/PageContextInitializer";
 import {IRequestModel} from "../../model/http/IRequestModel";
 import {PageRepository} from "../../repository/PageRepository";
-import {viewAddTextBlock, viewTextBlockRemoved} from "../../store/viewActions";
+import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../store/viewActions";
 import {TextBlockModel} from "../../model/http/TextBlockModel";
 import {RemoveBlockModel} from "../../model/http/RemoveBlockModel";
 import {UpdateTextBlock} from "../../model/http/UpdateTextBlock";
+import {CreateCodeBlock} from "../../model/http/CreateCodeBlock";
 
 @Injectable({
   providedIn: 'root',
@@ -49,7 +50,7 @@ export class PageHttpActionSubscriber {
         }
 
         case actionTypes.HTTP_CREATE_CODE_BLOCK: {
-          this.addCodeBlock(action);
+          this.addCodeBlock();
 
           break;
         }
@@ -57,8 +58,12 @@ export class PageHttpActionSubscriber {
     });
   }
 
-  private addCodeBlock(action) {
+  private addCodeBlock() {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
 
+    const model: IRequestModel = CreateCodeBlock.create(pageUuid);
+
+    this.store.dispatch(viewCreateCodeBlock(model.convertToViewModel()));
   }
 
   private addTextBlock() {

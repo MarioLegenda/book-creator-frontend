@@ -1,0 +1,42 @@
+@import '../../../../../styles/variables';
+
+.code-block-wrapper {
+  position: relative;
+
+  padding: 20px;
+
+  .block-actions {
+    display: block;
+    float: left;
+  }
+
+  .block-action {
+    color: $lightestGray;
+    font-size: 0.8em;
+
+    float: right;
+    position: relative;
+
+    .icon {
+      float: right;
+      font-size: 1.8em;
+      margin-left: 5px;
+
+      &:hover {
+        cursor: pointer;
+        color: $textColor;
+      }
+    }
+
+    .remove-icon {
+      &:hover {
+        color: $dangerRed;
+      }
+    }
+  }
+
+  .code-block {
+    border-radius: 5px;
+    border: 1px dashed $lightestGray;
+  }
+}

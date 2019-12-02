@@ -18,6 +18,12 @@
         [index]="i"
         [componentData]="item.value">
       </cms-view-text-block>
+
+      <cms-code-block
+        *ngIf="item.value.componentType == 'code_block'"
+        [index]="i"
+        [componentData]="item.value">
+      </cms-code-block>
     </div>
   </div>
 </div>

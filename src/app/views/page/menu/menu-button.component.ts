@@ -6,5 +6,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './menu-button.component.html',
 })
 export class MenuButtonComponent {
-  @Input() icon = '';
+  @Input('icon') icon = '';
+  @Input('title') title = false;
 }

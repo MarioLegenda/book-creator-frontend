@@ -19,8 +19,8 @@ import {PageRoutingModule} from "./page-routing.module";
 import {CommonModule} from "@angular/common";
 import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlaceholder/metadata-placeholder.component";
 import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.component";
-import {CodeEditorModule} from "@ngstack/code-editor";
 import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
+import {MonacoEditorModule} from "ngx-monaco-editor";
 
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
     MatDialogModule,
     AngularFontAwesomeModule,
     CKEditorModule,
-    CodeEditorModule.forRoot(),
+    MonacoEditorModule,
 
     CommonModule,
     ReactiveFormsModule,

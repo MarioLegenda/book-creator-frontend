@@ -17,6 +17,18 @@ export class ComponentFactory {
           },
         };
       }
+
+      case actionTypes.VIEW_ADD_CODE_BLOCK: {
+        const d = deepcopy(data);
+
+        return {
+          componentType: ComponentType.CODE_BLOCK_TYPE,
+          value: {
+            ...{componentType: ComponentType.CODE_BLOCK_TYPE},
+            ...d
+          },
+        };
+      }
     }
   }
 }

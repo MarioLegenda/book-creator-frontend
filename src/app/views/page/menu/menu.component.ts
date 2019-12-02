@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpCreateTextBlock} from "../../../store/httpActions";
+import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/httpActions";
 
 @Component({
   selector: 'cms-menu',
@@ -10,7 +10,17 @@ import {httpCreateTextBlock} from "../../../store/httpActions";
 export class MenuComponent {
   constructor(private store: Store<{menu: string}>) {}
 
-  appendBlock() {
+  menuExpanded = false;
+
+  appendTextBlock() {
     this.store.dispatch(httpCreateTextBlock());
+  }
+
+  appendCodeBlock() {
+    this.store.dispatch(httpCreateCodeBlock());
+  }
+
+  expandMenu() {
+    this.menuExpanded = !this.menuExpanded;
   }
 }
