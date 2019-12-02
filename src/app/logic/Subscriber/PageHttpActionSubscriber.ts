@@ -47,8 +47,18 @@ export class PageHttpActionSubscriber {
 
           break;
         }
+
+        case actionTypes.HTTP_CREATE_CODE_BLOCK: {
+          this.addCodeBlock(action);
+
+          break;
+        }
       }
     });
+  }
+
+  private addCodeBlock(action) {
+
   }
 
   private addTextBlock() {

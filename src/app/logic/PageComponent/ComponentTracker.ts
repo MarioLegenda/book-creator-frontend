@@ -10,15 +10,6 @@ import {AutoIncrementIndexFactory} from "../../library/AutoIncrementIndexFactory
 export class ComponentTracker {
   components = {};
 
-  private textBlockActions: Observable<{
-    internalName: string;
-    text: string;
-    shortDescription: string;
-    componentType: string;
-    uuid: string;
-    type: string;
-  }>;
-
   constructor(
     private store: Store<any>,
     private indexFactory: AutoIncrementIndexFactory

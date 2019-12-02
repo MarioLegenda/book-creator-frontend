@@ -19,6 +19,8 @@ import {PageRoutingModule} from "./page-routing.module";
 import {CommonModule} from "@angular/common";
 import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlaceholder/metadata-placeholder.component";
 import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.component";
+import {CodeEditorModule} from "@ngstack/code-editor";
+import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.co
     TextBlockComponent,
     MetadataPlaceholderComponent,
     BlockInputComponent,
+    CodeBlockComponent,
   ],
   imports: [
     MatCardModule,
@@ -37,14 +40,15 @@ import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.co
     MatFormFieldModule,
     DragDropModule,
     MatDialogModule,
-
-    CommonModule,
     AngularFontAwesomeModule,
     CKEditorModule,
+    CodeEditorModule.forRoot(),
+
+    CommonModule,
     ReactiveFormsModule,
+    FormsModule,
 
     PageRoutingModule,
-    FormsModule,
   ],
   providers: [],
 })
