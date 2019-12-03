@@ -85,6 +85,8 @@ export class PageContextInitializer {
       return {
         uuid: presentation.data.uuid,
         name: presentation.data.name,
+        shortId: presentation.data.shortId,
+        type: type,
       };
     }
   }

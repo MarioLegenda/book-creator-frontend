@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/httpActions";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
 
 @Component({
   selector: 'cms-menu',
@@ -8,7 +10,11 @@ import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/httpActio
   templateUrl: './menu.component.html',
 })
 export class MenuComponent {
-  constructor(private store: Store<{menu: string}>) {}
+  constructor(
+    private store: Store<{menu: string}>,
+    private pageContext: PageContextInitializer,
+    private router: Router
+  ) {}
 
   menuExpanded = false;
 
@@ -22,5 +28,12 @@ export class MenuComponent {
 
   expandMenu() {
     this.menuExpanded = !this.menuExpanded;
+  }
+
+  navigateToCodeProjects() {
+    const type: string = this.pageContext.getContext().knowledgeSource.type;
+    const sourceShortId = this.pageContext.getContext().knowledgeSource.shortId;
+
+    this.router.navigate(['/cms/code-projects', type, sourceShortId]);
   }
 }

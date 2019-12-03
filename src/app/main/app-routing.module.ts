@@ -11,9 +11,13 @@ const routes: Routes = [
     loadChildren: () => import('../views/selection/module/selection.module').then(m => m.SelectionModule)
   },
   {
+    path: 'cms/code-projects',
+    loadChildren: () => import('../views/codeProjects/module/code-projects.module').then(m => m.CodeProjectsModule)
+  },
+  {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'cms/selection'
+    redirectTo: 'cms/selection',
   },
 ];
 

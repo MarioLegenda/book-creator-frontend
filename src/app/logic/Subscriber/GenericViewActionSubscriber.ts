@@ -26,6 +26,7 @@ export class GenericViewActionSubscriber {
       switch (action.type) {
         case actionTypes.VIEW_PRESENTATION_CREATE: {
           this.router.navigate(['/page', 'presentation', action.presentation.shortId, action.emptyPage.shortId]);
+
           break;
         }
       }
