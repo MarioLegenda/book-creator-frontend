@@ -15,6 +15,6 @@
       <textarea *ngIf="type == 'short-description'" matInput (blur)="onBlur()" [(ngModel)]="value"></textarea>
     </mat-form-field>
 
-    <fa (click)="hideInputField()" class="icon" name="times"></fa>
+    <fa-icon (click)="hideInputField()" class="icon" [icon]="icons.times"></fa-icon>
   </div>
 </div>

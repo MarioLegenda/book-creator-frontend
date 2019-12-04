@@ -1,0 +1,41 @@
+@import '../../../../styles/variables';
+
+.menu {
+  border: 1px solid black;
+
+  .menu-entry {
+    width: 100%;
+    float: left;
+  }
+
+  .entry {
+    display: inline-block;
+    width: 100%;
+
+    position: relative;
+    text-align: right;
+    display: inline-block;
+    font-size: 0.9em;
+    font-weight: bolder;
+    color: $textColor;
+    text-underline: none;
+
+    padding: 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .icon {
+    position: absolute;
+
+    top: 5px;
+    left: 5px;
+
+    padding: 10px;
+
+    color: black;
+    font-weight: bolder;
+  }
+}

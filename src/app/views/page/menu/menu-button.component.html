@@ -2,8 +2,8 @@
   <p *ngIf="title" class="title">{{title}}</p>
   <div class="button-wrapper">
     <button class="empty-button ripple">
-      <fa class="button-icon" name="{{icon}}"></fa>
-      <fa class="off-page-icon" *ngIf="isOffPage" name="location-arrow"></fa>
+      <fa-icon class="button-icon" [icon]="icon"></fa-icon>
+      <fa-icon class="off-page-icon" *ngIf="isOffPage" [icon]="icon"></fa-icon>
     </button>
   </div>
 </div>

@@ -1,22 +1,23 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {OverviewRoutingModule} from "./overview-routing.module";
 import {BootstrapComponent} from "../bootstrap/bootstrap.component";
-import {CodeProjectsRoutingModule} from "./code-projects-routing.module";
-import {MatTabsModule} from "@angular/material/tabs";
+import {MenuComponent} from "../menu/menu.component";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
-    BootstrapComponent
+    BootstrapComponent,
+    MenuComponent,
   ],
   imports: [
-    MatTabsModule,
-
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    CodeProjectsRoutingModule,
+    OverviewRoutingModule,
+    FontAwesomeModule,
   ],
   providers: [],
 })
-export class CodeProjectsModule { }
+export class OverviewModule { }

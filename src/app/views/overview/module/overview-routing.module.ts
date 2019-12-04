@@ -4,13 +4,13 @@ import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 
 const routes: Routes = [
   {
-    path: ':type/:sourceShortId',
+    path: '',
     component: BootstrapComponent,
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CodeProjectsRoutingModule { }
+export class OverviewRoutingModule { }

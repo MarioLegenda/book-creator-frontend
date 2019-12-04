@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnDestroy} from '@angular/core';
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import {faList} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-work-area',
@@ -11,6 +12,10 @@ export class WorkAreaComponent implements OnDestroy {
   components = this.componentTracker.components;
 
   focusTrackerEvent: EventEmitter<string> = new EventEmitter<string>();
+
+  icons = {
+    'list': faList,
+  };
 
   private focusTracker = {
     focusedIndex: null,

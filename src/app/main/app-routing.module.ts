@@ -11,8 +11,8 @@ const routes: Routes = [
     loadChildren: () => import('../views/selection/module/selection.module').then(m => m.SelectionModule)
   },
   {
-    path: 'cms/code-projects',
-    loadChildren: () => import('../views/codeProjects/module/code-projects.module').then(m => m.CodeProjectsModule)
+    path: 'cms/overview',
+    loadChildren: () => import('../views/overview/module/overview.module').then(m => m.OverviewModule)
   },
   {
     path: '',

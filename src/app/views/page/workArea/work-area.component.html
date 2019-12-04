@@ -1,4 +1,4 @@
-<div class="container work-area">
+<div class="col-xs-12 col-md-12 col-lg-12 work-area">
   <cms-menu></cms-menu>
 
   <div cdkDropList class="container row page" (cdkDropListDropped)="drop($event)">
@@ -8,7 +8,7 @@
       cdkDrag>
 
       <div class="dragAndDropHandle" cdkDragHandle>
-        <fa name="list"></fa>
+        <fa-icon [icon]="icons.list"></fa-icon>
       </div>
 
       <cms-view-text-block

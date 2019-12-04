@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
@@ -22,6 +21,7 @@ import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlacehol
 import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.component";
 import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
 import {MonacoEditorModule} from "ngx-monaco-editor";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -41,7 +41,6 @@ import {MonacoEditorModule} from "ngx-monaco-editor";
     MatFormFieldModule,
     DragDropModule,
     MatDialogModule,
-    AngularFontAwesomeModule,
     CKEditorModule,
     MonacoEditorModule,
     MatTooltipModule,
@@ -49,6 +48,7 @@ import {MonacoEditorModule} from "ngx-monaco-editor";
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    FontAwesomeModule,
 
     PageRoutingModule,
   ],

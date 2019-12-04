@@ -1,8 +1,16 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/httpActions";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
+import {
+  faParagraph,
+  faCode,
+  faImage,
+  faPhotoVideo,
+  faLaptopCode,
+  faStickyNote, faFileAlt, faBars
+} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-menu',
@@ -15,6 +23,17 @@ export class MenuComponent {
     private pageContext: PageContextInitializer,
     private router: Router
   ) {}
+
+  icons = {
+    'paragraph': faParagraph,
+    'image': faImage,
+    'code': faCode,
+    'multimedia': faPhotoVideo,
+    'codeProjects': faLaptopCode,
+    'footnote': faStickyNote,
+    'dynamicForms': faFileAlt,
+    'menu': faBars,
+  };
 
   menuExpanded = false;
 
@@ -34,6 +53,6 @@ export class MenuComponent {
     const type: string = this.pageContext.getContext().knowledgeSource.type;
     const sourceShortId = this.pageContext.getContext().knowledgeSource.shortId;
 
-    this.router.navigate(['/cms/code-projects', type, sourceShortId]);
+    this.router.navigate(['/cms/overview', type, sourceShortId]);
   }
 }

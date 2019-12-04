@@ -1,47 +1,41 @@
 <div class="menu-wrapper">
-  <cms-menu-button (click)="expandMenu()" [icon]="'bars'"></cms-menu-button>
+  <cms-menu-button (click)="expandMenu()" [icon]="icons.menu"></cms-menu-button>
 
   <div class="concrete-menu transition-animation" [ngClass]="{'move-right': menuExpanded == true, 'move-left': menuExpanded == false}">
       <div class="expanded-menu">
 
         <cms-menu-button
           (mouseup)="appendTextBlock()"
-          [icon]="'paragraph'"
+          [icon]="icons.paragraph"
           [title]="'Add text block'">
         </cms-menu-button>
 
         <cms-menu-button
-          [icon]="'image'"
+          [icon]="icons.multimedia"
           [title]="'Add multimedia'">
         </cms-menu-button>
 
         <cms-menu-button
           (mouseup)="appendCodeBlock()"
-          [icon]="'code'"
+          [icon]="icons.code"
           [title]="'Add code block'">
         </cms-menu-button>
 
         <cms-menu-button
-          [icon]="'wpforms'"
+          [icon]="icons.dynamicForms"
           [title]="'Add dynamic form'">
         </cms-menu-button>
 
         <cms-menu-button
-          [icon]="'sticky-note'"
+          [icon]="icons.footnote"
           [title]="'Add footnote'">
         </cms-menu-button>
 
         <cms-menu-button
-          [icon]="'window-restore'"
+          [icon]="icons.codeProjects"
           [title]="'Code projects'"
           [isOffPage]="true"
           (click)="navigateToCodeProjects()">
-        </cms-menu-button>
-
-        <cms-menu-button
-          [icon]="'cog'"
-          [title]="'Settings'"
-          [isOffPage]="true">
         </cms-menu-button>
 
       </div>

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpUpdateTextBlock} from "../../../../../store/httpActions";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-block-input',
@@ -18,6 +19,10 @@ export class BlockInputComponent {
   @Input('initialText') initialText: string;
   @Input('type') type: string;
   @Input('blockUuid') blockUuid: string;
+
+  icons = {
+    'times': faTimes,
+  };
 
   constructor(
     private store: Store<any>
