@@ -16,7 +16,8 @@ export class RouteResolver {
     getPresentationUuidByShortId: `${environment.composeBaseUrl()}/api/v1/presentation/get-presentation-uuid`,
     getPresentation: `${environment.composeBaseUrl()}/api/v1/presentation/get-presentation`,
     createCodeProject: `${environment.composeBaseUrl()}/api/v1/code-projects/create`,
-    getProjects: `${environment.composeBaseUrl()}/api/v1/code-projects/get-paginated`,
+    getProjectsBySource: `${environment.composeBaseUrl()}/api/v1/code-projects/get-by-source`,
+    getProjects: `${environment.composeBaseUrl()}/api/v1/code-projects`,
   };
 
   addNewTextBlock(): string {
@@ -59,7 +60,11 @@ export class RouteResolver {
     return this.routes.createCodeProject;
   }
 
-  getProjects(sourceId: string, size: number, page: number) {
-    return `${this.routes.getProjects}/${sourceId}?pagination.size=${size}&pagination.page=${page}`;
+  getProjectsBySource(sourceId: string, size: number, page: number) {
+    return `${this.routes.getProjectsBySource}/${sourceId}?pagination.size=${size}&pagination.page=${page}`;
+  }
+
+  getProjects(size: number, page: number) {
+    return `${this.routes.getProjects}?pagination.size=${size}&pagination.page=${page}`;
   }
 }
