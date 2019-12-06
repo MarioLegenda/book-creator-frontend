@@ -6,6 +6,7 @@ import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 import {MenuComponent} from "../menu/menu.component";
 import {CodeProjectsComponent} from "../codeProjects/code-projects.component";
 import {ItemComponent} from "../codeProjects/item/item.component";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {ItemComponent} from "../codeProjects/item/item.component";
     ReactiveFormsModule,
     FormsModule,
     OverviewRoutingModule,
+    MatButtonModule,
   ],
   providers: [],
 })

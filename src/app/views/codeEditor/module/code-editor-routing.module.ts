@@ -4,7 +4,7 @@ import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':shortId',
     component: BootstrapComponent,
   },
 ];

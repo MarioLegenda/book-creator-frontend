@@ -9,9 +9,13 @@ const routes: Routes = [
     component: BootstrapComponent,
     children: [
       {
+        path: 'code-projects/:type/:sourceShortId',
+        component: CodeProjectsComponent,
+      },
+      {
         path: 'code-projects',
         component: CodeProjectsComponent,
-      }
+      },
     ]
   },
 

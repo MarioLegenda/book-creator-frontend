@@ -45,6 +45,6 @@ export class MenuComponent {
     const type: string = this.pageContext.getContext().knowledgeSource.type;
     const sourceShortId = this.pageContext.getContext().knowledgeSource.shortId;
 
-    this.router.navigate(['/cms/overview', type, sourceShortId]);
+    this.router.navigate(['/cms/overview/code-projects', type, sourceShortId]);
   }
 }
