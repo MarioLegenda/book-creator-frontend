@@ -3,6 +3,6 @@
      (mouseenter)="onHover()"
      (mouseleave)="onHover()">
 
-  <fa-icon *ngIf="focused"  [icon]="icons.edit"></fa-icon>
+  <i *ngIf="focused"  [ngClass]="icons.edit"></i>
   {{text}}
 </div>

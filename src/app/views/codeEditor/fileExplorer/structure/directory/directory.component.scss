@@ -50,6 +50,10 @@
         float: left;
         margin-right: 10px;
       }
+
+      .action:hover {
+        color: $dangerRed;
+      }
     }
 
     &:hover {

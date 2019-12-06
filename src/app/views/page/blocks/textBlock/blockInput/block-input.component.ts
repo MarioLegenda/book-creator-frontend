@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpUpdateTextBlock} from "../../../../../store/httpActions";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-block-input',
@@ -21,7 +20,7 @@ export class BlockInputComponent {
   @Input('blockUuid') blockUuid: string;
 
   icons = {
-    'times': faTimes,
+    'times': 'fas fa-times',
   };
 
   constructor(

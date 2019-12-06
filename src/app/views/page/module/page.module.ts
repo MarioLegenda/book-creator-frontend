@@ -21,7 +21,6 @@ import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlacehol
 import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.component";
 import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
 import {MonacoEditorModule} from "ngx-monaco-editor";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    FontAwesomeModule,
 
     PageRoutingModule,
   ],

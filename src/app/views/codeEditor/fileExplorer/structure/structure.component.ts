@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import Util from "../../../../library/Util";
 
 @Component({
   selector: 'cms-structure',

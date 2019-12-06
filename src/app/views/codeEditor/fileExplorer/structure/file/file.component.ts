@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {faJedi} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-file',
@@ -18,7 +17,7 @@ export class FileComponent {
       'padding-left': '20px',
     },
     icons: {
-      fileIcon: faJedi
+      fileIcon: 'fas fa-jedi'
     }
   };
 

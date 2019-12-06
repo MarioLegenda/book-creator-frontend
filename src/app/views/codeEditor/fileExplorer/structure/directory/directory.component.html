@@ -5,17 +5,17 @@
     [ngStyle]="componentState.dirStyles"
     [ngClass]="{'isExpanded': this.componentState.expanded}">
 
-    <fa-icon
+    <i
       (click)="expandDirectory()"
       class="icon"
-      [icon]="componentState.icons.dirCaret">
-    </fa-icon>
+      [ngClass]="componentState.icons.dirCaret">
+    </i>
 
     <h1 class="text">{{directory.name}}</h1>
 
     <div class="action-set">
-      <fa-icon class="action" [icon]="this.componentState.icons.newDir"></fa-icon>
-      <fa-icon class="action" [icon]="this.componentState.icons.newFile"></fa-icon>
+      <i class="action" [ngClass]="this.componentState.icons.newDir"></i>
+      <i class="action" [ngClass]="this.componentState.icons.newFile"></i>
     </div>
   </div>
 

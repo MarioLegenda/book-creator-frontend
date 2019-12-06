@@ -5,7 +5,6 @@ import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/httpActions";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 import {MatDialog} from "@angular/material/dialog";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -23,8 +22,8 @@ export class TextBlockComponent {
   editor = BalloonEditor;
 
   icons = {
-    'remove': faTrash,
-  }
+    'remove': 'fas fa-trash-alt',
+  };
 
   // @ts-ignore
   @ViewChild('editorComponent') editorComponent: CKEditorComponent;

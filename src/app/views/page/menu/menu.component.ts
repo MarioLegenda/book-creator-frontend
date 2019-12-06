@@ -3,14 +3,6 @@ import {Store} from "@ngrx/store";
 import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/httpActions";
 import {Router} from "@angular/router";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
-import {
-  faParagraph,
-  faCode,
-  faImage,
-  faPhotoVideo,
-  faLaptopCode,
-  faStickyNote, faFileAlt, faBars
-} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-menu',
@@ -25,14 +17,14 @@ export class MenuComponent {
   ) {}
 
   icons = {
-    'paragraph': faParagraph,
-    'image': faImage,
-    'code': faCode,
-    'multimedia': faPhotoVideo,
-    'codeProjects': faLaptopCode,
-    'footnote': faStickyNote,
-    'dynamicForms': faFileAlt,
-    'menu': faBars,
+    'menu': 'fas fa-bars',
+    'paragraph': 'fas fa-paragraph',
+    'image': 'fas fa-image',
+    'multimedia': 'fas fa-photo-video',
+    'code': 'fas fa-code',
+    'footnote': 'fas fa-file',
+    'dynamicForms': 'fab fa-wpforms',
+    'codeProjects': 'fas fa-laptop-code',
   };
 
   menuExpanded = false;

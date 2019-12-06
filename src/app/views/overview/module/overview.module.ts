@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {OverviewRoutingModule} from "./overview-routing.module";
 import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 import {MenuComponent} from "../menu/menu.component";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {CodeProjectsComponent} from "../codeProjects/code-projects.component";
 import {ItemComponent} from "../codeProjects/item/item.component";
 
@@ -20,7 +19,6 @@ import {ItemComponent} from "../codeProjects/item/item.component";
     ReactiveFormsModule,
     FormsModule,
     OverviewRoutingModule,
-    FontAwesomeModule,
   ],
   providers: [],
 })

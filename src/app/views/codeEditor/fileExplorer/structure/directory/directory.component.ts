@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {faAngleDown, faAngleRight, faFile, faFolder} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-directory',
@@ -16,9 +15,9 @@ export class DirectoryComponent {
     hovered: false,
     dirStyles: {},
     icons: {
-      dirCaret: faAngleRight,
-      newFile: faFile,
-      newDir: faFolder,
+      dirCaret: 'fas fa-angle-right',
+      newFile: 'far fa-file',
+      newDir: 'far fa-folder',
     },
   };
 
@@ -36,7 +35,7 @@ export class DirectoryComponent {
 
   expandDirectory() {
     if (this.componentState.expanded) {
-      this.componentState.icons.dirCaret = faAngleRight;
+      this.componentState.icons.dirCaret = 'fas fa-angle-right';
 
       this.componentState.expanded = false;
 
@@ -44,7 +43,7 @@ export class DirectoryComponent {
     }
 
     if (!this.componentState.expanded) {
-      this.componentState.icons.dirCaret = faAngleDown;
+      this.componentState.icons.dirCaret = 'fas fa-angle-down';
 
       this.componentState.expanded = true;
     }

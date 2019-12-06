@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-metadata-placeholder',
@@ -13,7 +12,7 @@ export class MetadataPlaceholderComponent {
   focused: boolean = false;
 
   icons = {
-    'edit': faEdit,
+    'edit': 'fas fa-edit',
   };
 
   private maxTextLen = 26;

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faClone} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'cms-file-explorer',
@@ -11,7 +10,7 @@ import {faClone} from "@fortawesome/free-solid-svg-icons";
 export class FileExplorerComponent {
   componentState = {
     icons: {
-      selectProject: faClone,
+      selectProject: 'fas fa-clone',
     },
     projectName: 'project name',
     fileStructure: [
