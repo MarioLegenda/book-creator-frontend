@@ -1,0 +1,66 @@
+@import '../../../../../../styles/variables';
+
+.directory {
+  width: 100%;
+  float: left;
+
+  .dir-name {
+    width: 100%;
+    float: left;
+
+    position: relative;
+
+    padding: 10px;
+
+    .text {
+      font-size: 14px;
+      color: $textColor;
+      width: 150px;
+      float: left;
+
+      padding: 0;
+      margin: 0;
+
+      padding-top: 4px;
+    }
+
+    .icon {
+      width: 20px;
+      display: inline-block;
+      float: left;
+      color: $appBlack;
+
+      &:hover {
+        color: white;
+      }
+    }
+
+    .action-set {
+      width: 60px;
+      position: absolute;
+      top: 7px;
+      right: 0;
+
+      color: $appBlack;
+
+      font-size: 1.2em;
+
+      .action {
+        display: inline-block;
+        float: left;
+        margin-right: 10px;
+      }
+    }
+
+    &:hover {
+      background-color: $lighterGray;
+      cursor: pointer;
+    }
+  }
+
+  .isExpanded {
+    -webkit-box-shadow: -1px 9px 34px -17px rgba(179,179,179,1);
+    -moz-box-shadow: -1px 9px 34px -17px rgba(179,179,179,1);
+    box-shadow: -1px 9px 34px -17px rgba(179,179,179,1);
+  }
+}

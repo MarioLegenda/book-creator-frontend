@@ -1,0 +1,28 @@
+@import '../../../../../../styles/variables';
+
+.file {
+  width: 100%;
+  float: left;
+
+  .file-name {
+    width: 100%;
+    float: left;
+
+    padding: 10px;
+
+    .text {
+      font-size: 14px;
+      color: $textColor;
+      width: 150px;
+      float: left;
+
+      padding: 0;
+      margin: 0;
+    }
+
+    &:hover {
+      background-color: $lighterGray;
+      cursor: pointer;
+    }
+  }
+}

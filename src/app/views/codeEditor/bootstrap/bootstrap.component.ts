@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'cms-code-editor',
@@ -8,4 +8,5 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './bootstrap.component.html',
 })
 export class BootstrapComponent {
+
 }

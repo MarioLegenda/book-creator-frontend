@@ -1,0 +1,29 @@
+<div class="col-xs-12 col-md-3 col-lg-3 directory">
+  <div
+    class="dir-name"
+    (dblclick)="expandDirectory()"
+    [ngStyle]="componentState.dirStyles"
+    [ngClass]="{'isExpanded': this.componentState.expanded}">
+
+    <fa-icon
+      (click)="expandDirectory()"
+      class="icon"
+      [icon]="componentState.icons.dirCaret">
+    </fa-icon>
+
+    <h1 class="text">{{directory.name}}</h1>
+
+    <div class="action-set">
+      <fa-icon class="action" [icon]="this.componentState.icons.newDir"></fa-icon>
+      <fa-icon class="action" [icon]="this.componentState.icons.newFile"></fa-icon>
+    </div>
+  </div>
+
+  <div *ngIf="componentState.expanded">
+    <div *ngFor="let item of directory.files">
+      <cms-directory *ngIf="isDirectory(item)" [directory]="item"></cms-directory>
+
+      <cms-file *ngIf="isFile(item)" [file]="item" [depth]="directory.depth"></cms-file>
+    </div>
+  </div>
+</div>

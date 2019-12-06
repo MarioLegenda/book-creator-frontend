@@ -3,16 +3,31 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 import {CodeEditorRoutingModule} from "./code-editor-routing.module";
+import {MonacoEditorModule} from "ngx-monaco-editor";
+import {WorkspaceComponent} from "../workspace/workspace.component";
+import {FileExplorerComponent} from "../fileExplorer/file-explorer.component";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {StructureComponent} from "../fileExplorer/structure/structure.component";
+import {DirectoryComponent} from "../fileExplorer/structure/directory/directory.component";
+import {FileComponent} from "../fileExplorer/structure/file/file.component";
 
 @NgModule({
   declarations: [
-    BootstrapComponent
+    BootstrapComponent,
+    WorkspaceComponent,
+    FileExplorerComponent,
+    StructureComponent,
+    DirectoryComponent,
+    FileComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     CodeEditorRoutingModule,
+
+    MonacoEditorModule,
+    FontAwesomeModule,
   ],
   providers: [],
 })
