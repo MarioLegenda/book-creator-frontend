@@ -15,7 +15,7 @@
 
     <div class="action-set">
       <i class="action" [ngClass]="this.componentState.icons.newDir"></i>
-      <i class="action" [ngClass]="this.componentState.icons.newFile"></i>
+      <i class="action" (click)="openFileDialog()" [ngClass]="this.componentState.icons.newFile"></i>
     </div>
   </div>
 

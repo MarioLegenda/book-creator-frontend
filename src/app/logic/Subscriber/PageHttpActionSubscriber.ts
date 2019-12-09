@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {actionTypes, httpCreateTextBlockFinished} from "../../store/httpActions";
 import {CreateTextBlockModel} from "../../model/http/CreateTextBlockModel";
 import {PageContextInitializer} from "../PageComponent/context/PageContextInitializer";
-import {IRequestModel} from "../../model/http/IRequestModel";
+import {IRequestModel} from "../../model/IRequestModel";
 import {PageRepository} from "../../repository/PageRepository";
 import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../store/viewActions";
 import {TextBlockModel} from "../../model/http/TextBlockModel";
@@ -61,7 +61,7 @@ export class PageHttpActionSubscriber {
   private addCodeBlock() {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
 
-    const model: IRequestModel = CreateCodeBlock.create(pageUuid);
+    const model = CreateCodeBlock.create(pageUuid);
 
     this.store.dispatch(viewCreateCodeBlock(model.convertToViewModel()));
   }
@@ -69,7 +69,7 @@ export class PageHttpActionSubscriber {
   private addTextBlock() {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
 
-    const model: IRequestModel = CreateTextBlockModel.create(pageUuid);
+    const model = CreateTextBlockModel.create(pageUuid);
 
     this.pageRepository.addTextBlock(model).subscribe((model: TextBlockModel) => {
       this.store.dispatch(httpCreateTextBlockFinished());
@@ -81,7 +81,7 @@ export class PageHttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.value.blockUuid;
 
-    const model: IRequestModel = new RemoveBlockModel(
+    const model = new RemoveBlockModel(
       pageUuid,
       blockUuid
     );
@@ -95,7 +95,7 @@ export class PageHttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid = action.blockUuid;
 
-    const model: IRequestModel = UpdateTextBlock.create(
+    const model = UpdateTextBlock.create(
       pageUuid,
       blockUuid,
       (action.internalName) ? action.internalName : '',

@@ -13,13 +13,12 @@ export class ItemComponent {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
   ) {}
 
   goToEditor() {
     this.router.navigate([
       '/cms/code-editor',
-      this.route.snapshot.paramMap.get('sourceShortId'),
+      this.item.shortId,
     ])
   }
 }

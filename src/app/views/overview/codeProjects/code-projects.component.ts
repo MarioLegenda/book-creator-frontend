@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
-import {CodeProjectModel} from "../../../model/http/CodeProjectModel";
+import {CodeProjectHttpModel} from "../../../model/http/codeEditor/CodeProjectHttpModel";
+import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppModel";
 
 @Component({
   selector: 'cms-code-project-overview',
@@ -10,15 +11,17 @@ import {CodeProjectModel} from "../../../model/http/CodeProjectModel";
   templateUrl: './code-projects.component.html',
 })
 export class CodeProjectsComponent implements OnInit {
-  listing: CodeProjectModel[];
+  listing: CodeProjectAppModel[] = [];
 
   constructor(
     private codeProjectsRepository: CodeProjectsRepository
   ) {}
 
   ngOnInit(): void {
-    this.codeProjectsRepository.getProjects(10, 1).subscribe((listing: CodeProjectModel[]) => {
-      this.listing = listing;
+    this.codeProjectsRepository.getProjects(10, 1).subscribe((codeProjects: CodeProjectHttpModel[]) => {
+      for (const codeProject of codeProjects) {
+        this.listing.push(codeProject.convertToAppModel());
+      }
     });
   }
 }

@@ -1,6 +1,6 @@
-import {IRequestModel} from "./IRequestModel";
 import {IViewModel} from "../app/IViewModel";
 import {PresentationCreateModel} from "../../views/selection/presentation/create/services/PresentationCreateModel";
+import {IRequestModel} from "../IRequestModel";
 
 export class CreatePresentationModel implements IRequestModel{
   data: any = {};

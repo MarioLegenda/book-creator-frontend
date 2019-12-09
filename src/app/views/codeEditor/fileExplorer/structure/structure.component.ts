@@ -1,4 +1,7 @@
 import {Component, Input} from '@angular/core';
+import {DirectoryRepository} from "../../../../repository/DirectoryRepository";
+import {CodeProjectAppModel} from "../../../../model/app/codeEditor/CodeProjectAppModel";
+import {DirectoryHttpModel} from "../../../../model/http/codeEditor/DirectoryHttpModel";
 
 @Component({
   selector: 'cms-structure',
@@ -8,7 +11,14 @@ import {Component, Input} from '@angular/core';
   templateUrl: './structure.component.html',
 })
 export class StructureComponent {
-  @Input('structure') structure;
+  structure = [];
+
+  @Input('project') project: CodeProjectAppModel;
+
+  constructor(
+    private directoryRepository: DirectoryRepository
+  ) {
+  }
 
   isDirectory(entry): boolean {
     return entry.type === 'directory';
@@ -16,5 +26,11 @@ export class StructureComponent {
 
   isFile(entry): boolean {
     return entry.type === 'file';
+  }
+
+  ngOnInit() {
+    this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((model: DirectoryHttpModel) => {
+      this.structure.push(model.convertToAppModel());
+    });
   }
 }

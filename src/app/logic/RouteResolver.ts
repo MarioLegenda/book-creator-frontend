@@ -18,6 +18,11 @@ export class RouteResolver {
     createCodeProject: `${environment.composeBaseUrl()}/api/v1/code-projects/create`,
     getProjectsBySource: `${environment.composeBaseUrl()}/api/v1/code-projects/get-by-source`,
     getProjects: `${environment.composeBaseUrl()}/api/v1/code-projects`,
+    getProjectUuidByShortId: `${environment.composeBaseUrl()}/api/v1/code-projects/get-project-uuid`,
+    getSingleProject: `${environment.composeBaseUrl()}/api/v1/code-projects/get-single-project`,
+    getRootDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/get-root-directory`,
+    addFileToDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/add-file-to-directory`,
+    getFilesFromDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/get-directory-files`,
   };
 
   addNewTextBlock(): string {
@@ -44,27 +49,47 @@ export class RouteResolver {
     return this.routes.createEmptyPage;
   }
 
-  findUuidByShortId(shortId: string) {
+  findUuidByShortId(shortId: string): string {
     return `${this.routes.findUuidByShortId}/${shortId}`;
   }
 
-  getPresentationUuid(shortId: string) {
+  getPresentationUuid(shortId: string): string {
     return `${this.routes.getPresentationUuidByShortId}/${shortId}`;
   }
 
-  getPresentation(uuid: string) {
+  getPresentation(uuid: string): string {
     return `${this.routes.getPresentation}/${uuid}`;
   }
 
-  createCodeProject() {
+  createCodeProject(): string {
     return this.routes.createCodeProject;
   }
 
-  getProjectsBySource(sourceId: string, size: number, page: number) {
+  getProjectsBySource(sourceId: string, size: number, page: number): string {
     return `${this.routes.getProjectsBySource}/${sourceId}?pagination.size=${size}&pagination.page=${page}`;
   }
 
-  getProjects(size: number, page: number) {
+  getProjects(size: number, page: number): string {
     return `${this.routes.getProjects}?pagination.size=${size}&pagination.page=${page}`;
+  }
+
+  getProjectUuidByShortId(shortId: string): string {
+    return `${this.routes.getProjectUuidByShortId}/${shortId}`;
+  }
+
+  getSingleProject(uuid: string): string {
+    return `${this.routes.getSingleProject}/${uuid}`;
+  }
+
+  getRootDirectory(codeProjectUuid: string): string {
+    return `${this.routes.getRootDirectory}/${codeProjectUuid}`;
+  }
+
+  addFileToDirectory(): string {
+    return `${this.routes.addFileToDirectory}`;
+  }
+
+  getFilesFromDirectory(directoryId: string): string {
+    return `${this.routes.getFilesFromDirectory}/${directoryId}`;
   }
 }

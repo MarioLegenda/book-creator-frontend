@@ -1,10 +1,9 @@
 import {Injectable} from "@angular/core";
-import {IRequestModel} from "../model/http/IRequestModel";
 import {HttpClient} from "@angular/common/http";
 import {RouteResolver} from "../logic/RouteResolver";
 import {reduce} from "rxjs/operators";
-import {TextBlockModel} from "../model/http/TextBlockModel";
-import {CodeProjectModel} from "../model/http/CodeProjectModel";
+import {CodeProjectHttpModel} from "../model/http/codeEditor/CodeProjectHttpModel";
+import {IRequestModel} from "../model/IRequestModel";
 
 @Injectable({
   providedIn: 'root',
@@ -29,10 +28,10 @@ export class CodeProjectsRepository {
         reduce((acc, res: any) => {
           const data = (res as any).data;
 
-          const result: CodeProjectModel[] = [];
+          const result: CodeProjectHttpModel[] = [];
 
           for (const entry of data) {
-            result.push(new CodeProjectModel(
+            result.push(new CodeProjectHttpModel(
               entry.uuid,
               entry.shortId,
               entry.sourceId,

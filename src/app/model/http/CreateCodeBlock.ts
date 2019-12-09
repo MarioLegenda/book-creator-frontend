@@ -1,6 +1,6 @@
-import {IRequestModel} from "./IRequestModel";
 import {IViewModel} from "../app/IViewModel";
 import {CodeBlockModel} from "../app/CodeBlockModel";
+import {IRequestModel} from "../IRequestModel";
 
 export class CreateCodeBlock implements IRequestModel{
   data: any = {};
