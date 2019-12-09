@@ -23,6 +23,7 @@ export class RouteResolver {
     getRootDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/get-root-directory`,
     addFileToDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/add-file-to-directory`,
     getFilesFromDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/get-directory-files`,
+    getSubdirectories: `${environment.composeBaseUrl()}/api/v1/code-projects/get-subdirectories`,
   };
 
   addNewTextBlock(): string {
@@ -91,5 +92,9 @@ export class RouteResolver {
 
   getFilesFromDirectory(directoryId: string): string {
     return `${this.routes.getFilesFromDirectory}/${directoryId}`;
+  }
+
+  getSubdirectories(directoryId: string): string {
+    return `${this.routes.getSubdirectories}/${directoryId}`;
   }
 }

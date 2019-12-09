@@ -29,4 +29,27 @@ export class DirectoryRepository {
         }, {})
       )
   }
+
+  getSubdirectories(directoryId: string) {
+    return this.httpClient.get(this.routeResolver.getSubdirectories(directoryId))
+      .pipe(
+        reduce((acc, res: any) => {
+          const data = res.data;
+
+          const directoryHttpModels: DirectoryHttpModel[] = [];
+          for (const dir of data) {
+            directoryHttpModels.push(new DirectoryHttpModel(
+              dir.id,
+              dir.name,
+              dir.isRoot,
+              dir.codeProjectUuid,
+              dir.depth,
+              dir.parent,
+            ));
+          }
+
+          return directoryHttpModels;
+        }, {})
+      )
+  }
 }

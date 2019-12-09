@@ -3,7 +3,7 @@ import {FileAppModel} from "./FileAppModel";
 export class DirectoryAppModel {
   name: string;
   directoryId: string;
-  files: FileAppModel[];
+  structure: any[];
   depth: number;
   type: string;
   isRoot: boolean;
@@ -14,11 +14,11 @@ export class DirectoryAppModel {
     depth: number,
     type: string,
     isRoot: boolean,
-    files: FileAppModel[] = [],
+    structure: any[] = [],
   ) {
     this.name = name;
     this.directoryId = directoryId;
-    this.files = files;
+    this.structure = structure;
     this.depth = depth;
     this.type = type;
     this.isRoot = isRoot;

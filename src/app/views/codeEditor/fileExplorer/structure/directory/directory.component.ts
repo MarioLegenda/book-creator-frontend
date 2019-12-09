@@ -5,6 +5,8 @@ import {FileRepository} from "../../../../../repository/FileRepository";
 import {DirectoryAppModel} from "../../../../../model/app/codeEditor/DirectoryAppModel";
 import {FileHttpModel} from "../../../../../model/http/codeEditor/FileHttpModel";
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
+import {DirectoryRepository} from "../../../../../repository/DirectoryRepository";
+import {DirectoryHttpModel} from "../../../../../model/http/codeEditor/DirectoryHttpModel";
 
 @Component({
   selector: 'cms-directory',
@@ -30,6 +32,7 @@ export class DirectoryComponent {
   constructor(
     private dialog: MatDialog,
     private fileRepository: FileRepository,
+    private directoryRepository: DirectoryRepository,
   ) {}
 
   ngOnInit() {
@@ -54,7 +57,7 @@ export class DirectoryComponent {
     });
 
     dialogRef.afterClosed().subscribe((model: FileAppModel) => {
-      if (model) this.directory.files.push(model);
+      if (model) this.directory.structure.push(model);
     });
   }
 
@@ -64,8 +67,6 @@ export class DirectoryComponent {
 
       this.componentState.expanded = false;
 
-      this.directory.files = [];
-
       return;
     }
 
@@ -74,10 +75,16 @@ export class DirectoryComponent {
 
       this.componentState.expanded = true;
 
-      this.fileRepository.getFilesFromDirectory(this.directory.directoryId).subscribe((files: FileHttpModel[]) => {
-        for (const file of files) {
-          this.directory.files.push(file.convertToAppModel());
+      this.directoryRepository.getSubdirectories(this.directory.directoryId).subscribe((models: DirectoryHttpModel[]) => {
+        for (const dir of models) {
+          this.directory.structure.push(dir.convertToAppModel());
         }
+
+        this.fileRepository.getFilesFromDirectory(this.directory.directoryId).subscribe((files: FileHttpModel[]) => {
+          for (const file of files) {
+            this.directory.structure.push(file.convertToAppModel());
+          }
+        });
       });
     }
   }

@@ -20,7 +20,7 @@
   </div>
 
   <div *ngIf="componentState.expanded">
-    <div *ngFor="let item of directory.files">
+    <div *ngFor="let item of directory.structure">
       <cms-directory *ngIf="isDirectory(item)" [directory]="item"></cms-directory>
 
       <cms-file *ngIf="isFile(item)" [file]="item" [depth]="directory.depth"></cms-file>
