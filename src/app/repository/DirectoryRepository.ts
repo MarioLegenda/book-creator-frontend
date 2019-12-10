@@ -24,6 +24,7 @@ export class DirectoryRepository {
             data.name,
             data.isRoot,
             data.codeProjectUuid,
+            data.depth,
             data.parent,
           )
         }, {})
@@ -51,5 +52,23 @@ export class DirectoryRepository {
           return directoryHttpModels;
         }, {})
       )
+  }
+
+  createDirectory(model) {
+    return this.httpClient.put(this.routeResolver.createDirectory(), model)
+      .pipe(
+        reduce(((acc, res: any) => {
+          const data = res.data;
+
+          return new DirectoryHttpModel(
+            data.id,
+            data.name,
+            data.isRoot,
+            data.codeProjectUuid,
+            data.depth,
+            data.parent,
+          );
+        }), {})
+      );
   }
 }

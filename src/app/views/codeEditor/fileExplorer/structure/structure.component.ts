@@ -17,8 +17,7 @@ export class StructureComponent {
 
   constructor(
     private directoryRepository: DirectoryRepository
-  ) {
-  }
+  ) {}
 
   isDirectory(entry): boolean {
     return entry.type === 'directory';
@@ -30,7 +29,7 @@ export class StructureComponent {
 
   ngOnInit() {
     this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((model: DirectoryHttpModel) => {
-      this.structure.push(model.convertToAppModel());
+      this.structure.push(model.convertToAppModel(this.project.uuid));
     });
   }
 }

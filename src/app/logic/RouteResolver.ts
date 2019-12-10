@@ -24,6 +24,7 @@ export class RouteResolver {
     addFileToDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/add-file-to-directory`,
     getFilesFromDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/get-directory-files`,
     getSubdirectories: `${environment.composeBaseUrl()}/api/v1/code-projects/get-subdirectories`,
+    createDirectory: `${environment.composeBaseUrl()}/api/v1/code-projects/add-directory`,
   };
 
   addNewTextBlock(): string {
@@ -96,5 +97,9 @@ export class RouteResolver {
 
   getSubdirectories(directoryId: string): string {
     return `${this.routes.getSubdirectories}/${directoryId}`;
+  }
+
+  createDirectory(): string {
+    return `${this.routes.createDirectory}`;
   }
 }

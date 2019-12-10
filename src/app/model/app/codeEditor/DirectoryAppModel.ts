@@ -1,6 +1,5 @@
-import {FileAppModel} from "./FileAppModel";
-
 export class DirectoryAppModel {
+  codeProjectUuid: string;
   name: string;
   directoryId: string;
   structure: any[];
@@ -9,6 +8,7 @@ export class DirectoryAppModel {
   isRoot: boolean;
 
   constructor(
+    codeProjectUuid: string,
     name: string,
     directoryId: string,
     depth: number,
@@ -16,6 +16,7 @@ export class DirectoryAppModel {
     isRoot: boolean,
     structure: any[] = [],
   ) {
+    this.codeProjectUuid = codeProjectUuid;
     this.name = name;
     this.directoryId = directoryId;
     this.structure = structure;

@@ -26,8 +26,9 @@ export class DirectoryHttpModel {
     this.depth = depth;
   }
 
-  convertToAppModel(): DirectoryAppModel {
+  convertToAppModel(codeProjectUuid: string): DirectoryAppModel {
     return new DirectoryAppModel(
+      codeProjectUuid,
       this.name,
       this.id,
       this.depth,

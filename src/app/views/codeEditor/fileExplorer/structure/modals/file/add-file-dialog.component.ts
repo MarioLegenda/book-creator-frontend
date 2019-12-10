@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FileRepository} from "../../../../../repository/FileRepository";
-import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
-import {FileHttpModel} from "../../../../../model/http/codeEditor/FileHttpModel";
+import {FileRepository} from "../../../../../../repository/FileRepository";
+import {FileAppModel} from "../../../../../../model/app/codeEditor/FileAppModel";
+import {FileHttpModel} from "../../../../../../model/http/codeEditor/FileHttpModel";
 
 @Component({
   selector: 'cms-add-file-modal',

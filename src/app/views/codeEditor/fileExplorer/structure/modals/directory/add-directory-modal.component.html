@@ -1,0 +1,12 @@
+<div class="dialog">
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field class="form-field">
+      <input [(ngModel)]="model.name"  matInput placeholder="Add new directory" class="form-input">
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button cdkFocusInitial (click)="createDirectory()">Ok</button>
+  </div>
+</div>

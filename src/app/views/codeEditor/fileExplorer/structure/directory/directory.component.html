@@ -14,7 +14,7 @@
     <h1 class="text">{{directory.name}}</h1>
 
     <div class="action-set">
-      <i class="action" [ngClass]="this.componentState.icons.newDir"></i>
+      <i class="action" (click)="openDirectoryDialog()" [ngClass]="this.componentState.icons.newDir"></i>
       <i class="action" (click)="openFileDialog()" [ngClass]="this.componentState.icons.newFile"></i>
     </div>
   </div>
