@@ -1,9 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RouteResolver} from "../logic/RouteResolver";
 import {reduce} from "rxjs/operators";
 import {FileHttpModel} from "../model/http/codeEditor/FileHttpModel";
-import {IRequestModel} from "../model/IRequestModel";
+import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import {IRequestModel} from "../model/IRequestModel";
 export class FileRepository {
   constructor(
     private httpClient: HttpClient,
-    private routeResolver: RouteResolver
+    private routeResolver: CodeEditorRouteResolver
   ) {}
 
   public addFileToDirectory(model) {

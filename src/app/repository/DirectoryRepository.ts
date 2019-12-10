@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RouteResolver} from "../logic/RouteResolver";
+import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
 import {reduce} from "rxjs/operators";
 import {DirectoryHttpModel} from "../model/http/codeEditor/DirectoryHttpModel";
 
@@ -10,7 +10,7 @@ import {DirectoryHttpModel} from "../model/http/codeEditor/DirectoryHttpModel";
 export class DirectoryRepository {
   constructor(
     private httpClient: HttpClient,
-    private routeResolver: RouteResolver
+    private routeResolver: CodeEditorRouteResolver
   ) {}
 
   getRootDirectory(codeProjectUuid: string) {

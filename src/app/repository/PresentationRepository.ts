@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RouteResolver} from "../logic/RouteResolver";
+import {RouteResolver} from "../logic/routes/RouteResolver";
 import {IRequestModel} from "../model/IRequestModel";
 
 @Injectable({
