@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/file/add-file-dialog.component";
 import {FileRepository} from "../../../../../repository/FileRepository";
@@ -54,7 +54,7 @@ export class DirectoryComponent {
   openFileDialog(): void {
     const dialogRef = this.dialog.open(AddFileDialogComponent, {
       width: '300px',
-      data: new FileAppModel('', this.directory.directoryId, '', ''),
+      data: new FileAppModel('','', this.directory.directoryId, '', ''),
     });
 
     dialogRef.afterClosed().subscribe((model: FileAppModel) => {
@@ -92,6 +92,17 @@ export class DirectoryComponent {
     });
   }
 
+  onFileRemoved(file) {
+    const structure = this.directory.structure;
+    for (let i = 0; structure.length > 0; i++) {
+      if (structure[i].type === 'file' && file.id === structure[i].id) {
+        this.directory.structure.splice(i, 1);
+
+        break;
+      }
+    }
+  }
+
   expandDirectory() {
     if (this.componentState.expanded) {
       this.componentState.icons.dirCaret = 'fas fa-angle-right';
@@ -117,7 +128,7 @@ export class DirectoryComponent {
 
         this.fileRepository.getFilesFromDirectory(this.directory.directoryId).subscribe((files: FileHttpModel[]) => {
           for (const file of files) {
-            this.directory.structure.push(file.convertToAppModel());
+            this.directory.structure.push(file.convertToAppModel(file.id));
           }
         });
       });

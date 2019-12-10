@@ -23,7 +23,7 @@
     <div *ngFor="let item of directory.structure">
       <cms-directory *ngIf="isDirectory(item)" [directory]="item"></cms-directory>
 
-      <cms-file *ngIf="isFile(item)" [file]="item" [depth]="directory.depth"></cms-file>
+      <cms-file (fileRemoved)="onFileRemoved($event)" *ngIf="isFile(item)" [file]="item" [depth]="directory.depth"></cms-file>
     </div>
   </div>
 </div>

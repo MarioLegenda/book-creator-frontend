@@ -25,4 +25,25 @@
       cursor: pointer;
     }
   }
+
+  .action-set {
+    width: 60px;
+    position: absolute;
+    top: 7px;
+    right: 0;
+
+    color: $appBlack;
+
+    font-size: 1.2em;
+
+    .action {
+      display: inline-block;
+      float: right;
+      margin-right: 10px;
+    }
+
+    .action:hover {
+      color: $editorMainColor;
+    }
+  }
 }

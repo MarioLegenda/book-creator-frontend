@@ -21,7 +21,7 @@ export class AddFileDialogComponent {
 
   createFile() {
     this.fileRepository.addFileToDirectory(this.model.createNewFileHttpModel()).subscribe((model: FileHttpModel) => {
-      this.dialogRef.close(model.convertToAppModel());
+      this.dialogRef.close(model.convertToAppModel(model.id));
     });
   }
 }

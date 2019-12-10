@@ -30,6 +30,10 @@ export class FileRepository {
       )
   }
 
+  public removeFileById(model) {
+    return this.httpClient.post(this.routeResolver.removeFile(), model);
+  }
+
   public getFilesFromDirectory(directoryId: string) {
     return this.httpClient.get(this.routeResolver.getFilesFromDirectory(directoryId))
       .pipe(

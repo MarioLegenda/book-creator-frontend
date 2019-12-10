@@ -1,4 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
+import {FileRepository} from "../../../../../repository/FileRepository";
 
 @Component({
   selector: 'cms-file',
@@ -7,9 +9,14 @@ import {Component, Input} from '@angular/core';
   ],
   templateUrl: './file.component.html',
 })
-export class FileComponent {
-  @Input('file') file;
-  @Input('depth') depth;
+export class FileComponent implements OnInit {
+  @Input('file') file: FileAppModel;
+  @Input('depth') depth: number;
+  @Output('fileRemoved') fileRemoved = new EventEmitter();
+
+  constructor(
+    private fileRepository: FileRepository
+  ) {}
 
   componentState = {
     showed: false,
@@ -17,18 +24,25 @@ export class FileComponent {
       'padding-left': '20px',
     },
     icons: {
-      fileIcon: 'fas fa-jedi'
+      removeFile: 'far fa-trash-alt',
     }
   };
 
   ngOnInit() {
     if (this.depth === 1) {
-      this.componentState.fileStyles['padding-left'] = `${(parseInt(this.depth)) * 35}px`;
+      this.componentState.fileStyles['padding-left'] = `${this.depth * 35}px`;
     } else if (this.depth > 1) {
-      this.componentState.fileStyles['padding-left'] = `${(parseInt(this.depth)) * 25}px`;
+      this.componentState.fileStyles['padding-left'] = `${this.depth * 25}px`;
     }
   }
 
-  showFile() {
+  removeFile() {
+    this.fileRepository.removeFileById({
+      data: {
+        fileId: this.file.id,
+      }
+    }).subscribe(() => {
+      this.fileRemoved.emit(this.file);
+    })
   }
 }

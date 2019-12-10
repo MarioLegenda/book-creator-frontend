@@ -21,9 +21,10 @@ export class FileHttpModel {
     this.directoryId = directoryId;
   }
 
-  convertToAppModel(): FileAppModel {
+  convertToAppModel(fileId: string): FileAppModel {
     return new FileAppModel(
       this.name,
+      fileId,
       this.directoryId,
       this.content,
       this.type,
