@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {PresentationCreateModel} from "./services/PresentationCreateModel";
 import {Store} from "@ngrx/store";
-import {httpCreatePresentation} from "../../../../store/httpActions";
-import {GenericHttpActionSubscriber} from "../../../../logic/Subscriber/GenericHttpActionSubscriber";
-import {GenericViewActionSubscriber} from "../../../../logic/Subscriber/GenericViewActionSubscriber";
+import {HttpActionSubscriber} from "../../../../store/subscriber/knowledgeSource/HttpActionSubscriber";
+import {ViewActionSubscriber} from "../../../../store/subscriber/knowledgeSource/ViewActionSubscriber";
+import {httpCreatePresentation} from "../../../../store/knowledgeSource/httpActions";
 
 @Component({
   selector: 'cms-presentation-create',
@@ -18,8 +18,8 @@ export class PresentationCreateComponent {
 
   constructor(
     private store: Store<any>,
-    private genericHttpActionSubscriber: GenericHttpActionSubscriber,
-    private genericViewActionSubscriber: GenericViewActionSubscriber,
+    private genericHttpActionSubscriber: HttpActionSubscriber,
+    private genericViewActionSubscriber: ViewActionSubscriber,
   ) {}
 
   onSubmit() {

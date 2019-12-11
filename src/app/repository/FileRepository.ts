@@ -38,6 +38,7 @@ export class FileRepository {
     return this.httpClient.get(this.routeResolver.getFilesFromDirectory(directoryId))
       .pipe(
         reduce((acc, res: any) => {
+          console.log(res);
           const files = res.data;
 
           const fileModels: FileHttpModel[] = [];

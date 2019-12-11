@@ -45,6 +45,14 @@ export class DirectoryComponent {
     }
   }
 
+  directoryHovered() {
+    this.componentState.hovered = true;
+  }
+
+  directoryUnHovered() {
+    this.componentState.hovered = false;
+  }
+
   isDirectory(entry) {
     return entry.type === 'directory';
   }

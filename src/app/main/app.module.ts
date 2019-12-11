@@ -7,8 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import {viewActionReducer} from "../store/viewReducers";
-import {httpActionReducer} from "../store/httpReducers";
+import {viewActionReducer as pageViewReducer} from "../store/page/viewReducers";
+import {httpActionReducer as pageHttpReducer} from "../store/page/httpReducers";
+import {editorActionReducer as editorViewReducer} from "../store/editor/editorViewReducers";
+import {httpActionReducer as knowledgeSourceHttpActionReducer} from "../store/knowledgeSource/httpReducers";
+import {viewActionReducer as knowledgeSourceViewActionReducer} from "../store/knowledgeSource/viewReducers";
 
 @NgModule({
   declarations: [
@@ -19,8 +22,11 @@ import {httpActionReducer} from "../store/httpReducers";
     AppRoutingModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({
-      viewActions: viewActionReducer,
-      httpActions: httpActionReducer,
+      pageViewActions: pageViewReducer,
+      pageHttpActions: pageHttpReducer,
+      knowledgeSourceHttpActions: knowledgeSourceHttpActionReducer,
+      knowledgeSourceViewActions: knowledgeSourceViewActionReducer,
+      editorViewReducer: editorViewReducer,
     }),
     HttpClientModule,
     MonacoEditorModule.forRoot(),

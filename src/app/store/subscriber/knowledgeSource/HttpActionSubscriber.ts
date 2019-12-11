@@ -1,17 +1,17 @@
 import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {actionTypes} from "../../store/httpActions";
-import {IRequestModel} from "../../model/IRequestModel";
-import {CreatePresentationModel} from "../../model/http/CreatePresentationModel";
-import {PresentationRepository} from "../../repository/PresentationRepository";
-import {viewCreatePresentation} from "../../store/viewActions";
-import {PageRepository} from "../../repository/PageRepository";
+import {PresentationRepository} from "../../../repository/PresentationRepository";
+import {PageRepository} from "../../../repository/PageRepository";
+import {viewCreatePresentation} from "../../knowledgeSource/viewActions";
+import {CreatePresentationModel} from "../../../model/http/CreatePresentationModel";
+import {IRequestModel} from "../../../model/IRequestModel";
+import {actionTypes} from "../../knowledgeSource/httpActions";
 
 @Injectable({
   providedIn: 'root',
 })
-export class GenericHttpActionSubscriber {
+export class HttpActionSubscriber {
   private observable;
 
   constructor(
@@ -19,7 +19,7 @@ export class GenericHttpActionSubscriber {
     private presentationRepository: PresentationRepository,
     private pageRepository: PageRepository,
   ) {
-    this.subscribeToHttpActions(store.pipe(select('httpActions')));
+    this.subscribeToHttpActions(store.pipe(select('knowledgeSourceHttpActions')));
   }
 
   private subscribeToHttpActions(observable: Observable<any>) {

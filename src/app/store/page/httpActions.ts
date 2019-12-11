@@ -7,23 +7,12 @@ export const actionTypes = {
   HTTP_UPDATE_TEXT_BLOCK_FINISHED: '[Http] Update text block finished',
   HTTP_REMOVE_TEXT_BLOCK: '[Http] Remove text block',
   HTTP_REMOVE_TEXT_BLOCK_FINISHED: '[Http] Remove text block finished',
-  HTTP_CREATE_PRESENTATION: '[Http] Create presentation',
-  HTTP_CREATE_PRESENTATION_FINISHED: '[Http] Create presentation finished',
   HTTP_CREATE_CODE_BLOCK: '[Http] Create code block',
   HTTP_CREATE_CODE_BLOCK_FINISHED: '[Http] Create code block',
 };
 
-export const httpCreatePresentation = createAction(
-  actionTypes.HTTP_CREATE_PRESENTATION,
-  props<{}>()
-);
-
 export const httpCreateCodeBlock = createAction(
   actionTypes.HTTP_CREATE_CODE_BLOCK
-);
-
-export const httpCreatePresentationFinished = createAction(
-  actionTypes.HTTP_CREATE_PRESENTATION_FINISHED
 );
 
 export const httpCreateTextBlock = createAction(

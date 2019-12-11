@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, ViewChild} from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../logic/PageComponent/IComponent";
 import {Store} from "@ngrx/store";
-import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/httpActions";
+import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 import {MatDialog} from "@angular/material/dialog";
 

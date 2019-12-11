@@ -1,20 +1,20 @@
 import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
-import {actionTypes} from "../../store/viewActions";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {actionTypes} from "../../knowledgeSource/viewActions";
 
 @Injectable({
   providedIn: 'root',
 })
-export class GenericViewActionSubscriber {
+export class ViewActionSubscriber {
   private observable;
 
   constructor(
     private store: Store<any>,
     private router: Router,
   ) {
-    this.subscribeToViewActions(store.pipe(select('viewActions')));
+    this.subscribeToViewActions(store.pipe(select('knowledgeSourceViewActions')));
   }
 
   private subscribeToViewActions(observable: Observable<any>) {

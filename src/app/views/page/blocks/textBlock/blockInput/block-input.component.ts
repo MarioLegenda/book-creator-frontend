@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpUpdateTextBlock} from "../../../../../store/httpActions";
+import {httpUpdateTextBlock} from "../../../../../store/page/httpActions";
 
 @Component({
   selector: 'cms-block-input',

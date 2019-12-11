@@ -4,7 +4,7 @@ import {Store} from "@ngrx/store";
 import {PageContext} from "./PageContext";
 import {PageRepository} from "../../../repository/PageRepository";
 import {TextBlockModel} from "../../../model/http/TextBlockModel";
-import {actionTypes, viewAddTextBlock} from "../../../store/viewActions";
+import {actionTypes, viewAddTextBlock} from "../../../store/page/viewActions";
 import {IPage} from "./IPage";
 import {PresentationRepository} from "../../../repository/PresentationRepository";
 import {IKnowledgeSource} from "./IKnowledgeSource";

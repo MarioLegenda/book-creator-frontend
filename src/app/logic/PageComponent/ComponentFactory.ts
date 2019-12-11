@@ -1,6 +1,6 @@
 import {ComponentType} from "./ComponentType";
 import {IComponent} from "./IComponent";
-import {actionTypes} from "../../store/viewActions";
+import {actionTypes} from "../../store/page/viewActions";
 import deepcopy from 'deepcopy';
 
 export class ComponentFactory {

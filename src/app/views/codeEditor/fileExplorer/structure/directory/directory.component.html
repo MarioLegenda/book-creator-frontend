@@ -2,6 +2,8 @@
   <div
     class="dir-name"
     (dblclick)="expandDirectory()"
+    (mouseenter)="directoryHovered()"
+    (mouseleave)="directoryUnHovered()"
     [ngStyle]="componentState.dirStyles"
     [ngClass]="{'isExpanded': this.componentState.expanded}">
 
@@ -13,10 +15,10 @@
 
     <h1 class="text">{{directory.name}}</h1>
 
-    <div class="action-set">
+    <div class="action-set" *ngIf="componentState.hovered">
+      <i class="action" *ngIf="!directory.isRoot" (click)="removeDirectory()" [ngClass]="this.componentState.icons.removeDirectory"></i>
       <i class="action" (click)="openDirectoryDialog()" [ngClass]="this.componentState.icons.newDir"></i>
       <i class="action" (click)="openFileDialog()" [ngClass]="this.componentState.icons.newFile"></i>
-      <i class="action" (click)="removeDirectory()" [ngClass]="this.componentState.icons.removeDirectory"></i>
     </div>
   </div>
 

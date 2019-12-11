@@ -12,8 +12,15 @@ export class FileExplorerComponent {
   @Input('project') project: CodeProjectHttpModel;
 
   componentState = {
+    selectedAction: 'project',
+    selectedActionClass: {},
     icons: {
-      selectProject: 'fas fa-clone',
+      selectProject: {'fas fa-clone': true},
+      searchProject: {'fas fa-search': true},
     },
   };
+
+  selectAction(action) {
+    this.componentState.selectedAction = action;
+  }
 }

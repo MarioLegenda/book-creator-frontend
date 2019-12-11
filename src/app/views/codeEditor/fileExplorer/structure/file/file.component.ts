@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {FileRepository} from "../../../../../repository/FileRepository";
+import {Store} from "@ngrx/store";
+import {viewEditorShowFile} from "../../../../../store/editor/editorViewActions";
 
 @Component({
   selector: 'cms-file',
@@ -15,7 +17,8 @@ export class FileComponent implements OnInit {
   @Output('fileRemoved') fileRemoved = new EventEmitter();
 
   constructor(
-    private fileRepository: FileRepository
+    private fileRepository: FileRepository,
+    private store: Store<any>
   ) {}
 
   componentState = {
@@ -44,5 +47,9 @@ export class FileComponent implements OnInit {
     }).subscribe(() => {
       this.fileRemoved.emit(this.file);
     })
+  }
+
+  showFile() {
+    this.store.dispatch(viewEditorShowFile(this.file))
   }
 }

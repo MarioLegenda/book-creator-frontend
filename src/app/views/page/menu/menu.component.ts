@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/httpActions";
+import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/page/httpActions";
 import {Router} from "@angular/router";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
 

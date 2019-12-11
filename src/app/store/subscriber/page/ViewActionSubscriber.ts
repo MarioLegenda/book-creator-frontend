@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
-import {ComponentTracker} from "../PageComponent/ComponentTracker";
+import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {actionTypes} from "../../store/viewActions";
-import {IComponent} from "../PageComponent/IComponent";
-import {ComponentFactory} from "../PageComponent/ComponentFactory";
+import {actionTypes} from "../../page/viewActions";
+import {IComponent} from "../../../logic/PageComponent/IComponent";
+import {ComponentFactory} from "../../../logic/PageComponent/ComponentFactory";
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class ViewActionSubscriber {
     private store: Store<any>,
     public componentTracker: ComponentTracker
   ) {
-    this.subscribeToViewActions(store.pipe(select('viewActions')));
+    this.subscribeToViewActions(store.pipe(select('pageViewActions')));
   }
 
   private subscribeToViewActions(observable: Observable<any>) {

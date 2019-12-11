@@ -62,7 +62,20 @@
       width: 45px;
       float: left;
 
-      margin-left: 9px;
+      &:hover {
+        color: $editorMainColor;
+        cursor: pointer;
+      }
+
+      i {
+        margin-left: 6px;
+      }
+
+      border-left: 4px solid $appBlack;
+    }
+
+    .selected-action {
+      border-left: 4px solid $editorMainColor;
     }
   }
 }

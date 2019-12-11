@@ -1,11 +1,5 @@
 <div class="col-xs-12 col-md-12 col-lg-12 tabs-wrapper">
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
-  <cms-file-tab></cms-file-tab>
+  <div *ngFor="let tab of tabs">
+    <cms-file-tab></cms-file-tab>
+  </div>
 </div>
