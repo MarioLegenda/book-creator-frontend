@@ -1,0 +1,35 @@
+@import '../../../../../../styles/variables';
+
+.tab {
+  width: 191px;
+  float: left;
+
+  font-size: 0.9em;
+
+  position: relative;
+
+  margin: 0; padding: 0;
+
+  padding: 10px 15px 10px 10px;
+
+  background-color: white;
+  border-bottom: 4px solid $editorMainColor;
+  border-right: 1px solid $lightestGray;
+
+  p {
+    margin: 0; padding: 0;
+  }
+
+  i {
+    display: inline-block;
+    position: absolute;
+
+    top: 5px;
+    right: 5px;
+
+    &:hover {
+      color: $editorMainColor;
+      cursor: pointer;
+    }
+  }
+}

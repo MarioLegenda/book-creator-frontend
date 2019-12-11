@@ -14,6 +14,9 @@ import {AddFileDialogComponent} from "../fileExplorer/structure/modals/file/add-
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {AddDirectoryDialogComponent} from "../fileExplorer/structure/modals/directory/add-directory-dialog.component";
+import {FileTabComponent} from "../workspace/fileTabs/file-tab.component";
+import {TextEditorComponent} from "../workspace/textEditor/text-editor.component";
+import {TabComponent} from "../workspace/fileTabs/tab/tab.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import {AddDirectoryDialogComponent} from "../fileExplorer/structure/modals/dire
     FileComponent,
     AddFileDialogComponent,
     AddDirectoryDialogComponent,
+    FileTabComponent,
+    TextEditorComponent,
+    TabComponent,
   ],
   imports: [
     CommonModule,
