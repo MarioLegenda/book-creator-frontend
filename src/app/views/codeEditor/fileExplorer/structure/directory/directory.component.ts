@@ -8,6 +8,9 @@ import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {DirectoryRepository} from "../../../../../repository/DirectoryRepository";
 import {DirectoryHttpModel} from "../../../../../model/http/codeEditor/DirectoryHttpModel";
 import {AddDirectoryDialogComponent} from "../modals/directory/add-directory-dialog.component";
+import {Store} from "@ngrx/store";
+import {httpGetFileContentAction} from "../../../../../store/editor/httpActions";
+import {viewEditorShowFile} from "../../../../../store/editor/viewActions";
 
 @Component({
   selector: 'cms-directory',
@@ -33,6 +36,7 @@ export class DirectoryComponent {
   };
 
   constructor(
+    private store: Store<any>,
     private dialog: MatDialog,
     private fileRepository: FileRepository,
     private directoryRepository: DirectoryRepository,
@@ -76,6 +80,8 @@ export class DirectoryComponent {
     dialogRef.afterClosed().subscribe((model: FileAppModel) => {
       if (model) {
         this.directory.structure.push(model);
+
+        this.store.dispatch(viewEditorShowFile(model));
 
         if (!this.componentState.expanded) {
           this.expandDirectory();

@@ -1,13 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import {
-  viewEditorShowFile
-} from './editorViewActions';
+  viewEditorShowFile,
+} from './viewActions';
 import deepcopy from 'deepcopy';
 
 const editorActionReducers = createReducer(null,
   on(viewEditorShowFile, (state, action) => deepcopy(action)),
 );
 
-export function editorActionReducer(state, action) {
+export function editorViewReducer(state, action) {
   return editorActionReducers(state, action);
 }

@@ -13,10 +13,6 @@ export class BootstrapComponent implements OnInit {
     projects: null,
   };
 
-  onClick(index) {
-    console.log(index);
-  }
-
   ngOnInit(): void {
 
   }

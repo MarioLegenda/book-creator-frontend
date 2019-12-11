@@ -9,9 +9,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import {viewActionReducer as pageViewReducer} from "../store/page/viewReducers";
 import {httpActionReducer as pageHttpReducer} from "../store/page/httpReducers";
-import {editorActionReducer as editorViewReducer} from "../store/editor/editorViewReducers";
+import {editorViewReducer} from "../store/editor/viewReducers";
+import {editorHttpReducer} from "../store/editor/httpReducers";
 import {httpActionReducer as knowledgeSourceHttpActionReducer} from "../store/knowledgeSource/httpReducers";
 import {viewActionReducer as knowledgeSourceViewActionReducer} from "../store/knowledgeSource/viewReducers";
+import {TabSession} from "../store/sessions/TabSession";
+import {clearState} from "../store/globalReducers";
 
 @NgModule({
   declarations: [
@@ -26,11 +29,15 @@ import {viewActionReducer as knowledgeSourceViewActionReducer} from "../store/kn
       pageHttpActions: pageHttpReducer,
       knowledgeSourceHttpActions: knowledgeSourceHttpActionReducer,
       knowledgeSourceViewActions: knowledgeSourceViewActionReducer,
-      editorViewReducer: editorViewReducer,
+      editorViewActions: editorViewReducer,
+      editorHttpActions: editorHttpReducer,
+    }, {
+      metaReducers: [clearState]
     }),
     HttpClientModule,
     MonacoEditorModule.forRoot(),
   ],
+  providers: [{provide: TabSession, useClass: TabSession}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

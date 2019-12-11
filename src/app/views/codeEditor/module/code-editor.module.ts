@@ -14,9 +14,10 @@ import {AddFileDialogComponent} from "../fileExplorer/structure/modals/file/add-
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {AddDirectoryDialogComponent} from "../fileExplorer/structure/modals/directory/add-directory-dialog.component";
-import {FileTabComponent} from "../workspace/fileTabs/file-tab.component";
+import {FileTabsComponent} from "../workspace/fileTabs/file-tabs.component";
 import {TextEditorComponent} from "../workspace/textEditor/text-editor.component";
 import {TabComponent} from "../workspace/fileTabs/tab/tab.component";
+import {TabSession} from "../../../store/sessions/TabSession";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import {TabComponent} from "../workspace/fileTabs/tab/tab.component";
     FileComponent,
     AddFileDialogComponent,
     AddDirectoryDialogComponent,
-    FileTabComponent,
+    FileTabsComponent,
     TextEditorComponent,
     TabComponent,
   ],

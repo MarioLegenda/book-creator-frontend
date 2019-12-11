@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {FileRepository} from "../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
-import {viewEditorShowFile} from "../../../../../store/editor/editorViewActions";
+import {httpGetFileContentAction} from "../../../../../store/editor/httpActions";
 
 @Component({
   selector: 'cms-file',
@@ -50,6 +50,6 @@ export class FileComponent implements OnInit {
   }
 
   showFile() {
-    this.store.dispatch(viewEditorShowFile(this.file))
+    this.store.dispatch(httpGetFileContentAction(this.file));
   }
 }

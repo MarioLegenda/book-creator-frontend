@@ -38,7 +38,6 @@ export class FileRepository {
     return this.httpClient.get(this.routeResolver.getFilesFromDirectory(directoryId))
       .pipe(
         reduce((acc, res: any) => {
-          console.log(res);
           const files = res.data;
 
           const fileModels: FileHttpModel[] = [];
@@ -55,5 +54,9 @@ export class FileRepository {
           return fileModels;
         }, {})
       );
+  }
+
+  public getFileContent(fileId: string) {
+    return this.httpClient.get(this.routeResolver.getFileContent(fileId));
   }
 }

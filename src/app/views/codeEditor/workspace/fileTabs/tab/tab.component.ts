@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {FileTab} from "../../../../../model/app/codeEditor/FileTab";
 
 @Component({
   selector: 'cms-file-tab',
@@ -8,4 +9,5 @@ import {Component} from '@angular/core';
   templateUrl: './tab.component.html',
 })
 export class TabComponent {
+  @Input('fileTab') fileTab: FileTab;
 }
