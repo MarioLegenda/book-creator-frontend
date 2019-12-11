@@ -7,6 +7,7 @@ import {httpGetFileContentAction} from "../../../../../store/editor/httpActions"
 @Component({
   selector: 'cms-file',
   styleUrls: [
+    '../global-actions.component.scss',
     './file.component.scss',
   ],
   templateUrl: './file.component.html',
@@ -27,7 +28,7 @@ export class FileComponent implements OnInit {
       'padding-left': '20px',
     },
     icons: {
-      removeFile: 'far fa-trash-alt',
+      removeFile: 'far fa-trash-alt remove',
     }
   };
 

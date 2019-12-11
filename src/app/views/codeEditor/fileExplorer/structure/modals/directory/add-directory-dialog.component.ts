@@ -1,8 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FileRepository} from "../../../../../../repository/FileRepository";
-import {FileAppModel} from "../../../../../../model/app/codeEditor/FileAppModel";
-import {FileHttpModel} from "../../../../../../model/http/codeEditor/FileHttpModel";
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 import {DirectoryAppModel} from "../../../../../../model/app/codeEditor/DirectoryAppModel";
 import {DirectoryHttpModel} from "../../../../../../model/http/codeEditor/DirectoryHttpModel";
@@ -10,7 +7,7 @@ import {DirectoryHttpModel} from "../../../../../../model/http/codeEditor/Direct
 @Component({
   selector: 'cms-add-directory-modal',
   templateUrl: './add-directory-modal.component.html',
-  styleUrls: ['./add-directory-modal.component.scss']
+  styleUrls: ['../global-dialog.component.scss']
 })
 export class AddDirectoryDialogComponent {
   constructor(
@@ -18,7 +15,7 @@ export class AddDirectoryDialogComponent {
     public dialogRef: MatDialogRef<AddDirectoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public model: DirectoryAppModel) {}
 
-  onNoClick(): void {
+  close(): void {
     this.dialogRef.close();
   }
 

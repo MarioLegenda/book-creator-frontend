@@ -1,12 +1,18 @@
 <div class="dialog">
-  <div mat-dialog-content class="dialog-content">
-    <mat-form-field class="form-field">
-      <input [(ngModel)]="model.name"  matInput placeholder="Add new file" class="form-input">
-    </mat-form-field>
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
   </div>
 
-  <div mat-dialog-actions class="dialog-actions">
-    <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button cdkFocusInitial (click)="createFile()">Ok</button>
+  <div class="header">
+    <i class="fas fa-file-alt icon"></i>
+    <p>Add a new file</p>
+  </div>
+
+  <div class="dialog-content form-group">
+      <input [(ngModel)]="model.name"  placeholder="Name" class="form-input form-control">
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn create" cdkFocusInitial (click)="createFile()">Create</button>
   </div>
 </div>

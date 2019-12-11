@@ -35,27 +35,6 @@
       }
     }
 
-    .action-set {
-      width: 90px;
-      position: absolute;
-      top: 7px;
-      right: 0;
-
-      color: $appBlack;
-
-      font-size: 1.2em;
-
-      .action {
-        display: inline-block;
-        float: right;
-        margin-right: 10px;
-      }
-
-      .action:hover {
-        color: $editorMainColor;
-      }
-    }
-
     &:hover {
       background-color: $lighterGray;
       cursor: pointer;

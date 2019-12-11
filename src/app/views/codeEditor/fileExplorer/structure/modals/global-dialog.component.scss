@@ -1,0 +1,91 @@
+@import '../../../../../../styles/variables';
+
+.dialog {
+  padding: 0 50px 0 50px;
+
+  position: relative;
+
+  .close-dialog {
+    position: absolute;
+
+    top: -12px; right: -10px;
+
+    i {
+      font-size: 1em;
+      color: $appBlack;
+
+      &:hover {
+        color: $editorMainColor;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .header {
+    width: 100%;
+    float: left;
+
+    position: relative;
+
+    border-bottom: 1px solid $editorMainColor;
+
+    margin-bottom: 40px;
+
+    .icon {
+      position: absolute;
+
+      top: 5px; right: 5px;
+
+      color: $editorMainColor;
+    }
+
+    p {
+      color: $appBlack;
+    }
+  }
+
+  .dialog-content {
+    width: 100% !important;
+    float: left;
+
+    margin-bottom: 40px;
+
+    .form-field {
+      width: 100%;
+    }
+
+    .form-input {
+      width: 100%;
+    }
+  }
+
+  .dialog-actions {
+    width: 100%;
+    float: left;
+
+    padding: 0; margin: 0;
+
+    .cancel, .create {
+      display: block;
+    }
+
+    .cancel {
+      float: left;
+    }
+
+    .create {
+      float: right;
+      background-color: $editorMainColor;
+      color: white;
+    }
+  }
+
+  .form-control{
+    border-width: 1px;
+    border-color: $lightestGray;
+  }
+
+  .form-control:focus {
+    box-shadow: none; -webkit-box-shadow: none;
+  }
+}

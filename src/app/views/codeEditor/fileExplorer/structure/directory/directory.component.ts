@@ -15,6 +15,7 @@ import {viewEditorShowFile} from "../../../../../store/editor/viewActions";
 @Component({
   selector: 'cms-directory',
   styleUrls: [
+    '../global-actions.component.scss',
     './directory.component.scss',
   ],
   templateUrl: './directory.component.html',
@@ -29,9 +30,9 @@ export class DirectoryComponent {
     dirStyles: {},
     icons: {
       dirCaret: 'fas fa-angle-right',
-      newFile: 'far fa-file',
-      newDir: 'far fa-folder',
-      removeDirectory: 'far fa-trash-alt',
+      newFile: 'far fa-file-alt',
+      newDir: 'fas fa-folder-plus',
+      removeDirectory: 'far fa-trash-alt remove',
     },
   };
 
@@ -73,7 +74,7 @@ export class DirectoryComponent {
 
   openFileDialog(): void {
     const dialogRef = this.dialog.open(AddFileDialogComponent, {
-      width: '300px',
+      width: '400px',
       data: new FileAppModel('','', this.directory.directoryId, '', ''),
     });
 
@@ -92,7 +93,7 @@ export class DirectoryComponent {
 
   openDirectoryDialog(): void {
     const dialogRef = this.dialog.open(AddDirectoryDialogComponent, {
-      width: '300px',
+      width: '400px',
       data: new DirectoryAppModel(
         this.directory.codeProjectUuid,
         '',

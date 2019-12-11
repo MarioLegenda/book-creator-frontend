@@ -7,7 +7,7 @@ import {FileHttpModel} from "../../../../../../model/http/codeEditor/FileHttpMod
 @Component({
   selector: 'cms-add-file-modal',
   templateUrl: './add-file-modal.component.html',
-  styleUrls: ['./add-file-modal.component.scss']
+  styleUrls: ['../global-dialog.component.scss']
 })
 export class AddFileDialogComponent {
   constructor(
@@ -15,7 +15,7 @@ export class AddFileDialogComponent {
     public dialogRef: MatDialogRef<AddFileDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public model: FileAppModel) {}
 
-  onNoClick(): void {
+  close(): void {
     this.dialogRef.close();
   }
 
