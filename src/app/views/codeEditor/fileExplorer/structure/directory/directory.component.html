@@ -16,12 +16,13 @@
     <div class="action-set">
       <i class="action" (click)="openDirectoryDialog()" [ngClass]="this.componentState.icons.newDir"></i>
       <i class="action" (click)="openFileDialog()" [ngClass]="this.componentState.icons.newFile"></i>
+      <i class="action" (click)="removeDirectory()" [ngClass]="this.componentState.icons.removeDirectory"></i>
     </div>
   </div>
 
   <div *ngIf="componentState.expanded">
     <div *ngFor="let item of directory.structure">
-      <cms-directory *ngIf="isDirectory(item)" [directory]="item"></cms-directory>
+      <cms-directory (removeDirectoryEvent)="onRemoveDirectory($event)" *ngIf="isDirectory(item)" [directory]="item"></cms-directory>
 
       <cms-file (fileRemoved)="onFileRemoved($event)" *ngIf="isFile(item)" [file]="item" [depth]="directory.depth"></cms-file>
     </div>

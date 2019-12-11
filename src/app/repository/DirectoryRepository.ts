@@ -71,4 +71,12 @@ export class DirectoryRepository {
         }), {})
       );
   }
+
+  removeDirectory(directoryId: string) {
+    return this.httpClient.post(this.routeResolver.removeDirectory(), {
+      data: {
+        directoryId: directoryId,
+      },
+    });
+  }
 }

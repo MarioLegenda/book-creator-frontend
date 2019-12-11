@@ -18,6 +18,7 @@ import {AddDirectoryDialogComponent} from "../modals/directory/add-directory-dia
 })
 export class DirectoryComponent {
   @Input('directory') directory: DirectoryAppModel;
+  @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter();
 
   componentState = {
     expanded: false,
@@ -27,6 +28,7 @@ export class DirectoryComponent {
       dirCaret: 'fas fa-angle-right',
       newFile: 'far fa-file',
       newDir: 'far fa-folder',
+      removeDirectory: 'far fa-trash-alt',
     },
   };
 
@@ -49,6 +51,12 @@ export class DirectoryComponent {
 
   isFile(entry) {
     return entry.type === 'file';
+  }
+
+  removeDirectory() {
+    this.directoryRepository.removeDirectory(this.directory.directoryId).subscribe(() => {
+      this.removeDirectoryEvent.emit(this.directory);
+    });
   }
 
   openFileDialog(): void {
@@ -96,6 +104,17 @@ export class DirectoryComponent {
     const structure = this.directory.structure;
     for (let i = 0; structure.length > 0; i++) {
       if (structure[i].type === 'file' && file.id === structure[i].id) {
+        this.directory.structure.splice(i, 1);
+
+        break;
+      }
+    }
+  }
+
+  onRemoveDirectory(directory) {
+    const structure = this.directory.structure;
+    for (let i = 0; structure.length > 0; i++) {
+      if (structure[i].type === 'directory' && directory.id === structure[i].id) {
         this.directory.structure.splice(i, 1);
 
         break;
