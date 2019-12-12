@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../../model/app/codeEditor/FileTab";
 
@@ -10,19 +10,10 @@ import {FileTab} from "../../../../model/app/codeEditor/FileTab";
   templateUrl: './file-tabs.component.html',
 })
 export class FileTabsComponent {
-  tabs = {};
+  @Input('tabs') tabs = {};
+  @Output('tabCloseEvent') tabCloseEvent = new EventEmitter();
 
-  constructor(
-    private store: Store<any>,
-  ) {}
-
-  ngOnInit() {
-    this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
-      if (action) {
-        if (!Object.hasOwnProperty(action.id)) {
-          this.tabs[action.id] = new FileTab(action.id, action.name);
-        }
-      }
-    });
+  onTabClose(tab: FileTab) {
+    this.tabCloseEvent.emit(tab);
   }
 }

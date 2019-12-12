@@ -8,8 +8,9 @@ export class TabSession {
   remove(fileId: string): void {
     const index = this.openTabs.indexOf(fileId);
 
-    if (index) this.openTabs.slice(this.openTabs.indexOf(fileId), 1);
+    if (index >= 0) this.openTabs.splice(index, 1);
   }
+
 
   add(fileId): void {
     if (!this.has(fileId)) {

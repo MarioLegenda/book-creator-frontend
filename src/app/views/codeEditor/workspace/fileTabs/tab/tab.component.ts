@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FileTab} from "../../../../../model/app/codeEditor/FileTab";
 
 @Component({
@@ -10,4 +10,9 @@ import {FileTab} from "../../../../../model/app/codeEditor/FileTab";
 })
 export class TabComponent {
   @Input('fileTab') fileTab: FileTab;
+  @Output('tabCloseEvent') tabCloseEvent = new EventEmitter();
+
+  close() {
+    this.tabCloseEvent.emit(this.fileTab);
+  }
 }

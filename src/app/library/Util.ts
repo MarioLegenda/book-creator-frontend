@@ -1,5 +1,5 @@
 export default class Util {
-  static is(type, val) {
+  static is(type: string, val) {
     const res = `[object ${Util.ucFirst(type)}]`;
 
     if (type === "float") {
@@ -17,7 +17,11 @@ export default class Util {
     return Object.prototype.toString.call(val) === res;
   }
 
-  static ucFirst (str) {
+  static ucFirst (str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  static hasKey(obj: object, key: string | number): boolean {
+    return Object.prototype.hasOwnProperty.call(obj, key);
   }
 }

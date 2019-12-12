@@ -9,7 +9,7 @@
   </div>
 
   <div class="dialog-content form-group">
-      <input [(ngModel)]="model.name"  placeholder="Name" class="form-input form-control">
+      <input (keyup.enter)="createDirectory()" [(ngModel)]="model.name"  placeholder="Name" class="form-input form-control">
   </div>
 
   <div class="dialog-actions">

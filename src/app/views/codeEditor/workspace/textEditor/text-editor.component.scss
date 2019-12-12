@@ -2,4 +2,16 @@
 
 .text-editor-wrapper {
   height: 100%;
+
+  .no-tabs-message {
+    font-size: 4em;
+
+    color: $lightestGray;
+
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+
+    margin-top: 100px;
+  }
 }

@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {select, Store} from "@ngrx/store";
-import {FileTab} from "../../../../model/app/codeEditor/FileTab";
+import {TabSession} from "../../../../store/sessions/TabSession";
 
 @Component({
   selector: 'cms-text-editor',
@@ -10,6 +10,8 @@ import {FileTab} from "../../../../model/app/codeEditor/FileTab";
   templateUrl: './text-editor.component.html',
 })
 export class TextEditorComponent {
+  @Input('hasTabs') hasTabs: boolean;
+
   componentState = {
     editorOptions: {
       theme: 'vs-light',
@@ -25,8 +27,7 @@ export class TextEditorComponent {
 
   constructor(
     private store: Store<any>,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
