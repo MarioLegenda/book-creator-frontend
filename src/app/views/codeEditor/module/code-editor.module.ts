@@ -18,6 +18,8 @@ import {FileTabsComponent} from "../workspace/fileTabs/file-tabs.component";
 import {TextEditorComponent} from "../workspace/textEditor/text-editor.component";
 import {TabComponent} from "../workspace/fileTabs/tab/tab.component";
 import {TabSession} from "../../../store/sessions/TabSession";
+import {DeleteDirectoryDialogComponent} from "../fileExplorer/structure/modals/deleteDirectory/delete-directory-dialog.component";
+import {DeleteFileDialogComponent} from "../fileExplorer/structure/modals/deleteFile/delete-file-dialog.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import {TabSession} from "../../../store/sessions/TabSession";
     FileTabsComponent,
     TextEditorComponent,
     TabComponent,
+    DeleteDirectoryDialogComponent,
+    DeleteFileDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +51,9 @@ import {TabSession} from "../../../store/sessions/TabSession";
   providers: [],
   entryComponents: [
     AddFileDialogComponent,
-    AddDirectoryDialogComponent
+    AddDirectoryDialogComponent,
+    DeleteDirectoryDialogComponent,
+    DeleteFileDialogComponent,
   ]
 })
 export class CodeEditorModule { }

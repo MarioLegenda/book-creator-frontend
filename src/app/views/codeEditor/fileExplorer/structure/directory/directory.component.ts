@@ -11,6 +11,7 @@ import {AddDirectoryDialogComponent} from "../modals/directory/add-directory-dia
 import {Store} from "@ngrx/store";
 import {httpGetFileContentAction} from "../../../../../store/editor/httpActions";
 import {viewEditorShowFile} from "../../../../../store/editor/viewActions";
+import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 
 @Component({
   selector: 'cms-directory',
@@ -67,8 +68,17 @@ export class DirectoryComponent {
   }
 
   removeDirectory() {
-    this.directoryRepository.removeDirectory(this.directory.directoryId).subscribe(() => {
-      this.removeDirectoryEvent.emit(this.directory);
+    const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
+      width: '400px',
+      data: {name: this.directory.name},
+    });
+
+    dialogRef.afterClosed().subscribe((decision) => {
+      if (decision !== true) return;
+
+      this.directoryRepository.removeDirectory(this.directory.directoryId).subscribe(() => {
+        this.removeDirectoryEvent.emit(this.directory);
+      });
     });
   }
 

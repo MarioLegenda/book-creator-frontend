@@ -3,6 +3,8 @@ import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {FileRepository} from "../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
 import {httpGetFileContentAction} from "../../../../../store/editor/httpActions";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 
 @Component({
   selector: 'cms-file',
@@ -19,7 +21,8 @@ export class FileComponent implements OnInit {
 
   constructor(
     private fileRepository: FileRepository,
-    private store: Store<any>
+    private store: Store<any>,
+    private dialog: MatDialog,
   ) {}
 
   componentState = {
@@ -41,13 +44,22 @@ export class FileComponent implements OnInit {
   }
 
   removeFile() {
-    this.fileRepository.removeFileById({
-      data: {
-        fileId: this.file.id,
-      }
-    }).subscribe(() => {
-      this.fileRemoved.emit(this.file);
-    })
+    const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
+      width: '400px',
+      data: {name: this.file.name},
+    });
+
+    dialogRef.afterClosed().subscribe((decision) => {
+      if (decision !== true) return;
+
+      this.fileRepository.removeFileById({
+        data: {
+          fileId: this.file.id,
+        }
+      }).subscribe(() => {
+        this.fileRemoved.emit(this.file);
+      })
+    });
   }
 
   showFile() {

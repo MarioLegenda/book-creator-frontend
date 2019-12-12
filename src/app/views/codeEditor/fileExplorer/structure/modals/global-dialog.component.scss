@@ -42,6 +42,11 @@
     p {
       color: $appBlack;
     }
+
+    .highlight {
+      color: $editorMainColor;
+      font-weight: bolder;
+    }
   }
 
   .dialog-content {
@@ -65,7 +70,7 @@
 
     padding: 0; margin: 0;
 
-    .cancel, .create {
+    .cancel, .create, .danger {
       display: block;
     }
 
@@ -77,6 +82,12 @@
       float: right;
       background-color: $editorMainColor;
       color: white;
+    }
+
+    .danger {
+      background-color: $dangerRed;
+      color: white;
+      float: right;
     }
   }
 

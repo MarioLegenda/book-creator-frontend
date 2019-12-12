@@ -1,0 +1,13 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <p>Are you sure you wish to delete the directory <span class="highlight">{{model.name}}</span>?</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn danger" cdkFocusInitial (click)="deleteDirectory()">Delete</button>
+  </div>
+</div>

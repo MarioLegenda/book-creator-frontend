@@ -20,6 +20,8 @@ export class AddDirectoryDialogComponent {
   }
 
   createDirectory() {
+    if (!this.model.name) return this.dialogRef.close();
+
     this.directoryRepository.createDirectory({
       data: {
         codeProjectUuid: this.model.codeProjectUuid,
