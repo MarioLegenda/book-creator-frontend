@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-md-12 col-lg-12 text-editor-wrapper">
+<div class="col-xs-12 col-md-12 col-lg-12 text-editor-wrapper" #wrapperRef>
   <p
     class="no-tabs-message"
     *ngIf="!hasTabs">
@@ -7,8 +7,9 @@
 
   <ngx-monaco-editor
     *ngIf="hasTabs"
-    style="height: 100%"
+    style="height: 600px"
     [options]="componentState.editorOptions"
-    [(ngModel)]="componentState.code">
+    [(ngModel)]="componentState.code"
+    (keyup)="onChange()">
   </ngx-monaco-editor>
 </div>

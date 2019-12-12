@@ -3,7 +3,8 @@ import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../model/app/codeEditor/FileTab";
 import Util from "../../../library/Util";
 import {TabSession} from "../../../store/sessions/TabSession";
-import {actionTypes} from "../../../store/editor/httpActions";
+import {actionTypes as httpActionTypes} from "../../../store/editor/httpActions";
+import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions";
 
 @Component({
   selector: 'cms-editor-workspace',
@@ -16,6 +17,8 @@ export class WorkspaceComponent {
   tabs = [];
   hasTabs = false;
 
+  selectedTab = null;
+
   private indexMap = {};
 
   constructor(
@@ -26,9 +29,19 @@ export class WorkspaceComponent {
   ngOnInit() {
     this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
       if (action) {
-        if (!Util.hasKey(this.tabs, action.id)) {
-          this.tabs.push(new FileTab(action.id, action.name));
-          this.indexMap[action.id] = this.findTabIndex(action.id);
+
+        switch (action.type) {
+          case viewActionTypes.VIEW_EDITOR_SHOW_FILE: {
+            if (!Util.hasKey(this.tabs, action.id)) {
+              const tab: FileTab = new FileTab(action.id, action.name);
+              this.tabs.unshift(tab);
+              this.indexMap[action.id] = this.findTabIndex(action.id);
+
+              this.onTabSelect(tab);
+            }
+
+            break;
+          }
         }
       }
 
@@ -37,7 +50,7 @@ export class WorkspaceComponent {
 
     this.store.pipe(select('editorHttpActions')).subscribe((action: any) => {
       if (action) {
-        if (action.type === actionTypes.EDITOR_HTTP_REMOVE_FILE_FINISHED) {
+        if (action.type === httpActionTypes.EDITOR_HTTP_REMOVE_FILE_FINISHED) {
           this.onTabClose(action);
         }
       }
@@ -53,6 +66,10 @@ export class WorkspaceComponent {
     }
 
     this.updateHasTabs();
+  }
+
+  onTabSelect(tab: FileTab) {
+    this.selectedTab = tab;
   }
 
   private updateHasTabs(): void {

@@ -3,8 +3,6 @@
 .file-explorer {
   background-color: $almostWhiteGray;
 
-  min-height: 800px;
-
   .editor-dir-structure {
     width: 268px;
     float: left;
@@ -45,7 +43,6 @@
 
   .editor-actions-wrapper {
     width: 50px;
-    min-height: 800px;
     background-color: $appBlack;
     float: left;
   }

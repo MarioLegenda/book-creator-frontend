@@ -10,9 +10,23 @@ import {FileTab} from "../../../../../model/app/codeEditor/FileTab";
 })
 export class TabComponent {
   @Input('fileTab') fileTab: FileTab;
-  @Output('tabCloseEvent') tabCloseEvent = new EventEmitter();
+  @Input('selectedTab') selectedTab: FileTab;
 
-  close() {
+  @Output('tabCloseEvent') tabCloseEvent = new EventEmitter();
+  @Output('tabSelectEvent') tabSelectEvent = new EventEmitter();
+
+  private selected = false;
+
+  onClose() {
     this.tabCloseEvent.emit(this.fileTab);
+  }
+
+  onSelected($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+
+    this.selected = true;
+
+    this.tabSelectEvent.emit(this.fileTab);
   }
 }

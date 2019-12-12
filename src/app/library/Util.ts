@@ -24,4 +24,12 @@ export default class Util {
   static hasKey(obj: object, key: string | number): boolean {
     return Object.prototype.hasOwnProperty.call(obj, key);
   }
+
+  static setHeightFromWrapper(wrapper, el) {
+    const width = wrapper.offsetWidth;
+    const height = wrapper.offsetHeight;
+
+    el.setAttribute('style', `width: ${width}px`);
+    el.setAttribute('style', `height: ${height}px`);
+  }
 }

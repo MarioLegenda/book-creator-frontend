@@ -12,9 +12,13 @@
 
   padding: 10px 15px 10px 10px;
 
-  background-color: white;
+  background-color: $lighterGray;
   border-bottom: 4px solid $editorMainColor;
   border-right: 1px solid $lightestGray;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   p {
     margin: 0; padding: 0;
@@ -24,6 +28,8 @@
     display: inline-block;
     position: absolute;
 
+    color: $lightGray;
+
     top: 5px;
     right: 5px;
 
@@ -31,5 +37,13 @@
       color: $editorMainColor;
       cursor: pointer;
     }
+  }
+}
+
+.selected-tab {
+  background-color: white;
+
+  i {
+    color: $appBlack;
   }
 }

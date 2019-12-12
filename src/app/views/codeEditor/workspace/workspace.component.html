@@ -1,4 +1,10 @@
-<div class="col-xs-12 col-md-9 col-lg-9 editor-workspace" style="height: 500px">
-  <cms-file-tabs (tabCloseEvent)="onTabClose($event)" [tabs]="tabs"></cms-file-tabs>
+<div class="col-xs-12 col-md-9 col-lg-9 editor-workspace" style="height: 100%">
+  <cms-file-tabs
+    (tabCloseEvent)="onTabClose($event)"
+    [tabs]="tabs"
+    (tabSelectEvent)="onTabSelect($event)"
+    [selectedTab]="selectedTab">
+
+  </cms-file-tabs>
   <cms-text-editor [hasTabs]="hasTabs"></cms-text-editor>
 </div>
