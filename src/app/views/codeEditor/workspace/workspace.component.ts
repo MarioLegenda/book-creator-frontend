@@ -3,6 +3,7 @@ import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../model/app/codeEditor/FileTab";
 import Util from "../../../library/Util";
 import {TabSession} from "../../../store/sessions/TabSession";
+import {actionTypes} from "../../../store/editor/httpActions";
 
 @Component({
   selector: 'cms-editor-workspace',
@@ -32,6 +33,14 @@ export class WorkspaceComponent {
       }
 
       this.updateHasTabs();
+    });
+
+    this.store.pipe(select('editorHttpActions')).subscribe((action: any) => {
+      if (action) {
+        if (action.type === actionTypes.EDITOR_HTTP_REMOVE_FILE_FINISHED) {
+          this.onTabClose(action);
+        }
+      }
     });
   }
 

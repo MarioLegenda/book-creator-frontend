@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {FileRepository} from "../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
-import {httpGetFileContentAction} from "../../../../../store/editor/httpActions";
+import {httpGetFileContentAction, httpRemoveFile} from "../../../../../store/editor/httpActions";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 
@@ -52,13 +52,9 @@ export class FileComponent implements OnInit {
     dialogRef.afterClosed().subscribe((decision) => {
       if (decision !== true) return;
 
-      this.fileRepository.removeFileById({
-        data: {
-          fileId: this.file.id,
-        }
-      }).subscribe(() => {
-        this.fileRemoved.emit(this.file);
-      })
+      this.store.dispatch(httpRemoveFile(this.file));
+
+      this.fileRemoved.emit(this.file);
     });
   }
 

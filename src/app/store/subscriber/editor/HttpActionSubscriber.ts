@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {actionTypes} from "../../editor/httpActions";
+import {actionTypes, httpRemoveFileFinished} from "../../editor/httpActions";
 import {viewEditorShowFile} from "../../editor/viewActions";
 import {FileRepository} from "../../../repository/FileRepository";
 import {TabSession} from "../../sessions/TabSession";
@@ -32,7 +32,21 @@ export class HttpActionSubscriber {
             action.content = res.data.content;
 
             this.store.dispatch(viewEditorShowFile(action));
-          })
+          });
+
+          break;
+        }
+
+        case actionTypes.EDITOR_HTTP_REMOVE_FILE: {
+          this.fileRepository.removeFileById({
+            data: {
+              fileId: action.id,
+            }
+          }).subscribe(() => {
+            this.store.dispatch(httpRemoveFileFinished(action));
+          });
+
+          break;
         }
       }
     });
