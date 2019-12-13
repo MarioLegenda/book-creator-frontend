@@ -1,0 +1,21 @@
+@import '../../../../../../styles/variables';
+
+.working-area {
+  float:left;
+
+  .console {
+    border-top: 1px solid $lightestGray;
+
+    margin-top: 10px;
+    padding: 5px;
+
+    .run-button {
+      display:inline-block;
+      float: right;
+    }
+  }
+
+  .editor {
+    float: left;
+  }
+}

@@ -22,6 +22,7 @@ import {DeleteDirectoryDialogComponent} from "../fileExplorer/structure/modals/d
 import {DeleteFileDialogComponent} from "../fileExplorer/structure/modals/deleteFile/delete-file-dialog.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {PlaygroundComponent} from "../workspace/playground/playground.component";
+import {WorkingAreaComponent} from "../workspace/playground/workingArea/working-area.component";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {PlaygroundComponent} from "../workspace/playground/playground.component"
     DeleteDirectoryDialogComponent,
     DeleteFileDialogComponent,
     PlaygroundComponent,
+    WorkingAreaComponent,
   ],
   imports: [
     CommonModule,

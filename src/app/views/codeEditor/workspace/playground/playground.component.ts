@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {CodeProjectAppModel} from "../../../../model/app/codeEditor/CodeProjectAppModel";
 
 @Component({
   selector: 'cms-playground',
@@ -11,18 +12,12 @@ export class PlaygroundComponent {
   // @ts-ignore
   @ViewChild('playgroundWrapperRef') playgroundWrapperRef: ElementRef;
 
+  @Input('project') project: CodeProjectAppModel;
+
   componentState = {
     expanded: false,
+    expandedOnce: false,
     expandedIcon: 'fas fa-angle-up',
-    editorOptions: {
-      theme: 'vs-light',
-      language: 'javascript',
-      codeLens: false,
-      formatOnPaste: true,
-      minimap: {
-        enabled: false,
-      }
-    },
     code: '',
   };
 
@@ -37,6 +32,8 @@ export class PlaygroundComponent {
 
     this.componentState.expandedIcon = this.componentState.expanded ? 'fas fa-angle-down' : 'fas fa-angle-up';
 
-    console.log(this.componentState.expandedIcon);
+    if (!this.componentState.expandedOnce) {
+      this.componentState.expandedOnce = true;
+    }
   }
 }

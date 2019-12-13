@@ -10,13 +10,7 @@
     <i class="expand-icon" [ngClass]="componentState.expandedIcon"></i>
   </div>
 
-  <div class="col-xs-12 col-md-12 col-lg-12 console">
-    <button class="btn btn-success run-button">Run</button>
-  </div>
-
-  <ngx-monaco-editor
-    class="col-xs-12 col-md-12 col-lg-12 editor"
-    [options]="componentState.editorOptions"
-    [(ngModel)]="componentState.code">
-  </ngx-monaco-editor>
+  <cms-playground-working-area
+    *ngIf="componentState.expandedOnce">
+  </cms-playground-working-area>
 </div>

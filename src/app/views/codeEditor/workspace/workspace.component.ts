@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, Output} from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../model/app/codeEditor/FileTab";
 import Util from "../../../library/Util";
@@ -7,6 +7,7 @@ import {actionTypes as httpActionTypes} from "../../../store/editor/httpActions"
 import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions";
 import {FileRepository} from "../../../repository/FileRepository";
 import {ReplaySubject} from "rxjs";
+import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppModel";
 
 @Component({
   selector: 'cms-editor-workspace',
@@ -21,6 +22,8 @@ export class WorkspaceComponent implements OnDestroy {
 
   selectedTab: FileTab = null;
   contentLoadedEvent = new ReplaySubject();
+
+  @Input('project') project: CodeProjectAppModel;
 
   private indexMap = {};
 
