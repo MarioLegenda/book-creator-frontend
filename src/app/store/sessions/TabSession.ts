@@ -11,7 +11,6 @@ export class TabSession {
     if (index >= 0) this.openTabs.splice(index, 1);
   }
 
-
   add(fileId): void {
     if (!this.has(fileId)) {
       this.openTabs.push(fileId);

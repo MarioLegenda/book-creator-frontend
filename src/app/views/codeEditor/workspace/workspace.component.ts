@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../model/app/codeEditor/FileTab";
 import Util from "../../../library/Util";
 import {TabSession} from "../../../store/sessions/TabSession";
 import {actionTypes as httpActionTypes} from "../../../store/editor/httpActions";
 import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions";
+import {FileRepository} from "../../../repository/FileRepository";
+import {ReplaySubject} from "rxjs";
 
 @Component({
   selector: 'cms-editor-workspace',
@@ -13,17 +15,19 @@ import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions"
   ],
   templateUrl: './workspace.component.html',
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements OnDestroy {
   tabs = [];
   hasTabs = false;
 
-  selectedTab = null;
+  selectedTab: FileTab = null;
+  contentLoadedEvent = new ReplaySubject();
 
   private indexMap = {};
 
   constructor(
     private store: Store<any>,
     private tabSession: TabSession,
+    private fileRepository: FileRepository,
   ) {}
 
   ngOnInit() {
@@ -70,6 +74,14 @@ export class WorkspaceComponent {
 
   onTabSelect(tab: FileTab) {
     this.selectedTab = tab;
+
+    this.fileRepository.getFileContent(tab.id).subscribe((body: any) => {
+      this.contentLoadedEvent.next(body.data.content);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.contentLoadedEvent.unsubscribe();
   }
 
   private updateHasTabs(): void {

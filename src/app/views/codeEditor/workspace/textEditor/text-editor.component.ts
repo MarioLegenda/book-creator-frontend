@@ -1,7 +1,9 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, ViewChild} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {BehaviorSubject, of} from "rxjs";
 import {debounceTime} from "rxjs/operators";
+import {FileRepository} from "../../../../repository/FileRepository";
+import {FileTab} from "../../../../model/app/codeEditor/FileTab";
 
 @Component({
   selector: 'cms-text-editor',
@@ -10,13 +12,16 @@ import {debounceTime} from "rxjs/operators";
   ],
   templateUrl: './text-editor.component.html',
 })
-export class TextEditorComponent {
+export class TextEditorComponent implements AfterViewInit, OnDestroy {
   @Input('hasTabs') hasTabs: boolean;
+  @Input('tab') tab: FileTab;
+  @Input('contentLoadedEvent') contentLoadedEvent;
 
   // @ts-ignore
   @ViewChild('wrapperRef') wrapperRef: ElementRef;
 
   private typeAheadSource = new BehaviorSubject([]);
+  private typeAheadObservable = null;
 
   componentState = {
     editorOptions: {
@@ -33,6 +38,7 @@ export class TextEditorComponent {
 
   constructor(
     private store: Store<any>,
+    private fileRepository: FileRepository,
   ) {}
 
   ngOnInit() {
@@ -42,12 +48,16 @@ export class TextEditorComponent {
       }
     });
 
-    this.typeAheadSource.pipe(
-      debounceTime(2000),
+    this.typeAheadObservable = this.typeAheadSource.pipe(
+      debounceTime(500),
     )
       .subscribe(() => {
         if (this.componentState.code) {
-          console.log(this.componentState.code);
+          this.fileRepository.updateFileContent(
+            this.tab.id,
+            this.componentState.code
+          ).subscribe(() => {
+          });
         }
       });
   }
@@ -56,11 +66,18 @@ export class TextEditorComponent {
     const h = document.body.offsetHeight;
 
     this.wrapperRef.nativeElement.setAttribute('style', `height: ${h - 45}px`);
+
+    this.contentLoadedEvent.subscribe((content: string) => {
+      this.componentState.code = content;
+    })
   }
 
   onChange() {
     this.typeAheadSource.next([]);
   }
 
+  ngOnDestroy(): void {
+    this.typeAheadObservable.unsubscribe();
+  }
 
 }

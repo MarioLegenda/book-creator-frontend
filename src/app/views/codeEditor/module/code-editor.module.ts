@@ -21,6 +21,7 @@ import {TabSession} from "../../../store/sessions/TabSession";
 import {DeleteDirectoryDialogComponent} from "../fileExplorer/structure/modals/deleteDirectory/delete-directory-dialog.component";
 import {DeleteFileDialogComponent} from "../fileExplorer/structure/modals/deleteFile/delete-file-dialog.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {PlaygroundComponent} from "../workspace/playground/playground.component";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     TabComponent,
     DeleteDirectoryDialogComponent,
     DeleteFileDialogComponent,
+    PlaygroundComponent,
   ],
   imports: [
     CommonModule,

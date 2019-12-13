@@ -37,7 +37,9 @@ import {clearState} from "../store/globalReducers";
     HttpClientModule,
     MonacoEditorModule.forRoot(),
   ],
-  providers: [{provide: TabSession, useClass: TabSession}],
+  providers: [
+    {provide: TabSession, useClass: TabSession},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

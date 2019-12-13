@@ -6,5 +6,13 @@
     [selectedTab]="selectedTab">
 
   </cms-file-tabs>
-  <cms-text-editor [hasTabs]="hasTabs"></cms-text-editor>
+
+  <cms-text-editor
+    [contentLoadedEvent]="contentLoadedEvent"
+    [tab]="selectedTab"
+    [hasTabs]="hasTabs">
+
+  </cms-text-editor>
+
+  <cms-playground></cms-playground>
 </div>

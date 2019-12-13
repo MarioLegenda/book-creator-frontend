@@ -59,4 +59,13 @@ export class FileRepository {
   public getFileContent(fileId: string) {
     return this.httpClient.get(this.routeResolver.getFileContent(fileId));
   }
+
+  public updateFileContent(fileId: string, content: string) {
+    return this.httpClient.post(this.routeResolver.updateFileContent(), {
+      data: {
+        fileId: fileId,
+        content: content,
+      },
+    })
+  }
 }

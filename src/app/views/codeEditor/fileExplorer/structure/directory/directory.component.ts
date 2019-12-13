@@ -9,7 +9,6 @@ import {DirectoryRepository} from "../../../../../repository/DirectoryRepository
 import {DirectoryHttpModel} from "../../../../../model/http/codeEditor/DirectoryHttpModel";
 import {AddDirectoryDialogComponent} from "../modals/directory/add-directory-dialog.component";
 import {Store} from "@ngrx/store";
-import {httpGetFileContentAction} from "../../../../../store/editor/httpActions";
 import {viewEditorShowFile} from "../../../../../store/editor/viewActions";
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 

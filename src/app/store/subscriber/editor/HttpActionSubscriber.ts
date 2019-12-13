@@ -31,6 +31,8 @@ export class HttpActionSubscriber {
           this.fileRepository.getFileContent(action.id).subscribe((res: any) => {
             action.content = res.data.content;
 
+            console.log(action);
+
             this.store.dispatch(viewEditorShowFile(action));
           });
 
@@ -53,6 +55,5 @@ export class HttpActionSubscriber {
   }
 
   destroy() {
-    this.tabSession.clear();
   }
 }
