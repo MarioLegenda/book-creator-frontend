@@ -29,8 +29,8 @@ export class DirectoryComponent {
     hovered: false,
     dirStyles: {},
     icons: {
-      dirCaret: 'fas fa-angle-right',
-      newFile: 'far fa-file-alt',
+      dirCaret: 'far fa-folder',
+      newFile: 'far fa-file-code',
       newDir: 'fas fa-folder-plus',
       removeDirectory: 'far fa-trash-alt remove',
     },
@@ -148,7 +148,7 @@ export class DirectoryComponent {
 
   expandDirectory() {
     if (this.componentState.expanded) {
-      this.componentState.icons.dirCaret = 'fas fa-angle-right';
+      this.componentState.icons.dirCaret = 'far fa-folder';
 
       this.componentState.expanded = false;
 
@@ -156,7 +156,7 @@ export class DirectoryComponent {
     }
 
     if (!this.componentState.expanded) {
-      this.componentState.icons.dirCaret = 'fas fa-angle-down';
+      this.componentState.icons.dirCaret = 'far fa-folder-open';
 
       this.componentState.expanded = true;
 

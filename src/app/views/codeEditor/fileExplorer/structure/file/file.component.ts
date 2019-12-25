@@ -27,6 +27,7 @@ export class FileComponent implements OnInit {
 
   componentState = {
     showed: false,
+    hovered: false,
     fileStyles: {
       'padding-left': '20px',
     },
@@ -60,5 +61,13 @@ export class FileComponent implements OnInit {
 
   showFile() {
     this.store.dispatch(httpGetFileContentAction(this.file));
+  }
+
+  fileHovered() {
+    this.componentState.hovered = true;
+  }
+
+  fileUnHovered() {
+    this.componentState.hovered = false;
   }
 }

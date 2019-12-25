@@ -11,7 +11,7 @@
     padding: 10px;
 
     .text {
-      font-size: 14px;
+      font-size: 13px;
       color: $textColor;
       width: 150px;
       float: left;
@@ -21,7 +21,7 @@
     }
 
     &:hover {
-      background-color: $lighterGray;
+      background-color: $lightestGray;
       cursor: pointer;
     }
   }

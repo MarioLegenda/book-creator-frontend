@@ -4,8 +4,7 @@
     (dblclick)="expandDirectory()"
     (mouseenter)="directoryHovered()"
     (mouseleave)="directoryUnHovered()"
-    [ngStyle]="componentState.dirStyles"
-    [ngClass]="{'isExpanded': this.componentState.expanded}">
+    [ngStyle]="componentState.dirStyles">
 
     <i
       (click)="expandDirectory()"

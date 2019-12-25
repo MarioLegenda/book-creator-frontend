@@ -1,7 +1,7 @@
 @import '../../../../../../styles/variables';
 
 .directory {
-  width: 100%;
+  width: 268px;
   float: left;
 
   .dir-name {
@@ -13,15 +13,13 @@
     padding: 10px;
 
     .text {
-      font-size: 14px;
+      font-size: 13px;
       color: $textColor;
       width: 150px;
       float: left;
 
       padding: 0;
       margin: 0;
-
-      padding-top: 4px;
     }
 
     .icon {
@@ -36,14 +34,8 @@
     }
 
     &:hover {
-      background-color: $lighterGray;
+      background-color: $lightestGray;
       cursor: pointer;
     }
-  }
-
-  .isExpanded {
-    -webkit-box-shadow: -1px 9px 34px -17px rgba(179,179,179,1);
-    -moz-box-shadow: -1px 9px 34px -17px rgba(179,179,179,1);
-    box-shadow: -1px 9px 34px -17px rgba(179,179,179,1);
   }
 }
