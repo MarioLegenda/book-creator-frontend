@@ -24,6 +24,7 @@ export class FileRepository {
             data.name,
             data.id,
             data.directoryId,
+            data.depth,
             data.content,
           );
         }, {})
@@ -47,6 +48,7 @@ export class FileRepository {
               file.name,
               file.id,
               file.directoryId,
+              file.depth,
               file.content,
             ));
           }

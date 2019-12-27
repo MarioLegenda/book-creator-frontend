@@ -4,7 +4,6 @@ import {FileRepository} from "../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
 import {httpGetFileContentAction, httpRemoveFile} from "../../../../../store/editor/httpActions";
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog.component";
 
 @Component({
@@ -17,7 +16,6 @@ import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog
 })
 export class FileComponent implements OnInit {
   @Input('file') file: FileAppModel;
-  @Input('depth') depth: number;
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
 
   constructor(
@@ -29,20 +27,31 @@ export class FileComponent implements OnInit {
   componentState = {
     showed: false,
     hovered: false,
-    fileStyles: {
-      'padding-left': '20px',
-    },
+    fileStyles: {},
     icons: {
       removeFile: 'far fa-trash-alt remove',
+      file: 'far fa-file-code'
     }
   };
 
   ngOnInit() {
-    if (this.depth === 1) {
-      this.componentState.fileStyles['margin-left'] = `${this.depth * 35}px`;
-    } else if (this.depth > 1) {
-      this.componentState.fileStyles['margin-left'] = `${this.depth * 25}px`;
+    if (this.file.isJavascript()) {
+      this.componentState.icons.file = "fab fa-js-square";
     }
+
+    let wBase = 15;
+    let p = 0;
+    if (this.file.depth === 1) {
+      p = 33;
+    } else if (this.file.depth === 2) {
+      p = (this.file.depth * 24);
+    } else if (this.file.depth > 2) {
+      p = (this.file.depth * 24) - 10;
+    }
+
+    const w = 269 + (this.file.depth * wBase);
+    this.componentState.fileStyles['width'] = `${w}px`;
+    this.componentState.fileStyles['padding-left'] = `${p}px`;
   }
 
   removeFileDialog() {

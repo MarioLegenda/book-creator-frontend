@@ -13,7 +13,7 @@
 
     <cms-file
       *ngIf="isFile(item)"
-      [file]="item" [depth]="1"
+      [file]="item"
       (fileRemovedEvent)="removeFileEvent($event)">
     </cms-file>
   </div>

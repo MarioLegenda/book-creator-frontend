@@ -19,10 +19,21 @@
       padding: 0;
       margin: 0;
     }
+
+    .icon {
+      width: 20px;
+      display: inline-block;
+      float: left;
+      color: $lighterGray;
+    }
   }
 
   &:hover {
     background-color: $lightestGray;
     cursor: pointer;
+  }
+
+  &:hover .file-name .icon {
+    color: $appBlack;
   }
 }

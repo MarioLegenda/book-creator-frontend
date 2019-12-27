@@ -5,6 +5,12 @@
     (mouseenter)="fileHovered()"
     (mouseleave)="fileUnHovered()"
     [ngStyle]="this.componentState.fileStyles">
+
+    <i
+      class="icon"
+      [ngClass]="componentState.icons.file">
+    </i>
+
     <h1 class="text">{{file.name}}</h1>
 
     <div class="action-set" *ngIf="componentState.hovered">

@@ -69,6 +69,8 @@ export class DirectoryComponent {
     });
   }
 
+
+
   directoryHovered() {
     this.componentState.hovered = true;
   }
@@ -95,20 +97,20 @@ export class DirectoryComponent {
   newFileDialog(): void {
     const dialogRef = this.dialog.open(AddFileDialogComponent, {
       width: '400px',
-      data: new FileAppModel('','', this.directory.directoryId, '', ''),
+      data: new FileAppModel('','', this.directory.directoryId, '', '', this.directory.depth),
     });
 
     dialogRef.afterClosed().subscribe((model: FileAppModel) => {
       if (model) {
         this.store.dispatch(viewEditorShowFile(model));
 
+        this.addFileEvent.emit({
+          parent: this.directory,
+          file: model,
+        });
+
         if (!this.componentState.expanded) {
           this.expandDirectory();
-        } else {
-          this.addFileEvent.emit({
-            parent: this.directory,
-            file: model,
-          })
         }
       }
     });
