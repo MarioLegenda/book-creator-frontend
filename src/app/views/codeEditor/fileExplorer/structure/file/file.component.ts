@@ -27,6 +27,7 @@ export class FileComponent implements OnInit {
 
   componentState = {
     showed: false,
+    hovered: false,
     fileStyles: {
       'padding-left': '20px',
     },
@@ -37,9 +38,9 @@ export class FileComponent implements OnInit {
 
   ngOnInit() {
     if (this.depth === 1) {
-      this.componentState.fileStyles['padding-left'] = `${this.depth * 35}px`;
+      this.componentState.fileStyles['margin-left'] = `${this.depth * 35}px`;
     } else if (this.depth > 1) {
-      this.componentState.fileStyles['padding-left'] = `${this.depth * 25}px`;
+      this.componentState.fileStyles['margin-left'] = `${this.depth * 25}px`;
     }
   }
 
@@ -60,5 +61,13 @@ export class FileComponent implements OnInit {
 
   showFile() {
     this.store.dispatch(httpGetFileContentAction(this.file));
+  }
+
+  fileHovered() {
+    this.componentState.hovered = true;
+  }
+
+  fileUnHovered() {
+    this.componentState.hovered = false;
   }
 }
