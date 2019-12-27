@@ -9,6 +9,8 @@ import {Subject} from "rxjs";
 import StructureTracker from "../../../../library/StructureTracker";
 import Util from "../../../../library/Util";
 import {FileAppModel} from "../../../../model/app/codeEditor/FileAppModel";
+import {Store} from "@ngrx/store";
+import {viewEditorDirectoryEmptied} from "../../../../store/editor/viewActions";
 
 @Component({
   selector: 'cms-structure',
@@ -34,6 +36,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
     private directoryRepository: DirectoryRepository,
     private fileRepository: FileRepository,
     private structureTracker: StructureTracker,
+    private store: Store<any>,
   ) {}
 
   isDirectory(entry): boolean {
@@ -134,7 +137,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
     if (this.structureTracker.getStructureLen(file.directoryId) === 0) {
       for (const s of this.structure) {
         if (s.type === 'directory' && file.directoryId === s.directoryId) {
-          this.unExpandDirectoryEvent(s);
+          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.directoryId}));
 
           break;
         }

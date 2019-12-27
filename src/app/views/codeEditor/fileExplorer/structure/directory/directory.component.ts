@@ -6,8 +6,8 @@ import {DirectoryAppModel} from "../../../../../model/app/codeEditor/DirectoryAp
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {DirectoryRepository} from "../../../../../repository/DirectoryRepository";
 import {AddDirectoryDialogComponent} from "../modals/directory/add-directory-dialog.component";
-import {Store} from "@ngrx/store";
-import {viewEditorShowFile} from "../../../../../store/editor/viewActions";
+import {select, Store} from "@ngrx/store";
+import {actionTypes, viewEditorShowFile} from "../../../../../store/editor/viewActions";
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 
 @Component({
@@ -25,6 +25,8 @@ export class DirectoryComponent {
   @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter();
   @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
   @Output('addFileEvent') addFileEvent = new EventEmitter();
+
+  private editorViewActions;
 
   componentState = {
     expanded: false,
@@ -51,6 +53,20 @@ export class DirectoryComponent {
     if (this.directory.isRoot) {
       this.expandDirectory();
     }
+
+    this.editorViewActions = this.store.pipe(select('editorViewActions')).subscribe((action) => {
+      if (!action) {
+        return;
+      }
+
+      switch (action.type) {
+        case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
+          if (action.directoryId === this.directory.directoryId) {
+            this.expandDirectory();
+          }
+        }
+      }
+    });
   }
 
   directoryHovered() {
