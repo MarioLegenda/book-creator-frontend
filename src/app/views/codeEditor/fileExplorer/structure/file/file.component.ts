@@ -38,9 +38,9 @@ export class FileComponent implements OnInit {
 
   ngOnInit() {
     if (this.depth === 1) {
-      this.componentState.fileStyles['padding-left'] = `${this.depth * 35}px`;
+      this.componentState.fileStyles['margin-left'] = `${this.depth * 35}px`;
     } else if (this.depth > 1) {
-      this.componentState.fileStyles['padding-left'] = `${this.depth * 25}px`;
+      this.componentState.fileStyles['margin-left'] = `${this.depth * 25}px`;
     }
   }
 

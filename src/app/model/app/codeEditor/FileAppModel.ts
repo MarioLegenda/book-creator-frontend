@@ -1,5 +1,3 @@
-import {FileHttpModel} from "../../http/codeEditor/FileHttpModel";
-
 export class FileAppModel {
   public name: string;
   public id: string;
