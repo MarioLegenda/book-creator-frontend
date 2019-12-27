@@ -4,11 +4,17 @@
       (expandDirectoryEvent)="expandDirectoryEvent($event)"
       (unExpandDirectoryEvent)="unExpandDirectoryEvent($event)"
       (addDirectoryEvent)="addDirectoryEvent($event)"
+      (addFileEvent)="addFileEvent($event)"
+      (removeDirectoryEvent)="removeDirectoryEvent($event)"
       *ngIf="isDirectory(item)"
       [directory]="item">
 
     </cms-directory>
 
-    <cms-file *ngIf="isFile(item)" [file]="item" [depth]="1"></cms-file>
+    <cms-file
+      *ngIf="isFile(item)"
+      [file]="item" [depth]="1"
+      (fileRemovedEvent)="removeFileEvent($event)">
+    </cms-file>
   </div>
 </div>

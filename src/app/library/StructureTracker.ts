@@ -23,7 +23,25 @@ export default class StructureTracker {
     return this.structure[key];
   }
 
-  addToStructureItem(key: string, id: string): void {
+  addItemToStructure(key: string, id: string): void {
     this.structure[key].push(id);
+  }
+
+  getStructureLen(key: string): number {
+    if (!this.hasStructure(key)) return 0;
+
+    return this.getStructure(key).length;
+  }
+
+  removeItemFromStructure(key: string, item: string): void {
+    if (!this.hasStructure(key)) return;
+
+    const st = this.getStructure(key);
+
+    const idx: number = st.findIndex(val => val === item);
+
+    if (idx === -1) return;
+
+    st.splice(idx, 1);
   }
 }

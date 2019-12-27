@@ -5,6 +5,7 @@ import {Store} from "@ngrx/store";
 import {httpGetFileContentAction, httpRemoveFile} from "../../../../../store/editor/httpActions";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
+import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog.component";
 
 @Component({
   selector: 'cms-file',
@@ -17,7 +18,7 @@ import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-d
 export class FileComponent implements OnInit {
   @Input('file') file: FileAppModel;
   @Input('depth') depth: number;
-  @Output('fileRemoved') fileRemoved = new EventEmitter();
+  @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
 
   constructor(
     private fileRepository: FileRepository,
@@ -44,8 +45,8 @@ export class FileComponent implements OnInit {
     }
   }
 
-  removeFile() {
-    const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
+  removeFileDialog() {
+    const dialogRef = this.dialog.open(DeleteFileDialogComponent, {
       width: '400px',
       data: {name: this.file.name},
     });
@@ -55,7 +56,7 @@ export class FileComponent implements OnInit {
 
       this.store.dispatch(httpRemoveFile(this.file));
 
-      this.fileRemoved.emit(this.file);
+      this.fileRemovedEvent.emit(this.file);
     });
   }
 

@@ -8,6 +8,7 @@ import {FileRepository} from "../../../../repository/FileRepository";
 import {Subject} from "rxjs";
 import StructureTracker from "../../../../library/StructureTracker";
 import Util from "../../../../library/Util";
+import {FileAppModel} from "../../../../model/app/codeEditor/FileAppModel";
 
 @Component({
   selector: 'cms-structure',
@@ -67,7 +68,9 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
         const ids: string[] = [];
         for (const s of structure) {
-          ids.push(s.directoryId);
+          if (!ids.includes(s)) {
+            ids.push((s.type === 'file') ? s.id : s.directoryId);
+          }
         }
 
         this.structureTracker.addToStructure(directory.directoryId, ids);
@@ -93,16 +96,63 @@ export class StructureComponent implements OnInit, AfterViewInit {
     const parent: DirectoryAppModel = data.parent;
     const created: DirectoryAppModel = data.created;
 
-    this.structureTracker.addToStructureItem(parent.directoryId, created.directoryId);
+    if (!this.structureTracker.hasStructure(parent.directoryId)) {
+      this.structureTracker.createStructure(parent.directoryId);
+    }
+
+    this.structureTracker.addItemToStructure(parent.directoryId, created.directoryId);
 
     const idx: number = this.structure.findIndex(val => val.directoryId === parent.directoryId);
 
     this.structure.splice(idx + 1, 0, created);
-
-    this.structure.sort((a, b) => a.name.localeCompare(b.firstname));
   }
 
+  addFileEvent(data) {
+    const parent: DirectoryAppModel = data.parent;
+    const file: FileAppModel = data.file;
 
+    if (!this.structureTracker.hasStructure(parent.directoryId)) {
+      this.structureTracker.createStructure(parent.directoryId);
+    }
+
+    this.structureTracker.addItemToStructure(parent.directoryId, file.id);
+
+    const idx: number = this.structure.findIndex(val => val.directoryId === parent.directoryId);
+
+    this.structure.splice(idx + this.structureTracker.getStructureLen(parent.directoryId), 0, file);
+  }
+
+  removeFileEvent(file: FileAppModel) {
+    this.structureTracker.removeItemFromStructure(file.directoryId, file.id);
+
+    const idx = this.structure.findIndex(val => {
+      return val.type === 'file' && val.id === file.id;
+    });
+
+    this.structure.splice(idx, 1);
+
+    if (this.structureTracker.getStructureLen(file.directoryId) === 0) {
+      for (const s of this.structure) {
+        if (s.type === 'directory' && file.directoryId === s.directoryId) {
+          this.unExpandDirectoryEvent(s);
+
+          break;
+        }
+      }
+    }
+  }
+
+  removeDirectoryEvent(directory: DirectoryAppModel) {
+    if (!this.structureTracker.hasStructure(directory.directoryId)) return this.removeDirectoryStructure(directory.directoryId);
+
+    const structures = this.structureTracker.getStructure(directory.directoryId);
+
+    this.removeStructures(structures);
+
+    this.structureTracker.clearStructure(directory.directoryId);
+
+    this.removeDirectoryStructure(directory.directoryId);
+  }
 
   ngOnInit() {
     this.expandRootDirectory();
@@ -141,6 +191,8 @@ export class StructureComponent implements OnInit, AfterViewInit {
         tempSubject.unsubscribe();
 
         tempSubject = null;
+
+        this.sortStructure();
       });
     });
   }
@@ -174,10 +226,39 @@ export class StructureComponent implements OnInit, AfterViewInit {
       this.structureTracker.clearStructure(s);
 
       const idx: number = this.structure.findIndex((v) => {
-        return v.directoryId === s;
+        if (v.type === 'file' && v.id === s) return true;
+        if (v.type === 'directory' && v.directoryId === s) return true;
+
+        return false;
       });
 
-      this.structure.splice(idx, 1);
+      if (idx !== -1) {
+        this.structure.splice(idx, 1);
+      }
     }
+  }
+
+  private sortStructure() {
+    this.structure.sort((a, b) => {
+      if (a.type === 'file' || b.type === 'file') {
+        return 0;
+      }
+
+      if (a.name < b.name) {
+        return -1;
+      }
+
+      if (a.name > b.name) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }
+
+  private removeDirectoryStructure(directoryId: string) {
+    const idx = this.structure.findIndex(val => val.type === 'directory' && val.directoryId === directoryId);
+
+    this.structure.splice(idx, 1);
   }
 }

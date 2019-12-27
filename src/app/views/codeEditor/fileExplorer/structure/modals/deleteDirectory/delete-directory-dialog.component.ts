@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 import {DirectoryAppModel} from "../../../../../../model/app/codeEditor/DirectoryAppModel";
 
 @Component({

@@ -29,15 +29,15 @@
       display: inline-block;
       float: left;
       color: $lighterGray;
-
-      &:hover {
-        color: $appBlack;
-      }
     }
   }
 
   &:hover {
     background-color: $lightestGray;
     cursor: pointer;
+  }
+
+  &:hover .dir-name .icon {
+    color: $appBlack;
   }
 }

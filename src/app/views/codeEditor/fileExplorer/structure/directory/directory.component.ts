@@ -24,6 +24,7 @@ export class DirectoryComponent {
   @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter();
   @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter();
   @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
+  @Output('addFileEvent') addFileEvent = new EventEmitter();
 
   componentState = {
     expanded: false,
@@ -40,7 +41,6 @@ export class DirectoryComponent {
   constructor(
     private store: Store<any>,
     private dialog: MatDialog,
-    private fileRepository: FileRepository,
     private directoryRepository: DirectoryRepository,
   ) {}
 
@@ -61,14 +61,6 @@ export class DirectoryComponent {
     this.componentState.hovered = false;
   }
 
-  isDirectory(entry) {
-    return entry.type === 'directory';
-  }
-
-  isFile(entry) {
-    return entry.type === 'file';
-  }
-
   removeDirectoryDialog() {
     const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
       width: '400px',
@@ -84,7 +76,7 @@ export class DirectoryComponent {
     });
   }
 
-  openFileDialog(): void {
+  newFileDialog(): void {
     const dialogRef = this.dialog.open(AddFileDialogComponent, {
       width: '400px',
       data: new FileAppModel('','', this.directory.directoryId, '', ''),
@@ -92,18 +84,21 @@ export class DirectoryComponent {
 
     dialogRef.afterClosed().subscribe((model: FileAppModel) => {
       if (model) {
-        this.directory.structure.push(model);
-
         this.store.dispatch(viewEditorShowFile(model));
 
         if (!this.componentState.expanded) {
           this.expandDirectory();
+        } else {
+          this.addFileEvent.emit({
+            parent: this.directory,
+            file: model,
+          })
         }
       }
     });
   }
 
-  openDirectoryDialog(): void {
+  newDirectoryDialog(): void {
     const dialogRef = this.dialog.open(AddDirectoryDialogComponent, {
       width: '400px',
       data: new DirectoryAppModel(
@@ -130,29 +125,13 @@ export class DirectoryComponent {
     });
   }
 
-  onFileRemoved(file) {
-    const structure = this.directory.structure;
-    for (let i = 0; structure.length > 0; i++) {
-      if (structure[i].type === 'file' && file.id === structure[i].id) {
-        this.directory.structure.splice(i, 1);
-
-        break;
-      }
-    }
-  }
-
-  onRemoveDirectory(directory) {
-    const structure = this.directory.structure;
-    for (let i = 0; structure.length > 0; i++) {
-      if (structure[i].type === 'directory' && directory.id === structure[i].id) {
-        this.directory.structure.splice(i, 1);
-
-        break;
-      }
-    }
-  }
-
   expandDirectory() {
+    if (this.directory.isRoot) {
+      this.componentState.icons.dirCaret = 'far fa-folder-open';
+
+      return;
+    }
+
     if (this.componentState.expanded) {
       this.componentState.icons.dirCaret = 'far fa-folder';
 
