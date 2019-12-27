@@ -1,12 +1,10 @@
 @import '../../../../styles/variables';
 
 .file-explorer {
-  background-color: white;
-
-  border-right: 1px solid $lightestGray;
+  background-color: $almostWhiteGray;
 
   .editor-dir-structure {
-    width: 269px;
+    width: 268px;
     float: left;
 
     .title {
@@ -27,29 +25,26 @@
     .project-name {
       width: 100%;
       float: left;
-      background-color: white;
+      background-color: $appBlack;
 
       padding: 15px;
 
-      border-top: 1px solid $lightestGray;
-      border-bottom: 1px solid $lightestGray;
+      color: $textColor;
 
       h1 {
         margin: 0;
         padding: 0;
 
         font-size: 14px;
-        color: $textColor;
+        color: white;
       }
     }
   }
 
   .editor-actions-wrapper {
     width: 50px;
-    background-color: white;
+    background-color: $appBlack;
     float: left;
-
-    border-right: 1px solid $lightestGray;
   }
 
   .editor-actions {
@@ -59,7 +54,7 @@
 
     .action {
       font-size: 2em;
-      color: $appBlack;
+      color: white;
 
       width: 45px;
       float: left;

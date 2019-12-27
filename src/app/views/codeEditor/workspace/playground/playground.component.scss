@@ -10,7 +10,9 @@
 
   height: 40px;
 
-  border-top: 1px solid $lightestGray;
+  -webkit-box-shadow: 0px -11px 23px -3px rgba(204,204,204,1);
+  -moz-box-shadow: 0px -11px 23px -3px rgba(204,204,204,1);
+  box-shadow: 0px -11px 23px -3px rgba(204,204,204,1);
 
   .closed-playground {
     .playground-icon {
@@ -22,9 +24,9 @@
       font-weight: bolder;
       color: $appBlack;
 
-      font-size: 1.1em;
+      font-size: 1.4em;
 
-      margin: 10px 0 0 5px;
+      margin: 8px 0 0 5px;
     }
 
     .expand-icon {
@@ -35,7 +37,7 @@
       font-size: 1.3em;
 
       margin-right: 10px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     &:hover {

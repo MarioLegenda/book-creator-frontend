@@ -3,8 +3,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/file/add-file-dialog.component";
 import {FileRepository} from "../../../../../repository/FileRepository";
 import {DirectoryAppModel} from "../../../../../model/app/codeEditor/DirectoryAppModel";
+import {FileHttpModel} from "../../../../../model/http/codeEditor/FileHttpModel";
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {DirectoryRepository} from "../../../../../repository/DirectoryRepository";
+import {DirectoryHttpModel} from "../../../../../model/http/codeEditor/DirectoryHttpModel";
 import {AddDirectoryDialogComponent} from "../modals/directory/add-directory-dialog.component";
 import {Store} from "@ngrx/store";
 import {viewEditorShowFile} from "../../../../../store/editor/viewActions";
@@ -21,17 +23,14 @@ import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-d
 export class DirectoryComponent {
   @Input('directory') directory: DirectoryAppModel;
   @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter();
-  @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter();
-  @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter();
-  @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
 
   componentState = {
     expanded: false,
     hovered: false,
     dirStyles: {},
     icons: {
-      dirCaret: 'far fa-folder',
-      newFile: 'far fa-file-code',
+      dirCaret: 'fas fa-angle-right',
+      newFile: 'far fa-file-alt',
       newDir: 'fas fa-folder-plus',
       removeDirectory: 'far fa-trash-alt remove',
     },
@@ -45,8 +44,6 @@ export class DirectoryComponent {
   ) {}
 
   ngOnInit() {
-    const w = 269 + (this.directory.depth * 15);
-    this.componentState.dirStyles['width'] = `${w}px`;
     this.componentState.dirStyles['padding-left'] = `${this.directory.depth * 15}px`;
     if (this.directory.isRoot) {
       this.expandDirectory();
@@ -69,7 +66,7 @@ export class DirectoryComponent {
     return entry.type === 'file';
   }
 
-  removeDirectoryDialog() {
+  removeDirectory() {
     const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
       width: '400px',
       data: {name: this.directory.name},
@@ -118,10 +115,7 @@ export class DirectoryComponent {
 
     dialogRef.afterClosed().subscribe((model: DirectoryAppModel) => {
       if (model) {
-        this.addDirectoryEvent.emit({
-          parent: this.directory,
-          created: model,
-        });
+        this.directory.structure.push(model);
 
         if (!this.componentState.expanded) {
           this.expandDirectory();
@@ -154,25 +148,33 @@ export class DirectoryComponent {
 
   expandDirectory() {
     if (this.componentState.expanded) {
-      this.componentState.icons.dirCaret = 'far fa-folder';
+      this.componentState.icons.dirCaret = 'fas fa-angle-right';
 
       this.componentState.expanded = false;
-
-      this.unExpandDirectoryEvent.emit(this.directory);
 
       return;
     }
 
     if (!this.componentState.expanded) {
-      this.componentState.icons.dirCaret = 'far fa-folder-open';
+      this.componentState.icons.dirCaret = 'fas fa-angle-down';
 
       this.componentState.expanded = true;
-
-      this.expandDirectoryEvent.emit(this.directory);
 
       if (this.directory.structure.length > 0) {
         return;
       }
+
+      this.directoryRepository.getSubdirectories(this.directory.directoryId).subscribe((models: DirectoryHttpModel[]) => {
+        for (const dir of models) {
+          this.directory.structure.push(dir.convertToAppModel(this.directory.codeProjectUuid));
+        }
+
+        this.fileRepository.getFilesFromDirectory(this.directory.directoryId).subscribe((files: FileHttpModel[]) => {
+          for (const file of files) {
+            this.directory.structure.push(file.convertToAppModel(file.id));
+          }
+        });
+      });
     }
   }
 }

@@ -1,7 +1,7 @@
 @import '../../../../../../styles/variables';
 
 .file {
-  width: 269px;
+  width: 100%;
   float: left;
 
   .file-name {
@@ -11,7 +11,7 @@
     padding: 10px;
 
     .text {
-      font-size: 13px;
+      font-size: 14px;
       color: $textColor;
       width: 150px;
       float: left;
@@ -19,10 +19,10 @@
       padding: 0;
       margin: 0;
     }
-  }
 
-  &:hover {
-    background-color: $lightestGray;
-    cursor: pointer;
+    &:hover {
+      background-color: $lighterGray;
+      cursor: pointer;
+    }
   }
 }
