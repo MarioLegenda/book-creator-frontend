@@ -1,12 +1,12 @@
 <div class="col-xs-12 col-md-12 col-lg-12 text-editor-wrapper" #wrapperRef>
   <p
     class="no-tabs-message"
-    *ngIf="!hasTabs">
+    *ngIf="!hasTabs && !tab">
     Welcome to the code editor
   </p>
 
   <ngx-monaco-editor
-    *ngIf="hasTabs"
+    *ngIf="hasTabs && tab"
     style="height: 600px"
     [options]="componentState.editorOptions"
     [(ngModel)]="componentState.code"

@@ -73,6 +73,7 @@ export class WorkspaceComponent implements OnDestroy {
     }
 
     this.updateHasTabs();
+    this.selectedTab = null;
   }
 
   onTabSelect(tab: FileTab) {

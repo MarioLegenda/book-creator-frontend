@@ -11,6 +11,7 @@ import Util from "../../../../library/Util";
 import {FileAppModel} from "../../../../model/app/codeEditor/FileAppModel";
 import {Store} from "@ngrx/store";
 import {viewEditorDirectoryEmptied} from "../../../../store/editor/viewActions";
+import {httpRemoveFileFinished} from "../../../../store/editor/httpActions";
 
 @Component({
   selector: 'cms-structure',
@@ -236,6 +237,10 @@ export class StructureComponent implements OnInit, AfterViewInit {
       });
 
       if (idx !== -1) {
+        if (this.structure[idx].type === 'file') {
+          this.store.dispatch(httpRemoveFileFinished(this.structure[idx]));
+        }
+        
         this.structure.splice(idx, 1);
       }
     }
