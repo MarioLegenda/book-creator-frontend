@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {AddFileDialogComponent} from "../modals/file/add-file-dialog.component";
+import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
 import {FileRepository} from "../../../../../repository/FileRepository";
 import {DirectoryAppModel} from "../../../../../model/app/codeEditor/DirectoryAppModel";
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {DirectoryRepository} from "../../../../../repository/DirectoryRepository";
-import {AddDirectoryDialogComponent} from "../modals/directory/add-directory-dialog.component";
+import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
 import {select, Store} from "@ngrx/store";
 import {actionTypes, viewEditorShowFile} from "../../../../../store/editor/viewActions";
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
@@ -88,7 +88,7 @@ export class DirectoryComponent {
     dialogRef.afterClosed().subscribe((decision) => {
       if (decision !== true) return;
 
-      this.directoryRepository.removeDirectory(this.directory.directoryId).subscribe(() => {
+      this.directoryRepository.removeDirectory(this.directory.codeProjectUuid, this.directory.directoryId).subscribe(() => {
         this.removeDirectoryEvent.emit(this.directory);
       });
     });
@@ -97,7 +97,15 @@ export class DirectoryComponent {
   newFileDialog(): void {
     const dialogRef = this.dialog.open(AddFileDialogComponent, {
       width: '400px',
-      data: new FileAppModel('','', this.directory.directoryId, '', '', this.directory.depth),
+      data: new FileAppModel(
+        '',
+        '',
+        this.directory.directoryId,
+        '',
+        '',
+        this.directory.depth,
+        this.directory.codeProjectUuid,
+      ),
     });
 
     dialogRef.afterClosed().subscribe((model: FileAppModel) => {

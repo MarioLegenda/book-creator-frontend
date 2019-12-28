@@ -35,8 +35,8 @@ export class FileRepository {
     return this.httpClient.post(this.routeResolver.removeFile(), model);
   }
 
-  public getFilesFromDirectory(directoryId: string) {
-    return this.httpClient.get(this.routeResolver.getFilesFromDirectory(directoryId))
+  public getFilesFromDirectory(codeProjectUuid: string, directoryId: string) {
+    return this.httpClient.get(this.routeResolver.getFilesFromDirectory(codeProjectUuid, directoryId))
       .pipe(
         reduce((acc, res: any) => {
           const files = res.data;
@@ -58,13 +58,14 @@ export class FileRepository {
       );
   }
 
-  public getFileContent(fileId: string) {
-    return this.httpClient.get(this.routeResolver.getFileContent(fileId));
+  public getFileContent(codeProjectUuid: string, fileId: string) {
+    return this.httpClient.get(this.routeResolver.getFileContent(codeProjectUuid, fileId));
   }
 
-  public updateFileContent(fileId: string, content: string) {
+  public updateFileContent(codeProjectUuid: string, fileId: string, content: string) {
     return this.httpClient.post(this.routeResolver.updateFileContent(), {
       data: {
+        codeProjectUuid: codeProjectUuid,
         fileId: fileId,
         content: content,
       },

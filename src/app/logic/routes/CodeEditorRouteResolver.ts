@@ -25,12 +25,12 @@ export class CodeEditorRouteResolver {
     return `${this.routes.addFileToDirectory}`;
   }
 
-  getFilesFromDirectory(directoryId: string): string {
-    return `${this.routes.getFilesFromDirectory}/${directoryId}`;
+  getFilesFromDirectory(codeProjectUuid: string, directoryId: string): string {
+    return `${this.routes.getFilesFromDirectory}/${codeProjectUuid}/${directoryId}`;
   }
 
-  getSubdirectories(directoryId: string): string {
-    return `${this.routes.getSubdirectories}/${directoryId}`;
+  getSubdirectories(codeProjectUuid: string, directoryId: string): string {
+    return `${this.routes.getSubdirectories}/${codeProjectUuid}/${directoryId}`;
   }
 
   createDirectory(): string {
@@ -45,8 +45,8 @@ export class CodeEditorRouteResolver {
     return `${this.routes.removeDirectory}`;
   }
 
-  getFileContent(fileId: string): string {
-    return `${this.routes.getFileContent}/${fileId}`;
+  getFileContent(codeProjectUuid: string, fileId: string): string {
+    return `${this.routes.getFileContent}/${codeProjectUuid}/${fileId}`;
   }
 
   updateFileContent(): string {

@@ -31,8 +31,8 @@ export class DirectoryRepository {
       )
   }
 
-  getSubdirectories(directoryId: string) {
-    return this.httpClient.get(this.routeResolver.getSubdirectories(directoryId))
+  getSubdirectories(codeProjectUuid: string, directoryId: string) {
+    return this.httpClient.get(this.routeResolver.getSubdirectories(codeProjectUuid, directoryId))
       .pipe(
         reduce((acc, res: any) => {
           const data = res.data;
@@ -72,9 +72,10 @@ export class DirectoryRepository {
       );
   }
 
-  removeDirectory(directoryId: string) {
+  removeDirectory(codeProjectUuid: string, directoryId: string) {
     return this.httpClient.post(this.routeResolver.removeDirectory(), {
       data: {
+        codeProjectUuid: codeProjectUuid,
         directoryId: directoryId,
       },
     });

@@ -78,7 +78,7 @@ export class WorkspaceComponent implements OnDestroy {
   onTabSelect(tab: FileTab) {
     this.selectedTab = tab;
 
-    this.fileRepository.getFileContent(tab.id).subscribe((body: any) => {
+    this.fileRepository.getFileContent(this.project.uuid, tab.id).subscribe((body: any) => {
       this.contentLoadedEvent.next(body.data.content);
     });
   }

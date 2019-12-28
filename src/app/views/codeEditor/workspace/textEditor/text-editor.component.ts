@@ -4,6 +4,7 @@ import {BehaviorSubject, of} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {FileRepository} from "../../../../repository/FileRepository";
 import {FileTab} from "../../../../model/app/codeEditor/FileTab";
+import {CodeProjectAppModel} from "../../../../model/app/codeEditor/CodeProjectAppModel";
 
 @Component({
   selector: 'cms-text-editor',
@@ -16,6 +17,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   @Input('hasTabs') hasTabs: boolean;
   @Input('tab') tab: FileTab;
   @Input('contentLoadedEvent') contentLoadedEvent;
+  @Input('project') project: CodeProjectAppModel;
 
   // @ts-ignore
   @ViewChild('wrapperRef') wrapperRef: ElementRef;
@@ -54,6 +56,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => {
         if (this.componentState.code) {
           this.fileRepository.updateFileContent(
+            this.project.uuid,
             this.tab.id,
             this.componentState.code
           ).subscribe(() => {

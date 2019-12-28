@@ -28,7 +28,7 @@ export class HttpActionSubscriber {
         case actionTypes.EDITOR_HTTP_GET_FILE_CONTENT: {
           if (this.tabSession.has(action.id)) return;
 
-          this.fileRepository.getFileContent(action.id).subscribe((res: any) => {
+          this.fileRepository.getFileContent(action.codeProjectUuid, action.id).subscribe((res: any) => {
             action.content = res.data.content;
 
             this.store.dispatch(viewEditorShowFile(action));
@@ -40,6 +40,7 @@ export class HttpActionSubscriber {
         case actionTypes.EDITOR_HTTP_REMOVE_FILE: {
           this.fileRepository.removeFileById({
             data: {
+              codeProjectUuid: action.codeProjectUuid,
               fileId: action.id,
             }
           }).subscribe(() => {

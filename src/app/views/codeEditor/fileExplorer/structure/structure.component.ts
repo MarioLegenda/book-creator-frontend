@@ -201,15 +201,15 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   private getSubstructure(directory: DirectoryAppModel, subject: Subject<any>) {
-    this.directoryRepository.getSubdirectories(directory.directoryId).subscribe((models: DirectoryHttpModel[]) => {
+    this.directoryRepository.getSubdirectories(this.project.uuid, directory.directoryId).subscribe((models: DirectoryHttpModel[]) => {
       const structure = [];
       for (const dir of models) {
         structure.push(dir.convertToAppModel(directory.codeProjectUuid));
       }
 
-      this.fileRepository.getFilesFromDirectory(directory.directoryId).subscribe((files: FileHttpModel[]) => {
+      this.fileRepository.getFilesFromDirectory(this.project.uuid, directory.directoryId).subscribe((files: FileHttpModel[]) => {
         for (const file of files) {
-          structure.push(file.convertToAppModel(file.id));
+          structure.push(file.convertToAppModel(this.project.uuid, file.id));
         }
 
         subject.next(structure);

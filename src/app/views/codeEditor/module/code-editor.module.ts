@@ -10,10 +10,10 @@ import {StructureComponent} from "../fileExplorer/structure/structure.component"
 import {DirectoryComponent} from "../fileExplorer/structure/directory/directory.component";
 import {FileComponent} from "../fileExplorer/structure/file/file.component";
 import {MatDialogModule} from "@angular/material/dialog";
-import {AddFileDialogComponent} from "../fileExplorer/structure/modals/file/add-file-dialog.component";
+import {AddFileDialogComponent} from "../fileExplorer/structure/modals/addFile/add-file-dialog.component";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {AddDirectoryDialogComponent} from "../fileExplorer/structure/modals/directory/add-directory-dialog.component";
+import {AddDirectoryDialogComponent} from "../fileExplorer/structure/modals/addDirectory/add-directory-dialog.component";
 import {FileTabsComponent} from "../workspace/fileTabs/file-tabs.component";
 import {TextEditorComponent} from "../workspace/textEditor/text-editor.component";
 import {TabComponent} from "../workspace/fileTabs/tab/tab.component";

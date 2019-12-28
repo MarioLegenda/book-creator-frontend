@@ -5,6 +5,7 @@ export class FileAppModel {
   public directoryId: string;
   public type: string;
   public depth: number;
+  public codeProjectUuid: string;
 
   constructor(
     name: string,
@@ -13,6 +14,7 @@ export class FileAppModel {
     content: string,
     type: string,
     depth: number,
+    codeProjectUuid: string,
   ) {
     this.id = id;
     this.name = name;
@@ -20,6 +22,7 @@ export class FileAppModel {
     this.content = content;
     this.type = type;
     this.depth = depth;
+    this.codeProjectUuid = codeProjectUuid;
   }
 
   getExtension(): string {
@@ -33,6 +36,7 @@ export class FileAppModel {
   createNewFileHttpModel(): object {
     return {
       data: {
+        codeProjectUuid: this.codeProjectUuid,
         name: this.name,
         directoryId: this.directoryId,
         content: '',

@@ -24,7 +24,7 @@ export class FileHttpModel {
     this.depth = depth;
   }
 
-  convertToAppModel(fileId: string): FileAppModel {
+  convertToAppModel(codeProjectUuid: string, fileId: string): FileAppModel {
     return new FileAppModel(
       this.name,
       fileId,
@@ -32,6 +32,7 @@ export class FileHttpModel {
       this.content,
       this.type,
       this.depth,
+      codeProjectUuid,
     );
   }
 }
