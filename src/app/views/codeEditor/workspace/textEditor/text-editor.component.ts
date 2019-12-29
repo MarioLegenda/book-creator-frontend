@@ -1,10 +1,9 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {BehaviorSubject, of} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {FileRepository} from "../../../../repository/FileRepository";
 import {FileTab} from "../../../../model/app/codeEditor/FileTab";
-import {CodeProjectAppModel} from "../../../../model/app/codeEditor/CodeProjectAppModel";
 
 @Component({
   selector: 'cms-text-editor',
@@ -17,7 +16,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   @Input('hasTabs') hasTabs: boolean;
   @Input('tab') tab: FileTab;
   @Input('contentLoadedEvent') contentLoadedEvent;
-  @Input('project') project: CodeProjectAppModel;
+  @Input('codeProjectUuid') codeProjectUuid: string;
 
   // @ts-ignore
   @ViewChild('wrapperRef') wrapperRef: ElementRef;
@@ -33,7 +32,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       formatOnPaste: true,
       minimap: {
         enabled: false,
-      }
+      },
     },
     code: '',
   };
@@ -56,7 +55,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => {
         if (this.componentState.code) {
           this.fileRepository.updateFileContent(
-            this.project.uuid,
+            this.codeProjectUuid,
             this.tab.id,
             this.componentState.code
           ).subscribe(() => {

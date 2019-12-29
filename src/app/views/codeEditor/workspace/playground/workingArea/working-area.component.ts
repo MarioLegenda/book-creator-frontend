@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'cms-playground-working-area',
@@ -8,6 +8,8 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Ou
   templateUrl: './working-area.component.html',
 })
 export class WorkingAreaComponent {
+  @Output('runProjectEvent') runProjectEvent = new EventEmitter();
+
   componentState = {
     editorOptions: {
       theme: 'vs-light',
@@ -20,4 +22,10 @@ export class WorkingAreaComponent {
     },
     code: '',
   };
+
+  onRunProject() {
+    this.runProjectEvent.emit({
+      code: this.componentState.code,
+    });
+  }
 }

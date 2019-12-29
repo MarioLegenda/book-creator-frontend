@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {CodeProjectAppModel} from "../../../../model/app/codeEditor/CodeProjectAppModel";
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'cms-playground',
@@ -12,7 +11,7 @@ export class PlaygroundComponent {
   // @ts-ignore
   @ViewChild('playgroundWrapperRef') playgroundWrapperRef: ElementRef;
 
-  @Input('project') project: CodeProjectAppModel;
+  @Input('codeProjectUuid') codeProjectUuid: string;
 
   componentState = {
     expanded: false,
@@ -35,5 +34,8 @@ export class PlaygroundComponent {
     if (!this.componentState.expandedOnce) {
       this.componentState.expandedOnce = true;
     }
+  }
+
+  onRunProject(data) {
   }
 }

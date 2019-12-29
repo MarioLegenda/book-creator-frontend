@@ -11,9 +11,8 @@
     [contentLoadedEvent]="contentLoadedEvent"
     [tab]="selectedTab"
     [hasTabs]="hasTabs"
-    [project]="project">
-
+    [codeProjectUuid]="project.uuid">
   </cms-text-editor>
 
-  <cms-playground project="project"></cms-playground>
+  <cms-playground [codeProjectUuid]="project.uuid"></cms-playground>
 </div>
