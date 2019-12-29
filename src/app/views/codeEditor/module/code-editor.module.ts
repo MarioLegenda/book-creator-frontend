@@ -17,12 +17,12 @@ import {AddDirectoryDialogComponent} from "../fileExplorer/structure/modals/addD
 import {FileTabsComponent} from "../workspace/fileTabs/file-tabs.component";
 import {TextEditorComponent} from "../workspace/textEditor/text-editor.component";
 import {TabComponent} from "../workspace/fileTabs/tab/tab.component";
-import {TabSession} from "../../../store/sessions/TabSession";
 import {DeleteDirectoryDialogComponent} from "../fileExplorer/structure/modals/deleteDirectory/delete-directory-dialog.component";
 import {DeleteFileDialogComponent} from "../fileExplorer/structure/modals/deleteFile/delete-file-dialog.component";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {PlaygroundComponent} from "../workspace/playground/playground.component";
 import {WorkingAreaComponent} from "../workspace/playground/workingArea/working-area.component";
+import {EditDirectoryDialogComponent} from "../fileExplorer/structure/modals/editDirectory/edit-directory-dialog.component";
+import {EditFileDialogComponent} from "../fileExplorer/structure/modals/editFile/edit-file-dialog.component";
 
 @NgModule({
   declarations: [
@@ -39,6 +39,8 @@ import {WorkingAreaComponent} from "../workspace/playground/workingArea/working-
     TabComponent,
     DeleteDirectoryDialogComponent,
     DeleteFileDialogComponent,
+    EditDirectoryDialogComponent,
+    EditFileDialogComponent,
     PlaygroundComponent,
     WorkingAreaComponent,
   ],
@@ -59,6 +61,8 @@ import {WorkingAreaComponent} from "../workspace/playground/workingArea/working-
     AddDirectoryDialogComponent,
     DeleteDirectoryDialogComponent,
     DeleteFileDialogComponent,
+    EditDirectoryDialogComponent,
+    EditFileDialogComponent,
   ]
 })
 export class CodeEditorModule { }

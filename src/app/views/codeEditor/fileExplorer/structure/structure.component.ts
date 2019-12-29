@@ -135,19 +135,26 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
     this.structure.splice(idx, 1);
 
-    if (this.structureTracker.getStructureLen(file.directoryId) === 0) {
-      for (const s of this.structure) {
-        if (s.type === 'directory' && file.directoryId === s.directoryId) {
-          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.directoryId}));
+    this.sendDirectoryEmptied(file.directoryId);
 
-          break;
-        }
-      }
+    if (this.structureTracker.getStructureLen(file.directoryId) === 0) {
+      this.structureTracker.clearStructure(file.directoryId);
     }
   }
 
   removeDirectoryEvent(directory: DirectoryAppModel) {
-    if (!this.structureTracker.hasStructure(directory.directoryId)) return this.removeDirectoryStructure(directory.directoryId);
+    if (!this.structureTracker.hasStructure(directory.directoryId)) {
+      for (const s of this.structure) {
+        if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.directoryId)) {
+          this.structureTracker.clearStructure(s.directoryId);
+          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.directoryId}));
+        }
+      }
+
+      this.removeDirectoryStructure(directory.directoryId);
+
+      return this.sendDirectoryEmptied(directory.directoryId);
+    }
 
     const structures = this.structureTracker.getStructure(directory.directoryId);
 
@@ -156,6 +163,8 @@ export class StructureComponent implements OnInit, AfterViewInit {
     this.structureTracker.clearStructure(directory.directoryId);
 
     this.removeDirectoryStructure(directory.directoryId);
+
+    this.sendDirectoryEmptied(directory.directoryId);
   }
 
   ngOnInit() {
@@ -240,7 +249,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
         if (this.structure[idx].type === 'file') {
           this.store.dispatch(httpRemoveFileFinished(this.structure[idx]));
         }
-        
+
         this.structure.splice(idx, 1);
       }
     }
@@ -268,5 +277,17 @@ export class StructureComponent implements OnInit, AfterViewInit {
     const idx = this.structure.findIndex(val => val.type === 'directory' && val.directoryId === directoryId);
 
     this.structure.splice(idx, 1);
+  }
+
+  private sendDirectoryEmptied(directoryId: string) {
+    if (this.structureTracker.getStructureLen(directoryId) === 0) {
+      for (const s of this.structure) {
+        if (s.type === 'directory' && directoryId === s.directoryId) {
+          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.directoryId}));
+
+          break;
+        }
+      }
+    }
   }
 }

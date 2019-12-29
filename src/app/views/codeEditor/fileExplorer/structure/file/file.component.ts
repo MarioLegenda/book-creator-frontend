@@ -5,6 +5,7 @@ import {Store} from "@ngrx/store";
 import {httpGetFileContentAction, httpRemoveFile} from "../../../../../store/editor/httpActions";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog.component";
+import {EditFileDialogComponent} from "../modals/editFile/edit-file-dialog.component";
 
 @Component({
   selector: 'cms-file',
@@ -30,7 +31,8 @@ export class FileComponent implements OnInit {
     fileStyles: {},
     icons: {
       removeFile: 'far fa-trash-alt remove',
-      file: 'far fa-file-code'
+      file: 'far fa-file-code',
+      editFile: 'far fa-edit'
     }
   };
 
@@ -66,6 +68,25 @@ export class FileComponent implements OnInit {
       this.store.dispatch(httpRemoveFile(this.file));
 
       this.fileRemovedEvent.emit(this.file);
+    });
+  }
+
+  editFileDialog() {
+    const dialogRef = this.dialog.open(EditFileDialogComponent, {
+      width: '400px',
+      data: new FileAppModel(
+        this.file.name,
+        this.file.id,
+        this.file.directoryId,
+        this.file.content,
+        'file',
+        this.file.depth,
+        this.file.codeProjectUuid,
+      ),
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+
     });
   }
 

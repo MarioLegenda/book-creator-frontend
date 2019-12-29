@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
-import {FileRepository} from "../../../../../repository/FileRepository";
 import {DirectoryAppModel} from "../../../../../model/app/codeEditor/DirectoryAppModel";
 import {FileAppModel} from "../../../../../model/app/codeEditor/FileAppModel";
 import {DirectoryRepository} from "../../../../../repository/DirectoryRepository";
@@ -9,6 +8,7 @@ import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-
 import {select, Store} from "@ngrx/store";
 import {actionTypes, viewEditorShowFile} from "../../../../../store/editor/viewActions";
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
+import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directory-dialog.component";
 
 @Component({
   selector: 'cms-directory',
@@ -33,6 +33,7 @@ export class DirectoryComponent {
     hovered: false,
     dirStyles: {},
     icons: {
+      editDirectory: 'far fa-edit',
       dirCaret: 'far fa-folder',
       newFile: 'far fa-file-code',
       newDir: 'fas fa-folder-plus',
@@ -52,6 +53,8 @@ export class DirectoryComponent {
     this.componentState.dirStyles['padding-left'] = `${this.directory.depth * 15}px`;
     if (this.directory.isRoot) {
       this.expandDirectory();
+      this.sendExpandDirectoryEvent();
+      this.changeIconIfRoot();
     }
 
     this.editorViewActions = this.store.pipe(select('editorViewActions')).subscribe((action) => {
@@ -62,14 +65,13 @@ export class DirectoryComponent {
       switch (action.type) {
         case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
           if (action.directoryId === this.directory.directoryId) {
-            this.expandDirectory();
+            this.unExpandDirectory();
+            this.sendUnExpandDirectoryEvent();
           }
         }
       }
     });
   }
-
-
 
   directoryHovered() {
     this.componentState.hovered = true;
@@ -151,33 +153,57 @@ export class DirectoryComponent {
     });
   }
 
-  expandDirectory() {
-    if (this.directory.isRoot) {
-      this.componentState.icons.dirCaret = 'far fa-folder-open';
+  editDirectoryDialog(): void {
+    const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
+      width: '400px',
+      data: new DirectoryAppModel(
+        this.directory.codeProjectUuid,
+        this.directory.name,
+        this.directory.directoryId,
+        this.directory.depth,
+        'directory',
+        false,
+      ),
+    });
 
-      return;
-    }
+    dialogRef.afterClosed().subscribe((model: DirectoryAppModel) => {
+    });
+  }
 
-    if (this.componentState.expanded) {
-      this.componentState.icons.dirCaret = 'far fa-folder';
-
-      this.componentState.expanded = false;
-
-      this.unExpandDirectoryEvent.emit(this.directory);
-
-      return;
-    }
-
+  handleExpandDirectory(): void {
     if (!this.componentState.expanded) {
-      this.componentState.icons.dirCaret = 'far fa-folder-open';
-
-      this.componentState.expanded = true;
-
-      this.expandDirectoryEvent.emit(this.directory);
-
-      if (this.directory.structure.length > 0) {
-        return;
-      }
+      this.expandDirectory();
+      this.sendExpandDirectoryEvent();
+    } else if (this.componentState.expanded) {
+      this.unExpandDirectory();
+      this.sendUnExpandDirectoryEvent();
     }
   }
+
+  expandDirectory(): void {
+    this.componentState.icons.dirCaret = 'far fa-folder-open';
+
+    this.componentState.expanded = true;
+  }
+
+  private unExpandDirectory(): void {
+    this.componentState.icons.dirCaret = 'far fa-folder';
+
+    this.componentState.expanded = false;
+  }
+
+  private sendUnExpandDirectoryEvent(): void {
+    this.unExpandDirectoryEvent.emit(this.directory);
+  }
+
+  private sendExpandDirectoryEvent(): void {
+    this.expandDirectoryEvent.emit(this.directory);
+  }
+
+  private changeIconIfRoot(): void {
+    if (this.directory.isRoot) {
+      this.componentState.icons.dirCaret = 'far fa-folder-open';
+    }
+  }
+
 }
