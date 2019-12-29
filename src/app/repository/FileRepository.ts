@@ -71,4 +71,10 @@ export class FileRepository {
       },
     })
   }
+
+  public renameFile(model) {
+    return this.httpClient.post(this.routeResolver.renameFile(), {
+      data: model,
+    });
+  }
 }

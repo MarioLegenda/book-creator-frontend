@@ -8,16 +8,31 @@ import {FileRepository} from "../../../../../../repository/FileRepository";
   styleUrls: ['../global-dialog.component.scss']
 })
 export class EditFileDialogComponent {
+  placeholderName: string;
+
   constructor(
     private fileRepository: FileRepository,
     public dialogRef: MatDialogRef<EditFileDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public model: FileAppModel) {}
+    @Inject(MAT_DIALOG_DATA) public model: FileAppModel)
+  {
+    this.placeholderName = model.name;
+  }
 
   close(): void {
     this.dialogRef.close();
   }
 
   editFile() {
-    if (!this.model.name) return this.dialogRef.close();
+    if (!this.placeholderName) return this.dialogRef.close();
+
+    this.fileRepository.renameFile({
+      name: this.model.name,
+      fileId: this.model.id,
+      codeProjectUuid: this.model.codeProjectUuid,
+      directoryId: this.model.directoryId,
+      newName: this.placeholderName,
+    }).subscribe((res: any) => {
+      this.dialogRef.close(res.data);
+    });
   }
 }

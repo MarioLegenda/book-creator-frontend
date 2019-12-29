@@ -15,6 +15,7 @@ export class CodeEditorRouteResolver {
     removeDirectory: `${environment.composeBaseUrl()}/api/v1/directory/remove-directory`,
     getFileContent: `${environment.composeBaseUrl()}/api/v1/directory/get-file-content`,
     updateFileContent: `${environment.composeBaseUrl()}/api/v1/directory/update-file-content`,
+    renameFile: `${environment.composeBaseUrl()}/api/v1/directory/rename-file`,
   };
 
   getRootDirectory(codeProjectUuid: string): string {
@@ -51,5 +52,9 @@ export class CodeEditorRouteResolver {
 
   updateFileContent(): string {
     return `${this.routes.updateFileContent}`;
+  }
+
+  renameFile(): string {
+    return `${this.routes.renameFile}`;
   }
 }
