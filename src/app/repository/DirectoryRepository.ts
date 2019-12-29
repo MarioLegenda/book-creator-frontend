@@ -80,4 +80,10 @@ export class DirectoryRepository {
       },
     });
   }
+
+  renameDirectory(model) {
+    return this.httpClient.post(this.routeResolver.renameDirectory(), {
+      data: model,
+    });
+  }
 }

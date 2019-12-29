@@ -127,7 +127,7 @@ export class DirectoryComponent {
   }
 
   newDirectoryDialog(): void {
-    const dialogRef = this.dialog.open(AddDirectoryDialogComponent, {
+    const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
       width: '400px',
       data: new DirectoryAppModel(
         this.directory.codeProjectUuid,
@@ -166,7 +166,10 @@ export class DirectoryComponent {
       ),
     });
 
-    dialogRef.afterClosed().subscribe((model: DirectoryAppModel) => {
+    dialogRef.afterClosed().subscribe((data) => {
+      if (!data) return;
+
+      this.directory.name = data.name;
     });
   }
 

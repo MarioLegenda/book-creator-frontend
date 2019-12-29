@@ -86,6 +86,8 @@ export class FileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((newFile) => {
+      if (!newFile) return;
+
       this.file.name = newFile.name;
     });
   }
