@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import EnvironmentEmulatorRepository from "../../../../repository/EnvironmentEmulatorRepository";
+import { Subject, ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'cms-playground',
@@ -13,6 +14,8 @@ export class PlaygroundComponent {
   @ViewChild('playgroundWrapperRef') playgroundWrapperRef: ElementRef;
 
   @Input('codeProjectUuid') codeProjectUuid: string;
+
+  resultCommunicator: Subject<any> = new ReplaySubject();
 
   componentState = {
     expanded: false,
@@ -54,7 +57,8 @@ export class PlaygroundComponent {
     this.envEmulatorRepository.BuildAndRunProject(this.codeProjectUuid, code.code).subscribe((data: any) => {
       this.componentState.resultAvailable = true;
       this.componentState.isRunning = false;
-      this.componentState.resultData = data.Data;
+
+      this.resultCommunicator.next(data.Data);
     });
   }
 }
