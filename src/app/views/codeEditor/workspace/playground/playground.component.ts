@@ -58,7 +58,7 @@ export class PlaygroundComponent {
       this.componentState.resultAvailable = true;
       this.componentState.isRunning = false;
 
-      this.resultCommunicator.next(data.Data);
+      this.resultCommunicator.next(data.data);
     });
   }
 }
