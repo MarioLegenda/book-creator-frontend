@@ -204,8 +204,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
         tempSubject.unsubscribe();
 
         tempSubject = null;
-
-        this.sortStructure();
       });
     });
   }

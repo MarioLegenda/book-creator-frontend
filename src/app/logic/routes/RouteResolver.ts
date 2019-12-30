@@ -5,21 +5,23 @@ import {Injectable} from "@angular/core";
   providedIn: 'root',
 })
 export class RouteResolver {
+  private bookApiUri = environment.composeBookApiBaseUrl();
+
   private readonly routes = {
-    addNewTextBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/add-new-block`,
-    getPageByUuid: `${environment.composeBaseUrl()}/api/v1/pages/get-by-uuid/:pageUuid`,
-    removeBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/remove`,
-    updateBlock: `${environment.composeBaseUrl()}/api/v1/pages/text-block/update-block`,
-    createPresentation: `${environment.composeBaseUrl()}/api/v1/knowledge-source/create/presentation`,
-    createEmptyPage: `${environment.composeBaseUrl()}/api/v1/pages/create/empty-page`,
-    findUuidByShortId: `${environment.composeBaseUrl()}/api/v1/pages/get-uuid-by-shortId`,
-    getPresentationUuidByShortId: `${environment.composeBaseUrl()}/api/v1/knowledge-source/get/presentation/uuid`,
-    getPresentation: `${environment.composeBaseUrl()}/api/v1/knowledge-source/get/presentation/by-uuid`,
-    createCodeProject: `${environment.composeBaseUrl()}/api/v1/code-projects/create`,
-    getProjectsBySource: `${environment.composeBaseUrl()}/api/v1/code-projects/get-by-knowledge-source`,
-    getProjects: `${environment.composeBaseUrl()}/api/v1/code-projects`,
-    getProjectUuidByShortId: `${environment.composeBaseUrl()}/api/v1/code-projects/get-project-uuid`,
-    getSingleProject: `${environment.composeBaseUrl()}/api/v1/code-projects/get`,
+    addNewTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/add-new-block`,
+    getPageByUuid: `${this.bookApiUri}/api/v1/pages/get-by-uuid/:pageUuid`,
+    removeBlock: `${this.bookApiUri}/api/v1/pages/text-block/remove`,
+    updateBlock: `${this.bookApiUri}/api/v1/pages/text-block/update-block`,
+    createPresentation: `${this.bookApiUri}/api/v1/knowledge-source/create/presentation`,
+    createEmptyPage: `${this.bookApiUri}/api/v1/pages/create/empty-page`,
+    findUuidByShortId: `${this.bookApiUri}/api/v1/pages/get-uuid-by-shortId`,
+    getPresentationUuidByShortId: `${this.bookApiUri}/api/v1/knowledge-source/get/presentation/uuid`,
+    getPresentation: `${this.bookApiUri}/api/v1/knowledge-source/get/presentation/by-uuid`,
+    createCodeProject: `${this.bookApiUri}/api/v1/code-projects/create`,
+    getProjectsBySource: `${this.bookApiUri}/api/v1/code-projects/get-by-knowledge-source`,
+    getProjects: `${this.bookApiUri}/api/v1/code-projects`,
+    getProjectUuidByShortId: `${this.bookApiUri}/api/v1/code-projects/get-project-uuid`,
+    getSingleProject: `${this.bookApiUri}/api/v1/code-projects/get`,
   };
 
   addNewTextBlock(): string {

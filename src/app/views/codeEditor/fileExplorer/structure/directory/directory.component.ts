@@ -127,7 +127,7 @@ export class DirectoryComponent {
   }
 
   newDirectoryDialog(): void {
-    const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
+    const dialogRef = this.dialog.open(AddDirectoryDialogComponent, {
       width: '400px',
       data: new DirectoryAppModel(
         this.directory.codeProjectUuid,

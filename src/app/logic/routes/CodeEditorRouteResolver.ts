@@ -5,18 +5,22 @@ import {Injectable} from "@angular/core";
   providedIn: 'root',
 })
 export class CodeEditorRouteResolver {
+  private bookApiUri = environment.composeBookApiBaseUrl();
+  private envEmulatorUri = environment.composeEnvEmulatorUrl();
+
   private readonly routes = {
-    getRootDirectory: `${environment.composeBaseUrl()}/api/v1/directory/get-root-directory`,
-    addFileToDirectory: `${environment.composeBaseUrl()}/api/v1/directory/add-file`,
-    getFilesFromDirectory: `${environment.composeBaseUrl()}/api/v1/directory/get-files`,
-    getSubdirectories: `${environment.composeBaseUrl()}/api/v1/directory/get-subdirectories`,
-    createDirectory: `${environment.composeBaseUrl()}/api/v1/directory/add-directory`,
-    removeFile: `${environment.composeBaseUrl()}/api/v1/directory/remove-file`,
-    removeDirectory: `${environment.composeBaseUrl()}/api/v1/directory/remove-directory`,
-    getFileContent: `${environment.composeBaseUrl()}/api/v1/directory/get-file-content`,
-    updateFileContent: `${environment.composeBaseUrl()}/api/v1/directory/update-file-content`,
-    renameFile: `${environment.composeBaseUrl()}/api/v1/directory/rename-file`,
-    renameDirectory: `${environment.composeBaseUrl()}/api/v1/directory/rename-directory`,
+    getRootDirectory: `${this.bookApiUri}/api/v1/directory/get-root-directory`,
+    addFileToDirectory: `${this.bookApiUri}/api/v1/directory/add-file`,
+    getFilesFromDirectory: `${this.bookApiUri}/api/v1/directory/get-files`,
+    getSubdirectories: `${this.bookApiUri}/api/v1/directory/get-subdirectories`,
+    createDirectory: `${this.bookApiUri}/api/v1/directory/add-directory`,
+    removeFile: `${this.bookApiUri}/api/v1/directory/remove-file`,
+    removeDirectory: `${this.bookApiUri}/api/v1/directory/remove-directory`,
+    getFileContent: `${this.bookApiUri}/api/v1/directory/get-file-content`,
+    updateFileContent: `${this.bookApiUri}/api/v1/directory/update-file-content`,
+    renameFile: `${this.bookApiUri}/api/v1/directory/rename-file`,
+    renameDirectory: `${this.bookApiUri}/api/v1/directory/rename-directory`,
+    runProject: `${this.bookApiUri}/api/environment-emulator/build-and-run`,
   };
 
   getRootDirectory(codeProjectUuid: string): string {
@@ -61,5 +65,9 @@ export class CodeEditorRouteResolver {
 
   renameDirectory(): string {
     return `${this.routes.renameDirectory}`;
+  }
+
+  runProject(codeProjectUuid: string): string {
+    return `${this.routes.runProject}/${codeProjectUuid}`;
   }
 }

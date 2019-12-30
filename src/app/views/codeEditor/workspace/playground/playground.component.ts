@@ -1,4 +1,5 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import EnvironmentEmulatorRepository from "../../../../repository/EnvironmentEmulatorRepository";
 
 @Component({
   selector: 'cms-playground',
@@ -16,9 +17,16 @@ export class PlaygroundComponent {
   componentState = {
     expanded: false,
     expandedOnce: false,
+    resultAvailable: false,
+    resultData: null,
     expandedIcon: 'fas fa-angle-up',
     code: '',
+    isRunning: false,
   };
+
+  constructor(
+    private envEmulatorRepository: EnvironmentEmulatorRepository
+  ) {}
 
   onExpandPlayground() {
     let height = (this.componentState.expanded) ? 40 : 400;
@@ -36,6 +44,17 @@ export class PlaygroundComponent {
     }
   }
 
-  onRunProject(data) {
+  onCloseResultWindow() {
+    this.componentState.resultAvailable = false;
+    this.componentState.resultData = null;
+  }
+
+  onRunProject(code) {
+    this.componentState.isRunning = true;
+    this.envEmulatorRepository.BuildAndRunProject(this.codeProjectUuid, code.code).subscribe((data: any) => {
+      this.componentState.resultAvailable = true;
+      this.componentState.isRunning = false;
+      this.componentState.resultData = data.Data;
+    });
   }
 }

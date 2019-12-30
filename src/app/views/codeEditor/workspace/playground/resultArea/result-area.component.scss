@@ -1,0 +1,33 @@
+@import '../../../../../../styles/variables';
+
+.result-area {
+  position: absolute;
+  top: 200px;
+  border-top: 1px solid $lightestGray;
+
+  overflow: auto;
+
+  padding: 30px;
+
+  height: 200px;
+
+  background-color: white;
+
+  .result-block {
+    margin-top: 20px;
+  }
+
+  .minimize {
+    color: $lightestGray;
+    position: absolute;
+
+    top: 5px; left: 5px;
+
+    color: $appBlack;
+
+    &:hover {
+      color: $appBlack;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, Input} from '@angular/core';
 
 @Component({
   selector: 'cms-playground-working-area',
@@ -9,6 +9,8 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class WorkingAreaComponent {
   @Output('runProjectEvent') runProjectEvent = new EventEmitter();
+
+  @Input('isRunning') isRunning: boolean = false;
 
   componentState = {
     editorOptions: {
@@ -24,6 +26,8 @@ export class WorkingAreaComponent {
   };
 
   onRunProject() {
+    if (!this.componentState.code) return;
+    
     this.runProjectEvent.emit({
       code: this.componentState.code,
     });

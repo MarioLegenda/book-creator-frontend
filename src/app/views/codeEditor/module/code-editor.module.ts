@@ -23,6 +23,7 @@ import {PlaygroundComponent} from "../workspace/playground/playground.component"
 import {WorkingAreaComponent} from "../workspace/playground/workingArea/working-area.component";
 import {EditDirectoryDialogComponent} from "../fileExplorer/structure/modals/editDirectory/edit-directory-dialog.component";
 import {EditFileDialogComponent} from "../fileExplorer/structure/modals/editFile/edit-file-dialog.component";
+import {ResultAreaComponent} from "../workspace/playground/resultArea/result-area.component";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {EditFileDialogComponent} from "../fileExplorer/structure/modals/editFile
     EditFileDialogComponent,
     PlaygroundComponent,
     WorkingAreaComponent,
+    ResultAreaComponent,
   ],
   imports: [
     CommonModule,
