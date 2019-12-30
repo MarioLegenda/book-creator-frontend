@@ -16,4 +16,8 @@ export class BootstrapComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
+  onType(type) {
+    console.log(type);
+  }
 }

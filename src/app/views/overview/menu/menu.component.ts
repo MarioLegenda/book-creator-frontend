@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'cms-overview-menu',
@@ -8,16 +9,15 @@ import {Component} from '@angular/core';
   templateUrl: './menu.component.html',
 })
 export class MenuComponent {
-  icons = {
-    codeProjects: 'fas fa-laptop-code',
-    knowledgeSource: 'fas fa-book-open',
-  };
+  type: string;
 
-  navigateSource() {
-
-  }
-
-  navigateCodeProjects() {
-
+  constructor(
+    private router: Router,
+  ) {
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.type = event.url.split("/")[3];
+      }
+    });
   }
 }

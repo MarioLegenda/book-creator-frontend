@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
 import {CodeProjectHttpModel} from "../../../model/http/codeEditor/CodeProjectHttpModel";
 import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppModel";
@@ -24,4 +24,6 @@ export class CodeProjectsComponent implements OnInit {
       }
     });
   }
+
+
 }
