@@ -7,7 +7,7 @@ import {DirectoryHttpModel} from "../../../../../../model/http/codeEditor/Direct
 @Component({
   selector: 'cms-add-directory-modal',
   templateUrl: './add-directory-modal.component.html',
-  styleUrls: ['../global-dialog.component.scss']
+  styleUrls: ['../../../../../../main/global-dialog.component.scss']
 })
 export class AddDirectoryDialogComponent {
   constructor(

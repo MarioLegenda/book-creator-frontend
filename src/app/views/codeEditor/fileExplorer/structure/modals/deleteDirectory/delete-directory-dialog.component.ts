@@ -5,7 +5,7 @@ import {DirectoryAppModel} from "../../../../../../model/app/codeEditor/Director
 @Component({
   selector: 'cms-add-directory-modal',
   templateUrl: './delete-directory-modal.component.html',
-  styleUrls: ['../global-dialog.component.scss']
+  styleUrls: ['../../../../../../main/global-dialog.component.scss']
 })
 export class DeleteDirectoryDialogComponent {
   constructor(

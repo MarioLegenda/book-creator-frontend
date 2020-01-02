@@ -11,6 +11,12 @@ import { Router, NavigationEnd } from '@angular/router';
 export class MenuComponent {
   type: string;
 
+  componentState = {
+    icons: {
+      'new': 'fa fa-plus',
+    }
+  };
+
   constructor(
     private router: Router,
   ) {

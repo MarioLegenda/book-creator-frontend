@@ -6,7 +6,7 @@ import {DirectoryAppModel} from "../../../../../../model/app/codeEditor/Director
 @Component({
   selector: 'cms-edit-directory-modal',
   templateUrl: './edit-directory-modal.component.html',
-  styleUrls: ['../global-dialog.component.scss']
+  styleUrls: ['../../../../../../main/global-dialog.component.scss']
 })
 export class EditDirectoryDialogComponent {
   placeholderName: string;

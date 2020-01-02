@@ -5,7 +5,7 @@ import {FileAppModel} from "../../../../../../model/app/codeEditor/FileAppModel"
 @Component({
   selector: 'cms-add-directory-modal',
   templateUrl: './delete-file-modal.component.html',
-  styleUrls: ['../global-dialog.component.scss']
+  styleUrls: ['../../../../../../main/global-dialog.component.scss']
 })
 export class DeleteFileDialogComponent {
   constructor(

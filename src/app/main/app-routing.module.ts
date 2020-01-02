@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('../views/overview/module/overview.module').then(m => m.OverviewModule)
   },
   {
+    path: 'cms/managment',
+    loadChildren: () => import('../views/manager/module/manager.module').then(m => m.ManagerModule)
+  },
+  {
     path: 'cms/code-editor',
     loadChildren: () => import('../views/codeEditor/module/code-editor.module').then(m => m.CodeEditorModule)
   },

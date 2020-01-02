@@ -7,7 +7,7 @@ import {FileHttpModel} from "../../../../../../model/http/codeEditor/FileHttpMod
 @Component({
   selector: 'cms-add-file-modal',
   templateUrl: './add-file-modal.component.html',
-  styleUrls: ['../global-dialog.component.scss']
+  styleUrls: ['../../../../../../main/global-dialog.component.scss']
 })
 export class AddFileDialogComponent {
   constructor(

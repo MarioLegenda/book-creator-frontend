@@ -5,7 +5,7 @@ import {FileRepository} from "../../../../../../repository/FileRepository";
 @Component({
   selector: 'cms-edit-directory-modal',
   templateUrl: './edit-file-modal.component.html',
-  styleUrls: ['../global-dialog.component.scss']
+  styleUrls: ['../../../../../../main/global-dialog.component.scss']
 })
 export class EditFileDialogComponent {
   placeholderName: string;

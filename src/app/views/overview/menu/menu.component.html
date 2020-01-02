@@ -4,12 +4,16 @@
       <a class="entry" routerLink="./knowledge-sources">
         Knowledge sources
       </a>
+
+      <i [ngClass]="componentState.icons.new" class="newIcon"></i>
     </div>
 
     <div class="menu-entry" [ngClass]="{'selected': type === 'code-projects'}">
       <a class="entry" routerLink="./code-projects">
         Code projects
       </a>
+
+      <i [ngClass]="componentState.icons.new" class="newIcon"></i>
     </div>
   </nav>
 </div>
