@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, ViewChild} from '@angular/core';
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import {IComponent} from "../../../../logic/PageComponent/IComponent";
 import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
-import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -19,7 +18,7 @@ export class TextBlockComponent {
 
   editorCreated = false;
 
-  editor = BalloonEditor;
+  editor = ClassicEditor;
 
   icons = {
     'remove': 'fas fa-trash-alt',
@@ -43,10 +42,8 @@ export class TextBlockComponent {
         const model = this.createTextModel();
 
         this.store.dispatch(httpUpdateTextBlock(model));
-
-        this.editorCreated = false;
       }
-    })
+    });
   }
 
   createEditor() {
@@ -57,12 +54,6 @@ export class TextBlockComponent {
     $event.editing.view.focus();
 
     this.editorComponent.editorInstance.setData(this.componentData.value.text);
-  }
-
-  saveText() {
-    const model = this.createTextModel();
-
-    this.store.dispatch(httpUpdateTextBlock(model));
   }
 
   remove() {

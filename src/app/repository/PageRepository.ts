@@ -9,7 +9,7 @@ import {IRequestModel} from "../model/IRequestModel";
 @Injectable({
   providedIn: 'root',
 })
-export class PageRepository {
+export default class PageRepository {
   constructor(
     private routeResolver: RouteResolver,
     private httpClient: HttpClient

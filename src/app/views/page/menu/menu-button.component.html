@@ -1,4 +1,6 @@
 <div class="menu-entry">
+  <i *ngIf="!isSingleIcon" class="far fa-circle desc-icon"></i>
+  
   <p *ngIf="title" class="title">{{title}}</p>
   <div class="button-wrapper">
     <button class="empty-button ripple">

@@ -20,7 +20,7 @@
 }
 
 .empty-button {
-  width: 60px;
+  width: 61px;
   font-size: 14px;
   border: none;
   border-radius: 2px;
@@ -31,10 +31,6 @@
 
   position: relative;
   padding: 15px;
-
-  &:hover {
-    color: black;
-  }
 }
 
 .menu-entry {
@@ -43,19 +39,41 @@
 
   margin-top: 10px;
 
-  .title {
-    width: 240px;
+  border-left: 2px solid white;
+
+  .desc-icon {
+    display: block;
+
+    margin: 15px 0 0 10px;
+    margin-top: 15px;
     float: left;
 
-    margin-top: 13px;
+    color: $lightestGray;
+  }
+
+  .title {
+    width: 198px;
+    float: left;
+
+    margin: 13px 13px 0 0;
 
     padding-left: 15px;
+    font-size: 0.9em;
 
     color: $textColor;
   }
 
   &:hover {
     cursor: pointer;
+    border-left: 2px solid $editorMainColor;
+  }
+
+  &:hover .desc-icon {
+    color: $editorMainColor;
+  }
+
+  &:hover .button-icon {
+    color: $editorMainColor;
   }
 }
 

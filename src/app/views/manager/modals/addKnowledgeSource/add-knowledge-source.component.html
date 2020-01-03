@@ -1,0 +1,31 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <p>New knowledge source</p>
+  </div>
+
+  <div class="source-listing col-xs-12 col-md-12 col-lg-12">
+    <div 
+      class="item col-xs-12 col-md-12 col-lg-12"
+      (click)="onSelect('blog')">
+      <div class="icon">
+        <i class="far fa-circle"></i>
+      </div>
+
+      <p class="title">Blog</p>
+    </div>
+
+    <div 
+      class="item col-xs-12 col-md-12 col-lg-12"
+      (click)="onSelect('book')">
+      <div class="icon">
+        <i class="far fa-circle"></i>
+      </div>
+
+      <p class="title">Book</p>
+    </div>
+  </div>
+</div>

@@ -7,14 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('../views/page/module/page.module').then(m => m.PageModule)
   },
   {
-    path: 'cms/selection',
-    loadChildren: () => import('../views/selection/module/selection.module').then(m => m.SelectionModule)
-  },
-  {
-    path: 'cms/overview',
-    loadChildren: () => import('../views/overview/module/overview.module').then(m => m.OverviewModule)
-  },
-  {
     path: 'cms/managment',
     loadChildren: () => import('../views/manager/module/manager.module').then(m => m.ManagerModule)
   },
@@ -25,7 +17,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'cms/selection',
+    redirectTo: 'cms/managment/overview',
   },
 ];
 

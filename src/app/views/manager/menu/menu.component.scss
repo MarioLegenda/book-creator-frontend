@@ -2,18 +2,30 @@
 
 .menu {
   float: left;
-  border-right: 1px solid $lightestGray;
+
+  background-color: white;
 
   .menu-entry {
     width: 100%;
     float: left;
 
+    margin-top: 5px;
+
     position: relative;
 
-    .newIcon {
+    .action-wrapper {
       position: absolute;
-      color: $editorMainColor;
-      top: 16px; right: 10px;
+
+      right: 0;
+
+      i {
+        display: block;
+        padding: 15px 10px 19px 10px;
+
+        background-color: $editorMainColor;
+
+        color: white;
+      }
 
       &:hover {
         cursor: pointer;
@@ -23,7 +35,7 @@
   }
 
   .selected {
-    background-color: $lightestGray;
+    background-color: $almostWhiteGray;
     border-left: 2px solid $editorMainColor;
   }
 
@@ -37,12 +49,13 @@
     display: inline-block;
     font-size: 0.85em;
     color: $textColor;
-    text-underline: none;
+    text-decoration: none;
 
     padding: 15px;
 
     &:hover {
       cursor: pointer;
+      background-color: $almostWhiteGray;
     }
   }
 }

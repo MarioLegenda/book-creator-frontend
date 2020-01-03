@@ -5,7 +5,9 @@
         Knowledge sources
       </a>
 
-      <i [ngClass]="componentState.icons.new" class="newIcon"></i>
+      <div class="action-wrapper" (click)="addKsDialog()">
+        <i [ngClass]="componentState.icons.new" class="newIcon"></i>
+      </div>
     </div>
 
     <div class="menu-entry" [ngClass]="{'selected': type === 'code-projects'}">
@@ -13,7 +15,9 @@
         Code projects
       </a>
 
-      <i [ngClass]="componentState.icons.new" class="newIcon"></i>
+      <div class="action-wrapper">
+        <i [ngClass]="componentState.icons.new" class="newIcon"></i>
+      </div>
     </div>
   </nav>
 </div>
