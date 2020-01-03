@@ -18,7 +18,6 @@ import {PageRoutingModule} from "./page-routing.module";
 
 import {CommonModule} from "@angular/common";
 import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlaceholder/metadata-placeholder.component";
-import {BlockInputComponent} from "../blocks/textBlock/blockInput/block-input.component";
 import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
 import {MonacoEditorModule} from "ngx-monaco-editor";
 
@@ -30,7 +29,6 @@ import {MonacoEditorModule} from "ngx-monaco-editor";
     WorkAreaComponent,
     TextBlockComponent,
     MetadataPlaceholderComponent,
-    BlockInputComponent,
     CodeBlockComponent,
   ],
   imports: [
@@ -38,9 +36,9 @@ import {MonacoEditorModule} from "ngx-monaco-editor";
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    DragDropModule,
     MatDialogModule,
     CKEditorModule,
+    DragDropModule,
     MonacoEditorModule,
     MatTooltipModule,
 

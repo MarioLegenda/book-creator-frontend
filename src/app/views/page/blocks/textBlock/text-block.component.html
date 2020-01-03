@@ -28,6 +28,8 @@
       #editorComponent
       *ngIf="editorCreated"
       [editor]="editor"
+      (change)="onChange()"
+      [config]="editorConfig"
       [(ngModel)]="componentData.value.text"
       (ready)="onEditorReady($event)"
       required
