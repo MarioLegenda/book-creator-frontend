@@ -60,8 +60,6 @@ export class ComponentTracker {
 
     this.positionMap.remove(position);
 
-    console.log(this.positionMap);
-
     if (this.componentLen() === 0) {
       this.indexFactory.reset();
     }

@@ -27,7 +27,7 @@ export class TextBlockComponent {
   };
 
   editorConfig = {
-    toolbar: [			
+    toolbar: [
       'heading',
       '|',
       'bold',

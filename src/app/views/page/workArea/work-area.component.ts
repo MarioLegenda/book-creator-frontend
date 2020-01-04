@@ -2,8 +2,7 @@ import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild} from 
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
 import { httpUpdateTextBlock } from 'src/app/store/page/httpActions';
-import {select, Store} from '@ngrx/store';
-import {actionTypes} from "../../../store/page/viewActions";
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'cms-work-area',
