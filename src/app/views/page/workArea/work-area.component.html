@@ -1,7 +1,11 @@
-<div class="col-xs-12 col-md-12 col-lg-12 work-area">
-  <cms-menu></cms-menu>
+<div class="col-xs-12 col-md-12 col-lg-12 work-area" #workAreaRef>
+  <cms-menu (blockAddedEvent)="onBlockAdded()"></cms-menu>
 
-  <div cdkDropList class="container row page" (cdkDropListDropped)="drop($event)">
+  <div
+    cdkDropList
+    class="container row page col-xs-10 col-lg-9 col-md-9"
+    (cdkDropListDropped)="drop($event)"
+    #pageRef>
     <div
       *ngFor="let item of components | keyvalue; let i = index; trackBy: trackByFn"
       class="col-xs-12 col-lg-12 col-md-12 component-wrapper"

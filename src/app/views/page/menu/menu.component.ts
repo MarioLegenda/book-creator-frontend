@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/page/httpActions";
 import {Router} from "@angular/router";
@@ -18,6 +18,8 @@ export class MenuComponent {
     private router: Router,
   ) {}
 
+  @Output('blockAddedEvent') blockAddedEvent: EventEmitter<any> = new EventEmitter();
+
   icons = {
     'menu': 'fas fa-bars',
     'paragraph': 'fas fa-paragraph',
@@ -32,6 +34,8 @@ export class MenuComponent {
   menuExpanded = false;
 
   appendTextBlock() {
+    this.blockAddedEvent.emit();
+
     this.store.dispatch(httpCreateTextBlock({position: this.componentTracker.nextPosition()}));
   }
 

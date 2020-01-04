@@ -2,13 +2,12 @@
 
 .work-area {
   position: relative;
+  float: left;
 
   background-color: $almostWhiteGray;
 
   .page {
-    width: 900px;
-    height: 1000px;
-
+    float: none;
     margin: 5% auto;
     padding: 4%;
 

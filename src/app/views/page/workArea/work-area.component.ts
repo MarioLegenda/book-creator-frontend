@@ -1,15 +1,16 @@
-import {Component, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
 import { httpUpdateTextBlock } from 'src/app/store/page/httpActions';
-import { Store } from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
+import {actionTypes} from "../../../store/page/viewActions";
 
 @Component({
   selector: 'cms-work-area',
   styleUrls: ['./work-area.component.scss'],
   templateUrl: './work-area.component.html',
 })
-export class WorkAreaComponent implements OnDestroy {
+export class WorkAreaComponent implements OnDestroy, OnInit {
   components = this.componentTracker.components;
 
   focusTrackerEvent: EventEmitter<string> = new EventEmitter<string>();
@@ -18,14 +19,27 @@ export class WorkAreaComponent implements OnDestroy {
     'list': 'fas fa-list',
   };
 
+  // @ts-ignore
+  @ViewChild('pageRef') pageRef: ElementRef;
+  // @ts-ignore
+  @ViewChild('workAreaRef') workAreaRef: ElementRef;
+
+  onBlockAdded() {
+  }
+
   private focusTracker = {
     focusedIndex: null,
   };
 
   constructor(
     private store: Store<any>,
-    private componentTracker: ComponentTracker
+    private componentTracker: ComponentTracker,
   ) {}
+
+  ngOnInit(): void {
+    const h = document.body.offsetHeight;
+    this.workAreaRef.nativeElement.setAttribute('style', `min-height: ${h}px`);
+  }
 
   ngOnDestroy() {
     this.focusTrackerEvent.unsubscribe();
