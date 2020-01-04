@@ -1,8 +1,8 @@
 import {IComponent} from "./IComponent";
 import { Injectable } from '@angular/core';
-import {select, Store} from "@ngrx/store";
-import {Observable} from "rxjs";
 import {AutoIncrementIndexFactory} from "../../library/AutoIncrementIndexFactory";
+import Util from 'src/app/library/Util';
+import PositionMap from './PositionMap';
 
 @Injectable({
   providedIn: 'root',
@@ -11,23 +11,33 @@ export class ComponentTracker {
   components = {};
 
   constructor(
-    private store: Store<any>,
-    private indexFactory: AutoIncrementIndexFactory
+    private indexFactory: AutoIncrementIndexFactory,
+    private positionMap: PositionMap,
   ) {
-    this.indexFactory.update(this.componentsLen());
+    this.indexFactory.update(this.maxIndex());
+  }
+
+  bulkAdd(components: IComponent[]): void {
+    for (const c of components) {
+      this.add(c);
+    }
   }
 
   add(component: IComponent): void {
-    component.value.$index = this.indexFactory.increment();
+    component.value.position = this.indexFactory.increment();
 
-    this.components[component.value.$index] = component;
+    this.positionMap.add(component.value.position);
+
+    this.components[this.positionMap.getIndex(component.value.position)] = component;
   }
 
-  has(index: number): boolean {
-    return (this.components[index]);
+  has(position: number): boolean {
+    const idx = this.positionMap.getIndex(position);
+
+    return (this.components[idx]) ? true : false;
   }
 
-  hasBy(fn: Function) {
+  hasBy(fn: Function): boolean {
     const keys = Object.keys(this.components);
 
     for (const key of keys) {
@@ -43,19 +53,44 @@ export class ComponentTracker {
     return false;
   }
 
-  remove(index: number): void {
-    delete this.components[index];
+  remove(position: number): void {
+    const c = Util.objectFilter(this.components, (_, val: any) => val.value.position === position);
 
-    if (this.componentsLen() === 0) {
+    delete this.components[Object.keys(c)[0]];
+
+    this.positionMap.remove(position);
+
+    console.log(this.positionMap);
+
+    if (this.componentLen() === 0) {
       this.indexFactory.reset();
     }
   }
 
-  reset() {
-    this.components = {};
+  nextPosition(): number {
+    this.indexFactory.update(this.maxIndex());
+
+    return this.indexFactory.increment();
   }
 
-  private componentsLen(): number {
+  reset(): void {
+    this.components = {};
+    this.positionMap.reset();
+  }
+
+  private maxIndex(): number {
+    const positions = Object.entries(this.components).map((val: any) => {
+      return val[1].value.position;
+    });
+
+    if (positions.length === 0) {
+      return 0;
+    }
+
+    return Math.max(...positions);
+  }
+
+  private componentLen(): number {
     const keys = Object.keys(this.components);
     let num = 0;
     for (const c of keys) {

@@ -31,7 +31,7 @@ export class HttpActionSubscriber {
 
       switch (action.type) {
         case actionTypes.HTTP_CREATE_TEXT_BLOCK: {
-          this.addTextBlock();
+          this.addTextBlock(action);
 
           break;
         }
@@ -65,10 +65,11 @@ export class HttpActionSubscriber {
     this.store.dispatch(viewCreateCodeBlock(model.convertToViewModel()));
   }
 
-  private addTextBlock() {
+  private addTextBlock(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const position: number = action.position;
 
-    const model = CreateTextBlockModel.create(pageUuid);
+    const model = CreateTextBlockModel.create(pageUuid, position);
 
     this.pageRepository.addTextBlock(model).subscribe((model: TextBlockModel) => {
       this.store.dispatch(httpCreateTextBlockFinished());
@@ -92,18 +93,16 @@ export class HttpActionSubscriber {
 
   private updateTextBlock(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
-    const blockUuid = action.blockUuid;
+    const blockUuid: string = action.blockUuid;
+    const position: number = action.position;
 
     const model = UpdateTextBlock.create(
       pageUuid,
       blockUuid,
-      (action.internalName) ? action.internalName : '',
-      (action.shortDescription) ? action.shortDescription : '',
+      position,
       (action.text) ? action.text : '',
     );
 
-    this.pageRepository.updateTextBlock(model).subscribe(() => {
-
-    });
+    this.pageRepository.updateTextBlock(model).subscribe(() => {});
   }
 }

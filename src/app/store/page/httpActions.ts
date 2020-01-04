@@ -17,6 +17,7 @@ export const httpCreateCodeBlock = createAction(
 
 export const httpCreateTextBlock = createAction(
   actionTypes.HTTP_CREATE_TEXT_BLOCK,
+  props<{}>(),
 );
 
 export const httpCreateTextBlockFinished = createAction(

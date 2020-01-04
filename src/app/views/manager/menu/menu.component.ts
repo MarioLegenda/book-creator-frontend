@@ -35,11 +35,5 @@ export class OverviewMenuComponent {
       width: '400px',
       data: {},
     });
-
-    dialogRef.afterClosed().subscribe((type) => {
-      if (!type) return;
-
-      console.log(type);
-    });
   }
 }

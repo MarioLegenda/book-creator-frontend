@@ -33,8 +33,7 @@ export default class PageRepository {
           return TextBlockModel.create(
             (model as any).data.pageUuid,
             data.uuid,
-            data.internalName,
-            data.shortDescription,
+            data.position,
             data.text,
           );
         }, {})
@@ -56,17 +55,14 @@ export default class PageRepository {
             models.push(TextBlockModel.create(
               pageUuid,
               (block as any).uuid,
-              (block as any).internalName,
-              (block as any).shortDescription,
-              (block as any).text
+              (block as any).position,
+              (block as any).text,
             ));
           }
 
           return {
             uuid: page.uuid,
-            internalName: page.internalName,
             shortId: page.shortId,
-            shortDescription: page.shortDescription,
             blocks: models,
           };
         }, {}),

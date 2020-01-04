@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
   providedIn: 'root',
 })
 export class AutoIncrementIndexFactory {
-  private start = 0;
+  private start = 1;
   private lastIndex: number|null = null;
   private currentIndex: number|null = null;
 

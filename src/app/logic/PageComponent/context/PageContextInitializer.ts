@@ -3,11 +3,12 @@ import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {PageContext} from "./PageContext";
 import PageRepository from "../../../repository/PageRepository";
+import BlogRepository from "../../../repository/BlogRepository";
 import {TextBlockModel} from "../../../model/http/TextBlockModel";
-import {actionTypes, viewAddTextBlock} from "../../../store/page/viewActions";
+import {actionTypes, viewAddTextBlock, viewBulkAddTextBlock} from "../../../store/page/viewActions";
 import {IPage} from "./IPage";
-import {PresentationRepository} from "../../../repository/PresentationRepository";
 import {IKnowledgeSource} from "./IKnowledgeSource";
+import { IViewModel } from 'src/app/model/app/IViewModel';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class PageContextInitializer {
   private contextInitiated = false;
 
   constructor(
+    private blogRepository: BlogRepository,
     private pageRepository: PageRepository,
-    private presentationRepository: PresentationRepository,
     private store: Store<any>,
   ) {}
 
@@ -31,14 +32,19 @@ export class PageContextInitializer {
     this.createContext(type, sourceShortId, pageShortId).then((data: any) => {
       this.context = data.context;
 
-      const blocks: TextBlockModel[] = data.blocks;
+      const dataBlocks: TextBlockModel[] = data.blocks;
+      const viewModels: IViewModel[] = [];
 
-      for (const block of blocks) {
-        this.store.dispatch(viewAddTextBlock({
-          type: actionTypes.VIEW_ADD_TEXT_BLOCK,
-          ...block.convertToViewModel()
-        }));
+      for (const block of dataBlocks) {
+        viewModels.push(block.convertToViewModel());
       }
+
+      const blocks = viewModels;
+
+      this.store.dispatch(viewBulkAddTextBlock({
+        type: actionTypes.VIEW_BULK_ADD_TEXT_BLOCK,
+        blocks,
+      }));
     });
 
     this.contextInitiated = true;
@@ -78,14 +84,14 @@ export class PageContextInitializer {
   }
 
   private async getKnowledgeSourceByShortId(type: string, shortId: string) {
-    if (type === 'presentation') {
-      const presentationUuid: any = await this.presentationRepository.findUuidByShortId(shortId).toPromise();
-      const presentation: any = await this.presentationRepository.getPresentation(presentationUuid.data.uuid).toPromise();
+    if (type === 'blog') {
+      const uuid: any = await this.blogRepository.getUuid(shortId).toPromise();
+      const blog: any = await this.blogRepository.getBlog(uuid.data.uuid).toPromise();
 
       return {
-        uuid: presentation.data.uuid,
-        name: presentation.data.name,
-        shortId: presentation.data.shortId,
+        uuid: blog.data.uuid,
+        name: blog.data.name,
+        shortId: blog.data.shortId,
         type: type,
       };
     }

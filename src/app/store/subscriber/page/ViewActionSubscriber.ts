@@ -41,8 +41,30 @@ export class ViewActionSubscriber {
 
           break;
         }
+
+        case actionTypes.VIEW_BULK_ADD_TEXT_BLOCK: {
+          this.addManyTextBlocks(action);
+
+          break;
+        }
       }
     });
+  }
+
+  private addManyTextBlocks(action) {
+    const blocks = action.blocks;
+    const components: IComponent[] = [];
+
+    for (const block of blocks) {
+      const component: IComponent = ComponentFactory.createComponent({
+        type: actionTypes.VIEW_ADD_TEXT_BLOCK,
+        ...block
+      });
+
+      components.push(component);
+    }
+
+    this.componentTracker.bulkAdd(components);
   }
 
   private addCodeBlock(action) {
@@ -58,8 +80,8 @@ export class ViewActionSubscriber {
   }
 
   private removeTextBlock(action) {
-    if (this.componentTracker.has(action.value.$index)) {
-      this.componentTracker.remove(action.value.$index);
+    if (this.componentTracker.has(action.value.position)) {
+      this.componentTracker.remove(action.value.position);
     }
   }
 }

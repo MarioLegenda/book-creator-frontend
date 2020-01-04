@@ -10,16 +10,14 @@ export class CreateTextBlockModel implements IRequestModel{
 
   public static create(
     pageUuid: string,
-    internalName: string = '',
-    shortDescription: string = '',
+    position: number,
     text: string = '',
   ): CreateTextBlockModel {
     const model = new CreateTextBlockModel();
 
     model.data.pageUuid = pageUuid;
     model.data.text = (!text) ? '' : text;
-    model.data.internalName = (!internalName) ? '' : internalName;
-    model.data.shortDescription = (!shortDescription) ? '' : shortDescription;
+    model.data.position = position;
 
     return model;
   }

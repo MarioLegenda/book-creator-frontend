@@ -32,4 +32,20 @@ export default class Util {
     el.setAttribute('style', `width: ${width}px`);
     el.setAttribute('style', `height: ${height}px`);
   }
+
+  static objectFilter(obj, fn) {
+    const entries = Object.entries(obj);
+    const filtered = {};
+
+    for (const entry of entries) {
+      const key = entry[0];
+      const value = entry[1];
+
+      const res = fn.call(null, key, value);
+
+      if (res === true) filtered[key] = value;
+    }
+
+    return filtered;
+  }
 }

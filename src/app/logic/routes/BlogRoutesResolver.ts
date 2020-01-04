@@ -9,9 +9,19 @@ export default class BlogRoutesResolver {
 
   private readonly routes = {
     createBlankBlog: `${this.bookApiUri}/api/v1/knowledge-source/create/blank-blog`,
+    getUuid: `${this.bookApiUri}/api/v1/knowledge-source/get/blog/uuid`,
+    getBlog: `${this.bookApiUri}/api/v1/knowledge-source/get/blog/by-uuid`,
   };
 
-  createBlankBlog() {
+  createBlankBlog(): string {
       return this.routes.createBlankBlog;
+  }
+
+  getUuid(shortId: string): string {
+    return `${this.routes.getUuid}/${shortId}`;
+  }
+
+  getBlog(uuid: string): string {
+    return `${this.routes.getBlog}/${uuid}`;
   }
 }

@@ -105,13 +105,18 @@ export class TextBlockComponent {
   }
 
   ngOnDestroy(): void {
-    this.typeAheadObservable.unsubscribe();
+    if (this.typeAheadObservable) {
+      this.typeAheadObservable.unsubscribe();
+
+      this.typeAheadObservable = null;
+    }
   }
 
   private createTextModel(): any {
     const model: any = {};
     model.blockUuid = this.componentData.value.blockUuid;
     model.text = this.componentData.value.text;
+    model.position = this.componentData.value.position;
 
     return model;
   }

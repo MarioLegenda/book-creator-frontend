@@ -36,7 +36,9 @@ export class AddKnowledgeSourceDialogComponent {
       }
 
       createBlogData().then(({emptyPageShortId, blankBlogShortId}) => {
-          this.router.navigate(['/page', type, blankBlogShortId, emptyPageShortId]);
+        this.router.navigate(['/page', type, blankBlogShortId, emptyPageShortId]);
+        
+        this.dialogRef.close();
       });
 
     }

@@ -8,8 +8,7 @@ export class TextBlockModel implements IRequestModel{
   public convertToViewModel(): IViewModel {
     return new ViewTextBlockModel(
       this.data.blockUuid,
-      this.data.internalName,
-      this.data.shortDescription,
+      this.data.position,
       this.data.text,
     );
   }
@@ -17,17 +16,15 @@ export class TextBlockModel implements IRequestModel{
   public static create(
     pageUuid: string,
     blockUuid: string,
-    internalName: string = '',
-    shortDescription: string = '',
+    position: number,
     text: string = '',
   ): TextBlockModel {
     const model = new TextBlockModel();
 
+    model.data.position = position;
     model.data.pageUuid = pageUuid;
     model.data.blockUuid = blockUuid;
     model.data.text = (!text) ? '' : text;
-    model.data.internalName = (!internalName) ? '' : internalName;
-    model.data.shortDescription = (!shortDescription) ? '' : shortDescription;
 
     return model;
   }

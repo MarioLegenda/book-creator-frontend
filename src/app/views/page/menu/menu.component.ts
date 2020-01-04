@@ -3,6 +3,7 @@ import {Store} from "@ngrx/store";
 import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/page/httpActions";
 import {Router} from "@angular/router";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
+import { ComponentTracker } from 'src/app/logic/PageComponent/ComponentTracker';
 
 @Component({
   selector: 'cms-menu',
@@ -12,8 +13,9 @@ import {PageContextInitializer} from "../../../logic/PageComponent/context/PageC
 export class MenuComponent {
   constructor(
     private store: Store<{menu: string}>,
+    private componentTracker: ComponentTracker,
     private pageContext: PageContextInitializer,
-    private router: Router
+    private router: Router,
   ) {}
 
   icons = {
@@ -30,7 +32,7 @@ export class MenuComponent {
   menuExpanded = false;
 
   appendTextBlock() {
-    this.store.dispatch(httpCreateTextBlock());
+    this.store.dispatch(httpCreateTextBlock({position: this.componentTracker.nextPosition()}));
   }
 
   appendCodeBlock() {
