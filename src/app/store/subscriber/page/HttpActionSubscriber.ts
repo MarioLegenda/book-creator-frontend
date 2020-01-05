@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {actionTypes, httpCreateTextBlockFinished} from "../../page/httpActions";
 import {CreateTextBlockModel} from "../../../model/http/CreateTextBlockModel";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
-import PageRepository from "../../../repository/PageRepository";
+import {PageRepository} from "../../../repository/PageRepository";
 import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../page/viewActions";
 import {TextBlockModel} from "../../../model/http/TextBlockModel";
 import {RemoveBlockModel} from "../../../model/http/RemoveBlockModel";

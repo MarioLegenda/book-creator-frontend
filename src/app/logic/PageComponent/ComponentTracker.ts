@@ -2,7 +2,7 @@ import {IComponent} from "./IComponent";
 import { Injectable } from '@angular/core';
 import {AutoIncrementIndexFactory} from "../../library/AutoIncrementIndexFactory";
 import Util from 'src/app/library/Util';
-import PositionMap from './PositionMap';
+import {PositionMap} from './PositionMap';
 
 @Injectable({
   providedIn: 'root',

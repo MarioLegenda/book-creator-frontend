@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
 @Injectable({
   providedIn: 'root',
 })
-export default class EnvironmentEmulatorRepository {
+export class EnvironmentEmulatorRepository {
   constructor(
     private httpClient: HttpClient,
     private routeResolver: CodeEditorRouteResolver

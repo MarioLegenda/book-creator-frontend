@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import BlogRoutesResolver from '../logic/routes/BlogRoutesResolver';
+import {BlogRoutesResolver} from '../logic/routes/BlogRoutesResolver';
 
 @Injectable({
   providedIn: 'root',
 })
-export default class BlogRepository {
+export class BlogRepository {
   constructor(
     private httpClient: HttpClient,
     private routeResolver: BlogRoutesResolver,

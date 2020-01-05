@@ -47,7 +47,6 @@ export class TextBlockComponent {
   // @ts-ignore
   @ViewChild('editorComponent') editorComponent: CKEditorComponent;
 
-  @Input('focusTrackerEvent') focusTrackerEvent: EventEmitter<string>;
   @Input('index') index: number;
   @Input('componentData') componentData: IComponent;
 
@@ -58,16 +57,6 @@ export class TextBlockComponent {
     private store: Store<any>,
     public dialog: MatDialog,
   ) {}
-
-  ngOnInit() {
-    this.focusTrackerEvent.subscribe((index) => {
-      if (this.index === index) {
-        const model = this.createTextModel();
-
-        this.store.dispatch(httpUpdateTextBlock(model));
-      }
-    });
-  }
 
   createEditor() {
     this.editorCreated = true;

@@ -9,26 +9,14 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./work-area.component.scss'],
   templateUrl: './work-area.component.html',
 })
-export class WorkAreaComponent implements OnDestroy, OnInit {
+export class WorkAreaComponent implements OnInit {
   components = this.componentTracker.components;
-
-  focusTrackerEvent: EventEmitter<string> = new EventEmitter<string>();
 
   icons = {
     'list': 'fas fa-list',
   };
-
-  // @ts-ignore
-  @ViewChild('pageRef') pageRef: ElementRef;
   // @ts-ignore
   @ViewChild('workAreaRef') workAreaRef: ElementRef;
-
-  onBlockAdded() {
-  }
-
-  private focusTracker = {
-    focusedIndex: null,
-  };
 
   constructor(
     private store: Store<any>,
@@ -38,11 +26,6 @@ export class WorkAreaComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     const h = document.body.offsetHeight;
     this.workAreaRef.nativeElement.setAttribute('style', `min-height: ${h}px`);
-  }
-
-  ngOnDestroy() {
-    this.focusTrackerEvent.unsubscribe();
-    this.focusTracker = null;
   }
 
   drop(event: CdkDragDrop<any>) {
@@ -61,24 +44,6 @@ export class WorkAreaComponent implements OnDestroy, OnInit {
 
     this.store.dispatch(httpUpdateTextBlock(this.createTextModel(this.components[current])));
     this.store.dispatch(httpUpdateTextBlock(this.createTextModel(this.components[previous])));
-  }
-
-  onTextBlockFocus(index) {
-    if (this.focusTracker.focusedIndex === null) {
-      return this.focusTracker.focusedIndex = index;
-    }
-
-    if (this.focusTracker.focusedIndex === index) {
-      this.focusTracker.focusedIndex = index;
-
-      return;
-    }
-
-    if (this.focusTracker.focusedIndex !== index) {
-      this.focusTrackerEvent.emit(this.focusTracker.focusedIndex);
-
-      this.focusTracker.focusedIndex = index;
-    }
   }
 
   trackByFn(index) {

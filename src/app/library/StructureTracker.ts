@@ -1,6 +1,10 @@
 import Util from "./Util";
+import {Injectable} from "@angular/core";
 
-export default class StructureTracker {
+@Injectable({
+  providedIn: 'root',
+})
+export class StructureTracker {
   private structure = {};
 
   hasStructure(key: string): boolean {

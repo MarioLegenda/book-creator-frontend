@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('../views/page/module/page.module').then(m => m.PageModule)
   },
   {
-    path: 'cms/managment',
+    path: 'cms/managment/overview',
     loadChildren: () => import('../views/manager/module/manager.module').then(m => m.ManagerModule)
   },
   {

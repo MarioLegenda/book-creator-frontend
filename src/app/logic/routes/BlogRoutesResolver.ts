@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
 @Injectable({
   providedIn: 'root',
 })
-export default class BlogRoutesResolver {
+export class BlogRoutesResolver {
   private bookApiUri = environment.composeBookApiBaseUrl();
 
   private readonly routes = {

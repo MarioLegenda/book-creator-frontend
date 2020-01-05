@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {PresentationRepository} from "../../../repository/PresentationRepository";
-import PageRepository from "../../../repository/PageRepository";
+import {PageRepository} from "../../../repository/PageRepository";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +11,6 @@ export class HttpActionSubscriber {
 
   constructor(
     private store: Store<any>,
-    private presentationRepository: PresentationRepository,
     private pageRepository: PageRepository,
   ) {
     this.subscribeToHttpActions(store.pipe(select('knowledgeSourceHttpActions')));

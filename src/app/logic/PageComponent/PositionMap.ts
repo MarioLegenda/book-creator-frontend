@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
-export default class PositionMap {
+export class PositionMap {
     private map: {[key: number]: number} = {};
 
     bulkAdd(positions: number[]): void {
@@ -14,6 +14,8 @@ export default class PositionMap {
 
     add(position: number): void {
         const idx: number = this.next();
+
+        console.log(idx);
 
         this.map[idx] = position;
     }

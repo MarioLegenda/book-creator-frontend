@@ -6,8 +6,7 @@ import {DirectoryAppModel} from "../../../../model/app/codeEditor/DirectoryAppMo
 import {FileHttpModel} from "../../../../model/http/codeEditor/FileHttpModel";
 import {FileRepository} from "../../../../repository/FileRepository";
 import {Subject} from "rxjs";
-import StructureTracker from "../../../../library/StructureTracker";
-import Util from "../../../../library/Util";
+import {StructureTracker} from "../../../../library/StructureTracker";
 import {FileAppModel} from "../../../../model/app/codeEditor/FileAppModel";
 import {Store} from "@ngrx/store";
 import {viewEditorDirectoryEmptied} from "../../../../store/editor/viewActions";

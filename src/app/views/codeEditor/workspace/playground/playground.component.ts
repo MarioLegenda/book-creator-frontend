@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import EnvironmentEmulatorRepository from "../../../../repository/EnvironmentEmulatorRepository";
+import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 import { Subject, ReplaySubject } from 'rxjs';
 
 @Component({

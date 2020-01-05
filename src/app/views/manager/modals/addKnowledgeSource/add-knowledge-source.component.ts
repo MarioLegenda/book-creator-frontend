@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import BlogRepository from '../../../../repository/BlogRepository';
-import PageRepository from '../../../../repository/PageRepository';
+import {BlogRepository} from '../../../../repository/BlogRepository';
+import {PageRepository} from '../../../../repository/PageRepository';
 
 @Component({
   selector: 'cms-add-knowledge-source-modal',
@@ -37,7 +37,7 @@ export class AddKnowledgeSourceDialogComponent {
 
       createBlogData().then(({emptyPageShortId, blankBlogShortId}) => {
         this.router.navigate(['/page', type, blankBlogShortId, emptyPageShortId]);
-        
+
         this.dialogRef.close();
       });
 
