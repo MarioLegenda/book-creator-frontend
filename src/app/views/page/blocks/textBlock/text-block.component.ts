@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, ViewChild} from '@angular/core';
-import {IComponent} from "../../../../logic/PageComponent/IComponent";
+import {Component, Input, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -48,7 +47,7 @@ export class TextBlockComponent {
   @ViewChild('editorComponent') editorComponent: CKEditorComponent;
 
   @Input('index') index: number;
-  @Input('componentData') componentData: IComponent;
+  @Input('component') component;
 
   private typeAheadSource = new BehaviorSubject([]);
   private typeAheadObservable = null;
@@ -65,7 +64,7 @@ export class TextBlockComponent {
   onEditorReady($event: any) {
     $event.editing.view.focus();
 
-    this.editorComponent.editorInstance.setData(this.componentData.value.text);
+    this.editorComponent.editorInstance.setData(this.component.text);
 
     this.typeAheadObservable = this.typeAheadSource.pipe(
       debounceTime(500),
@@ -78,7 +77,7 @@ export class TextBlockComponent {
   }
 
   remove() {
-    this.store.dispatch(httpRemoveTextBlock(this.componentData));
+    this.store.dispatch(httpRemoveTextBlock(this.component));
   }
 
   componentHovered() {
@@ -103,9 +102,9 @@ export class TextBlockComponent {
 
   private createTextModel(): any {
     const model: any = {};
-    model.blockUuid = this.componentData.value.blockUuid;
-    model.text = this.componentData.value.text;
-    model.position = this.componentData.value.position;
+    model.blockUuid = this.component.blockUuid;
+    model.text = this.component.text;
+    model.position = this.component.position;
 
     return model;
   }

@@ -3,7 +3,7 @@ import {Store} from "@ngrx/store";
 import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/page/httpActions";
 import {Router} from "@angular/router";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
-import { ComponentTracker } from 'src/app/logic/PageComponent/ComponentTracker';
+import {PositionMap} from "../../../logic/PageComponent/PositionMap";
 
 @Component({
   selector: 'cms-menu',
@@ -13,7 +13,6 @@ import { ComponentTracker } from 'src/app/logic/PageComponent/ComponentTracker';
 export class MenuComponent {
   constructor(
     private store: Store<{menu: string}>,
-    private componentTracker: ComponentTracker,
     private pageContext: PageContextInitializer,
     private router: Router,
   ) {}
@@ -34,9 +33,7 @@ export class MenuComponent {
   menuExpanded = false;
 
   appendTextBlock() {
-    this.blockAddedEvent.emit();
-
-    this.store.dispatch(httpCreateTextBlock({position: this.componentTracker.nextPosition()}));
+    this.blockAddedEvent.emit('text-block');
   }
 
   appendCodeBlock() {

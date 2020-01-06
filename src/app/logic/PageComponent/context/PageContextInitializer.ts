@@ -29,29 +29,35 @@ export class PageContextInitializer {
     const sourceShortId = activatedRoute.snapshot.paramMap.get('sourceShortId');
     const type = activatedRoute.snapshot.paramMap.get('type');
 
-    this.createContext(type, sourceShortId, pageShortId).then((data: any) => {
-      this.context = data.context;
-
-      const dataBlocks: TextBlockModel[] = data.blocks;
-      const viewModels: IViewModel[] = [];
-
-      for (const block of dataBlocks) {
-        viewModels.push(block.convertToViewModel());
-      }
-
-      const blocks = viewModels;
-
-      this.store.dispatch(viewBulkAddTextBlock({
-        type: actionTypes.VIEW_BULK_ADD_TEXT_BLOCK,
-        blocks,
-      }));
-    });
-
     this.contextInitiated = true;
+
+    this.createContext(type, sourceShortId, pageShortId).then((data: any) => {
+      this.dispatchTextBlocks(data);
+    });
   }
 
   getContext(): PageContext {
     return this.context;
+  }
+
+  private dispatchTextBlocks(
+    data: any
+  ) {
+    this.context = data.context;
+
+    const dataBlocks: TextBlockModel[] = data.blocks;
+    const viewModels: IViewModel[] = [];
+
+    for (const block of dataBlocks) {
+      viewModels.push(block.convertToViewModel());
+    }
+
+    const blocks = viewModels;
+
+    this.store.dispatch(viewBulkAddTextBlock({
+      type: actionTypes.VIEW_BULK_ADD_TEXT_BLOCK,
+      blocks,
+    }));
   }
 
   private async createContext(type: string, sourceShortId: string, pageShortId: string) {

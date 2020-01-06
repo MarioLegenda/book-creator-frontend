@@ -32,6 +32,5 @@ export class BootstrapComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.componentTracker.reset();
   }
 }

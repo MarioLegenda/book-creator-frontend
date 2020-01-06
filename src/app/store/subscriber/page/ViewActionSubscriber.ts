@@ -80,8 +80,6 @@ export class ViewActionSubscriber {
   }
 
   private removeTextBlock(action) {
-    if (this.componentTracker.has(action.value.position)) {
-      this.componentTracker.remove(action.value.position);
-    }
+    this.componentTracker.remove(action.position);
   }
 }

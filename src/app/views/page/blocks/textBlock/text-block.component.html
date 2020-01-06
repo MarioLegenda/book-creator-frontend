@@ -30,7 +30,7 @@
       [editor]="editor"
       (change)="onChange()"
       [config]="editorConfig"
-      [(ngModel)]="componentData.value.text"
+      [(ngModel)]="component.text"
       (ready)="onEditorReady($event)"
       required
       data="componentData.value.text"

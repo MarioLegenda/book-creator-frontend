@@ -1,100 +1,62 @@
 import {IComponent} from "./IComponent";
 import { Injectable } from '@angular/core';
-import {AutoIncrementIndexFactory} from "../../library/AutoIncrementIndexFactory";
-import Util from 'src/app/library/Util';
-import {PositionMap} from './PositionMap';
+import {BehaviorSubject, Subject} from "rxjs";
+import {PositionMap} from "./PositionMap";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ComponentTracker {
-  components = {};
+  private subject = new Subject();
+  private subscriber;
 
   constructor(
-    private indexFactory: AutoIncrementIndexFactory,
-    private positionMap: PositionMap,
-  ) {
-    this.indexFactory.update(this.maxIndex());
-  }
+    private positionMap: PositionMap
+  ) {}
 
   bulkAdd(components: IComponent[]): void {
+    let max: number = 0;
     for (const c of components) {
+      if (c.value.position > max) max = c.value.position;
+
       this.add(c);
     }
+
+    this.positionMap.setMax(max);
   }
 
   add(component: IComponent): void {
-    component.value.position = this.indexFactory.increment();
-
-    this.positionMap.add(component.value.position);
-
-    this.components[this.positionMap.getIndex(component.value.position)] = component;
-  }
-
-  has(position: number): boolean {
-    const idx = this.positionMap.getIndex(position);
-
-    return (this.components[idx]) ? true : false;
-  }
-
-  hasBy(fn: Function): boolean {
-    const keys = Object.keys(this.components);
-
-    for (const key of keys) {
-      const val = this.components[key];
-
-      const res = fn.call(null, val.value);
-
-      if (res === true) {
-        return true;
-      }
-    }
-
-    return false;
+    this.subject.next(component);
   }
 
   remove(position: number): void {
-    const c = Util.objectFilter(this.components, (_, val: any) => val.value.position === position);
-
-    delete this.components[Object.keys(c)[0]];
-
-    this.positionMap.remove(position);
-
-    if (this.componentLen() === 0) {
-      this.indexFactory.reset();
-    }
+    this.subject.next(position);
   }
 
-  nextPosition(): number {
-    this.indexFactory.update(this.maxIndex());
-
-    return this.indexFactory.increment();
+  getNextPosition(): number {
+    return this.positionMap.next();
   }
 
-  reset(): void {
-    this.components = {};
-    this.positionMap.reset();
-  }
+  subscribe(fn) {
+    this.subscriber = this.subject.subscribe((val: any) => {
+      let type: string = '';
 
-  private maxIndex(): number {
-    const positions = Object.entries(this.components).map((val: any) => {
-      return val[1].value.position;
+      if (Number.isInteger(val)) {
+        type = 'position';
+      } else if (Array.isArray(val)) {
+        type = 'array';
+      } else {
+        type = 'component';
+      }
+
+      fn.call(null, val, type);
     });
 
-    if (positions.length === 0) {
-      return 0;
-    }
-
-    return Math.max(...positions);
+    return this.subscriber;
   }
 
-  private componentLen(): number {
-    const keys = Object.keys(this.components);
-    let num = 0;
-    for (const c of keys) {
-      num++;
-    }
-
-    return num;
+  destroy(): void {
+    this.subscriber.unsubscribe();
+    this.subscriber = null;
   }
 }

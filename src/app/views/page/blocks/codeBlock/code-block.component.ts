@@ -9,8 +9,6 @@ import {IComponent} from "../../../../logic/PageComponent/IComponent";
   templateUrl: './code-block.component.html',
 })
 export class CodeBlockComponent {
-  constructor() {}
-
   componentState = {
     hovered: false,
     editorOptions: {
@@ -26,7 +24,7 @@ export class CodeBlockComponent {
   };
 
   @Input('index') index: number;
-  @Input('componentData') componentData: IComponent;
+  @Input('component') component;
 
   componentHovered() {
     this.componentState.hovered = true;

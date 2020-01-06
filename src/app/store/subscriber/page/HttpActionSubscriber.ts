@@ -79,7 +79,7 @@ export class HttpActionSubscriber {
 
   private removeTextBlock(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
-    const blockUuid: string = action.value.blockUuid;
+    const blockUuid: string = action.blockUuid;
 
     const model = new RemoveBlockModel(
       pageUuid,

@@ -1,12 +1,13 @@
 <div class="col-xs-12 col-md-12 col-lg-12 work-area" #workAreaRef>
-  <cms-menu></cms-menu>
+  <cms-menu (blockAddedEvent)="onBlockAdded($event)"></cms-menu>
 
   <div
     cdkDropList
     class="container row page col-xs-10 col-lg-9 col-md-9"
     (cdkDropListDropped)="drop($event)">
+
     <div
-      *ngFor="let item of components | keyvalue; let i = index; trackBy: trackByFn"
+      *ngFor="let item of components"
       class="col-xs-12 col-lg-12 col-md-12 component-wrapper"
       cdkDrag>
 
@@ -20,15 +21,13 @@
       </div>
 
       <cms-view-text-block
-        *ngIf="item.value.componentType == 'text_block'"
-        [index]="i"
-        [componentData]="item.value">
+        *ngIf="item.componentType == 'text_block'"
+        [component]="item.value">
       </cms-view-text-block>
 
       <cms-code-block
-        *ngIf="item.value.componentType == 'code_block'"
-        [index]="i"
-        [componentData]="item.value">
+        *ngIf="item.componentType == 'code_block'"
+        [component]="item.value">
       </cms-code-block>
     </div>
   </div>
