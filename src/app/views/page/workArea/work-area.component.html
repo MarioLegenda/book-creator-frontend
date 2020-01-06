@@ -21,13 +21,13 @@
       </div>
 
       <cms-view-text-block
-        *ngIf="item.componentType == 'text_block'"
-        [component]="item.value">
+        *ngIf="item.blockType == 'text_block'"
+        [component]="item">
       </cms-view-text-block>
 
       <cms-code-block
-        *ngIf="item.componentType == 'code_block'"
-        [component]="item.value">
+        *ngIf="item.type == 'code_block'"
+        [component]="item">
       </cms-code-block>
     </div>
   </div>

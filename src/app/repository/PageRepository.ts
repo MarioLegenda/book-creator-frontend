@@ -2,8 +2,6 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {reduce} from "rxjs/operators";
 import {RouteResolver} from "../logic/routes/RouteResolver";
-import {CreateTextBlockModel} from "../model/http/CreateTextBlockModel";
-import {TextBlockModel} from "../model/http/TextBlockModel";
 import {IRequestModel} from "../model/IRequestModel";
 
 @Injectable({
@@ -23,19 +21,12 @@ export class PageRepository {
     return this.httpClient.get(this.routeResolver.findUuidByShortId(shortId));
   }
 
-  addTextBlock(model: IRequestModel) {
+  addTextBlock(model: any) {
     return this.httpClient.put(this.routeResolver.addNewTextBlock(), model, {observe: 'response'})
       .pipe(
         reduce((acc, res: any) => {
           const body: any = res.body;
-          const data = (body as any).data;
-
-          return TextBlockModel.create(
-            (model as any).data.pageUuid,
-            data.uuid,
-            data.position,
-            data.text,
-          );
+          return (body as any).data;
         }, {})
       );
   }
@@ -49,21 +40,10 @@ export class PageRepository {
 
           const blocks = (body as any).data.blocks;
 
-          const models: CreateTextBlockModel[] = [];
-
-          for (let [_, block] of Object.entries(blocks)) {
-            models.push(TextBlockModel.create(
-              pageUuid,
-              (block as any).uuid,
-              (block as any).position,
-              (block as any).text,
-            ));
-          }
-
           return {
             uuid: page.uuid,
             shortId: page.shortId,
-            blocks: models,
+            blocks: Object.values(blocks),
           };
         }, {}),
       );

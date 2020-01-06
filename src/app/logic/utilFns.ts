@@ -1,8 +1,8 @@
 export function getMaxPosition(components: any[]): number {
   let max: number = 0;
   for (const c of components) {
-    if (c.value.position > max) {
-      max = c.value.position;
+    if (c.position > max) {
+      max = c.position;
     }
   }
 
@@ -12,7 +12,7 @@ export function getMaxPosition(components: any[]): number {
 export function addPosition(component, components: any[]) {
   const max: number = getMaxPosition(components);
 
-  component.value.position = max + 1;
+  component.position = max + 1;
 
   return component;
 }

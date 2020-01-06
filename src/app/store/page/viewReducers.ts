@@ -2,9 +2,9 @@ import { createReducer, on } from '@ngrx/store';
 import {
   viewAddTextBlock,
   viewTextBlockRemoved,
-  viewTextBlockUpdated, 
+  viewTextBlockUpdated,
   viewCreateCodeBlock,
-  viewBulkAddTextBlock,
+  viewAddAllBlocks,
 } from './viewActions';
 import deepcopy from 'deepcopy';
 
@@ -13,7 +13,7 @@ const viewActionReducers = createReducer(null,
   on(viewTextBlockUpdated, (state, action) => deepcopy(action)),
   on(viewTextBlockRemoved, (state, action) => deepcopy(action)),
   on(viewCreateCodeBlock, (state, action) => deepcopy(action)),
-  on(viewBulkAddTextBlock, (state, action) => deepcopy(action)),
+  on(viewAddAllBlocks, (state, action) => deepcopy(action)),
 );
 
 export function viewActionReducer(state, action) {

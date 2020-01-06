@@ -4,7 +4,7 @@ export const actionTypes = {
   VIEW_ADD_TEXT_BLOCK: '[View] Create text block',
   VIEW_TEXT_BLOCK_UPDATED: '[View] Text block updated',
   VIEW_TEXT_BLOCK_REMOVED: '[View] Text block removed',
-  VIEW_BULK_ADD_TEXT_BLOCK: '[View] Bulk adding text block',
+  VIEW_ADD_ALL_BLOCKS: '[View] View add all blocks',
   VIEW_ADD_CODE_BLOCK: '[View] Create code block',
 };
 
@@ -18,8 +18,8 @@ export const viewAddTextBlock = createAction(
   props<{}>(),
 );
 
-export const viewBulkAddTextBlock = createAction(
-  actionTypes.VIEW_BULK_ADD_TEXT_BLOCK,
+export const viewAddAllBlocks = createAction(
+  actionTypes.VIEW_ADD_ALL_BLOCKS,
   props<{}>(),
 );
 

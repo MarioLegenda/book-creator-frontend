@@ -1,20 +1,23 @@
 import {IComponent} from "./IComponent";
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from "rxjs";
+import {ReplaySubject, Subject} from "rxjs";
 import {PositionMap} from "./PositionMap";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ComponentTracker {
-  private subject = new Subject();
-  private subscriber;
+  private componentSubject = new ReplaySubject();
+  private positionSubject = new ReplaySubject();
+  private initSubject = new ReplaySubject();
+
+  private subscribers = [];
 
   constructor(
     private positionMap: PositionMap
   ) {}
 
-  bulkAdd(components: IComponent[]): void {
+  init(components: IComponent[]): void {
     let max: number = 0;
     for (const c of components) {
       if (c.value.position > max) max = c.value.position;
@@ -26,37 +29,52 @@ export class ComponentTracker {
   }
 
   add(component: IComponent): void {
-    this.subject.next(component);
+    this.componentSubject.next(component);
   }
 
   remove(position: number): void {
-    this.subject.next(position);
+    this.positionSubject.next(position);
   }
 
   getNextPosition(): number {
     return this.positionMap.next();
   }
 
-  subscribe(fn) {
-    this.subscriber = this.subject.subscribe((val: any) => {
-      let type: string = '';
-
-      if (Number.isInteger(val)) {
-        type = 'position';
-      } else if (Array.isArray(val)) {
-        type = 'array';
-      } else {
-        type = 'component';
-      }
-
-      fn.call(null, val, type);
+  initSubscribe(fn) {
+    const s = this.initSubject.subscribe((val: any) => {
+      fn.call(null, val);
     });
 
-    return this.subscriber;
+    this.subscribers.push(s);
+
+    return s;
+  }
+
+  componentSubscribe(fn) {
+    const s = this.componentSubject.subscribe((val: any) => {
+      fn.call(null, val);
+    });
+
+    this.subscribers.push(s);
+
+    return s;
+  }
+
+  positionSubscribe(fn) {
+    const s = this.positionSubject.subscribe((val: any) => {
+      fn.call(null, val);
+    });
+
+    this.subscribers.push(s);
+
+    return s;
   }
 
   destroy(): void {
-    this.subscriber.unsubscribe();
-    this.subscriber = null;
+    for (const s of this.subscribers) {
+      s.unsubscribe();
+    }
+
+    this.subscribers = [];
   }
 }

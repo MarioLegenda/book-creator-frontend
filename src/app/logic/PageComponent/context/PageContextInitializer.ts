@@ -4,11 +4,9 @@ import {Store} from "@ngrx/store";
 import {PageContext} from "./PageContext";
 import {PageRepository} from "../../../repository/PageRepository";
 import {BlogRepository} from "../../../repository/BlogRepository";
-import {TextBlockModel} from "../../../model/http/TextBlockModel";
-import {actionTypes, viewBulkAddTextBlock} from "../../../store/page/viewActions";
+import {actionTypes, viewAddAllBlocks} from "../../../store/page/viewActions";
 import {IPage} from "./IPage";
 import {IKnowledgeSource} from "./IKnowledgeSource";
-import { IViewModel } from 'src/app/model/app/IViewModel';
 
 @Injectable({
   providedIn: 'root',
@@ -45,17 +43,10 @@ export class PageContextInitializer {
   ) {
     this.context = data.context;
 
-    const dataBlocks: TextBlockModel[] = data.blocks;
-    const viewModels: IViewModel[] = [];
+    const blocks = data.blocks;
 
-    for (const block of dataBlocks) {
-      viewModels.push(block.convertToViewModel());
-    }
-
-    const blocks = viewModels;
-
-    this.store.dispatch(viewBulkAddTextBlock({
-      type: actionTypes.VIEW_BULK_ADD_TEXT_BLOCK,
+    this.store.dispatch(viewAddAllBlocks({
+      type: actionTypes.VIEW_ADD_ALL_BLOCKS,
       blocks,
     }));
   }
@@ -67,8 +58,6 @@ export class PageContextInitializer {
 
     const page: IPage = {
       uuid: pageData.uuid,
-      internalName: pageData.internalName,
-      shortDescription: pageData.shortDescription,
       shortId: pageData.shortId,
     };
 

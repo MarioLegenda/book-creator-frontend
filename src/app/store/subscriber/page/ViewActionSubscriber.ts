@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {actionTypes} from "../../page/viewActions";
 import {IComponent} from "../../../logic/PageComponent/IComponent";
 import {ComponentFactory} from "../../../logic/PageComponent/ComponentFactory";
+import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 
 @Injectable({
   providedIn: 'root',
@@ -42,8 +43,8 @@ export class ViewActionSubscriber {
           break;
         }
 
-        case actionTypes.VIEW_BULK_ADD_TEXT_BLOCK: {
-          this.addManyTextBlocks(action);
+        case actionTypes.VIEW_ADD_ALL_BLOCKS: {
+          this.addAllBlocks(action);
 
           break;
         }
@@ -51,20 +52,21 @@ export class ViewActionSubscriber {
     });
   }
 
-  private addManyTextBlocks(action) {
+  private addAllBlocks(action) {
     const blocks = action.blocks;
     const components: IComponent[] = [];
 
     for (const block of blocks) {
-      const component: IComponent = ComponentFactory.createComponent({
-        type: actionTypes.VIEW_ADD_TEXT_BLOCK,
-        ...block
-      });
+      if (ComponentType.isTextBlock(block.blockType)) {
+        const component: IComponent = ComponentFactory.createComponent({
+          ...block
+        });
 
-      components.push(component);
+        components.push(component);
+      }
     }
 
-    this.componentTracker.bulkAdd(components);
+    this.componentTracker.init(components);
   }
 
   private addCodeBlock(action) {

@@ -5,8 +5,8 @@ import deepcopy from 'deepcopy';
 
 export class ComponentFactory {
   public static createComponent(data): IComponent {
-    switch (data.type) {
-      case actionTypes.VIEW_ADD_TEXT_BLOCK: {
+    switch (data.blockType) {
+      case ComponentType.TEXT_BLOCK_TYPE: {
         const d = deepcopy(data);
 
         return {

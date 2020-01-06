@@ -5,6 +5,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {MatDialog} from "@angular/material/dialog";
 import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import {TextBlockModel} from "../../../../model/app/TextBlockModel";
+import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -47,7 +49,7 @@ export class TextBlockComponent {
   @ViewChild('editorComponent') editorComponent: CKEditorComponent;
 
   @Input('index') index: number;
-  @Input('component') component;
+  @Input('component') component: TextBlockModel;
 
   private typeAheadSource = new BehaviorSubject([]);
   private typeAheadObservable = null;
@@ -70,7 +72,11 @@ export class TextBlockComponent {
       debounceTime(500),
     )
       .subscribe(() => {
-        const model = this.createTextModel();
+        const model = {
+          blockUuid: this.component.blockUuid,
+          position: this.component.position,
+          text: this.component.text,
+        };
 
         this.store.dispatch(httpUpdateTextBlock(model));
       });
@@ -98,14 +104,5 @@ export class TextBlockComponent {
 
       this.typeAheadObservable = null;
     }
-  }
-
-  private createTextModel(): any {
-    const model: any = {};
-    model.blockUuid = this.component.blockUuid;
-    model.text = this.component.text;
-    model.position = this.component.position;
-
-    return model;
   }
 }

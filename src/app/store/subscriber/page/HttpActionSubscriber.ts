@@ -2,14 +2,11 @@ import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {actionTypes, httpCreateTextBlockFinished} from "../../page/httpActions";
-import {CreateTextBlockModel} from "../../../model/http/CreateTextBlockModel";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
 import {PageRepository} from "../../../repository/PageRepository";
 import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../page/viewActions";
-import {TextBlockModel} from "../../../model/http/TextBlockModel";
-import {RemoveBlockModel} from "../../../model/http/RemoveBlockModel";
-import {UpdateTextBlock} from "../../../model/http/UpdateTextBlock";
 import {CreateCodeBlock} from "../../../model/http/CreateCodeBlock";
+import {HttpModel} from "../../../model/http/HttpModel";
 
 @Injectable({
   providedIn: 'root',
@@ -69,11 +66,11 @@ export class HttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const position: number = action.position;
 
-    const model = CreateTextBlockModel.create(pageUuid, position);
+    const model = HttpModel.addTextBlock(pageUuid, position);
 
-    this.pageRepository.addTextBlock(model).subscribe((model: TextBlockModel) => {
+    this.pageRepository.addTextBlock(model).subscribe((model) => {
       this.store.dispatch(httpCreateTextBlockFinished());
-      this.store.dispatch(viewAddTextBlock(model.convertToViewModel()));
+      this.store.dispatch(viewAddTextBlock(model));
     });
   }
 
@@ -81,10 +78,7 @@ export class HttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
 
-    const model = new RemoveBlockModel(
-      pageUuid,
-      blockUuid
-    );
+    const model = HttpModel.removeBlock(pageUuid, blockUuid);
 
     this.pageRepository.removeBlock(model).subscribe(() => {
       this.store.dispatch(viewTextBlockRemoved(action));
@@ -95,12 +89,13 @@ export class HttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
     const position: number = action.position;
+    const text: string = action.text;
 
-    const model = UpdateTextBlock.create(
+    const model = HttpModel.updateTextBlock(
       pageUuid,
       blockUuid,
+      text,
       position,
-      (action.text) ? action.text : '',
     );
 
     this.pageRepository.updateTextBlock(model).subscribe(() => {});
