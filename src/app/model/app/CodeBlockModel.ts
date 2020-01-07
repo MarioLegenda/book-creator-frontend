@@ -7,6 +7,7 @@ export class CodeBlockModel {
     public shortId: string,
     public position: string,
     public text: string,
+    public readOnly: boolean,
     public blockType: string = ComponentType.CODE_BLOCK_TYPE,
   ) {}
 }

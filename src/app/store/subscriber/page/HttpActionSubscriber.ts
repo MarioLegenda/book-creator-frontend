@@ -127,12 +127,14 @@ export class HttpActionSubscriber {
     const blockUuid: string = action.blockUuid;
     const position: number = action.position;
     const text: string = action.text;
+    const readonly: boolean = action.readonly;
 
     const model = HttpModel.updateCodeBlock(
       pageUuid,
       blockUuid,
       text,
       position,
+      readonly,
     );
 
     this.pageRepository.updateCodeBlock(model).subscribe(() => {});

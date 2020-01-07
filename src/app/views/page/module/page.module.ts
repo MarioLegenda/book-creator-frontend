@@ -8,6 +8,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 import {MenuComponent} from "../menu/menu.component";
 import {MenuButtonComponent} from "../menu/menu-button.component";
@@ -41,6 +42,7 @@ import {MonacoEditorModule} from "ngx-monaco-editor";
     DragDropModule,
     MonacoEditorModule,
     MatTooltipModule,
+    MatCheckboxModule,
 
     CommonModule,
     ReactiveFormsModule,

@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
+import {httpRemoveTextBlock, httpUpdateCodeBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
@@ -25,6 +25,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
   componentState = {
     hovered: false,
+    readonly: false,
     editorOptions: {
       theme: 'vs-light',
       language: 'javascript',
@@ -54,6 +55,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.componentState.code = this.component.text;
+    this.componentState.readonly = this.component.readOnly;
 
     this.typeAheadObservable = this.typeAheadSource.pipe(
       debounceTime(500),
@@ -75,7 +77,18 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChange() {
+  onCodeChange() {
     this.typeAheadSource.next();
+  }
+
+  onReadonlyChange() {
+    const model = {
+      blockUuid: this.component.blockUuid,
+      position: this.component.position,
+      text: this.componentState.code,
+      readonly: this.componentState.readonly,
+    };
+
+    this.store.dispatch(httpUpdateCodeBlock(model));
   }
 }

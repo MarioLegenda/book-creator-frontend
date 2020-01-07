@@ -33,6 +33,7 @@ export class HttpModel {
     blockUuid: string,
     text: string,
     position: number,
+    readonly: boolean = false,
   ) {
     return {
       data: {
@@ -40,6 +41,7 @@ export class HttpModel {
         blockUuid,
         text,
         position,
+        readonly,
       }
     }
   }
