@@ -2,8 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {reduce} from "rxjs/operators";
 import {RouteResolver} from "../logic/routes/RouteResolver";
-import {IRequestModel} from "../model/IRequestModel";
-import {TextBlockRouteResolver} from "../logic/routes/TextBlockRouteResolver";
+import {BlockRouteResolver} from "../logic/routes/BlockRouteResolver";
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import {TextBlockRouteResolver} from "../logic/routes/TextBlockRouteResolver";
 export class PageRepository {
   constructor(
     private routeResolver: RouteResolver,
-    private textBlockRouteResolver: TextBlockRouteResolver,
+    private blockRouteResolver: BlockRouteResolver,
     private httpClient: HttpClient
   ) {}
 
@@ -24,7 +23,7 @@ export class PageRepository {
   }
 
   addTextBlock(model: any) {
-    return this.httpClient.put(this.textBlockRouteResolver.addNewTextBlock(), model, {observe: 'response'})
+    return this.httpClient.put(this.blockRouteResolver.addNewTextBlock(), model, {observe: 'response'})
       .pipe(
         reduce((acc, res: any) => {
           const body: any = res.body;
@@ -34,7 +33,7 @@ export class PageRepository {
   }
 
   addCodeBlock(model: any) {
-    return this.httpClient.put(this.textBlockRouteResolver.addNewCodeBlock(), model, {observe: 'response'})
+    return this.httpClient.put(this.blockRouteResolver.addNewCodeBlock(), model, {observe: 'response'})
       .pipe(
         reduce((acc, res: any) => {
           const body: any = res.body;
@@ -61,11 +60,15 @@ export class PageRepository {
       );
   }
 
-  removeBlock(model: IRequestModel) {
-    return this.httpClient.post(this.textBlockRouteResolver.removeBlock(), model);
+  removeBlock(model) {
+    return this.httpClient.post(this.blockRouteResolver.removeBlock(), model);
   }
 
-  updateTextBlock(model: IRequestModel) {
-    return this.httpClient.post(this.textBlockRouteResolver.updateBlock(), model);
+  updateTextBlock(model) {
+    return this.httpClient.post(this.blockRouteResolver.updateTextBlock(), model);
+  }
+
+  updateCodeBlock(model) {
+    return this.httpClient.post(this.blockRouteResolver.updateCodeBlock(), model);
   }
 }

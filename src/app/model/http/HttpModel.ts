@@ -28,6 +28,22 @@ export class HttpModel {
     }
   }
 
+  static updateCodeBlock(
+    pageUuid: string,
+    blockUuid: string,
+    text: string,
+    position: number,
+  ) {
+    return {
+      data: {
+        pageUuid,
+        blockUuid,
+        text,
+        position,
+      }
+    }
+  }
+
   static removeBlock(
     pageUuid: string,
     blockUuid: string,

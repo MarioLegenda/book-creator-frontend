@@ -4,14 +4,15 @@ import {Injectable} from "@angular/core";
 @Injectable({
   providedIn: 'root',
 })
-export class TextBlockRouteResolver {
+export class BlockRouteResolver {
   private bookApiUri = environment.composeBookApiBaseUrl();
 
   private readonly routes = {
     addNewTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/add-new-block`,
     addNewCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/add-new-block`,
     removeBlock: `${this.bookApiUri}/api/v1/pages/block/remove`,
-    updateBlock: `${this.bookApiUri}/api/v1/pages/text-block/update-block`,
+    updateTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/update-block`,
+    updateCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/update-block`,
   };
 
   addNewTextBlock(): string {
@@ -26,7 +27,11 @@ export class TextBlockRouteResolver {
     return this.routes.removeBlock;
   }
 
-  updateBlock(): string {
-    return this.routes.updateBlock;
+  updateTextBlock(): string {
+    return this.routes.updateTextBlock;
+  }
+
+  updateCodeBlock(): string {
+    return this.routes.updateCodeBlock;
   }
 }

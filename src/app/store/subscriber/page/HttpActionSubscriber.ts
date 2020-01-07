@@ -51,6 +51,12 @@ export class HttpActionSubscriber {
           break;
         }
 
+        case actionTypes.HTTP_UPDATE_CODE_BLOCK: {
+          this.updateCodeBlock(action);
+
+          break;
+        }
+
         case actionTypes.HTTP_CREATE_CODE_BLOCK: {
           if (this.pageContextInitializer.isInitialized()) {
             this.addCodeBlock(action);
@@ -114,5 +120,21 @@ export class HttpActionSubscriber {
     );
 
     this.pageRepository.updateTextBlock(model).subscribe(() => {});
+  }
+
+  private updateCodeBlock(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const blockUuid: string = action.blockUuid;
+    const position: number = action.position;
+    const text: string = action.text;
+
+    const model = HttpModel.updateCodeBlock(
+      pageUuid,
+      blockUuid,
+      text,
+      position,
+    );
+
+    this.pageRepository.updateCodeBlock(model).subscribe(() => {});
   }
 }

@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {RouteResolver} from "../logic/routes/RouteResolver";
 import {reduce} from "rxjs/operators";
 import {CodeProjectHttpModel} from "../model/http/codeEditor/CodeProjectHttpModel";
-import {IRequestModel} from "../model/IRequestModel";
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,7 @@ export class CodeProjectsRepository {
     private routeResolver: RouteResolver
   ) {}
 
-  createCodeProject(model: IRequestModel) {
+  createCodeProject(model) {
     return this.httpClient.put(this.routeResolver.createCodeProject(), model);
   }
 

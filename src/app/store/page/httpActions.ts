@@ -8,11 +8,17 @@ export const actionTypes = {
   HTTP_REMOVE_TEXT_BLOCK: '[Http] Remove text block',
   HTTP_REMOVE_TEXT_BLOCK_FINISHED: '[Http] Remove text block finished',
   HTTP_CREATE_CODE_BLOCK: '[Http] Create code block',
+  HTTP_UPDATE_CODE_BLOCK: '[Http] Update code block',
   HTTP_CREATE_CODE_BLOCK_FINISHED: '[Http] Create code block',
 };
 
 export const httpCreateCodeBlock = createAction(
   actionTypes.HTTP_CREATE_CODE_BLOCK,
+  props<{}>(),
+);
+
+export const httpUpdateCodeBlock = createAction(
+  actionTypes.HTTP_UPDATE_CODE_BLOCK,
   props<{}>(),
 );
 

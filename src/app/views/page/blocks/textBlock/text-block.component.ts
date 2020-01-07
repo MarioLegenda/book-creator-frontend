@@ -1,10 +1,10 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {MatDialog} from "@angular/material/dialog";
 import { debounceTime } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {TextBlockModel} from "../../../../model/app/TextBlockModel";
 import {HttpModel} from "../../../../model/http/HttpModel";
 
@@ -13,7 +13,7 @@ import {HttpModel} from "../../../../model/http/HttpModel";
   styleUrls: ['./text-block.component.scss'],
   templateUrl: './text-block.component.html',
 })
-export class TextBlockComponent {
+export class TextBlockComponent implements OnDestroy {
   componentState = {
     hovered: false,
     updateWanted: false,
@@ -51,7 +51,7 @@ export class TextBlockComponent {
   @Input('index') index: number;
   @Input('component') component: TextBlockModel;
 
-  private typeAheadSource = new BehaviorSubject([]);
+  private typeAheadSource = new Subject();
   private typeAheadObservable = null;
 
   constructor(
@@ -95,14 +95,12 @@ export class TextBlockComponent {
   }
 
   onChange() {
-    this.typeAheadSource.next([]);
+    this.typeAheadSource.next();
   }
 
   ngOnDestroy(): void {
     if (this.typeAheadObservable) {
       this.typeAheadObservable.unsubscribe();
-
-      this.typeAheadObservable = null;
     }
   }
 }

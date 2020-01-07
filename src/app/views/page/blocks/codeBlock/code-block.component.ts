@@ -1,14 +1,16 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpRemoveTextBlock} from "../../../../store/page/httpActions";
+import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
+import {debounceTime} from "rxjs/operators";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'cms-code-block',
   styleUrls: ['./code-block.component.scss'],
   templateUrl: './code-block.component.html',
 })
-export class CodeBlockComponent {
+export class CodeBlockComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<any>
@@ -17,6 +19,9 @@ export class CodeBlockComponent {
   icons = {
     'remove': 'fas fa-trash-alt',
   };
+
+  private typeAheadSource = new Subject();
+  private typeAheadObservable = null;
 
   componentState = {
     hovered: false,
@@ -49,5 +54,28 @@ export class CodeBlockComponent {
 
   ngOnInit() {
     this.componentState.code = this.component.text;
+
+    this.typeAheadObservable = this.typeAheadSource.pipe(
+      debounceTime(500),
+    )
+      .subscribe(() => {
+        const model = {
+          blockUuid: this.component.blockUuid,
+          position: this.component.position,
+          text: this.componentState.code,
+        };
+
+        this.store.dispatch(httpUpdateTextBlock(model));
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.typeAheadObservable) {
+      this.typeAheadObservable.unsubscribe();
+    }
+  }
+
+  onChange() {
+    this.typeAheadSource.next();
   }
 }

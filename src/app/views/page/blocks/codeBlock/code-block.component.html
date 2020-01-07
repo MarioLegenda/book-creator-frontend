@@ -22,7 +22,8 @@
 
     <ngx-monaco-editor
       [options]="componentState.editorOptions"
-      [(ngModel)]="componentState.code">
+      [(ngModel)]="componentState.code"
+      (keyup)="onChange()">
     </ngx-monaco-editor>
 
   </div>
