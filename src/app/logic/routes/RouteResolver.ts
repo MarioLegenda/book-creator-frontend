@@ -13,11 +13,8 @@ export class RouteResolver {
     getPageByUuid: `${this.bookApiUri}/api/v1/pages/get-by-uuid/:pageUuid`,
     removeBlock: `${this.bookApiUri}/api/v1/pages/text-block/remove`,
     updateBlock: `${this.bookApiUri}/api/v1/pages/text-block/update-block`,
-    createPresentation: `${this.bookApiUri}/api/v1/knowledge-source/create/presentation`,
     createEmptyPage: `${this.bookApiUri}/api/v1/pages/create/empty-page`,
     findUuidByShortId: `${this.bookApiUri}/api/v1/pages/get-uuid-by-shortId`,
-    getPresentationUuidByShortId: `${this.bookApiUri}/api/v1/knowledge-source/get/presentation/uuid`,
-    getPresentation: `${this.bookApiUri}/api/v1/knowledge-source/get/presentation/by-uuid`,
     createCodeProject: `${this.bookApiUri}/api/v1/code-projects/create`,
     getProjectsBySource: `${this.bookApiUri}/api/v1/code-projects/get-by-knowledge-source`,
     getProjects: `${this.bookApiUri}/api/v1/code-projects`,
@@ -26,7 +23,7 @@ export class RouteResolver {
   };
 
   addNewCodeBlock(): string {
-    return this.routes.addNewCodeBlock;
+    return this.routes.addNewTextBlock;
   }
 
   addNewTextBlock(): string {
@@ -45,24 +42,12 @@ export class RouteResolver {
     return this.routes.updateBlock;
   }
 
-  createPresentation(): string {
-    return this.routes.createPresentation;
-  }
-
   createEmptyPage(): string {
     return this.routes.createEmptyPage;
   }
 
   findUuidByShortId(shortId: string): string {
     return `${this.routes.findUuidByShortId}/${shortId}`;
-  }
-
-  getPresentationUuid(shortId: string): string {
-    return `${this.routes.getPresentationUuidByShortId}/${shortId}`;
-  }
-
-  getPresentation(uuid: string): string {
-    return `${this.routes.getPresentation}/${uuid}`;
   }
 
   createCodeProject(): string {

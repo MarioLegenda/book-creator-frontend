@@ -6,6 +6,7 @@ import {PageContextInitializer} from "../../../logic/PageComponent/context/PageC
 import {PageRepository} from "../../../repository/PageRepository";
 import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../page/viewActions";
 import {HttpModel} from "../../../model/http/HttpModel";
+import deepcopy from 'deepcopy';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,13 @@ export class HttpActionSubscriber {
 
       switch (action.type) {
         case actionTypes.HTTP_CREATE_TEXT_BLOCK: {
-          this.addTextBlock(action);
+          if (this.pageContextInitializer.isInitialized()) {
+            this.addTextBlock(action);
+          } else {
+            this.pageContextInitializer.whenInit(((data) => {
+              return () => this.addTextBlock(data);
+            })(deepcopy(action)))
+          }
 
           break;
         }
@@ -45,7 +52,13 @@ export class HttpActionSubscriber {
         }
 
         case actionTypes.HTTP_CREATE_CODE_BLOCK: {
-          this.addCodeBlock(action);
+          if (this.pageContextInitializer.isInitialized()) {
+            this.addCodeBlock(action);
+          } else {
+            this.pageContextInitializer.whenInit(((data) => {
+              return () => this.addCodeBlock(data);
+            })(deepcopy(action)))
+          }
 
           break;
         }

@@ -62,7 +62,5 @@ export class ComponentTracker {
     for (const s of this.subscribers) {
       s.unsubscribe();
     }
-
-    this.subscribers = [];
   }
 }

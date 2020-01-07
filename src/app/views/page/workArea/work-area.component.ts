@@ -8,7 +8,6 @@ import {TextBlockModel} from "../../../model/app/TextBlockModel";
 import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
 
-
 @Component({
   selector: 'cms-work-area',
   styleUrls: ['./work-area.component.scss'],

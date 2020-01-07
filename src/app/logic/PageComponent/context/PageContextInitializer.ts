@@ -7,12 +7,17 @@ import {BlogRepository} from "../../../repository/BlogRepository";
 import {actionTypes, viewAddAllBlocks} from "../../../store/page/viewActions";
 import {IPage} from "./IPage";
 import {IKnowledgeSource} from "./IKnowledgeSource";
+import {ReplaySubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class PageContextInitializer {
   private context: PageContext;
+
+  private whenSubject: Subject<any> = new ReplaySubject();
+  private whenSubscriber;
+  private whenFns: Function[] = [];
 
   private contextInitiated = false;
 
@@ -27,10 +32,18 @@ export class PageContextInitializer {
     const sourceShortId = activatedRoute.snapshot.paramMap.get('sourceShortId');
     const type = activatedRoute.snapshot.paramMap.get('type');
 
-    this.contextInitiated = true;
-
     this.createContext(type, sourceShortId, pageShortId).then((data: any) => {
-      this.dispatchTextBlocks(data);
+      this.contextInitiated = true;
+
+      this.whenSubscriber = this.whenSubject.subscribe(() => {
+        for (const fn of this.whenFns) {
+          fn.call(null);
+        }
+
+        this.whenFns = [];
+      });
+
+      this.dispatchAllBlocks(data);
     });
   }
 
@@ -38,7 +51,20 @@ export class PageContextInitializer {
     return this.context;
   }
 
-  private dispatchTextBlocks(
+  isInitialized(): boolean {
+    return this.contextInitiated;
+  }
+
+  whenInit(fn: Function) {
+    this.whenSubject.next(fn);
+  }
+
+  destroy() {
+    this.whenSubscriber.unsubscribe();
+    this.whenFns = [];
+  }
+
+  private dispatchAllBlocks(
     data: any
   ) {
     this.context = data.context;

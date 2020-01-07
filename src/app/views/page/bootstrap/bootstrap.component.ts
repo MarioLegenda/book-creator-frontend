@@ -32,5 +32,7 @@ export class BootstrapComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.pageContext.destroy();
+    this.componentTracker.destroy();
   }
 }
