@@ -31,6 +31,16 @@ export class PageRepository {
       );
   }
 
+  addCodeBlock(model: any) {
+    return this.httpClient.put(this.routeResolver.addNewCodeBlock(), model, {observe: 'response'})
+      .pipe(
+        reduce((acc, res: any) => {
+          const body: any = res.body;
+          return (body as any).data;
+        }, {})
+      );
+  }
+
   getPageByUuid(pageUuid: string) {
     return this.httpClient.get(this.routeResolver.getPageByUuid(pageUuid), {observe: 'response'})
       .pipe(

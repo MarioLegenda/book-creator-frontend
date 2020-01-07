@@ -1,15 +1,13 @@
-import {IComponent} from "./IComponent";
 import { Injectable } from '@angular/core';
-import {ReplaySubject, Subject} from "rxjs";
+import {Subject} from "rxjs";
 import {PositionMap} from "./PositionMap";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ComponentTracker {
-  private componentSubject = new ReplaySubject();
-  private positionSubject = new ReplaySubject();
-  private initSubject = new ReplaySubject();
+  private componentSubject = new Subject();
+  private positionSubject = new Subject();
 
   private subscribers = [];
 
@@ -17,10 +15,10 @@ export class ComponentTracker {
     private positionMap: PositionMap
   ) {}
 
-  init(components: IComponent[]): void {
+  init(components: any[]): void {
     let max: number = 0;
     for (const c of components) {
-      if (c.value.position > max) max = c.value.position;
+      if (c.position > max) max = c.position;
 
       this.add(c);
     }
@@ -28,7 +26,7 @@ export class ComponentTracker {
     this.positionMap.setMax(max);
   }
 
-  add(component: IComponent): void {
+  add(component): void {
     this.componentSubject.next(component);
   }
 
@@ -38,16 +36,6 @@ export class ComponentTracker {
 
   getNextPosition(): number {
     return this.positionMap.next();
-  }
-
-  initSubscribe(fn) {
-    const s = this.initSubject.subscribe((val: any) => {
-      fn.call(null, val);
-    });
-
-    this.subscribers.push(s);
-
-    return s;
   }
 
   componentSubscribe(fn) {

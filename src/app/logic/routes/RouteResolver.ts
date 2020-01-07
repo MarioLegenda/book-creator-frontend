@@ -9,6 +9,7 @@ export class RouteResolver {
 
   private readonly routes = {
     addNewTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/add-new-block`,
+    addNewCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/add-new-block`,
     getPageByUuid: `${this.bookApiUri}/api/v1/pages/get-by-uuid/:pageUuid`,
     removeBlock: `${this.bookApiUri}/api/v1/pages/text-block/remove`,
     updateBlock: `${this.bookApiUri}/api/v1/pages/text-block/update-block`,
@@ -23,6 +24,10 @@ export class RouteResolver {
     getProjectUuidByShortId: `${this.bookApiUri}/api/v1/code-projects/get-project-uuid`,
     getSingleProject: `${this.bookApiUri}/api/v1/code-projects/get`,
   };
+
+  addNewCodeBlock(): string {
+    return this.routes.addNewCodeBlock;
+  }
 
   addNewTextBlock(): string {
     return this.routes.addNewTextBlock;

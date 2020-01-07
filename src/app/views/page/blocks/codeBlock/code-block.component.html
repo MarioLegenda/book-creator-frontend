@@ -2,6 +2,7 @@
   (mouseenter)="componentHovered()"
   (mouseleave)="componentUnHovered()"
   class="code-block-wrapper col-lg-12 col-md-12 col-xs-12">
+
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
       <div
@@ -9,6 +10,7 @@
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
+          <i (click)="remove()" class="icon remove-icon" [ngClass]="icons.remove"></i>
         </div>
 
       </div>
@@ -16,7 +18,7 @@
   </div>
 
   <div
-    class="code-block col-lg-12 col-md-12 col-xs-12">
+    class="code-block col-lg-12 col-md-12 col-xs-12 editor-wrapper">
 
     <ngx-monaco-editor
       [options]="componentState.editorOptions"

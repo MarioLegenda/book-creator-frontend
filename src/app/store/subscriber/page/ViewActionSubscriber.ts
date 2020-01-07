@@ -3,9 +3,7 @@ import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {actionTypes} from "../../page/viewActions";
-import {IComponent} from "../../../logic/PageComponent/IComponent";
 import {ComponentFactory} from "../../../logic/PageComponent/ComponentFactory";
-import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 
 @Injectable({
   providedIn: 'root',
@@ -54,29 +52,27 @@ export class ViewActionSubscriber {
 
   private addAllBlocks(action) {
     const blocks = action.blocks;
-    const components: IComponent[] = [];
+    const components: any[] = [];
 
     for (const block of blocks) {
-      if (ComponentType.isTextBlock(block.blockType)) {
-        const component: IComponent = ComponentFactory.createComponent({
-          ...block
-        });
+      const component = ComponentFactory.createComponent({
+        ...block
+      });
 
-        components.push(component);
-      }
+      components.push(component);
     }
 
     this.componentTracker.init(components);
   }
 
   private addCodeBlock(action) {
-    const component: IComponent = ComponentFactory.createComponent(action);
+    const component = ComponentFactory.createComponent(action);
 
     this.componentTracker.add(component);
   }
 
   private addTextBlock(action) {
-    const component: IComponent = ComponentFactory.createComponent(action);
+    const component = ComponentFactory.createComponent(action);
 
     this.componentTracker.add(component);
   }

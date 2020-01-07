@@ -39,4 +39,17 @@ export class HttpModel {
       }
     }
   }
+
+  static addCodeBlock(
+    pageUuid: string,
+    position: number,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        text: '',
+        position: position,
+      }
+    }
+  }
 }

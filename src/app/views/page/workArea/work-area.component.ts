@@ -1,10 +1,13 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {httpCreateTextBlock, httpUpdateTextBlock} from 'src/app/store/page/httpActions';
+import {httpCreateCodeBlock, httpCreateTextBlock, httpUpdateTextBlock} from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
 import {addPosition} from "../../../logic/utilFns";
 import {TextBlockModel} from "../../../model/app/TextBlockModel";
+import {ComponentType} from "../../../logic/PageComponent/ComponentType";
+import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
+
 
 @Component({
   selector: 'cms-work-area',
@@ -32,12 +35,21 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
     this.componentTracker.componentSubscribe((component) => {
       addPosition(component, this.components);
 
-      this.components.push(new TextBlockModel(
-        component.value.uuid,
-        component.value.position,
-        component.value.shortId,
-        component.value.text,
-      ));
+      if (ComponentType.isTextBlock(component)) {
+        this.components.push(new TextBlockModel(
+          component.uuid,
+          component.position,
+          component.shortId,
+          component.text,
+        ));
+      } else if (ComponentType.isCodeBlock(component)) {
+        this.components.push(new CodeBlockModel(
+          component.uuid,
+          component.shortId,
+          component.position,
+          component.text,
+        ));
+      }
     });
 
     this.componentTracker.positionSubscribe((position) => {
@@ -56,6 +68,13 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
     switch (type) {
       case 'text-block': {
         this.store.dispatch(httpCreateTextBlock({position: this.componentTracker.getNextPosition()}));
+
+        break;
+      }
+      case 'code-block': {
+        this.store.dispatch(httpCreateCodeBlock({position: this.componentTracker.getNextPosition()}));
+
+        break;
       }
     }
   }

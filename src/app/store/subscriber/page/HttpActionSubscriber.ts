@@ -5,7 +5,6 @@ import {actionTypes, httpCreateTextBlockFinished} from "../../page/httpActions";
 import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
 import {PageRepository} from "../../../repository/PageRepository";
 import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../page/viewActions";
-import {CreateCodeBlock} from "../../../model/http/CreateCodeBlock";
 import {HttpModel} from "../../../model/http/HttpModel";
 
 @Injectable({
@@ -46,7 +45,7 @@ export class HttpActionSubscriber {
         }
 
         case actionTypes.HTTP_CREATE_CODE_BLOCK: {
-          this.addCodeBlock();
+          this.addCodeBlock(action);
 
           break;
         }
@@ -54,12 +53,15 @@ export class HttpActionSubscriber {
     });
   }
 
-  private addCodeBlock() {
+  private addCodeBlock(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const position: number = action.position;
 
-    const model = CreateCodeBlock.create(pageUuid);
+    const model = HttpModel.addCodeBlock(pageUuid, position);
 
-    this.store.dispatch(viewCreateCodeBlock(model.convertToViewModel()));
+    this.pageRepository.addCodeBlock(model).subscribe((data) => {
+      this.store.dispatch(viewCreateCodeBlock(data));
+    });
   }
 
   private addTextBlock(action) {

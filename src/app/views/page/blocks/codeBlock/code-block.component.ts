@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {MatDialog} from "@angular/material/dialog";
-import {IComponent} from "../../../../logic/PageComponent/IComponent";
+import {httpRemoveTextBlock} from "../../../../store/page/httpActions";
+import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
 
 @Component({
   selector: 'cms-code-block',
@@ -9,6 +9,15 @@ import {IComponent} from "../../../../logic/PageComponent/IComponent";
   templateUrl: './code-block.component.html',
 })
 export class CodeBlockComponent {
+
+  constructor(
+    private store: Store<any>
+  ) {}
+
+  icons = {
+    'remove': 'fas fa-trash-alt',
+  };
+
   componentState = {
     hovered: false,
     editorOptions: {
@@ -24,7 +33,7 @@ export class CodeBlockComponent {
   };
 
   @Input('index') index: number;
-  @Input('component') component;
+  @Input('component') component: CodeBlockModel;
 
   componentHovered() {
     this.componentState.hovered = true;
@@ -34,6 +43,11 @@ export class CodeBlockComponent {
     this.componentState.hovered = false;
   }
 
+  remove() {
+    this.store.dispatch(httpRemoveTextBlock(this.component));
+  }
+
   ngOnInit() {
+    this.componentState.code = this.component.text;
   }
 }

@@ -37,7 +37,7 @@ export class MenuComponent {
   }
 
   appendCodeBlock() {
-    this.store.dispatch(httpCreateCodeBlock());
+    this.blockAddedEvent.emit('code-block');
   }
 
   expandMenu() {
