@@ -1,0 +1,28 @@
+@import '../../../../../styles/variables';
+
+.info-wrapper {
+  .info-entry {
+    border-bottom: 1px solid $lightestGray;
+
+    margin-bottom: 20px;
+  }
+
+  .designation {
+    width: 50px;
+    float: left;
+
+    i {
+      color: $lightGray;
+    }
+  }
+
+  .message {
+    float: left;
+    color: $textColor;
+    font-size: 0.9em;
+  }
+
+  .highlight {
+    font-weight: bold;
+  }
+}

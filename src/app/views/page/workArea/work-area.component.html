@@ -9,6 +9,7 @@
     <div
       *ngFor="let item of components"
       class="col-xs-12 col-lg-12 col-md-12 component-wrapper"
+      (cdkDragDropped)="onDropped(item)"
       cdkDrag>
 
       <div class="drag-preview col-xs-7 col-lg-5 col-md-5" *cdkDragPreview>
@@ -27,7 +28,8 @@
 
       <cms-code-block
         *ngIf="item.blockType == 'code_block'"
-        [component]="item">
+        [component]="item"
+        [componentDropped]="droppedSubject">
       </cms-code-block>
     </div>
   </div>

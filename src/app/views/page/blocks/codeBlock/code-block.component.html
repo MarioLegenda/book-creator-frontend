@@ -19,11 +19,25 @@
         [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
-        <mat-checkbox
-          [(ngModel)]="componentState.readonly"
-          (change)="onReadonlyChange()">
-            Readonly
-        </mat-checkbox>
+        <i
+          (click)="onReadonlyChange()"
+          [ngClass]="{'fa-eye': componentState.readonly === false, 'fa-eye-slash': componentState.readonly}"
+          class="fas icon readonly-icon"
+          [matTooltip]="(componentState.readonly) ? 'Mark as editable' : 'Mark as readonly'">
+
+        </i>
+      </div>
+
+      <div
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <i
+          (click)="onGithubGist()"
+          class="icon fab fa-github"
+          matTooltip="Embed Github gist">
+
+        </i>
       </div>
     </div>
   </div>
@@ -31,11 +45,20 @@
   <div
     class="code-block col-lg-12 col-md-12 col-xs-12 editor-wrapper">
 
+    <ngx-gist *ngIf="componentState.isGist" [gistId]="componentState.gistData.username + '/' + componentState.gistData.gistId"></ngx-gist>
+
     <ngx-monaco-editor
+      *ngIf="componentState.isCode"
       [options]="componentState.editorOptions"
       [(ngModel)]="componentState.code"
       (keyup)="onCodeChange()">
     </ngx-monaco-editor>
 
   </div>
+
+  <cms-block-info
+    [readOnly]="componentState.readonly"
+    [isGist]="componentState.isGist"
+    [isCode]="componentState.isCode">
+  </cms-block-info>
 </div>

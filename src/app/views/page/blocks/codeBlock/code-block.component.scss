@@ -33,6 +33,11 @@
       }
     }
 
+    .readonly-icon {
+      margin-left: 10px;
+      font-size: 1.8em;
+    }
+
     .remove-icon {
       &:hover {
         color: $dangerRed;

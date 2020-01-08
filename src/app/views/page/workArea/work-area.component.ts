@@ -7,6 +7,7 @@ import {addPosition} from "../../../logic/utilFns";
 import {TextBlockModel} from "../../../model/app/TextBlockModel";
 import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'cms-work-area',
@@ -15,6 +16,8 @@ import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
 })
 export class WorkAreaComponent implements OnInit, OnDestroy {
   components = [];
+
+  droppedSubject = new Subject();
 
   icons = {
     'list': 'fas fa-list',
@@ -77,6 +80,10 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+
+  onDropped(component) {
+    this.droppedSubject.next(component.blockUuid);
   }
 
   drop(event: CdkDragDrop<any>) {

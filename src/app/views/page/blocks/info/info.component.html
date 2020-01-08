@@ -1,0 +1,46 @@
+<div
+  class="info-wrapper col-lg-12 col-md-12 col-xs-12">
+
+  <div class="col-xs-12 col-md-12 col-lg-12 informational-actions">
+    <button
+      class="action-button"
+      (click)="toggleInfo()">
+      <i class="expand-icon fas" [ngClass]="{'fa-angle-left': componentState.showInfo === false, 'fa-angle-down': componentState.showInfo}"></i>Show info
+    </button>
+  </div>
+
+  <div
+    *ngIf="componentState.showInfo"
+    class="info-collection col-xs-12 col-md-12 col-lg-12">
+    <div *ngIf="readOnly" class="info-entry col-xs-12 col-md-12 col-lg-12">
+      <div class="designation">
+        <i class="far fa-eye"></i>
+      </div>
+
+      <div class="message">
+        <p><span class="highlight">Readonly.</span> The user will not be able to edit or run this code. Viewing only.</p>
+      </div>
+    </div>
+
+    <div *ngIf="!readOnly" class="info-entry col-xs-12 col-md-12 col-lg-12">
+      <div class="designation">
+        <i class="far fa-eye"></i>
+      </div>
+
+      <div class="message">
+        <p><span class="highlight">Runnable.</span> The user will be able to edit and run this code block</p>
+      </div>
+    </div>
+
+    <div *ngIf="isGist" class="info-entry col-xs-12 col-md-12 col-lg-12">
+      <div class="designation">
+        <i class="fab fa-github"></i>
+      </div>
+
+      <div class="message">
+        <p><span class="highlight">Github gist.</span> This code block will be rendered as a Github gist.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

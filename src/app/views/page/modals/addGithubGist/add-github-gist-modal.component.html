@@ -1,0 +1,32 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <i class="fas fa-link icon"></i>
+    <p>Add shareable link</p>
+  </div>
+
+  <div class="info">
+    <h1 class="title">
+      <i class="fas fa-info icon"></i>
+    </h1>
+
+    <p>Please, add a <span class="highlight">shareable</span> link, not an embedding one. You can get a shareable link on your Gist page in the top right corner under the <span class="highlight">Share</span> option.</p>
+  </div>
+
+  <div class="dialog-content form-group">
+    <input cdkFocusInitial (keyup.enter)="addLink()" [(ngModel)]="model.name"  placeholder="Link" class="form-input form-control">
+  </div>
+
+  <div
+    *ngFor="let error of errors"
+    class="error col-xs-12 col-md-12 col-lg-12">
+    <p>{{error}}</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn create" cdkFocusInitial (click)="addLink()">Add</button>
+  </div>
+</div>
