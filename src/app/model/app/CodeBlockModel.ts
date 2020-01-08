@@ -8,6 +8,9 @@ export class CodeBlockModel {
     public position: string,
     public text: string,
     public readOnly: boolean,
+    public isGist: boolean,
+    public isCode: boolean,
+    public gistData: any,
     public blockType: string = ComponentType.CODE_BLOCK_TYPE,
   ) {}
 }

@@ -66,19 +66,12 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.componentState.code = this.component.text;
     this.componentState.readonly = this.component.readOnly;
+    this.componentState.isGist = this.component.isGist;
+    this.componentState.isCode = this.component.isCode;
+    this.componentState.gistData = this.component.gistData;
 
-    this.typeAheadObservable = this.typeAheadSource.pipe(
-      debounceTime(500),
-    )
-      .subscribe(() => {
-        const model = {
-          blockUuid: this.component.blockUuid,
-          position: this.component.position,
-          text: this.componentState.code,
-        };
-
-        this.store.dispatch(httpUpdateTextBlock(model));
-      });
+    this.subscribeTypeahead();
+    this.subscribeDroppedForGist();
   }
 
   ngOnDestroy(): void {
@@ -98,14 +91,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   onReadonlyChange() {
     this.componentState.readonly = !this.componentState.readonly;
 
-    const model = {
-      blockUuid: this.component.blockUuid,
-      position: this.component.position,
-      text: this.componentState.code,
-      readonly: this.componentState.readonly,
-    };
-
-    this.store.dispatch(httpUpdateCodeBlock(model));
+    this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
   }
 
   onGithubGist() {
@@ -121,13 +107,26 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       this.componentState.isCode = false;
       this.componentState.isGist = true;
 
-      this.subscribeDroppedForGist();
+      this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
     });
+  }
+
+  private createUpdateModel() {
+    return {
+      blockUuid: this.component.blockUuid,
+      position: this.component.position,
+      text: this.componentState.code,
+      gistData: this.componentState.gistData,
+      isGist: this.componentState.isGist,
+      isCode: this.componentState.isCode,
+    };
   }
 
   private subscribeDroppedForGist() {
     this.onDroppedObservable = this.componentDropped.subscribe((blockUuid: string) => {
       if (blockUuid === this.component.blockUuid) {
+        if (!this.componentState.isGist) return;
+
         this.componentState.isGist = false;
 
         setTimeout(() => {
@@ -135,5 +134,14 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         }, 2000);
       }
     });
+  }
+
+  private subscribeTypeahead() {
+    this.typeAheadObservable = this.typeAheadSource.pipe(
+      debounceTime(500),
+    )
+      .subscribe(() => {
+        this.store.dispatch(httpUpdateTextBlock(this.createUpdateModel()));
+      });
   }
 }

@@ -128,12 +128,18 @@ export class HttpActionSubscriber {
     const position: number = action.position;
     const text: string = action.text;
     const readonly: boolean = action.readonly;
+    const gistData = action.gistData;
+    const isGist: boolean = action.isGist;
+    const isCode: boolean = action.isCode;
 
     const model = HttpModel.updateCodeBlock(
       pageUuid,
       blockUuid,
       text,
       position,
+      isGist,
+      isCode,
+      gistData,
       readonly,
     );
 

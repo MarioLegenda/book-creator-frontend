@@ -51,6 +51,9 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.position,
           component.text,
           component.readonly,
+          component.isGist,
+          component.isCode,
+          component.gistData,
         ));
       }
     });

@@ -33,6 +33,9 @@ export class HttpModel {
     blockUuid: string,
     text: string,
     position: number,
+    isGist: boolean,
+    isCode: boolean,
+    gistData: any,
     readonly: boolean = false,
   ) {
     return {
@@ -42,6 +45,9 @@ export class HttpModel {
         text,
         position,
         readonly,
+        isGist,
+        isCode,
+        gistData,
       }
     }
   }
