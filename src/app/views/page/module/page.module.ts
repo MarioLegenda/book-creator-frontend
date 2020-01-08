@@ -24,6 +24,7 @@ import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
 import {MonacoEditorModule} from "ngx-monaco-editor";
 import {AddGithubGistDialogComponent} from "../modals/addGithubGist/add-github-gist-modal.component";
 import {InfoComponent} from "../blocks/info/info.component";
+import {TestRunResultComponent} from "../blocks/testRun/test-run-result.component";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {InfoComponent} from "../blocks/info/info.component";
     CodeBlockComponent,
     AddGithubGistDialogComponent,
     InfoComponent,
+    TestRunResultComponent,
   ],
   imports: [
     MatCardModule,

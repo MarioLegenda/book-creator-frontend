@@ -1,0 +1,21 @@
+@import '../../../../../styles/variables';
+
+.test-run-result-wrapper {
+  position: relative;
+  margin-top: 40px;
+
+  .close-icon {
+    position: absolute;
+    top: 15px; right: 15px;
+    color: $lightGray;
+
+    &:hover {
+      cursor: pointer;
+      color: $appBlack;
+    }
+  }
+
+  .result-block {
+    min-height: 300px;
+  }
+}

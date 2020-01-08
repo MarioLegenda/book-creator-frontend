@@ -34,6 +34,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     readonly: false,
     gistData: null,
     isGist: false,
+    hasTestRunWindow: true,
     isCode: true,
     editorOptions: {
       theme: 'vs-light',
@@ -116,9 +117,14 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       this.componentState.gistData = gistData;
       this.componentState.isCode = false;
       this.componentState.isGist = true;
+      this.componentState.readonly = true;
 
       this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
     });
+  }
+
+  onTestRunWindowClose() {
+    this.componentState.hasTestRunWindow = false;
   }
 
   private createUpdateModel() {

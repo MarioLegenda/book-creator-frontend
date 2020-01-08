@@ -64,6 +64,13 @@
       (keyup)="onCodeChange()">
     </ngx-monaco-editor>
 
+    <button
+      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      *ngIf="componentState.isCode"
+      class="btn btn-success test-run-button">
+      Test run
+    </button>
+
   </div>
 
   <cms-block-info
@@ -71,4 +78,9 @@
     [isGist]="componentState.isGist"
     [isCode]="componentState.isCode">
   </cms-block-info>
+
+  <cms-test-run-result
+    *ngIf="componentState.hasTestRunWindow"
+    (testRunCloseEvent)="onTestRunWindowClose()">
+  </cms-test-run-result>
 </div>
