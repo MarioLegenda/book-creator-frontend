@@ -1,6 +1,10 @@
 @import '../../../../../styles/variables';
 
 .info-wrapper {
+  .info-collection {
+    margin-top: 40px;
+  }
+
   .info-entry {
     border-bottom: 1px solid $lightestGray;
 

@@ -64,12 +64,21 @@
       (keyup)="onCodeChange()">
     </ngx-monaco-editor>
 
-    <button
+    <div
       [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
       *ngIf="componentState.isCode"
-      class="btn btn-success test-run-button">
-      Test run
-    </button>
+      class="test-run-button-wrapper">
+
+      <i *ngIf="componentState.isCodeRunning" class="fas fa-atom fa-spin"></i>
+
+      <button
+        [disabled]="componentState.isCodeRunning"
+        (click)="onRunCode()"
+        class="btn btn-success test-run-button">
+        Test run
+      </button>
+    </div>
+
 
   </div>
 

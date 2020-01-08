@@ -22,6 +22,8 @@ export class AddGithubGistDialogComponent {
   }
 
   addLink() {
+    if (!this.model.name) return;
+
     this.validateHost();
     this.validateLink();
 

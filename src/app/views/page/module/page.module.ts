@@ -25,6 +25,7 @@ import {MonacoEditorModule} from "ngx-monaco-editor";
 import {AddGithubGistDialogComponent} from "../modals/addGithubGist/add-github-gist-modal.component";
 import {InfoComponent} from "../blocks/info/info.component";
 import {TestRunResultComponent} from "../blocks/testRun/test-run-result.component";
+import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {TestRunResultComponent} from "../blocks/testRun/test-run-result.componen
     AddGithubGistDialogComponent,
     InfoComponent,
     TestRunResultComponent,
+    RemoveConfirmDialogComponent,
   ],
   imports: [
     MatCardModule,
@@ -61,6 +63,7 @@ import {TestRunResultComponent} from "../blocks/testRun/test-run-result.componen
   providers: [],
   entryComponents: [
     AddGithubGistDialogComponent,
+    RemoveConfirmDialogComponent,
   ]
 })
 export class PageModule { }

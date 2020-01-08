@@ -7,6 +7,7 @@ import { debounceTime } from 'rxjs/operators';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {TextBlockModel} from "../../../../model/app/TextBlockModel";
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -83,7 +84,15 @@ export class TextBlockComponent implements OnDestroy {
   }
 
   remove() {
-    this.store.dispatch(httpRemoveTextBlock(this.component));
+    const dialogRef = this.dialog.open(RemoveConfirmDialogComponent, {
+      width: '480px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm === true) this.store.dispatch(httpRemoveTextBlock(this.component));
+    });
+
   }
 
   componentHovered() {

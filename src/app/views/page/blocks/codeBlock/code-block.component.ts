@@ -6,6 +6,7 @@ import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {AddGithubGistDialogComponent} from "../../modals/addGithubGist/add-github-gist-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 
 @Component({
   selector: 'cms-code-block',
@@ -36,6 +37,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     isGist: false,
     hasTestRunWindow: true,
     isCode: true,
+    isCodeRunning: false,
     editorOptions: {
       theme: 'vs-light',
       language: 'javascript',
@@ -61,7 +63,14 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   remove() {
-    this.store.dispatch(httpRemoveTextBlock(this.component));
+    const dialogRef = this.dialog.open(RemoveConfirmDialogComponent, {
+      width: '480px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm === true) this.store.dispatch(httpRemoveTextBlock(this.component));
+    });
   }
 
   ngOnInit() {
@@ -89,7 +98,15 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.typeAheadSource.next();
   }
 
+  onRunCode() {
+    this.componentState.isCodeRunning = true;
+
+    setTimeout(() => this.componentState.isCodeRunning = false, 3000);
+  }
+
   onReadonlyChange() {
+    if (this.componentState.isGist) return;
+
     this.componentState.readonly = !this.componentState.readonly;
 
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
@@ -135,6 +152,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       gistData: this.componentState.gistData,
       isGist: this.componentState.isGist,
       isCode: this.componentState.isCode,
+      readonly: this.componentState.readonly,
     };
   }
 
