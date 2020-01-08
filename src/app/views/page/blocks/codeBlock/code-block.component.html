@@ -24,7 +24,6 @@
           [ngClass]="{'fa-eye': componentState.readonly === false, 'fa-eye-slash': componentState.readonly}"
           class="fas icon readonly-icon"
           [matTooltip]="(componentState.readonly) ? 'Mark as editable' : 'Mark as readonly'">
-
         </i>
       </div>
 
@@ -36,7 +35,18 @@
           (click)="onGithubGist()"
           class="icon fab fa-github"
           matTooltip="Embed Github gist">
+        </i>
+      </div>
 
+      <div
+        *ngIf="componentState.isGist"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <i
+          (click)="onRefresh()"
+          class="icon fas fa-sync-alt"
+          matTooltip="Refresh gist">
         </i>
       </div>
     </div>

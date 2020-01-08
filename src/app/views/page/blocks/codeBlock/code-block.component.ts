@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateCodeBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
@@ -92,6 +92,16 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.componentState.readonly = !this.componentState.readonly;
 
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+  }
+
+  onRefresh() {
+    if (this.componentState.isGist) {
+      this.componentState.isGist = false;
+
+      setTimeout(() => this.componentState.isGist = true, 2000);
+
+      return;
+    }
   }
 
   onGithubGist() {
