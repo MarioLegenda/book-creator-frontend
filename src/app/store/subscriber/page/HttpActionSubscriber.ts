@@ -131,6 +131,7 @@ export class HttpActionSubscriber {
     const gistData = action.gistData;
     const isGist: boolean = action.isGist;
     const isCode: boolean = action.isCode;
+    const emulator: boolean = action.emulator;
 
     const model = HttpModel.updateCodeBlock(
       pageUuid,
@@ -140,6 +141,7 @@ export class HttpActionSubscriber {
       isGist,
       isCode,
       gistData,
+      emulator,
       readonly,
     );
 

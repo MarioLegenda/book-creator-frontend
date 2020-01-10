@@ -54,6 +54,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.isGist,
           component.isCode,
           component.gistData,
+          component.emulator,
         ));
       }
     });

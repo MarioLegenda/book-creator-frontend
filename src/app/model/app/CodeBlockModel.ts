@@ -11,6 +11,7 @@ export class CodeBlockModel {
     public isGist: boolean,
     public isCode: boolean,
     public gistData: any,
+    public emulator: any,
     public blockType: string = ComponentType.CODE_BLOCK_TYPE,
   ) {}
 }

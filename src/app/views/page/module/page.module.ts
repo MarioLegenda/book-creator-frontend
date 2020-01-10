@@ -9,7 +9,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { NgxGistModule } from 'ngx-gist/dist/ngx-gist.module';
+import {NgxGistModule} from 'ngx-gist/dist/ngx-gist.module';
 
 import {MenuComponent} from "../menu/menu.component";
 import {MenuButtonComponent} from "../menu/menu-button.component";
@@ -26,6 +26,7 @@ import {AddGithubGistDialogComponent} from "../modals/addGithubGist/add-github-g
 import {InfoComponent} from "../blocks/info/info.component";
 import {TestRunResultComponent} from "../blocks/testRun/test-run-result.component";
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
+import {SelectEnvironmentDialog} from "../modals/selectEnvironment/select-environment.component";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confi
     InfoComponent,
     TestRunResultComponent,
     RemoveConfirmDialogComponent,
+    SelectEnvironmentDialog,
   ],
   imports: [
     MatCardModule,
@@ -64,6 +66,7 @@ import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confi
   entryComponents: [
     AddGithubGistDialogComponent,
     RemoveConfirmDialogComponent,
+    SelectEnvironmentDialog,
   ]
 })
 export class PageModule { }

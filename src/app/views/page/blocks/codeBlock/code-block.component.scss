@@ -79,5 +79,29 @@
         color: $appBlack;
       }
     }
+
+    .emulator-info-wrapper {
+      width: 165px;
+      position: absolute;
+
+      bottom: 10px; left: 10px;
+
+      .missing {
+        color: $dangerRed;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .text {
+        font-size: 0.8em;
+        font-style: italic;
+
+        i {
+          margin-left: 3px;
+        }
+      }
+    }
   }
 }

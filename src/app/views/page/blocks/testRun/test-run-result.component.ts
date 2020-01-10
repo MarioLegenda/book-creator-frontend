@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'cms-test-run-result',
@@ -9,19 +9,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class TestRunResultComponent {
   @Output('testRunCloseEvent') testRunCloseEvent = new EventEmitter();
-  result = `import {Component} from '@angular/core';
-
-@Component({
-  selector: 'cms-test-run-result',
-  styleUrls: [
-    './test-run-result.component.scss',
-  ],
-  templateUrl: './test-run-result.component.html',
-})
-export class TestRunResultComponent {
-
-}
-`;
+  @Input('result') result: string;
 
   onClose() {
     this.testRunCloseEvent.emit();

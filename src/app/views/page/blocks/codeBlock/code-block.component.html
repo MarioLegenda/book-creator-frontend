@@ -49,6 +49,18 @@
           matTooltip="Refresh gist">
         </i>
       </div>
+
+      <div
+        *ngIf="componentState.isCode"
+        (click)="onSelectEnvironment()"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <i
+          class="icon fas fa-bug"
+          matTooltip="Select environment">
+        </i>
+      </div>
     </div>
   </div>
 
@@ -72,11 +84,26 @@
       <i *ngIf="componentState.isCodeRunning" class="fas fa-atom fa-spin"></i>
 
       <button
-        [disabled]="componentState.isCodeRunning"
+        [disabled]="componentState.isCodeRunning || !componentState.emulator"
         (click)="onRunCode()"
         class="btn btn-success test-run-button">
         Test run
       </button>
+    </div>
+
+    <div
+      *ngIf="componentState.emulator && componentState.isCode"
+      class="emulator-info-wrapper">
+
+      <p class="text">{{componentState.emulator.text}}<i class="fas fa-bug"></i></p>
+    </div>
+
+    <div
+      *ngIf="!componentState.emulator && componentState.isCode"
+      (click)="onSelectEnvironment()"
+      class="emulator-info-wrapper">
+
+      <p class="text missing">Dev environment missing<i class="fas fa-bug"></i></p>
     </div>
 
 
@@ -90,6 +117,7 @@
 
   <cms-test-run-result
     *ngIf="componentState.hasTestRunWindow"
-    (testRunCloseEvent)="onTestRunWindowClose()">
+    (testRunCloseEvent)="onTestRunWindowClose()"
+    [result]="componentState.testRunResult">
   </cms-test-run-result>
 </div>

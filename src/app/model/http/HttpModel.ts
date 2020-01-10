@@ -36,6 +36,7 @@ export class HttpModel {
     isGist: boolean,
     isCode: boolean,
     gistData: any,
+    emulator: any,
     readonly: boolean = false,
   ) {
     return {
@@ -48,6 +49,7 @@ export class HttpModel {
         isGist,
         isCode,
         gistData,
+        emulator,
       }
     }
   }

@@ -1,12 +1,15 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpRemoveTextBlock, httpUpdateCodeBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
+import {httpRemoveTextBlock, httpUpdateCodeBlock} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {AddGithubGistDialogComponent} from "../../modals/addGithubGist/add-github-gist-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
+import {SelectEnvironmentDialog} from "../../modals/selectEnvironment/select-environment.component";
+import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
+import {PageContextInitializer} from "../../../../logic/PageComponent/context/PageContextInitializer";
 
 @Component({
   selector: 'cms-code-block',
@@ -16,10 +19,11 @@ import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-co
   templateUrl: './code-block.component.html',
 })
 export class CodeBlockComponent implements OnInit, OnDestroy {
-
   constructor(
     private store: Store<any>,
     private dialog: MatDialog,
+    private emlRepository: EnvironmentEmulatorRepository,
+    private pageContext: PageContextInitializer,
   ) {}
 
   icons = {
@@ -29,13 +33,16 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
   private onDroppedObservable = null;
+  private emulators = null;
 
   componentState = {
     hovered: false,
     readonly: false,
     gistData: null,
     isGist: false,
-    hasTestRunWindow: true,
+    emulator: null,
+    hasTestRunWindow: false,
+    testRunResult: null,
     isCode: true,
     isCodeRunning: false,
     editorOptions: {
@@ -79,6 +86,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.componentState.isGist = this.component.isGist;
     this.componentState.isCode = this.component.isCode;
     this.componentState.gistData = this.component.gistData;
+    this.componentState.emulator = this.component.emulator;
 
     this.subscribeTypeahead();
     this.subscribeDroppedForGist();
@@ -100,8 +108,20 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
   onRunCode() {
     this.componentState.isCodeRunning = true;
+    this.componentState.hasTestRunWindow = false;
 
-    setTimeout(() => this.componentState.isCodeRunning = false, 3000);
+    this.emlRepository.buildAndRunSingleFile(
+      this.pageContext.getContext().page.shortId,
+      this.component.shortId,
+      this.componentState.code,
+      this.componentState.emulator.name,
+    ).subscribe((res) => {
+      this.componentState.isCodeRunning = false;
+
+      this.componentState.testRunResult = res;
+
+      this.componentState.hasTestRunWindow = true;
+    })
   }
 
   onReadonlyChange() {
@@ -140,8 +160,22 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSelectEnvironment() {
+    if (this.emulators) {
+      this.handleEmulatorDialog();
+    } else {
+      this.emlRepository.getEnvironments().subscribe(res => {
+        this.emulators = res;
+
+        this.handleEmulatorDialog();
+      });
+    }
+
+  }
+
   onTestRunWindowClose() {
     this.componentState.hasTestRunWindow = false;
+    this.componentState.testRunResult = null;
   }
 
   private createUpdateModel() {
@@ -153,6 +187,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       isGist: this.componentState.isGist,
       isCode: this.componentState.isCode,
       readonly: this.componentState.readonly,
+      emulator: this.componentState.emulator,
     };
   }
 
@@ -175,7 +210,22 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       debounceTime(500),
     )
       .subscribe(() => {
-        this.store.dispatch(httpUpdateTextBlock(this.createUpdateModel()));
+        this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       });
+  }
+
+  private handleEmulatorDialog() {
+    const dialogRef = this.dialog.open(SelectEnvironmentDialog, {
+      width: '480px',
+      data: this.emulators,
+    });
+
+    dialogRef.afterClosed().subscribe((eml: any) => {
+      if (!eml) return;
+
+      this.componentState.emulator = eml;
+
+      this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+    });
   }
 }
