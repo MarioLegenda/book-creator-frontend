@@ -161,12 +161,28 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((gistData: string) => {
       if (!gistData) return;
 
-      this.componentState.gistData = gistData;
-      this.componentState.isCode = false;
-      this.componentState.isGist = true;
-      this.componentState.readonly = true;
+      this.componentState.hasTestRunWindow = false;
+      this.componentState.testRunResult = null;
 
-      this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+      if (this.componentState.isGist) {
+        this.componentState.isGist = false;
+
+        setTimeout(() => {
+          this.componentState.gistData = gistData;
+          this.componentState.isCode = false;
+          this.componentState.isGist = true;
+          this.componentState.readonly = true;
+
+          this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+        }, 2000);
+      } else {
+        this.componentState.gistData = gistData;
+        this.componentState.isCode = false;
+        this.componentState.isGist = true;
+        this.componentState.readonly = true;
+
+        this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+      }
     });
   }
 
@@ -180,7 +196,15 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.handleEmulatorDialog();
       });
     }
+  }
 
+  onClearGist() {
+    this.componentState.isGist = false;
+    this.componentState.isCode = true;
+    this.componentState.gistData = null;
+    this.componentState.readonly = false;
+
+    this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
   }
 
   onTestRunWindowClose() {
