@@ -27,6 +27,7 @@ import {InfoComponent} from "../blocks/info/info.component";
 import {TestRunResultComponent} from "../blocks/testRun/test-run-result.component";
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
 import {SelectEnvironmentDialog} from "../modals/selectEnvironment/select-environment.component";
+import {BlockErrorComponent} from "../blocks/blockError/block-error.component";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {SelectEnvironmentDialog} from "../modals/selectEnvironment/select-enviro
     TestRunResultComponent,
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
+    BlockErrorComponent,
   ],
   imports: [
     MatCardModule,

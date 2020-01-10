@@ -18,9 +18,8 @@ export class TextBlockComponent implements OnDestroy {
   componentState = {
     hovered: false,
     updateWanted: false,
+    expanded: false,
   };
-
-  editorCreated = false;
 
   editor = ClassicEditor;
 
@@ -60,8 +59,12 @@ export class TextBlockComponent implements OnDestroy {
     public dialog: MatDialog,
   ) {}
 
-  createEditor() {
-    this.editorCreated = true;
+  onExpandBlock() {
+    this.componentState.expanded = true;
+  }
+
+  onCompressBlock() {
+    this.componentState.expanded = false;
   }
 
   onEditorReady($event: any) {

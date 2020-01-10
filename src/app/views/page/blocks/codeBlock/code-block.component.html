@@ -105,11 +105,15 @@
 
       <p class="text missing">Dev environment missing<i class="fas fa-bug"></i></p>
     </div>
-
-
   </div>
 
+  <cms-block-errors
+    *ngIf="componentState.blockErrors"
+    [errors]="componentState.blockErrors">
+  </cms-block-errors>
+
   <cms-block-info
+    [emulator]="componentState.emulator"
     [readOnly]="componentState.readonly"
     [isGist]="componentState.isGist"
     [isCode]="componentState.isCode">

@@ -12,6 +12,7 @@ export class InfoComponent {
   @Input('readOnly') readOnly: boolean;
   @Input('isGist') isGist: boolean;
   @Input('isCode') isCode: boolean;
+  @Input('emulator') emulator: any;
 
   componentState = {
     showInfo: false,

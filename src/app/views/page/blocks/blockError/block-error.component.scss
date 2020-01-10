@@ -1,0 +1,19 @@
+@import '../../../../../styles/variables';
+
+.block-errors-wrapper {
+  margin: 40px 0 40px 0;
+
+  .error-wrapper {
+    padding: 10px;
+    background-color: $lightRed;
+    border-left: 4px solid $dangerRed;
+
+    margin-bottom: 10px;
+
+    color: white;
+
+    p {
+      margin: 0; padding: 0;
+    }
+  }
+}

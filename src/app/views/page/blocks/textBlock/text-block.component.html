@@ -14,19 +14,43 @@
         </div>
 
       </div>
+
+      <div
+        *ngIf="!componentState.expanded"
+        matTooltip="Expand block"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <div class="icon-group">
+          <i (click)="onExpandBlock()" class="icon fas fa-expand"></i>
+        </div>
+
+      </div>
+
+      <div
+        *ngIf="componentState.expanded"
+        matTooltip="Compress block"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <div class="icon-group">
+          <i (click)="onCompressBlock()" class="icon fas fa-compress"></i>
+        </div>
+
+      </div>
     </div>
   </div>
 
   <div
     class="col-lg-12 col-md-12 col-xs-12 text-editor-wrapper"
-    (click)="createEditor()"
-    [ngClass]="{'editor-not-created': !editorCreated}">
+    (click)="onExpandBlock()"
+    [ngClass]="{'editor-not-created': !componentState.expanded}">
 
-    <p class="editor-not-created-text col-lg-12 col-md-12 col-xs-12" *ngIf="!editorCreated">Click to view text</p>
+    <p class="editor-not-created-text col-lg-12 col-md-12 col-xs-12" *ngIf="!componentState.expanded">Click to view text</p>
 
     <ckeditor
       #editorComponent
-      *ngIf="editorCreated"
+      *ngIf="componentState.expanded"
       [editor]="editor"
       (change)="onChange()"
       [config]="editorConfig"

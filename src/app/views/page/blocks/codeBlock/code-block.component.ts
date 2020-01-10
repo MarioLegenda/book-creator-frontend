@@ -40,6 +40,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     readonly: false,
     gistData: null,
     isGist: false,
+    blockErrors: null,
     emulator: null,
     hasTestRunWindow: false,
     testRunResult: null,
@@ -107,6 +108,15 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   onRunCode() {
+    this.componentState.blockErrors = null;
+
+    if (this.componentState.code === '') {
+      this.componentState.blockErrors = [];
+      this.componentState.blockErrors.push('There is no code to run');
+
+      return;
+    }
+
     this.componentState.isCodeRunning = true;
     this.componentState.hasTestRunWindow = false;
 
@@ -210,6 +220,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       debounceTime(500),
     )
       .subscribe(() => {
+        this.componentState.blockErrors = null;
+
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       });
   }

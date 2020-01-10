@@ -42,5 +42,15 @@
       </div>
     </div>
 
+    <div *ngIf="emulator" class="info-entry col-xs-12 col-md-12 col-lg-12">
+      <div class="designation">
+        <i class="fas fa-bug"></i>
+      </div>
+
+      <div class="message">
+        <p><span class="highlight">Running environment.</span> The user will run this code block in {{emulator.text}}</p>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -6,5 +6,18 @@
     class="close-icon fas fa-times"
   ></i>
 
-  <pre class="result-block">{{result}}</pre>
+  <pre
+    *ngIf="result !== ''"
+    class="result-block">
+    Output:
+
+
+    {{result}}
+  </pre>
+
+  <pre
+    *ngIf="result === ''"
+    class="result-block">
+    There is not output to show.
+  </pre>
 </div>
