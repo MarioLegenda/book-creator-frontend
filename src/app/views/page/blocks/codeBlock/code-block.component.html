@@ -73,6 +73,18 @@
           matTooltip="Clear gist (back to code)">
         </i>
       </div>
+
+      <div
+        *ngIf="componentState.isCode"
+        (click)="onSelectCodeProject()"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <i
+          class="icon fas fa-laptop-code"
+          matTooltip="Import code project">
+        </i>
+      </div>
     </div>
   </div>
 

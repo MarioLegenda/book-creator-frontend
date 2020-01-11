@@ -10,6 +10,7 @@ import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-co
 import {SelectEnvironmentDialog} from "../../modals/selectEnvironment/select-environment.component";
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 import {PageContextInitializer} from "../../../../logic/PageComponent/context/PageContextInitializer";
+import {LinkCodeProjectDialogComponent} from "../../modals/linkCodeProject/link-code-project.component";
 
 @Component({
   selector: 'cms-code-block',
@@ -33,7 +34,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
   private onDroppedObservable = null;
-  private emulators = null;
 
   componentState = {
     hovered: false,
@@ -187,15 +187,9 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   onSelectEnvironment() {
-    if (this.emulators) {
-      this.handleEmulatorDialog();
-    } else {
-      this.emlRepository.getEnvironments().subscribe(res => {
-        this.emulators = res;
-
-        this.handleEmulatorDialog();
-      });
-    }
+    this.emlRepository.getEnvironments().subscribe(emulators => {
+      this.handleEmulatorDialog(emulators);
+    });
   }
 
   onClearGist() {
@@ -205,6 +199,17 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.componentState.readonly = false;
 
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+  }
+
+  onSelectCodeProject() {
+    const dialogRef = this.dialog.open(LinkCodeProjectDialogComponent, {
+      width: '480px',
+      data: {name: ''},
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+
+    });
   }
 
   onTestRunWindowClose() {
@@ -250,10 +255,10 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       });
   }
 
-  private handleEmulatorDialog() {
+  private handleEmulatorDialog(emulators) {
     const dialogRef = this.dialog.open(SelectEnvironmentDialog, {
       width: '480px',
-      data: this.emulators,
+      data: emulators,
     });
 
     dialogRef.afterClosed().subscribe((eml: any) => {

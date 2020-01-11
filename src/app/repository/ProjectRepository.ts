@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RouteResolver} from "../logic/routes/RouteResolver";
 import {concatMap, reduce} from "rxjs/operators";
 import {CodeProjectHttpModel} from "../model/http/codeEditor/CodeProjectHttpModel";
+import {ProjectRouteResolver} from "../logic/routes/ProjectRouteResolver";
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +10,14 @@ import {CodeProjectHttpModel} from "../model/http/codeEditor/CodeProjectHttpMode
 export class ProjectRepository {
   constructor(
     private httpClient: HttpClient,
-    private routeResolver: RouteResolver
+    private projectRouteResolver: ProjectRouteResolver,
   ) {}
 
   getProjectByShortId(shortId: string) {
-    return this.httpClient.get(this.routeResolver.getProjectUuidByShortId(shortId))
+    return this.httpClient.get(this.projectRouteResolver.getProjectUuidByShortId(shortId))
       .pipe(
         concatMap((val: any) => {
-          return this.httpClient.get(this.routeResolver.getSingleProject(val.data));
+          return this.httpClient.get(this.projectRouteResolver.getSingleProject(val.data));
         })
       ).pipe(
         reduce((acc, res: any) => {
@@ -35,6 +35,6 @@ export class ProjectRepository {
   }
 
   getProjectByUuid(uuid: string) {
-    return this.httpClient.get(this.routeResolver.getSingleProject(uuid));
+    return this.httpClient.get(this.projectRouteResolver.getSingleProject(uuid));
   }
 }

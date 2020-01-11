@@ -28,6 +28,7 @@ import {TestRunResultComponent} from "../blocks/testRun/test-run-result.componen
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
 import {SelectEnvironmentDialog} from "../modals/selectEnvironment/select-environment.component";
 import {BlockErrorComponent} from "../blocks/blockError/block-error.component";
+import {LinkCodeProjectDialogComponent} from "../modals/linkCodeProject/link-code-project.component";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {BlockErrorComponent} from "../blocks/blockError/block-error.component";
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
     BlockErrorComponent,
+    LinkCodeProjectDialogComponent,
   ],
   imports: [
     MatCardModule,
@@ -69,6 +71,7 @@ import {BlockErrorComponent} from "../blocks/blockError/block-error.component";
     AddGithubGistDialogComponent,
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
+    LinkCodeProjectDialogComponent,
   ]
 })
 export class PageModule { }
