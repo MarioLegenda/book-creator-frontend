@@ -28,12 +28,10 @@ import {TestRunResultComponent} from "../blocks/testRun/test-run-result.componen
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
 import {SelectEnvironmentDialog} from "../modals/selectEnvironment/select-environment.component";
 import {BlockErrorComponent} from "../blocks/blockError/block-error.component";
-import {LinkCodeProjectDialogComponent} from "../modals/linkCodeProject/link-code-project.component";
 import {BlogTitleComponent} from "../blog/title/blog-title.component";
-import {AppContext} from "../../../logic/PageComponent/context/AppContext";
-import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {BlogIntroComponent} from "../blog/intro/blog-intro.component";
 import {TextCounterComponent} from "../../misc/textCounter/text-counter.component";
+import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/import-code-project.component";
 
 @NgModule({
   declarations: [
@@ -50,10 +48,10 @@ import {TextCounterComponent} from "../../misc/textCounter/text-counter.componen
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
     BlockErrorComponent,
-    LinkCodeProjectDialogComponent,
     BlogTitleComponent,
     BlogIntroComponent,
     TextCounterComponent,
+    ImportCodeProjectDialogComponent,
   ],
   imports: [
     MatCardModule,
@@ -79,7 +77,7 @@ import {TextCounterComponent} from "../../misc/textCounter/text-counter.componen
     AddGithubGistDialogComponent,
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
-    LinkCodeProjectDialogComponent,
+    ImportCodeProjectDialogComponent,
   ]
 })
 export class PageModule { }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateCodeBlock} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
@@ -10,7 +10,7 @@ import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-co
 import {SelectEnvironmentDialog} from "../../modals/selectEnvironment/select-environment.component";
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 import {AppContextInitializer} from "../../../../logic/PageComponent/context/AppContextInitializer";
-import {LinkCodeProjectDialogComponent} from "../../modals/linkCodeProject/link-code-project.component";
+import {ImportCodeProjectDialogComponent} from "../../modals/importCodeProject/import-code-project.component";
 
 @Component({
   selector: 'cms-code-block',
@@ -201,14 +201,16 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
   }
 
-  onSelectCodeProject() {
-    const dialogRef = this.dialog.open(LinkCodeProjectDialogComponent, {
+  onImportCodeProject() {
+    const dialogRef = this.dialog.open(ImportCodeProjectDialogComponent, {
       width: '480px',
-      data: {name: ''},
+      data: {},
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-
+    dialogRef.afterClosed().subscribe((action) => {
+      if (action === 'newCodeProject') {
+        
+      }
     });
   }
 
