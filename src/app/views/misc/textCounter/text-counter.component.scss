@@ -1,0 +1,13 @@
+@import '../../../../styles/variables';
+
+.text-counter-wrapper {
+  float: none;
+  .counter {
+    width: 100px;
+    float: right;
+
+    color: $lightGray;
+
+    text-align: right;
+  }
+}

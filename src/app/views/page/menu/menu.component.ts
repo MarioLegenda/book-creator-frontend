@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/page/httpActions";
 import {Router} from "@angular/router";
-import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
+import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {PositionMap} from "../../../logic/PageComponent/PositionMap";
 
 @Component({
@@ -13,7 +13,7 @@ import {PositionMap} from "../../../logic/PageComponent/PositionMap";
 export class MenuComponent {
   constructor(
     private store: Store<{menu: string}>,
-    private pageContext: PageContextInitializer,
+    private pageContext: AppContextInitializer,
     private router: Router,
   ) {}
 

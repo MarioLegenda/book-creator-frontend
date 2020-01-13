@@ -1,38 +1,28 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
+import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {ViewActionSubscriber} from "../../../store/subscriber/page/ViewActionSubscriber";
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {HttpActionSubscriber} from "../../../store/subscriber/page/HttpActionSubscriber";
-import {PageContext} from "../../../logic/PageComponent/context/PageContext";
 
 @Component({
   selector: 'cms-component',
   styleUrls: ['./bootstrap.component.scss'],
   templateUrl: './bootstrap.component.html',
-  providers: [
-    {
-      provide: PageContext,
-      useFactory: (pageContextInitializer: PageContextInitializer) => {
-        return pageContextInitializer.getContext();
-      },
-      deps: [PageContextInitializer]
-    }
-  ]
 })
 export class BootstrapComponent implements OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
-    private pageContext: PageContextInitializer,
+    private appContextInitializer: AppContextInitializer,
     private componentTracker: ComponentTracker,
     private viewActionSubscriber: ViewActionSubscriber,
     private httpActionsSubscriber: HttpActionSubscriber,
   ) {
-    pageContext.initContext(activatedRoute);
+    appContextInitializer.initContext(activatedRoute);
   }
 
   ngOnDestroy() {
-    this.pageContext.destroy();
+    this.appContextInitializer.destroy();
     this.componentTracker.destroy();
   }
 }

@@ -22,4 +22,8 @@ export class BlogRepository {
   getBlog(uuid: string) {
     return this.httpClient.get(this.routeResolver.getBlog(uuid));
   }
+
+  updateBlog(model: any) {
+    return this.httpClient.post(this.routeResolver.updateBlog(), model);
+  }
 }

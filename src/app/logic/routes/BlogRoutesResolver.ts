@@ -11,6 +11,7 @@ export class BlogRoutesResolver {
     createBlankBlog: `${this.bookApiUri}/api/v1/knowledge-source/create/blank-blog`,
     getUuid: `${this.bookApiUri}/api/v1/knowledge-source/get/blog/uuid`,
     getBlog: `${this.bookApiUri}/api/v1/knowledge-source/get/blog/by-uuid`,
+    updateBlog: `${this.bookApiUri}/api/v1/knowledge-source/update/blog`,
   };
 
   createBlankBlog(): string {
@@ -23,5 +24,9 @@ export class BlogRoutesResolver {
 
   getBlog(uuid: string): string {
     return `${this.routes.getBlog}/${uuid}`;
+  }
+
+  updateBlog() {
+    return `${this.routes.updateBlog}`;
   }
 }

@@ -1,0 +1,16 @@
+@import '../../../../../styles/variables';
+
+.title-wrapper {
+  float: none;
+
+  .title-input {
+    float: none;
+    display: block;
+    padding: 10px;
+    border: none;
+
+    font-size: 1.2em;
+
+    color: $appBlack;
+  }
+}

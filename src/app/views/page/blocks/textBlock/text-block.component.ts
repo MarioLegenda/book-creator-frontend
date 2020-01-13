@@ -3,10 +3,9 @@ import {Store} from "@ngrx/store";
 import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {MatDialog} from "@angular/material/dialog";
-import { debounceTime } from 'rxjs/operators';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 import {TextBlockModel} from "../../../../model/app/TextBlockModel";
-import {HttpModel} from "../../../../model/http/HttpModel";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 
 @Component({
@@ -29,7 +28,6 @@ export class TextBlockComponent implements OnDestroy {
 
   editorConfig = {
     toolbar: [
-      'heading',
       '|',
       'bold',
       'italic',

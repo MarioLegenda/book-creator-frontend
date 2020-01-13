@@ -78,4 +78,18 @@ export class HttpModel {
       }
     }
   }
+
+  static updateBlog(
+    uuid: string,
+    title: string,
+    description: string,
+  ) {
+    return {
+      data: {
+        uuid,
+        title,
+        description,
+      },
+    };
+  }
 }

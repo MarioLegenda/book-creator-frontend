@@ -8,10 +8,15 @@ import {TextBlockModel} from "../../../model/app/TextBlockModel";
 import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
 import {Subject} from "rxjs";
+import {AppContext} from "../../../logic/PageComponent/context/AppContext";
+import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 
 @Component({
   selector: 'cms-work-area',
-  styleUrls: ['./work-area.component.scss'],
+  styleUrls: [
+    './work-area.component.scss',
+    './blog-specific.component.scss',
+  ],
   templateUrl: './work-area.component.html',
 })
 export class WorkAreaComponent implements OnInit, OnDestroy {
@@ -19,15 +24,15 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
   droppedSubject = new Subject();
 
-  icons = {
-    'list': 'fas fa-list',
-  };
+  sourceContext: AppContext;
+
   // @ts-ignore
   @ViewChild('workAreaRef') workAreaRef: ElementRef;
 
   constructor(
     private store: Store<any>,
     private componentTracker: ComponentTracker,
+    private appContextInitializer: AppContextInitializer
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +69,10 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
       this.components.splice(idx, 1);
     });
+
+    this.appContextInitializer.whenInit((sourceContext: AppContext) => {
+      this.sourceContext = sourceContext;
+    })
   }
 
   ngOnDestroy() {

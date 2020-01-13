@@ -37,4 +37,8 @@ export class ProjectRepository {
   getProjectByUuid(uuid: string) {
     return this.httpClient.get(this.projectRouteResolver.getSingleProject(uuid));
   }
+
+  getProjects(size: number = 10, page: number = 1) {
+    return this.httpClient.get(this.projectRouteResolver.getProjects(size, page));
+  }
 }

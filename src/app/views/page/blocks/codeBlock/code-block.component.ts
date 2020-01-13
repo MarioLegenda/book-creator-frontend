@@ -9,7 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {SelectEnvironmentDialog} from "../../modals/selectEnvironment/select-environment.component";
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
-import {PageContextInitializer} from "../../../../logic/PageComponent/context/PageContextInitializer";
+import {AppContextInitializer} from "../../../../logic/PageComponent/context/AppContextInitializer";
 import {LinkCodeProjectDialogComponent} from "../../modals/linkCodeProject/link-code-project.component";
 
 @Component({
@@ -24,7 +24,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     private store: Store<any>,
     private dialog: MatDialog,
     private emlRepository: EnvironmentEmulatorRepository,
-    private pageContext: PageContextInitializer,
+    private pageContext: AppContextInitializer,
   ) {}
 
   icons = {

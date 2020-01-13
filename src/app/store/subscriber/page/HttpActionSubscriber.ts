@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {actionTypes, httpCreateTextBlockFinished} from "../../page/httpActions";
-import {PageContextInitializer} from "../../../logic/PageComponent/context/PageContextInitializer";
+import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {PageRepository} from "../../../repository/PageRepository";
 import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../page/viewActions";
 import {HttpModel} from "../../../model/http/HttpModel";
@@ -14,7 +14,7 @@ import deepcopy from 'deepcopy';
 export class HttpActionSubscriber {
   constructor(
     private store: Store<any>,
-    private pageContextInitializer: PageContextInitializer,
+    private pageContextInitializer: AppContextInitializer,
     private pageRepository: PageRepository,
   ) {
     this.subscribeToHttpActions(store.pipe(select('pageHttpActions')));

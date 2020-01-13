@@ -1,0 +1,18 @@
+@import '../../../../styles/variables';
+
+.source-block {
+  float: none;
+
+  margin-bottom: 40px;
+
+  .source-block-title {
+    float: none;
+    color: $lightGray;
+
+    font-size: 1em;
+
+    border-bottom: 1px solid $lightGray;
+
+    padding: 0 0 5px 0;
+  }
+}

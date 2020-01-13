@@ -1,0 +1,17 @@
+<div class="col-xs-12 col-md-12 col-lg-12 title-wrapper">
+  <form #form="ngForm">
+    <input
+      class="title-input col-xs-12 col-md-12 col-lg-12"
+      type="text"
+      name="title"
+      [(ngModel)]="model.title"
+      maxlength="150"
+      (keydown)="onTyping()"
+      placeholder="the title of your blog" />
+  </form>
+
+  <cms-text-counter
+    [text]="model.title"
+    [max]="100">
+  </cms-text-counter>
+</div>

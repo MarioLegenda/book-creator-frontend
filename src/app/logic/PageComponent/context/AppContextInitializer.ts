@@ -1,19 +1,19 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {PageContext} from "./PageContext";
+import {AppContext} from "./AppContext";
 import {PageRepository} from "../../../repository/PageRepository";
 import {BlogRepository} from "../../../repository/BlogRepository";
 import {actionTypes, viewAddAllBlocks} from "../../../store/page/viewActions";
 import {IPage} from "./IPage";
-import {IKnowledgeSource} from "./IKnowledgeSource";
+import {IBlogSource} from "./IBlogSource";
 import {ReplaySubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
-export class PageContextInitializer {
-  private context: PageContext;
+export class AppContextInitializer {
+  private context: AppContext;
 
   private whenSubject: Subject<any> = new ReplaySubject();
   private whenSubscriber;
@@ -34,20 +34,17 @@ export class PageContextInitializer {
 
     this.createContext(type, sourceShortId, pageShortId).then((data: any) => {
       this.contextInitiated = true;
-
-      this.whenSubscriber = this.whenSubject.subscribe(() => {
-        for (const fn of this.whenFns) {
-          fn.call(null);
-        }
-
-        this.whenFns = [];
-      });
+      this.context = data.context;
 
       this.dispatchAllBlocks(data);
+
+      this.whenSubscriber = this.whenSubject.subscribe((fn: Function) => {
+        fn.call(null, this.context);
+      });
     });
   }
 
-  getContext(): PageContext {
+  getContext(): AppContext {
     return this.context;
   }
 
@@ -56,6 +53,12 @@ export class PageContextInitializer {
   }
 
   whenInit(fn: Function) {
+    if (this.isInitialized()) {
+      fn.call(null, this.context);
+
+      return;
+    }
+
     this.whenSubject.next(fn);
   }
 
@@ -67,8 +70,6 @@ export class PageContextInitializer {
   private dispatchAllBlocks(
     data: any
   ) {
-    this.context = data.context;
-
     const blocks = data.blocks;
 
     this.store.dispatch(viewAddAllBlocks({
@@ -80,14 +81,14 @@ export class PageContextInitializer {
   private async createContext(type: string, sourceShortId: string, pageShortId: string) {
     const pageData = await this.getPageByShortId(pageShortId);
 
-    const knowledgeSource: IKnowledgeSource = await this.getKnowledgeSourceByShortId(type, sourceShortId);
+    const knowledgeSource: IBlogSource = await this.getKnowledgeSourceByShortId(type, sourceShortId);
 
     const page: IPage = {
       uuid: pageData.uuid,
       shortId: pageData.shortId,
     };
 
-    const context: PageContext = new PageContext(
+    const context: AppContext = new AppContext(
       knowledgeSource,
       page,
     );
@@ -111,7 +112,8 @@ export class PageContextInitializer {
 
       return {
         uuid: blog.data.uuid,
-        name: blog.data.name,
+        title: blog.data.title,
+        description: blog.data.description,
         shortId: blog.data.shortId,
         type: type,
       };
