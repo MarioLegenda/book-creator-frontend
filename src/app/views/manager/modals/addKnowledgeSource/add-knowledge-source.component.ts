@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {BlogRepository} from '../../../../repository/BlogRepository';
 import {PageRepository} from '../../../../repository/PageRepository';
+import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-add-knowledge-source-modal',
@@ -28,6 +29,11 @@ export class AddKnowledgeSourceDialogComponent {
       const createBlogData = async () => {
         const emptyPage: any = await this.pageRepository.createEmptyPage().toPromise();
         const blankBlog: any = await this.blogRepository.createBlankBlog().toPromise();
+
+        await this.blogRepository.linkPageToBlog(HttpModel.createLinkPageToBlog(
+          emptyPage.data.uuid,
+          blankBlog.data.uuid,
+        )).toPromise();
 
         const emptyPageShortId = emptyPage.data.shortId;
         const blankBlogShortId = blankBlog.data.shortId;

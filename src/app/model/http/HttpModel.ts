@@ -110,4 +110,16 @@ export class HttpModel {
       }
     }
   }
+
+  static createLinkPageToBlog(
+    pageUuid: string,
+    sourceId: string,
+  ) {
+    return {
+      data: {
+        pageUuid,
+        sourceId,
+      }
+    }
+  }
 }

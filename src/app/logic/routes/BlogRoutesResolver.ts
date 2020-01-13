@@ -12,6 +12,7 @@ export class BlogRoutesResolver {
     getUuid: `${this.bookApiUri}/api/v1/knowledge-source/get/blog/uuid`,
     getBlog: `${this.bookApiUri}/api/v1/knowledge-source/get/blog/by-uuid`,
     updateBlog: `${this.bookApiUri}/api/v1/knowledge-source/update/blog`,
+    linkPageToBlog: `${this.bookApiUri}/api/v1/knowledge-source/link-page-to-blog`,
   };
 
   createBlankBlog(): string {
@@ -26,7 +27,11 @@ export class BlogRoutesResolver {
     return `${this.routes.getBlog}/${uuid}`;
   }
 
-  updateBlog() {
+  updateBlog(): string {
     return `${this.routes.updateBlog}`;
+  }
+
+  linkPageToBlog(): string {
+    return `${this.routes.linkPageToBlog}`;
   }
 }

@@ -26,4 +26,8 @@ export class BlogRepository {
   updateBlog(model: any) {
     return this.httpClient.post(this.routeResolver.updateBlog(), model);
   }
+
+  linkPageToBlog(model: any) {
+    return this.httpClient.post(this.routeResolver.linkPageToBlog(), model);
+  }
 }
