@@ -1,4 +1,3 @@
-import {IViewModel} from "./IViewModel";
 import {ComponentType} from "../../logic/PageComponent/ComponentType";
 
 export class CodeBlockModel {

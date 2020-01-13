@@ -32,6 +32,8 @@ import {BlogTitleComponent} from "../blog/title/blog-title.component";
 import {BlogIntroComponent} from "../blog/intro/blog-intro.component";
 import {TextCounterComponent} from "../../misc/textCounter/text-counter.component";
 import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/import-code-project.component";
+import {NewCodeProjectDialogComponent} from "../modals/newCodeProject/new-code-project.component";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/impo
     BlogIntroComponent,
     TextCounterComponent,
     ImportCodeProjectDialogComponent,
+    NewCodeProjectDialogComponent,
   ],
   imports: [
     MatCardModule,
@@ -65,6 +68,9 @@ import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/impo
     MatTooltipModule,
     MatCheckboxModule,
     NgxGistModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
 
     CommonModule,
     ReactiveFormsModule,
@@ -78,6 +84,7 @@ import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/impo
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
     ImportCodeProjectDialogComponent,
+    NewCodeProjectDialogComponent,
   ]
 })
 export class PageModule { }

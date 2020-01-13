@@ -26,14 +26,14 @@ export class AddKnowledgeSourceDialogComponent {
 
     onSelect(type: string) {
       const createBlogData = async () => {
-        const blankBlog: any = await this.blogRepository.createBlankBlog().toPromise();
         const emptyPage: any = await this.pageRepository.createEmptyPage().toPromise();
+        const blankBlog: any = await this.blogRepository.createBlankBlog().toPromise();
 
         const emptyPageShortId = emptyPage.data.shortId;
         const blankBlogShortId = blankBlog.data.shortId;
 
         return {emptyPageShortId, blankBlogShortId};
-      }
+      };
 
       createBlogData().then(({emptyPageShortId, blankBlogShortId}) => {
         this.router.navigate(['/page', type, blankBlogShortId, emptyPageShortId]);

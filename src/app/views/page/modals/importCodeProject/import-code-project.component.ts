@@ -21,4 +21,8 @@ export class ImportCodeProjectDialogComponent {
   close(): void {
     this.dialogRef.close();
   }
+
+  onCreateNew() {
+    this.dialogRef.close('newCodeProject');
+  }
 }

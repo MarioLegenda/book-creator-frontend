@@ -92,4 +92,22 @@ export class HttpModel {
       },
     };
   }
+
+  static createCodeProject(
+    sourceId: string,
+    name: string,
+    description: string,
+    uuid: string = null,
+    shortId: string = null,
+  ) {
+    return {
+      data: {
+        uuid,
+        shortId,
+        sourceId,
+        name,
+        description,
+      }
+    }
+  }
 }

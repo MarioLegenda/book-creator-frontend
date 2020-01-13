@@ -11,6 +11,9 @@ import {SelectEnvironmentDialog} from "../../modals/selectEnvironment/select-env
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 import {AppContextInitializer} from "../../../../logic/PageComponent/context/AppContextInitializer";
 import {ImportCodeProjectDialogComponent} from "../../modals/importCodeProject/import-code-project.component";
+import {NewCodeProjectDialogComponent} from "../../modals/newCodeProject/new-code-project.component";
+import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
+import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-code-block',
@@ -25,6 +28,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private emlRepository: EnvironmentEmulatorRepository,
     private pageContext: AppContextInitializer,
+    private codeProjectsRepository: CodeProjectsRepository,
   ) {}
 
   icons = {
@@ -61,6 +65,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   @Input('index') index: number;
   @Input('component') component: CodeBlockModel;
   @Input('componentDropped') componentDropped: Subject<any>;
+  @Input('source') source;
 
   componentHovered() {
     this.componentState.hovered = true;
@@ -209,7 +214,25 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((action) => {
       if (action === 'newCodeProject') {
-        
+        setTimeout(() => {
+          const dialogRef = this.dialog.open(NewCodeProjectDialogComponent, {
+            width: '480px',
+            data: {
+              name: '',
+              description: '',
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((data) => {
+            this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
+              this.source.uuid,
+              data.name,
+              data.description,
+            )).subscribe(() => {
+
+            })
+          });
+        }, 500);
       }
     });
   }
