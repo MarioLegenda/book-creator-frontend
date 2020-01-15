@@ -30,4 +30,8 @@ export class BlogRepository {
   linkPageToBlog(model: any) {
     return this.httpClient.post(this.routeResolver.linkPageToBlog(), model);
   }
+
+  linkCodeProject(model: any) {
+    return this.httpClient.post(this.routeResolver.linkCodeProject(), model);
+  }
 }

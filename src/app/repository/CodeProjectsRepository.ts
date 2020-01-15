@@ -14,7 +14,12 @@ export class CodeProjectsRepository {
   ) {}
 
   createCodeProject(model) {
-    return this.httpClient.put(this.routeResolver.createCodeProject(), model);
+    return this.httpClient.put(this.routeResolver.createCodeProject(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
   }
 
   getBySource(sourceId: string, size: number = 10, page: number = 1) {
@@ -25,21 +30,7 @@ export class CodeProjectsRepository {
     return this.httpClient.get(this.routeResolver.getProjects(size, page))
       .pipe(
         reduce((acc, res: any) => {
-          const data = (res as any).data;
-
-          const result: CodeProjectHttpModel[] = [];
-
-          for (const entry of data) {
-            result.push(new CodeProjectHttpModel(
-              entry.uuid,
-              entry.shortId,
-              entry.sourceId,
-              entry.name,
-              entry.description,
-            ));
-          }
-
-          return result;
+          return (res as any).data;
         }, {})
       );
   }

@@ -59,7 +59,7 @@
         </cms-view-text-block>
 
         <cms-code-block
-          *ngIf="item.blockType == 'code_block'"
+          *ngIf="item.blockType === 'code_block'"
           [component]="item"
           [source]="sourceContext.knowledgeSource"
           [componentDropped]="droppedSubject">

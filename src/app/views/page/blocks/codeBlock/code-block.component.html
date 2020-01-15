@@ -63,18 +63,6 @@
       </div>
 
       <div
-        *ngIf="componentState.isGist"
-        (click)="onClearGist()"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
-        class="block-action col-lg-1 col-md-1 col-xs-1">
-
-        <i
-          class="icon fas fa-times"
-          matTooltip="Clear gist (back to code)">
-        </i>
-      </div>
-
-      <div
         *ngIf="componentState.isCode"
         (click)="onImportCodeProject()"
         [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
@@ -85,6 +73,32 @@
           matTooltip="Import code project">
         </i>
       </div>
+    </div>
+  </div>
+
+  <div class="right-blog-metadata">
+    <div
+      *ngIf="componentState.codeProjectImported"
+      (click)="onRemoveCodeProject()"
+      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      class="right-block-action">
+
+      <i
+        class="icon fas fa-times"
+        matTooltip="Remove code project">
+      </i>
+    </div>
+
+    <div
+      *ngIf="componentState.isGist"
+      (click)="onClearGist()"
+      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      class="right-block-action">
+
+      <i
+        class="icon fas fa-times"
+        matTooltip="Clear gist (back to code)">
+      </i>
     </div>
   </div>
 

@@ -14,6 +14,7 @@ import {ImportCodeProjectDialogComponent} from "../../modals/importCodeProject/i
 import {NewCodeProjectDialogComponent} from "../../modals/newCodeProject/new-code-project.component";
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {BlogRepository} from "../../../../repository/BlogRepository";
 
 @Component({
   selector: 'cms-code-block',
@@ -29,6 +30,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     private emlRepository: EnvironmentEmulatorRepository,
     private pageContext: AppContextInitializer,
     private codeProjectsRepository: CodeProjectsRepository,
+    private blogRepository: BlogRepository,
   ) {}
 
   icons = {
@@ -48,6 +50,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     emulator: null,
     hasTestRunWindow: false,
     testRunResult: null,
+    codeProjectImported: false,
     isCode: true,
     isCodeRunning: false,
     editorOptions: {
@@ -209,32 +212,35 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   onImportCodeProject() {
     const dialogRef = this.dialog.open(ImportCodeProjectDialogComponent, {
       width: '480px',
+      height: '480px',
       data: {},
     });
 
     dialogRef.afterClosed().subscribe((action) => {
+      if (!action) return;
+
       if (action === 'newCodeProject') {
-        setTimeout(() => {
-          const dialogRef = this.dialog.open(NewCodeProjectDialogComponent, {
-            width: '480px',
-            data: {
-              name: '',
-              description: '',
-            },
-          });
-
-          dialogRef.afterClosed().subscribe((data) => {
-            this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
-              this.source.uuid,
-              data.name,
-              data.description,
-            )).subscribe(() => {
-
-            })
-          });
-        }, 500);
+        return this.newCodeProjectFlow();
       }
+
+      const codeProjectUuid: string = action.uuid;
+      const blockUuid: string = this.component.blockUuid;
+      const pageUuid: string = this.pageContext.getContext().page.uuid;
+      const sourceId: string = this.source.uuid;
+
+      this.blogRepository.linkCodeProject(HttpModel.createLinkCodeProject(
+        codeProjectUuid,
+        pageUuid,
+        sourceId,
+        blockUuid,
+      )).subscribe(() => {
+        this.componentState.codeProjectImported = true;
+      });
     });
+  }
+
+  onRemoveCodeProject() {
+
   }
 
   onTestRunWindowClose() {
@@ -293,5 +299,40 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
       this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
     });
+  }
+
+  private newCodeProjectFlow() {
+    setTimeout(() => {
+      const dialogRef = this.dialog.open(NewCodeProjectDialogComponent, {
+        width: '480px',
+        data: {
+          name: '',
+          description: '',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((data) => {
+        if (!data) return;
+        this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
+          this.source.uuid,
+          data.name,
+          data.description,
+        )).subscribe((codeProject: any) => {
+          const codeProjectUuid: string = codeProject.uuid;
+          const blockUuid: string = this.component.blockUuid;
+          const pageUuid: string = this.pageContext.getContext().page.uuid;
+          const sourceId: string = this.source.uuid;
+
+          this.blogRepository.linkCodeProject(HttpModel.createLinkCodeProject(
+            codeProjectUuid,
+            pageUuid,
+            sourceId,
+            blockUuid,
+          )).subscribe(() => {
+            this.componentState.codeProjectImported = true;
+          });
+        })
+      });
+    }, 500);
   }
 }

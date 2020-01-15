@@ -122,4 +122,20 @@ export class HttpModel {
       }
     }
   }
+
+  static createLinkCodeProject(
+    codeProjectUuid: string,
+    pageUuid: string,
+    sourceId: string,
+    blockUuid: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        pageUuid,
+        sourceId,
+        blockUuid,
+      }
+    }
+  }
 }

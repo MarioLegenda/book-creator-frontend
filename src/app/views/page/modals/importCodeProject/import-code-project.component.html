@@ -16,7 +16,9 @@
     <p>Keep in mind that a single knowledge source, in this case a blog, can have up to 3 imported code projects</p>
   </div>
 
-  <div class="col-xs-12 col-md-12 col-lg-12 code-projects-missing">
+  <div
+    *ngIf="projects.length === 0"
+    class="col-xs-12 col-md-12 col-lg-12 code-projects-missing">
     <p>You haven't created any code projects</p>
 
     <div class="add-new-wrapper col-xs-12 col-md-12 col-lg-12">
@@ -24,6 +26,30 @@
         class="btn btn-success"
         (click)="onCreateNew()">
         Create code project</button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="projects.length > 0"
+    class="source-listing col-xs-12 col-md-12 col-lg-12">
+    <div class="add-new-wrapper col-xs-12 col-md-12 col-lg-12">
+      <button
+        class="btn btn-success"
+        (click)="onCreateNew()">
+        Create new code project</button>
+    </div>
+
+    <div
+      *ngFor="let item of projects"
+      class="item col-xs-12 col-md-12 col-lg-12"
+      (click)="onSelect(item)">
+      <div class="icon">
+        <i class="far fa-circle"></i>
+      </div>
+
+      <p class="title">
+        {{item.name}}
+      </p>
     </div>
   </div>
 </div>
