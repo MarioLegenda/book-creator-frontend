@@ -138,4 +138,20 @@ export class HttpModel {
       }
     }
   }
+
+  static unLinkCodeProject(
+    codeProjectUuid: string,
+    pageUuid: string,
+    sourceId: string,
+    blockUuid: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        pageUuid,
+        sourceId,
+        blockUuid,
+      }
+    }
+  }
 }

@@ -115,6 +115,7 @@ export class AppContextInitializer {
         title: blog.data.title,
         description: blog.data.description,
         shortId: blog.data.shortId,
+        codeProject: blog.codeProjects,
         type: type,
       };
     }

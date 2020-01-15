@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {BlogRoutesResolver} from '../logic/routes/BlogRoutesResolver';
+import {reduce} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +34,14 @@ export class BlogRepository {
 
   linkCodeProject(model: any) {
     return this.httpClient.post(this.routeResolver.linkCodeProject(), model);
+  }
+
+  unLinkCodeProject(model: any) {
+    return this.httpClient.post(this.routeResolver.unLinkCodeProject(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
   }
 }

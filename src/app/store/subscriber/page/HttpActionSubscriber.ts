@@ -39,8 +39,8 @@ export class HttpActionSubscriber {
           break;
         }
 
-        case actionTypes.HTTP_REMOVE_TEXT_BLOCK: {
-          this.removeTextBlock(action);
+        case actionTypes.HTTP_REMOVE_BLOCK: {
+          this.removeBlock(action);
 
           break;
         }
@@ -95,7 +95,7 @@ export class HttpActionSubscriber {
     });
   }
 
-  private removeTextBlock(action) {
+  private removeBlock(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
 

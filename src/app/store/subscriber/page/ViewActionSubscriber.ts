@@ -30,7 +30,7 @@ export class ViewActionSubscriber {
         }
 
         case actionTypes.VIEW_TEXT_BLOCK_REMOVED: {
-          this.removeTextBlock(action);
+          this.removeBlock(action);
 
           break;
         }
@@ -77,7 +77,7 @@ export class ViewActionSubscriber {
     this.componentTracker.add(component);
   }
 
-  private removeTextBlock(action) {
+  private removeBlock(action) {
     this.componentTracker.remove(action.position);
   }
 }

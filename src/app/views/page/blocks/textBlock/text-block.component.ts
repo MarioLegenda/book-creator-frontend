@@ -1,6 +1,6 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpRemoveTextBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
+import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {MatDialog} from "@angular/material/dialog";
 import {debounceTime} from 'rxjs/operators';
@@ -91,7 +91,7 @@ export class TextBlockComponent implements OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
-      if (confirm === true) this.store.dispatch(httpRemoveTextBlock(this.component));
+      if (confirm === true) this.store.dispatch(httpRemoveBlock(this.component));
     });
 
   }

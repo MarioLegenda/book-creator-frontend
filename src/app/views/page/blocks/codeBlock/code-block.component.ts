@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpRemoveTextBlock, httpUpdateCodeBlock} from "../../../../store/page/httpActions";
+import {httpRemoveBlock, httpUpdateCodeBlock} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
@@ -51,6 +51,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     hasTestRunWindow: false,
     testRunResult: null,
     codeProjectImported: false,
+    codeProjectUuid: null,
     isCode: true,
     isCodeRunning: false,
     editorOptions: {
@@ -70,6 +71,33 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   @Input('componentDropped') componentDropped: Subject<any>;
   @Input('source') source;
 
+  ngOnInit() {
+    this.componentState.code = this.component.text;
+    this.componentState.readonly = this.component.readOnly;
+    this.componentState.isGist = this.component.isGist;
+    this.componentState.isCode = this.component.isCode;
+    this.componentState.gistData = this.component.gistData;
+    this.componentState.emulator = this.component.emulator;
+
+    if (this.component.codeProjectUuid) {
+      this.componentState.codeProjectImported = true;
+      this.componentState.codeProjectUuid = this.component.codeProjectUuid;
+    }
+
+    this.subscribeTypeahead();
+    this.subscribeDroppedForGist();
+  }
+
+  ngOnDestroy(): void {
+    if (this.typeAheadObservable) {
+      this.typeAheadObservable.unsubscribe();
+    }
+
+    if (this.onDroppedObservable) {
+      this.onDroppedObservable.unsubscribe();
+    }
+  }
+
   componentHovered() {
     this.componentState.hovered = true;
   }
@@ -85,30 +113,16 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
-      if (confirm === true) this.store.dispatch(httpRemoveTextBlock(this.component));
+      if (confirm === true) {
+        if (this.componentState.codeProjectImported) {
+          this.removeCodeProject().subscribe(() => {
+            this.store.dispatch(httpRemoveBlock(this.component));
+          });
+        } else {
+          this.store.dispatch(httpRemoveBlock(this.component));
+        }
+      }
     });
-  }
-
-  ngOnInit() {
-    this.componentState.code = this.component.text;
-    this.componentState.readonly = this.component.readOnly;
-    this.componentState.isGist = this.component.isGist;
-    this.componentState.isCode = this.component.isCode;
-    this.componentState.gistData = this.component.gistData;
-    this.componentState.emulator = this.component.emulator;
-
-    this.subscribeTypeahead();
-    this.subscribeDroppedForGist();
-  }
-
-  ngOnDestroy(): void {
-    if (this.typeAheadObservable) {
-      this.typeAheadObservable.unsubscribe();
-    }
-
-    if (this.onDroppedObservable) {
-      this.onDroppedObservable.unsubscribe();
-    }
   }
 
   onCodeChange() {
@@ -235,12 +249,16 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         blockUuid,
       )).subscribe(() => {
         this.componentState.codeProjectImported = true;
+        this.componentState.codeProjectUuid = action.uuid;
       });
     });
   }
 
   onRemoveCodeProject() {
-
+    this.removeCodeProject().subscribe(() => {
+      this.componentState.codeProjectImported = false;
+      this.componentState.codeProjectUuid = null;
+    });
   }
 
   onTestRunWindowClose() {
@@ -334,5 +352,20 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         })
       });
     }, 500);
+  }
+
+  private removeCodeProject() {
+    const blockUuid: string = this.component.blockUuid;
+    const pageUuid: string = this.pageContext.getContext().page.uuid;
+    const sourceId: string = this.source.uuid;
+
+    const model: any = HttpModel.unLinkCodeProject(
+      this.componentState.codeProjectUuid,
+      pageUuid,
+      sourceId,
+      blockUuid
+    );
+
+    return this.blogRepository.unLinkCodeProject(model);
   }
 }

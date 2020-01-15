@@ -14,6 +14,7 @@ export class BlogRoutesResolver {
     updateBlog: `${this.bookApiUri}/api/v1/knowledge-source/update/blog`,
     linkPageToBlog: `${this.bookApiUri}/api/v1/knowledge-source/link-page-to-blog`,
     linkCodeProject: `${this.bookApiUri}/api/v1/knowledge-source/link-code-project`,
+    unLinkCodeProject: `${this.bookApiUri}/api/v1/knowledge-source/unlink-code-project`,
   };
 
   createBlankBlog(): string {
@@ -38,5 +39,9 @@ export class BlogRoutesResolver {
 
   linkCodeProject(): string {
     return `${this.routes.linkCodeProject}`;
+  }
+
+  unLinkCodeProject(): string {
+    return `${this.routes.unLinkCodeProject}`;
   }
 }
