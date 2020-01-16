@@ -47,6 +47,24 @@
         </mat-form-field>
       </div>
 
+      <div class="form-group col-xs-12 col-md-12 col-lg-12">
+        <mat-form-field style="width: 100%">
+          <mat-label>Choose your environment</mat-label>
+          <mat-select
+            name="environment"
+            [(ngModel)]="model.environment"
+            [(value)]="model.environment"
+            required>
+            <mat-option
+              *ngFor="let item of environments"
+              [value]="item.name"
+              [disabled]="item.inDevelopment || item.inMaintenance">
+              {{item.text}} {{(item.inDevelopment) ? "(in development)" : ""}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <div class="dialog-actions">
         <button
           [disabled]="!form.form.valid"

@@ -97,6 +97,7 @@ export class HttpModel {
     sourceId: string,
     name: string,
     description: string,
+    environment: string,
     uuid: string = null,
     shortId: string = null,
   ) {
@@ -106,6 +107,7 @@ export class HttpModel {
         shortId,
         sourceId,
         name,
+        environment,
         description,
       }
     }

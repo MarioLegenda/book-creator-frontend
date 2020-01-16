@@ -69,7 +69,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   @Input('index') index: number;
   @Input('component') component: CodeBlockModel;
   @Input('componentDropped') componentDropped: Subject<any>;
-  @Input('source') source;
+  @Input('source') source: any;
 
   ngOnInit() {
     this.componentState.code = this.component.text;
@@ -331,10 +331,12 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
       dialogRef.afterClosed().subscribe((data) => {
         if (!data) return;
+
         this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
           this.source.uuid,
           data.name,
           data.description,
+          data.environment,
         )).subscribe((codeProject: any) => {
           const codeProjectUuid: string = codeProject.uuid;
           const blockUuid: string = this.component.blockUuid;
