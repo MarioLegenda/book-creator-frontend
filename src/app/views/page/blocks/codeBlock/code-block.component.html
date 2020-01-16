@@ -100,6 +100,19 @@
         matTooltip="Clear gist (back to code)">
       </i>
     </div>
+
+    <div
+      *ngIf="componentState.codeProjectImported"
+      (click)="onOpenDirectoryStructure()"
+      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      class="right-block-action">
+
+      <i
+        class="icon directory-structure-icon fas fa-folder-open"
+        matTooltip="Open directory structure">
+      </i>
+    </div>
+
   </div>
 
   <div

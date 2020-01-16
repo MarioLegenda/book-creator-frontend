@@ -10,6 +10,7 @@ export class CodeProjectAppModel {
     shortId: string,
     sourceId: string,
     name: string,
+    environment: string,
     description: string = ''
   ) {
     this.uuid = uuid;

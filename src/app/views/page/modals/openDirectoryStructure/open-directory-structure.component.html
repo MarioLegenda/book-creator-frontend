@@ -1,0 +1,11 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <cms-structure
+    *ngIf="project"
+    [project]="project">
+  </cms-structure>
+
+</div>

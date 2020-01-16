@@ -30,10 +30,14 @@ import {SelectEnvironmentDialog} from "../modals/selectEnvironment/select-enviro
 import {BlockErrorComponent} from "../blocks/blockError/block-error.component";
 import {BlogTitleComponent} from "../blog/title/blog-title.component";
 import {BlogIntroComponent} from "../blog/intro/blog-intro.component";
-import {TextCounterComponent} from "../../misc/textCounter/text-counter.component";
+import {TextCounterComponent} from "../../shared/textCounter/text-counter.component";
 import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/import-code-project.component";
 import {NewCodeProjectDialogComponent} from "../modals/newCodeProject/new-code-project.component";
 import {MatSelectModule} from "@angular/material/select";
+import {OpenDirectoryStructureDialogComponent} from "../modals/openDirectoryStructure/open-directory-structure.component";
+import {StructureComponent} from "../../codeEditor/fileExplorer/structure/structure.component";
+import {DirectoryComponent} from "../../codeEditor/fileExplorer/structure/directory/directory.component";
+import {FileComponent} from "../../codeEditor/fileExplorer/structure/file/file.component";
 
 @NgModule({
   declarations: [
@@ -55,6 +59,10 @@ import {MatSelectModule} from "@angular/material/select";
     TextCounterComponent,
     ImportCodeProjectDialogComponent,
     NewCodeProjectDialogComponent,
+    OpenDirectoryStructureDialogComponent,
+    StructureComponent,
+    DirectoryComponent,
+    FileComponent,
   ],
   imports: [
     MatCardModule,
@@ -85,6 +93,7 @@ import {MatSelectModule} from "@angular/material/select";
     SelectEnvironmentDialog,
     ImportCodeProjectDialogComponent,
     NewCodeProjectDialogComponent,
+    OpenDirectoryStructureDialogComponent,
   ]
 })
 export class PageModule { }

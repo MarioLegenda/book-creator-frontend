@@ -22,7 +22,12 @@ export class EnvironmentEmulatorRepository {
   public BuildAndRunProject(codeProjectUuid: string, content: string) {
     return this.httpClient.post(this.routeResolver.runProject(codeProjectUuid), {
       data: content,
-    });
+    })
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {})
+      );
   }
 
   public buildAndRunSingleFile(

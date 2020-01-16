@@ -11,7 +11,7 @@ import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppM
   templateUrl: './code-projects.component.html',
 })
 export class CodeProjectsComponent implements OnInit {
-  listing: CodeProjectAppModel[] = [];
+  listing = [];
 
   constructor(
     private codeProjectsRepository: CodeProjectsRepository
@@ -20,7 +20,7 @@ export class CodeProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.codeProjectsRepository.getProjects(10, 1).subscribe((codeProjects: CodeProjectHttpModel[]) => {
       for (const codeProject of codeProjects) {
-        this.listing.push(codeProject.convertToAppModel());
+        this.listing.push(codeProject);
       }
     });
   }

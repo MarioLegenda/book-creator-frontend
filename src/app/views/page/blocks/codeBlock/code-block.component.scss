@@ -14,8 +14,10 @@
 
     .right-block-action {
       width: 100%;
-      height: 10px;
+      height: 40px;
       float: left;
+
+      margin-bottom: 10px;
 
       color: $lightestGray;
     }
@@ -29,6 +31,10 @@
         cursor: pointer;
         color: $textColor;
       }
+    }
+
+    .directory-structure-icon {
+      font-size: 1.4em;
     }
   }
 

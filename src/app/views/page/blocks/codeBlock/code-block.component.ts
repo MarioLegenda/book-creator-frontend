@@ -15,6 +15,7 @@ import {NewCodeProjectDialogComponent} from "../../modals/newCodeProject/new-cod
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
+import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryStructure/open-directory-structure.component";
 
 @Component({
   selector: 'cms-code-block',
@@ -130,30 +131,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   onRunCode() {
-    this.componentState.blockErrors = null;
-
-    if (this.componentState.code === '') {
-      this.componentState.blockErrors = [];
-      this.componentState.blockErrors.push('There is no code to run');
-
-      return;
-    }
-
-    this.componentState.isCodeRunning = true;
-    this.componentState.hasTestRunWindow = false;
-
-    this.emlRepository.buildAndRunSingleFile(
-      this.pageContext.getContext().page.shortId,
-      this.component.shortId,
-      this.componentState.code,
-      this.componentState.emulator.name,
-    ).subscribe((res) => {
-      this.componentState.isCodeRunning = false;
-
-      this.componentState.testRunResult = res;
-
-      this.componentState.hasTestRunWindow = true;
-    })
+    this.runCodeProjectFlow();
   }
 
   onReadonlyChange() {
@@ -266,6 +244,17 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.componentState.testRunResult = null;
   }
 
+  onOpenDirectoryStructure() {
+    const dialogRef = this.dialog.open(OpenDirectoryStructureDialogComponent, {
+      width: '480px',
+      height: '500px',
+      data: {codeProjectUuid: this.componentState.codeProjectUuid},
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+
   private createUpdateModel() {
     return {
       blockUuid: this.component.blockUuid,
@@ -369,5 +358,45 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     );
 
     return this.blogRepository.unLinkCodeProject(model);
+  }
+
+  private runCodeProjectFlow() {
+    this.componentState.blockErrors = null;
+
+    if (this.componentState.code === '') {
+      this.componentState.blockErrors = [];
+      this.componentState.blockErrors.push('There is no code to run');
+
+      return;
+    }
+
+    this.componentState.isCodeRunning = true;
+    this.componentState.hasTestRunWindow = false;
+
+    if (this.componentState.codeProjectImported) {
+      this.emlRepository.BuildAndRunProject(
+        this.componentState.codeProjectUuid,
+        this.componentState.code
+      ).subscribe((res) => {
+        this.componentState.isCodeRunning = false;
+
+        this.componentState.testRunResult = res;
+
+        this.componentState.hasTestRunWindow = true;
+      });
+    } else {
+      this.emlRepository.buildAndRunSingleFile(
+        this.pageContext.getContext().page.shortId,
+        this.component.shortId,
+        this.componentState.code,
+        this.componentState.emulator.name,
+      ).subscribe((res) => {
+        this.componentState.isCodeRunning = false;
+
+        this.componentState.testRunResult = res;
+
+        this.componentState.hasTestRunWindow = true;
+      });
+    }
   }
 }
