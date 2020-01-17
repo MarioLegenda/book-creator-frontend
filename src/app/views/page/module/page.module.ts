@@ -35,9 +35,7 @@ import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/impo
 import {NewCodeProjectDialogComponent} from "../modals/newCodeProject/new-code-project.component";
 import {MatSelectModule} from "@angular/material/select";
 import {OpenDirectoryStructureDialogComponent} from "../modals/openDirectoryStructure/open-directory-structure.component";
-import {StructureComponent} from "../../codeEditor/fileExplorer/structure/structure.component";
-import {DirectoryComponent} from "../../codeEditor/fileExplorer/structure/directory/directory.component";
-import {FileComponent} from "../../codeEditor/fileExplorer/structure/file/file.component";
+import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
 
 @NgModule({
   declarations: [
@@ -60,9 +58,6 @@ import {FileComponent} from "../../codeEditor/fileExplorer/structure/file/file.c
     ImportCodeProjectDialogComponent,
     NewCodeProjectDialogComponent,
     OpenDirectoryStructureDialogComponent,
-    StructureComponent,
-    DirectoryComponent,
-    FileComponent,
   ],
   imports: [
     MatCardModule,
@@ -79,6 +74,8 @@ import {FileComponent} from "../../codeEditor/fileExplorer/structure/file/file.c
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
+
+    FileExplorerModule,
 
     CommonModule,
     ReactiveFormsModule,

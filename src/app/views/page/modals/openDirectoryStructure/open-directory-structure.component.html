@@ -3,9 +3,16 @@
     <i (click)="close()" class="fas fa-times"></i>
   </div>
 
-  <cms-structure
+  <cms-file-explorer
     *ngIf="project"
+    [showEditorActions]="false"
+    [enableAddDirectory]="false"
+    [enableAddFile]="false"
+    [enableRemoveDirectory]="false"
+    [enableRemoveFile]="false"
+    [enableEditDirectory]="false"
+    [enableEditFile]="false"
     [project]="project">
-  </cms-structure>
+  </cms-file-explorer>
 
 </div>

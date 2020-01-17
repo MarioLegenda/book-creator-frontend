@@ -1,0 +1,43 @@
+<div class="col-xs-12 col-md-12 col-lg-12 file-explorer" #wrapperRef>
+  <div
+    *ngIf="showEditorActions"
+    class="editor-actions-wrapper"
+    #actionWrapperRef>
+    <div class="editor-actions">
+      <div
+        (click)="selectAction('project')"
+        class="action"
+        [ngClass]="{'selected-action': componentState.selectedAction === 'project'}">
+
+        <i class="select-project fas fa-clone"></i>
+      </div>
+
+      <div
+        class="action"
+        [ngClass]="{'selected-action': componentState.selectedAction === 'search'}"
+        (click)="selectAction('search')">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="editor-dir-structure">
+    <div class="title">
+      <h1>FILE EXPLORER</h1>
+    </div>
+
+    <div class="project-name">
+      <h1>{{project.name}}</h1>
+    </div>
+
+    <cms-structure
+      [enableAddDirectory]="enableAddDirectory"
+      [enableAddFile]="enableAddFile"
+      [enableEditDirectory]="enableEditDirectory"
+      [enableEditFile]="enableEditFile"
+      [enableRemoveDirectory]="enableRemoveDirectory"
+      [enableRemoveFile]="enableRemoveFile"
+      [project]="project">
+    </cms-structure>
+  </div>
+</div>

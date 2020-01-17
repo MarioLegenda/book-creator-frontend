@@ -6,7 +6,7 @@ import {TabSession} from "../../../store/sessions/TabSession";
 import {actionTypes as httpActionTypes} from "../../../store/editor/httpActions";
 import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions";
 import {FileRepository} from "../../../repository/FileRepository";
-import {ReplaySubject} from "rxjs";
+import {Subject} from "rxjs";
 import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppModel";
 
 @Component({
@@ -16,12 +16,12 @@ import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppM
   ],
   templateUrl: './workspace.component.html',
 })
-export class WorkspaceComponent implements OnDestroy {
+export class WorkspaceComponent {
   tabs = [];
   hasTabs = false;
 
   selectedTab: FileTab = null;
-  contentLoadedEvent = new ReplaySubject();
+  contentLoadedEvent = new Subject();
 
   @Input('project') project: CodeProjectAppModel;
 
@@ -82,10 +82,6 @@ export class WorkspaceComponent implements OnDestroy {
     this.fileRepository.getFileContent(this.project.uuid, tab.id).subscribe((body: any) => {
       this.contentLoadedEvent.next(body.data.content);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.contentLoadedEvent.unsubscribe();
   }
 
   private updateHasTabs(): void {

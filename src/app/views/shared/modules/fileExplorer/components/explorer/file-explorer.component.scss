@@ -1,0 +1,87 @@
+@import '../../../../../../../styles/variables';
+
+.file-explorer {
+  background-color: white;
+
+  border-right: 1px solid $lightestGray;
+
+  .editor-dir-structure {
+    width: 269px;
+    float: left;
+
+    .title {
+      padding: 15px;
+
+      border-bottom: 1px solid white;
+
+      font-size: 14px;
+    }
+
+    .title h1 {
+      color: $textColor;
+      font-size: 14px;
+
+      margin: 0;
+    }
+
+    .project-name {
+      width: 100%;
+      float: left;
+      background-color: white;
+
+      padding: 15px;
+
+      border-top: 1px solid $lightestGray;
+      border-bottom: 1px solid $lightestGray;
+
+      h1 {
+        margin: 0;
+        padding: 0;
+
+        font-size: 14px;
+        color: $textColor;
+      }
+    }
+  }
+
+  .editor-actions-wrapper {
+    width: 50px;
+    background-color: white;
+    float: left;
+
+    border-right: 1px solid $lightestGray;
+  }
+
+  .editor-actions {
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+
+    .action {
+      font-size: 2em;
+      color: $appBlack;
+
+      width: 45px;
+      float: left;
+
+      &:hover {
+        color: $editorMainColor;
+        cursor: pointer;
+      }
+
+      i {
+        margin-left: 6px;
+      }
+
+      border-left: 4px solid $appBlack;
+    }
+
+    .selected-action {
+      border-left: 4px solid $editorMainColor;
+    }
+  }
+}
+
+.col-xs-12, .col-md-3, .col-lg-3 {
+  padding: 0; margin: 0;
+}

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {select, Store} from "@ngrx/store";
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject, of, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {FileRepository} from "../../../../repository/FileRepository";
 import {FileTab} from "../../../../model/app/codeEditor/FileTab";
@@ -23,6 +23,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
 
   private typeAheadSource = new BehaviorSubject([]);
   private typeAheadObservable = null;
+  private contentLoadedSubscription: Subscription;
 
   componentState = {
     editorOptions: {
@@ -69,7 +70,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
 
     this.wrapperRef.nativeElement.setAttribute('style', `height: ${h - 45}px`);
 
-    this.contentLoadedEvent.subscribe((content: string) => {
+    this.contentLoadedSubscription = this.contentLoadedEvent.subscribe((content: string) => {
       this.componentState.code = content;
     })
   }
@@ -80,6 +81,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.typeAheadObservable.unsubscribe();
+    this.contentLoadedSubscription.unsubscribe();
   }
 
 }

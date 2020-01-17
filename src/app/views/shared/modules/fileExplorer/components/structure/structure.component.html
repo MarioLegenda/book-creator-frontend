@@ -1,0 +1,27 @@
+<div class="col-xs-12 col-md-3 col-lg-3 structure" #structureWrapper>
+  <div *ngFor="let item of structure">
+    <cms-directory
+      (expandDirectoryEvent)="expandDirectoryEvent($event)"
+      (unExpandDirectoryEvent)="unExpandDirectoryEvent($event)"
+      (addDirectoryEvent)="addDirectoryEvent($event)"
+      (addFileEvent)="addFileEvent($event)"
+      (removeDirectoryEvent)="removeDirectoryEvent($event)"
+      *ngIf="isDirectory(item)"
+
+      [enableRemoveDirectory]="enableRemoveDirectory"
+      [enableEditDirectory]="enableEditDirectory"
+      [enableAddFile]="enableAddFile"
+      [enableAddDirectory]="enableAddDirectory"
+
+      [directory]="item">
+    </cms-directory>
+
+    <cms-file
+      [enableEditFile]="enableEditFile"
+      [enableRemoveFile]="enableRemoveFile"
+      *ngIf="isFile(item)"
+      [file]="item"
+      (fileRemovedEvent)="removeFileEvent($event)">
+    </cms-file>
+  </div>
+</div>
