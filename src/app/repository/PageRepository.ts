@@ -71,4 +71,13 @@ export class PageRepository {
   updateCodeBlock(model) {
     return this.httpClient.post(this.blockRouteResolver.updateCodeBlock(), model);
   }
+
+  addMultimediaBlock(model) {
+    return this.httpClient.put(this.blockRouteResolver.addNewMultimediaBlock(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
 }

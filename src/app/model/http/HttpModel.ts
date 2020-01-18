@@ -12,6 +12,18 @@ export class HttpModel {
     }
   }
 
+  static addMultimediaBlock(
+    pageUuid: string,
+    position: number,
+  ) {
+    return {
+      data: {
+        pageUuid,
+        position,
+      }
+    }
+  }
+
   static updateTextBlock(
     pageUuid: string,
     blockUuid: string,

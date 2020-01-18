@@ -64,6 +64,10 @@
           [source]="sourceContext.knowledgeSource"
           [componentDropped]="droppedSubject">
         </cms-code-block>
+
+        <cms-multimedia-block
+          *ngIf="item.blockType === 'multimedia_block'">
+        </cms-multimedia-block>
       </div>
     </div>
 

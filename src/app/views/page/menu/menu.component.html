@@ -1,7 +1,9 @@
 <div class="menu-wrapper">
   <cms-menu-button [isSingleIcon]="true" (click)="expandMenu()" [icon]="icons.menu"></cms-menu-button>
 
-  <div class="concrete-menu transition-animation" [ngClass]="{'move-right': menuExpanded == true, 'move-left': menuExpanded == false}">
+  <div
+    class="concrete-menu transition-animation"
+    [ngClass]="{'move-right': menuExpanded == true, 'move-left': menuExpanded == false}">
       <div class="expanded-menu">
 
         <cms-menu-button
@@ -11,6 +13,7 @@
         </cms-menu-button>
 
         <cms-menu-button
+          (mouseup)="appendMultimediaBlock()"
           [icon]="icons.multimedia"
           [title]="'Add multimedia'">
         </cms-menu-button>

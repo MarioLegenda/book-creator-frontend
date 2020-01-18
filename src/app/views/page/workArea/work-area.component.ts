@@ -1,7 +1,12 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {httpCreateCodeBlock, httpCreateTextBlock, httpUpdateTextBlock} from 'src/app/store/page/httpActions';
+import {
+  httpCreateCodeBlock,
+  httpCreateMultimediaBlock,
+  httpCreateTextBlock,
+  httpUpdateTextBlock
+} from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
 import {addPosition} from "../../../logic/utilFns";
 import {TextBlockModel} from "../../../model/app/TextBlockModel";
@@ -10,6 +15,7 @@ import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
 import {Subject} from "rxjs";
 import {AppContext} from "../../../logic/PageComponent/context/AppContext";
 import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
+import {MultimediaBlockModel} from "../../../model/app/MultimediaBlockModel";
 
 @Component({
   selector: 'cms-work-area',
@@ -62,6 +68,12 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.emulator,
           component.codeProjectUuid,
         ));
+      } else if (ComponentType.isMultimediaBlock(component)) {
+        this.components.push(new MultimediaBlockModel(
+          component.uuid,
+          component.shortId,
+          component.position,
+        ));
       }
     });
 
@@ -92,6 +104,9 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
         this.store.dispatch(httpCreateCodeBlock({position: this.componentTracker.getNextPosition()}));
 
         break;
+      }
+      case 'multimedia-block': {
+        this.store.dispatch(httpCreateMultimediaBlock({position: this.componentTracker.getNextPosition()}));
       }
     }
   }

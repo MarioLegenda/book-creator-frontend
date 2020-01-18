@@ -40,6 +40,10 @@ export class MenuComponent {
     this.blockAddedEvent.emit('code-block');
   }
 
+  appendMultimediaBlock() {
+    this.blockAddedEvent.emit('multimedia-block');
+  }
+
   expandMenu() {
     this.menuExpanded = !this.menuExpanded;
   }

@@ -10,6 +10,7 @@ export class BlockRouteResolver {
   private readonly routes = {
     addNewTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/add-new-block`,
     addNewCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/add-new-block`,
+    addNewMultimediaBlock: `${this.bookApiUri}/api/v1/pages/multimedia-block/add-new-block`,
     removeBlock: `${this.bookApiUri}/api/v1/pages/block/remove`,
     updateTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/update-block`,
     updateCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/update-block`,
@@ -33,5 +34,9 @@ export class BlockRouteResolver {
 
   updateCodeBlock(): string {
     return this.routes.updateCodeBlock;
+  }
+
+  addNewMultimediaBlock(): string {
+    return this.routes.addNewMultimediaBlock;
   }
 }

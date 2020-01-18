@@ -19,6 +19,14 @@ export class ComponentFactory {
 
         return d;
       }
+
+      case ComponentType.MULTIMEDIA_BLOCK_TYPE: {
+        const d = deepcopy(data);
+
+        delete d.type;
+
+        return d;
+      }
     }
   }
 }

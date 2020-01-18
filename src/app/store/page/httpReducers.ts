@@ -7,6 +7,7 @@ import {
   httpRemoveBlock,
   httpCreateCodeBlock,
   httpUpdateCodeBlock,
+  httpCreateMultimediaBlock,
 } from './httpActions';
 import deepcopy from 'deepcopy';
 
@@ -18,6 +19,7 @@ const httpActionsReducers = createReducer(null,
   on(httpUpdateTextBlockFinished, (state, action) => deepcopy(action)),
   on(httpCreateCodeBlock, (state, action) => deepcopy(action)),
   on(httpUpdateCodeBlock, (state, action) => deepcopy(action)),
+  on(httpCreateMultimediaBlock, (state, action) => deepcopy(action)),
 );
 
 export function httpActionReducer(state, action) {

@@ -46,6 +46,12 @@ export class ViewActionSubscriber {
 
           break;
         }
+
+        case actionTypes.VIEW_ADD_MULTIMEDIA_BLOCK: {
+          this.addMultimediaBlock(action);
+
+          break;
+        }
       }
     });
   }
@@ -79,5 +85,11 @@ export class ViewActionSubscriber {
 
   private removeBlock(action) {
     this.componentTracker.remove(action.position);
+  }
+
+  private addMultimediaBlock(action) {
+    const component = ComponentFactory.createComponent(action);
+
+    this.componentTracker.add(component);
   }
 }

@@ -36,6 +36,7 @@ import {NewCodeProjectDialogComponent} from "../modals/newCodeProject/new-code-p
 import {MatSelectModule} from "@angular/material/select";
 import {OpenDirectoryStructureDialogComponent} from "../modals/openDirectoryStructure/open-directory-structure.component";
 import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
+import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-block.component";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explore
     ImportCodeProjectDialogComponent,
     NewCodeProjectDialogComponent,
     OpenDirectoryStructureDialogComponent,
+    MultimediaBlockComponent,
   ],
   imports: [
     MatCardModule,

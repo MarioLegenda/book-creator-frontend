@@ -4,7 +4,12 @@ import {Observable} from "rxjs";
 import {actionTypes, httpCreateTextBlockFinished} from "../../page/httpActions";
 import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {PageRepository} from "../../../repository/PageRepository";
-import {viewAddTextBlock, viewCreateCodeBlock, viewTextBlockRemoved} from "../../page/viewActions";
+import {
+  viewAddMultimediaBlock,
+  viewAddTextBlock,
+  viewCreateCodeBlock,
+  viewTextBlockRemoved
+} from "../../page/viewActions";
 import {HttpModel} from "../../../model/http/HttpModel";
 import deepcopy from 'deepcopy';
 
@@ -33,6 +38,18 @@ export class HttpActionSubscriber {
           } else {
             this.pageContextInitializer.whenInit(((data) => {
               return () => this.addTextBlock(data);
+            })(deepcopy(action)))
+          }
+
+          break;
+        }
+
+        case actionTypes.HTTP_CREATE_MULTIMEDIA_BLOCK: {
+          if (this.pageContextInitializer.isInitialized()) {
+            this.addMultimediaBlock(action);
+          } else {
+            this.pageContextInitializer.whenInit(((data) => {
+              return () => this.addMultimediaBlock(data);
             })(deepcopy(action)))
           }
 
@@ -92,6 +109,17 @@ export class HttpActionSubscriber {
     this.pageRepository.addTextBlock(model).subscribe((model) => {
       this.store.dispatch(httpCreateTextBlockFinished());
       this.store.dispatch(viewAddTextBlock(model));
+    });
+  }
+
+  private addMultimediaBlock(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const position: number = action.position;
+
+    const model = HttpModel.addMultimediaBlock(pageUuid, position);
+
+    this.pageRepository.addMultimediaBlock(model).subscribe((data) => {
+      this.store.dispatch(viewAddMultimediaBlock(data));
     });
   }
 

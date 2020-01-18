@@ -1,6 +1,7 @@
 export class ComponentType {
   public static readonly TEXT_BLOCK_TYPE = 'text_block';
   public static readonly CODE_BLOCK_TYPE = 'code_block';
+  public static readonly MULTIMEDIA_BLOCK_TYPE = 'multimedia_block';
 
   static isTextBlock(component): boolean {
     return ComponentType.TEXT_BLOCK_TYPE === component.blockType;
@@ -8,5 +9,9 @@ export class ComponentType {
 
   static isCodeBlock(component): boolean {
     return ComponentType.CODE_BLOCK_TYPE === component.blockType;
+  }
+
+  static isMultimediaBlock(component): boolean {
+    return ComponentType.MULTIMEDIA_BLOCK_TYPE === component.blockType;
   }
 }
