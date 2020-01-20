@@ -168,4 +168,20 @@ export class HttpModel {
       }
     }
   }
+
+  static uploadFile(
+    pageUuid: string,
+    blockUuid: string,
+    imageData: any,
+    file: any,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        blockUuid: blockUuid,
+        imageData: imageData,
+        file: file,
+      }
+    }
+  }
 }

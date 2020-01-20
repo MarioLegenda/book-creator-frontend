@@ -8,6 +8,9 @@ export const environment = {
   bookApiUri: '11.11.11.12',
   bookApiPort:80,
 
+  rebelCdnApiUri: '11.11.11.12',
+  rebelCdnApiPort: 80,
+
   envEmulatorUri: '11.11.11.12',
   envEmulatorPort: 80,
 
@@ -17,7 +20,11 @@ export const environment = {
 
   composeEnvEmulatorUrl(): string {
     return `${environment.protocol}://${environment.envEmulatorUri}:${environment.envEmulatorPort}`;
-  }
+  },
+
+  composeRebelCdnUrl(): string {
+    return `${environment.protocol}://${environment.rebelCdnApiUri}:${environment.rebelCdnApiPort}`;
+  },
 };
 
 /*

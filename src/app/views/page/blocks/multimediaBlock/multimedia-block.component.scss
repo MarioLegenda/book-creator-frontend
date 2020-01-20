@@ -1,4 +1,86 @@
 @import '../../../../../styles/variables';
 
 .multimedia-block-wrapper {
+  position: relative;
+
+  padding: 20px;
+
+  .upload-btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .upload-file-input {
+    width: 30px;
+    height: 30px;
+    font-size: 100px;
+    position: absolute;
+    right: 0;
+    top: -7px;
+    opacity: 0;
+
+    border: 1px solid red;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .block-actions {
+    display: block;
+    float: left;
+
+    margin-top: 5px;
+  }
+
+  .readonly-action {
+    float: left;
+  }
+
+  .block-action {
+    color: $lightestGray;
+    font-size: 0.8em;
+
+    float: right;
+    position: relative;
+
+    .icon {
+      float: right;
+      font-size: 1.8em;
+
+      &:hover {
+        cursor: pointer;
+        color: $textColor;
+      }
+    }
+
+    .readonly-icon {
+      margin-left: 10px;
+      font-size: 1.8em;
+    }
+
+    .remove-icon {
+      &:hover {
+        color: $dangerRed;
+      }
+    }
+  }
+
+  .multimedia-block {
+    position: relative;
+
+    border-radius: 5px;
+    border: 1px dashed $lightestGray;
+
+    padding: 10px;
+    margin-top: 5px;
+
+    .no-multimedia {
+      color: $lightestGray;
+      font-size: 1.5em;
+      font-style: italic;
+      text-align: center;
+    }
+  }
 }

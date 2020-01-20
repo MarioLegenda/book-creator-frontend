@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {reduce} from "rxjs/operators";
 import {RouteResolver} from "../logic/routes/RouteResolver";
 import {BlockRouteResolver} from "../logic/routes/BlockRouteResolver";
+import {RebelCdnRepository} from "./RebelCdnRepository";
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class PageRepository {
   constructor(
     private routeResolver: RouteResolver,
     private blockRouteResolver: BlockRouteResolver,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private rebelCdnRepository: RebelCdnRepository,
   ) {}
 
   createEmptyPage() {

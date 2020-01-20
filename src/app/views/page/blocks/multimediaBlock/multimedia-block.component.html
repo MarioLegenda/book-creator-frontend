@@ -1,4 +1,37 @@
 <div
+  (mouseenter)="componentHovered()"
+  (mouseleave)="componentUnHovered()"
   class="multimedia-block-wrapper col-lg-12 col-md-12 col-xs-12">
-  Multimedia block
+
+  <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
+    <div class="block-actions col-lg-12 col-md-12 col-xs-12">
+      <div
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+          <div
+            class="fas fa-upload icon upload-button"></div>
+          <input
+            type="file"
+            class="upload-file-input"
+            (change)="fileChange($event)"
+            [matTooltip]="'Upload a file'"/>
+      </div>
+
+      <div
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <i
+          class="icon fab fa-youtube"
+          matTooltip="Embed a Youtube video">
+        </i>
+      </div>
+    </div>
+  </div>
+
+  <div class="multimedia-block col-lg-12 col-md-12 col-xs-12 editor-wrapper">
+    <div class="no-multimedia">No images or youtube videos uploaded</div>
+  </div>
+
 </div>
