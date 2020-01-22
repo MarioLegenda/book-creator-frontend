@@ -23,6 +23,7 @@
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
+          (click)="addYoutubeLink()"
           class="icon fab fa-youtube"
           matTooltip="Embed a Youtube video">
         </i>
@@ -31,7 +32,25 @@
   </div>
 
   <div class="multimedia-block col-lg-12 col-md-12 col-xs-12 editor-wrapper">
-    <div class="no-multimedia">No images or youtube videos uploaded</div>
+    <div
+      *ngIf="!componentState.file && !componentState.video"
+      class="no-multimedia">
+      No images or youtube videos uploaded
+    </div>
+
+    <div
+      *ngIf="componentState.file"
+      class="image-wrapper">
+      <img
+        class="col-xs-12 col-md-12 col-lg-12"
+        [src]="componentState.file" />
+    </div>
+
+    <div
+      *ngIf="componentState.video"
+      class="image-wrapper">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/P7LXLI6TRLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
   </div>
 
 </div>

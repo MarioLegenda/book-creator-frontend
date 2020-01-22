@@ -37,6 +37,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {OpenDirectoryStructureDialogComponent} from "../modals/openDirectoryStructure/open-directory-structure.component";
 import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
 import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-block.component";
+import {AddYoutubeLinkDialogComponent} from "../modals/embedYoutubeLink/embed-youtube-link.component";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-blo
     NewCodeProjectDialogComponent,
     OpenDirectoryStructureDialogComponent,
     MultimediaBlockComponent,
+    AddYoutubeLinkDialogComponent,
   ],
   imports: [
     MatCardModule,
@@ -93,6 +95,7 @@ import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-blo
     ImportCodeProjectDialogComponent,
     NewCodeProjectDialogComponent,
     OpenDirectoryStructureDialogComponent,
+    AddYoutubeLinkDialogComponent,
   ]
 })
 export class PageModule { }

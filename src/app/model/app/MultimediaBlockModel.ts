@@ -5,6 +5,7 @@ export class MultimediaBlockModel {
     public blockUuid: string,
     public shortId: string,
     public position: string,
+    public fileInfo: any,
     public blockType: string = ComponentType.MULTIMEDIA_BLOCK_TYPE,
   ) {}
 }

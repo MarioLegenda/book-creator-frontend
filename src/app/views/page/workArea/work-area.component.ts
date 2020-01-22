@@ -73,6 +73,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.uuid,
           component.shortId,
           component.position,
+          component.fileInfo,
         ));
       }
     });

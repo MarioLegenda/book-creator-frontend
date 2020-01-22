@@ -14,6 +14,8 @@ export const environment = {
   envEmulatorUri: '11.11.11.12',
   envEmulatorPort: 80,
 
+  publicDir: 'images',
+
   composeBookApiBaseUrl(): string {
     return `${environment.protocol}://${environment.bookApiUri}:${environment.bookApiPort}`;
   },

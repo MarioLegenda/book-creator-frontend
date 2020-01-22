@@ -39,7 +39,7 @@ export class TextBlockComponent implements OnDestroy {
       'outdent',
       '|',
       'undo',
-      'redo'
+      'redo',
     ]
   };
 

@@ -4,11 +4,11 @@ import {Injectable} from "@angular/core";
 @Injectable({
   providedIn: 'root',
 })
-export class RebelCdnRouteResolver {
-  private cndUri = environment.composeRebelCdnUrl();
+export class FileUploadRouteResolver {
+  private cndUri = environment.composeBookApiBaseUrl();
 
   private readonly routes = {
-    uploadFile: `${this.cndUri}/api/cdn/v1/upload-file`,
+    uploadFile: `${this.cndUri}/api/v1/uploads/upload-file`,
   };
 
   uploadFile(): string {

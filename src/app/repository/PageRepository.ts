@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import {reduce} from "rxjs/operators";
 import {RouteResolver} from "../logic/routes/RouteResolver";
 import {BlockRouteResolver} from "../logic/routes/BlockRouteResolver";
-import {RebelCdnRepository} from "./RebelCdnRepository";
+import {FileUploadRepository} from "./FileUploadRepository";
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class PageRepository {
     private routeResolver: RouteResolver,
     private blockRouteResolver: BlockRouteResolver,
     private httpClient: HttpClient,
-    private rebelCdnRepository: RebelCdnRepository,
+    private rebelCdnRepository: FileUploadRepository,
   ) {}
 
   createEmptyPage() {
@@ -76,6 +76,15 @@ export class PageRepository {
 
   addMultimediaBlock(model) {
     return this.httpClient.put(this.blockRouteResolver.addNewMultimediaBlock(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
+
+  updateMultimediaBlock(model) {
+    return this.httpClient.post(this.blockRouteResolver.updateMultimediaBlock(), model)
       .pipe(
         reduce((acc, res: any) => {
           return res.data;

@@ -184,4 +184,20 @@ export class HttpModel {
       }
     }
   }
+
+  static updateMultimediaBlock(
+    pageUuid: string,
+    blockUuid: string,
+    fileInfo: object,
+    video: string,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        blockUuid: blockUuid,
+        fileInfo: fileInfo,
+        video: video,
+      }
+    }
+  }
 }

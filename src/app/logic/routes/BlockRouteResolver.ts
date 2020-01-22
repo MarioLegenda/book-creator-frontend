@@ -14,6 +14,7 @@ export class BlockRouteResolver {
     removeBlock: `${this.bookApiUri}/api/v1/pages/block/remove`,
     updateTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/update-block`,
     updateCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/update-block`,
+    updateMultimediaBlock: `${this.bookApiUri}/api/v1/pages/multimedia-block/update-block`,
   };
 
   addNewTextBlock(): string {
@@ -38,5 +39,9 @@ export class BlockRouteResolver {
 
   addNewMultimediaBlock(): string {
     return this.routes.addNewMultimediaBlock;
+  }
+
+  updateMultimediaBlock(): string {
+    return this.routes.updateMultimediaBlock;
   }
 }
