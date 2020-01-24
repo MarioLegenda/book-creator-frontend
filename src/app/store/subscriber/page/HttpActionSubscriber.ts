@@ -12,6 +12,7 @@ import {
 } from "../../page/viewActions";
 import {HttpModel} from "../../../model/http/HttpModel";
 import deepcopy from 'deepcopy';
+import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 
 @Injectable({
   providedIn: 'root',
@@ -129,9 +130,15 @@ export class HttpActionSubscriber {
 
     const model = HttpModel.removeBlock(pageUuid, blockUuid);
 
-    this.pageRepository.removeBlock(model).subscribe(() => {
-      this.store.dispatch(viewTextBlockRemoved(action));
-    })
+    if (action.blockType === ComponentType.MULTIMEDIA_BLOCK_TYPE) {
+      this.pageRepository.removeMultimediaBlock(model).subscribe(() => {
+        this.store.dispatch(viewTextBlockRemoved(action));
+      });
+    } else {
+      this.pageRepository.removeBlock(model).subscribe(() => {
+        this.store.dispatch(viewTextBlockRemoved(action));
+      });
+    }
   }
 
   private updateTextBlock(action) {

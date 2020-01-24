@@ -6,7 +6,9 @@ import {PageRepository} from "../../../../repository/PageRepository";
 import {environment} from "../../../../../environments/environment";
 import {AddYoutubeLinkDialogComponent} from "../../modals/embedYoutubeLink/embed-youtube-link.component";
 import {MatDialog} from "@angular/material/dialog";
-import {DomSanitizer} from "@angular/platform-browser";
+import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
+import {httpRemoveBlock} from "../../../../store/page/httpActions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -21,13 +23,14 @@ export class MultimediaBlockComponent implements OnInit {
 
   componentState = {
     hovered: false,
-    file: null,
+    fileInfo: null,
+    filePath: null,
     video: null,
   };
 
   ngOnInit() {
     if (this.component.fileInfo) {
-      this.componentState.file = `http://${environment.rebelCdnApiUri}/images/${this.component.fileInfo.fileName}`;
+      this.componentState.filePath = `http://${environment.rebelCdnApiUri}/images/${this.component.fileInfo.fileName}`;
     }
   }
 
@@ -35,8 +38,21 @@ export class MultimediaBlockComponent implements OnInit {
     private rebelCdnRepository: FileUploadRepository,
     private pageRepository: PageRepository,
     private dialog: MatDialog,
-    private domSanitizer: DomSanitizer,
+    private store: Store<any>,
   ) {}
+
+  remove() {
+    const dialogRef = this.dialog.open(RemoveConfirmDialogComponent, {
+      width: '480px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm === true) {
+        this.store.dispatch(httpRemoveBlock(this.component));
+      }
+    });
+  }
 
   componentHovered() {
     this.componentState.hovered = true;
@@ -66,10 +82,6 @@ export class MultimediaBlockComponent implements OnInit {
     });
   }
 
-  embeddedYoutubeLink() {
-    return this.domSanitizer.bypassSecurityTrustResourceUrl(this.componentState.video);
-  }
-
   fileChange($event) {
     const file = $event.target.files[0];
 
@@ -93,12 +105,14 @@ export class MultimediaBlockComponent implements OnInit {
           {
             fileName: res.fileName,
             dir: res.dir,
+            width: res.width,
+            height: res.height,
           },
           null,
         );
 
         this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
-          this.componentState.file = `http://11.11.11.12/images/${res.fileInfo.fileName}`;
+          this.componentState.filePath = `http://11.11.11.12/images/${res.fileInfo.fileName}`;
         });
       });
     };

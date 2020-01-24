@@ -34,10 +34,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     private blogRepository: BlogRepository,
   ) {}
 
-  icons = {
-    'remove': 'fas fa-trash-alt',
-  };
-
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
   private onDroppedObservable = null;

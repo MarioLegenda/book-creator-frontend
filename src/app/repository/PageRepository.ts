@@ -91,4 +91,13 @@ export class PageRepository {
         }, {}),
       );
   }
+
+  removeMultimediaBlock(model) {
+    return this.httpClient.post(this.blockRouteResolver.removeMultimediaBlock(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
 }

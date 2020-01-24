@@ -200,4 +200,16 @@ export class HttpModel {
       }
     }
   }
+
+  static removeMultimediaBlock(
+    pageUuid: string,
+    blockUuid: string,
+  ) {
+    return {
+      data: {
+        pageUuid,
+        blockUuid,
+      }
+    }
+  }
 }
