@@ -32,6 +32,17 @@
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
+          (click)="embedUnsplashLink()"
+          class="icon fas fa-strikethrough"
+          matTooltip="Embed an Unsplash image">
+        </i>
+      </div>
+
+      <div
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <i
           (click)="addYoutubeLink()"
           class="icon fab fa-youtube"
           matTooltip="Embed a Youtube video">
@@ -40,9 +51,24 @@
     </div>
   </div>
 
+  <div class="right-blog-metadata">
+    <div
+      *ngIf="componentState.contentUploaded"
+      (click)="onRemoveMultimedia()"
+      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      class="right-block-action">
+
+      <i
+        class="icon fas fa-times"
+        matTooltip="Remove multimedia">
+      </i>
+    </div>
+
+  </div>
+
   <div class="multimedia-block col-lg-12 col-md-12 col-xs-12 editor-wrapper">
     <div
-      *ngIf="!componentState.filePath && !componentState.video"
+      *ngIf="!componentState.filePath && !componentState.video && !componentState.unsplash"
       class="no-multimedia">
       No images or youtube videos uploaded
     </div>
@@ -52,7 +78,15 @@
       class="image-wrapper">
       <img
         class="col-xs-12 col-md-12 col-lg-12"
-        [src]="componentState.filePath" />
+        [src]="'https://unsplash.com/photos/G6CR8v_bts0'" />
+    </div>
+
+    <div
+      *ngIf="componentState.unsplash"
+      class="image-wrapper">
+      <img
+        class="col-xs-12 col-md-12 col-lg-12"
+        [src]="componentState.unsplash" />
     </div>
 
     <div

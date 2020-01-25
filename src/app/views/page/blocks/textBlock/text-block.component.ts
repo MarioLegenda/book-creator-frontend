@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as BaloonEditor from "@ckeditor/ckeditor5-build-balloon";
 import {MatDialog} from "@angular/material/dialog";
 import {debounceTime} from 'rxjs/operators';
 import {Subject} from 'rxjs';
@@ -20,7 +20,7 @@ export class TextBlockComponent implements OnDestroy {
     expanded: false,
   };
 
-  editor = ClassicEditor;
+  editor = BaloonEditor;
 
   icons = {
     'remove': 'fas fa-trash-alt',

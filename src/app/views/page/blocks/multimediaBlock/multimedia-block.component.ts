@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {httpRemoveBlock} from "../../../../store/page/httpActions";
 import {Store} from "@ngrx/store";
+import {EmbedUnsplashDialogComponent} from "../../modals/embedUnsplashImage/embed-unsplash-modal.component";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -26,13 +27,9 @@ export class MultimediaBlockComponent implements OnInit {
     fileInfo: null,
     filePath: null,
     video: null,
+    unsplash: null,
+    contentUploaded: false,
   };
-
-  ngOnInit() {
-    if (this.component.fileInfo) {
-      this.componentState.filePath = `http://${environment.rebelCdnApiUri}/images/${this.component.fileInfo.fileName}`;
-    }
-  }
 
   constructor(
     private rebelCdnRepository: FileUploadRepository,
@@ -40,6 +37,18 @@ export class MultimediaBlockComponent implements OnInit {
     private dialog: MatDialog,
     private store: Store<any>,
   ) {}
+
+  ngOnInit() {
+    if (this.component.fileInfo) {
+      this.componentState.filePath = `http://${environment.rebelCdnApiUri}/images/${this.component.fileInfo.fileName}`;
+
+      this.componentState.contentUploaded = true;
+    } else if (this.component.unsplash) {
+      this.componentState.unsplash = this.component.unsplash;
+
+      this.componentState.contentUploaded = true;
+    }
+  }
 
   remove() {
     const dialogRef = this.dialog.open(RemoveConfirmDialogComponent, {
@@ -51,6 +60,30 @@ export class MultimediaBlockComponent implements OnInit {
       if (confirm === true) {
         this.store.dispatch(httpRemoveBlock(this.component));
       }
+    });
+  }
+
+  embedUnsplashLink() {
+    const dialogRef = this.dialog.open(EmbedUnsplashDialogComponent, {
+      width: '480px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((id: string) => {
+      if (!id) return;
+
+      const model = HttpModel.updateMultimediaBlock(
+        this.page.uuid,
+        this.component.blockUuid,
+        null,
+        null,
+        `https://source.unsplash.com/${id}/1600x900`,
+      );
+
+      this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
+        this.componentState.unsplash = res.unsplash;
+        this.componentState.contentUploaded = true;
+      });
     });
   }
 
@@ -74,11 +107,32 @@ export class MultimediaBlockComponent implements OnInit {
         this.component.blockUuid,
         null,
         `https://youtube.com/embed/${youtubeId}`,
+        null,
       );
 
       this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
         this.componentState.video = res.video;
+        this.componentState.contentUploaded = true;
       });
+    });
+  }
+
+  onRemoveMultimedia() {
+    const model = HttpModel.updateMultimediaBlock(
+      this.page.uuid,
+      this.component.blockUuid,
+      null,
+      null,
+      null,
+    );
+
+    this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
+      this.componentState.contentUploaded = false;
+
+      this.componentState.unsplash = null;
+      this.componentState.filePath = null;
+      this.componentState.fileInfo = null;
+      this.componentState.video = null;
     });
   }
 
@@ -109,10 +163,12 @@ export class MultimediaBlockComponent implements OnInit {
             height: res.height,
           },
           null,
+          null,
         );
 
         this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
           this.componentState.filePath = `http://11.11.11.12/images/${res.fileInfo.fileName}`;
+          this.componentState.contentUploaded = true;
         });
       });
     };

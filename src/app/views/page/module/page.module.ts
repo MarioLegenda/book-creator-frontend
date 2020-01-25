@@ -38,6 +38,7 @@ import {OpenDirectoryStructureDialogComponent} from "../modals/openDirectoryStru
 import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
 import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-block.component";
 import {AddYoutubeLinkDialogComponent} from "../modals/embedYoutubeLink/embed-youtube-link.component";
+import {EmbedUnsplashDialogComponent} from "../modals/embedUnsplashImage/embed-unsplash-modal.component";
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {AddYoutubeLinkDialogComponent} from "../modals/embedYoutubeLink/embed-yo
     OpenDirectoryStructureDialogComponent,
     MultimediaBlockComponent,
     AddYoutubeLinkDialogComponent,
+    EmbedUnsplashDialogComponent,
   ],
   imports: [
     MatCardModule,
@@ -96,6 +98,7 @@ import {AddYoutubeLinkDialogComponent} from "../modals/embedYoutubeLink/embed-yo
     NewCodeProjectDialogComponent,
     OpenDirectoryStructureDialogComponent,
     AddYoutubeLinkDialogComponent,
+    EmbedUnsplashDialogComponent,
   ]
 })
 export class PageModule { }

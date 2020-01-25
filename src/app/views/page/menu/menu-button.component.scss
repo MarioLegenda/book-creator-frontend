@@ -20,7 +20,7 @@
 }
 
 .empty-button {
-  width: 61px;
+  width: 60px;
   font-size: 14px;
   border: none;
   border-radius: 2px;
@@ -39,8 +39,6 @@
 
   margin-top: 10px;
 
-  border-left: 2px solid white;
-
   .desc-icon {
     display: block;
 
@@ -52,7 +50,7 @@
   }
 
   .title {
-    width: 198px;
+    width: 150px;
     float: left;
 
     margin: 13px 13px 0 0;
@@ -65,7 +63,6 @@
 
   &:hover {
     cursor: pointer;
-    border-left: 2px solid $editorMainColor;
   }
 
   &:hover .desc-icon {
@@ -73,7 +70,7 @@
   }
 
   &:hover .button-icon {
-    color: $editorMainColor;
+    color: $mainAppColor;
   }
 }
 

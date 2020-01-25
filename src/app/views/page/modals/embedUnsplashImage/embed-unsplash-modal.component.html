@@ -1,0 +1,24 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <i class="fas fa-link icon"></i>
+    <p>Embed an Unsplash image</p>
+  </div>
+
+  <div class="dialog-content form-group">
+    <input cdkFocusInitial (keyup.enter)="addLink()" [(ngModel)]="model.name"  placeholder="Link" class="form-input form-control">
+  </div>
+
+  <div
+    *ngFor="let error of errors"
+    class="error col-xs-12 col-md-12 col-lg-12">
+    <p>{{error}}</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn create" cdkFocusInitial (click)="addLink()">Add</button>
+  </div>
+</div>

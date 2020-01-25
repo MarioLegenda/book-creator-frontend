@@ -3,13 +3,13 @@
 .title-wrapper {
   float: none;
 
-  border: 1px solid $lightestGray;
-
   .title-input {
     float: none;
     display: block;
     padding: 10px;
     border: none;
+
+    font-family: $mainFont;
 
     font-size: 1.2em;
 

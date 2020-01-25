@@ -6,8 +6,6 @@
     <div
       *ngIf="sourceContext && sourceContext.knowledgeSource.type === 'blog'"
       class="source-block col-xs-12 col-md-12 col-lg-12">
-      <h1 class="source-block-title">TITLE</h1>
-
       <cms-blog-title
         [source]="sourceContext.knowledgeSource"></cms-blog-title>
     </div>
@@ -15,16 +13,9 @@
     <div
       *ngIf="sourceContext && sourceContext.knowledgeSource.type === 'blog'"
       class="source-block col-xs-12 col-md-12 col-lg-12">
-      <h1 class="source-block-title">BlOG INTRO</h1>
-
       <cms-blog-intro
         [source]="sourceContext.knowledgeSource">
       </cms-blog-intro>
-    </div>
-
-    <div
-      class="source-block col-xs-12 col-md-12 col-lg-12">
-      <h1 class="source-block-title">CONTENT</h1>
     </div>
 
     <div

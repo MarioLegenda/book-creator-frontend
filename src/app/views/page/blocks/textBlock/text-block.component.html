@@ -51,6 +51,7 @@
     <ckeditor
       #editorComponent
       *ngIf="componentState.expanded"
+      class="concrete-editor"
       [editor]="editor"
       (change)="onChange()"
       [config]="editorConfig"

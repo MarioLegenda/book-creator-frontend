@@ -190,6 +190,7 @@ export class HttpModel {
     blockUuid: string,
     fileInfo: object,
     video: string,
+    unsplash: string,
   ) {
     return {
       data: {
@@ -197,6 +198,7 @@ export class HttpModel {
         blockUuid: blockUuid,
         fileInfo: fileInfo,
         video: video,
+        unsplash: unsplash,
       }
     }
   }

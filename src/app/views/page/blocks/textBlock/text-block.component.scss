@@ -5,6 +5,14 @@
 
   padding: 20px;
 
+  .concrete-editor {
+    font-family: $mainFont;
+    color: black;
+    font-size: 1.2em;
+
+    line-height: 1.1em;
+  }
+
   .editor-not-created-text {
     color: $lightestGray;
     font-size: 1.5em;

@@ -17,15 +17,20 @@
   }
 
   .transition-animation {
-    transition: left 0.5s;
+    transition: left 0.5s, box-shadow 0.5s, border-right 0.5s;
   }
 
   .move-left {
-    left: -240px;
+    left: -190px;
   }
 
   .move-right {
     left: 0;
+    -webkit-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
+    -moz-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
+    box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
+
+    border-right: 4px solid $mainAppColor;
   }
 
   .horizontal-bar {
@@ -33,7 +38,7 @@
   }
 
   .expanded-menu {
-    width: 300px;
+    width: 250px;
     overflow: hidden;
   }
 }
