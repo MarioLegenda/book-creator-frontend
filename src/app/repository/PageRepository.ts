@@ -13,7 +13,6 @@ export class PageRepository {
     private routeResolver: RouteResolver,
     private blockRouteResolver: BlockRouteResolver,
     private httpClient: HttpClient,
-    private rebelCdnRepository: FileUploadRepository,
   ) {}
 
   createEmptyPage() {
@@ -94,6 +93,15 @@ export class PageRepository {
 
   removeMultimediaBlock(model) {
     return this.httpClient.post(this.blockRouteResolver.removeMultimediaBlock(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
+
+  updatePosition(model) {
+    return this.httpClient.post(this.blockRouteResolver.updatePosition(), model)
       .pipe(
         reduce((acc, res: any) => {
           return res.data;

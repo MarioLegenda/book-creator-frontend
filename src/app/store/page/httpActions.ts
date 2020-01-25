@@ -10,10 +10,16 @@ export const actionTypes = {
   HTTP_UPDATE_CODE_BLOCK: '[Http] Update code block',
   HTTP_CREATE_CODE_BLOCK_FINISHED: '[Http] Create code block',
   HTTP_CREATE_MULTIMEDIA_BLOCK: '[Http] Create multimedia block',
+  HTTP_UPDATE_BLOCK_POSITION: '[Http] Update block position',
 };
 
 export const httpCreateMultimediaBlock = createAction(
   actionTypes.HTTP_CREATE_MULTIMEDIA_BLOCK,
+  props<{}>(),
+);
+
+export const httpUpdateBlockPosition = createAction(
+  actionTypes.HTTP_UPDATE_BLOCK_POSITION,
   props<{}>(),
 );
 

@@ -57,9 +57,9 @@
         </cms-code-block>
 
         <cms-multimedia-block
+          *ngIf="item.blockType === 'multimedia_block'"
           [component]="item"
-          [page]="sourceContext.page"
-          *ngIf="item.blockType === 'multimedia_block'">
+          [page]="sourceContext.page">
         </cms-multimedia-block>
       </div>
     </div>

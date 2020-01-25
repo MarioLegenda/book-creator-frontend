@@ -44,11 +44,11 @@ export class HttpModel {
     pageUuid: string,
     blockUuid: string,
     text: string,
-    position: number,
     isGist: boolean,
     isCode: boolean,
     gistData: any,
     emulator: any,
+    position: number,
     readonly: boolean = false,
   ) {
     return {
@@ -56,12 +56,12 @@ export class HttpModel {
         pageUuid,
         blockUuid,
         text,
-        position,
         readonly,
         isGist,
         isCode,
         gistData,
         emulator,
+        position,
       }
     }
   }
@@ -191,6 +191,7 @@ export class HttpModel {
     fileInfo: object,
     video: string,
     unsplash: string,
+    position: number,
   ) {
     return {
       data: {
@@ -199,6 +200,7 @@ export class HttpModel {
         fileInfo: fileInfo,
         video: video,
         unsplash: unsplash,
+        position: position,
       }
     }
   }
@@ -211,6 +213,20 @@ export class HttpModel {
       data: {
         pageUuid,
         blockUuid,
+      }
+    }
+  }
+
+  static updatePosition(
+    pageUuid: string,
+    blockUuid: string,
+    position: number,
+  ) {
+    return {
+      data: {
+        pageUuid,
+        blockUuid,
+        position,
       }
     }
   }

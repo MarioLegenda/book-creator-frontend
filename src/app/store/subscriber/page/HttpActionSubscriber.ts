@@ -69,6 +69,12 @@ export class HttpActionSubscriber {
           break;
         }
 
+        case actionTypes.HTTP_UPDATE_BLOCK_POSITION: {
+          this.updateBlockPosition(action);
+
+          break;
+        }
+
         case actionTypes.HTTP_UPDATE_CODE_BLOCK: {
           this.updateCodeBlock(action);
 
@@ -87,6 +93,18 @@ export class HttpActionSubscriber {
           break;
         }
       }
+    });
+  }
+
+  private updateBlockPosition(action) {
+    const pageUuid: string = action.pageUuid;
+    const blockUuid: string = action.blockUuid;
+    const position: number = action.position;
+
+    const model = HttpModel.updatePosition(pageUuid, blockUuid, position);
+
+    this.pageRepository.updatePosition(model).subscribe(() => {
+
     });
   }
 
@@ -144,8 +162,8 @@ export class HttpActionSubscriber {
   private updateTextBlock(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
-    const position: number = action.position;
     const text: string = action.text;
+    const position: number = action.position;
 
     const model = HttpModel.updateTextBlock(
       pageUuid,
@@ -172,11 +190,11 @@ export class HttpActionSubscriber {
       pageUuid,
       blockUuid,
       text,
-      position,
       isGist,
       isCode,
       gistData,
       emulator,
+      position,
       readonly,
     );
 

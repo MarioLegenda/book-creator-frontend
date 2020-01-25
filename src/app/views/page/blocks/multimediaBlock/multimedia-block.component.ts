@@ -78,11 +78,14 @@ export class MultimediaBlockComponent implements OnInit {
         null,
         null,
         `https://source.unsplash.com/${id}/1600x900`,
+        this.component.position,
       );
 
       this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
         this.componentState.unsplash = res.unsplash;
         this.componentState.contentUploaded = true;
+        this.componentState.filePath = null;
+        this.componentState.fileInfo = null;
       });
     });
   }
@@ -108,6 +111,7 @@ export class MultimediaBlockComponent implements OnInit {
         null,
         `https://youtube.com/embed/${youtubeId}`,
         null,
+        this.component.position,
       );
 
       this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
@@ -124,6 +128,7 @@ export class MultimediaBlockComponent implements OnInit {
       null,
       null,
       null,
+      this.component.position,
     );
 
     this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
@@ -164,11 +169,14 @@ export class MultimediaBlockComponent implements OnInit {
           },
           null,
           null,
+          this.component.position,
         );
 
         this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
           this.componentState.filePath = `http://11.11.11.12/images/${res.fileInfo.fileName}`;
           this.componentState.contentUploaded = true;
+          this.componentState.fileInfo = res.fileInfo;
+          this.componentState.unsplash = null;
         });
       });
     };

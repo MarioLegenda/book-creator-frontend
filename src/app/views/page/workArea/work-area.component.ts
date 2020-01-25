@@ -4,7 +4,7 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {
   httpCreateCodeBlock,
   httpCreateMultimediaBlock,
-  httpCreateTextBlock,
+  httpCreateTextBlock, httpUpdateBlockPosition,
   httpUpdateTextBlock
 } from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
@@ -51,15 +51,14 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
       if (ComponentType.isTextBlock(component)) {
         this.components.push(new TextBlockModel(
           component.uuid,
-          component.position,
           component.shortId,
           component.text,
+          component.position,
         ));
       } else if (ComponentType.isCodeBlock(component)) {
         this.components.push(new CodeBlockModel(
           component.uuid,
           component.shortId,
-          component.position,
           component.text,
           component.readonly,
           component.isGist,
@@ -67,14 +66,15 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.gistData,
           component.emulator,
           component.codeProjectUuid,
+          component.position,
         ));
       } else if (ComponentType.isMultimediaBlock(component)) {
         this.components.push(new MultimediaBlockModel(
           component.uuid,
           component.shortId,
-          component.position,
           component.fileInfo,
           component.unsplash,
+          component.position,
         ));
       }
     });
@@ -125,8 +125,17 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
     previous.position = current.position;
     current.position = temp;
 
-    this.store.dispatch(httpUpdateTextBlock(this.createTextModel(previous)));
-    this.store.dispatch(httpUpdateTextBlock(this.createTextModel(current)));
+    this.store.dispatch(httpUpdateBlockPosition({
+      pageUuid: this.sourceContext.page.uuid,
+      blockUuid: previous.blockUuid,
+      position: previous.position,
+    }));
+
+    this.store.dispatch(httpUpdateBlockPosition({
+      pageUuid: this.sourceContext.page.uuid,
+      blockUuid: current.blockUuid,
+      position: current.position,
+    }));
 
     moveItemInArray(this.components, event.previousIndex, event.currentIndex);
   }
