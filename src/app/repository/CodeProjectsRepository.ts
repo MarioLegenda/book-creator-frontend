@@ -45,4 +45,13 @@ export class CodeProjectsRepository {
         }, {})
       );
   }
+
+  removeCodeProject(model) {
+    return this.httpClient.post(this.projectRouteResolver.removeCodeProject(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
 }

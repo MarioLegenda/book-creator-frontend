@@ -26,7 +26,6 @@ export class CodeProjectsComponent implements OnInit {
     this.getInitialItems();
   }
 
-
   onItemDeleted(item) {
     const idx: number = this.items.findIndex((val) => {
       return val.uuid === item.uuid;

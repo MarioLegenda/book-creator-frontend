@@ -15,6 +15,7 @@ import {httpActionReducer as knowledgeSourceHttpActionReducer} from "../store/kn
 import {viewActionReducer as knowledgeSourceViewActionReducer} from "../store/knowledgeSource/viewReducers";
 import {TabSession} from "../store/sessions/TabSession";
 import {clearState} from "../store/globalReducers";
+import {NewCodeProjectDialogComponent} from "../views/shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,6 @@ import {clearState} from "../store/globalReducers";
   providers: [
     {provide: TabSession, useClass: TabSession},
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

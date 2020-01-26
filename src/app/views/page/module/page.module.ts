@@ -32,13 +32,14 @@ import {BlogTitleComponent} from "../blog/title/blog-title.component";
 import {BlogIntroComponent} from "../blog/intro/blog-intro.component";
 import {TextCounterComponent} from "../../shared/textCounter/text-counter.component";
 import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/import-code-project.component";
-import {NewCodeProjectDialogComponent} from "../modals/newCodeProject/new-code-project.component";
+import {NewCodeProjectDialogComponent} from "../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 import {MatSelectModule} from "@angular/material/select";
 import {OpenDirectoryStructureDialogComponent} from "../modals/openDirectoryStructure/open-directory-structure.component";
 import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
 import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-block.component";
 import {AddYoutubeLinkDialogComponent} from "../modals/embedYoutubeLink/embed-youtube-link.component";
 import {EmbedUnsplashDialogComponent} from "../modals/embedUnsplashImage/embed-unsplash-modal.component";
+import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,6 @@ import {EmbedUnsplashDialogComponent} from "../modals/embedUnsplashImage/embed-u
     BlogIntroComponent,
     TextCounterComponent,
     ImportCodeProjectDialogComponent,
-    NewCodeProjectDialogComponent,
     OpenDirectoryStructureDialogComponent,
     MultimediaBlockComponent,
     AddYoutubeLinkDialogComponent,
@@ -88,6 +88,7 @@ import {EmbedUnsplashDialogComponent} from "../modals/embedUnsplashImage/embed-u
     FormsModule,
 
     PageRoutingModule,
+    NewCodeProjectModule,
   ],
   providers: [],
   entryComponents: [
@@ -95,7 +96,6 @@ import {EmbedUnsplashDialogComponent} from "../modals/embedUnsplashImage/embed-u
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
     ImportCodeProjectDialogComponent,
-    NewCodeProjectDialogComponent,
     OpenDirectoryStructureDialogComponent,
     AddYoutubeLinkDialogComponent,
     EmbedUnsplashDialogComponent,

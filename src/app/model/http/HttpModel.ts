@@ -106,7 +106,6 @@ export class HttpModel {
   }
 
   static createCodeProject(
-    sourceId: string,
     name: string,
     description: string,
     environment: string,
@@ -117,7 +116,6 @@ export class HttpModel {
       data: {
         uuid,
         shortId,
-        sourceId,
         name,
         environment,
         description,
@@ -249,6 +247,16 @@ export class HttpModel {
       data: {
         pagination: pagination,
         searchTerm: searchTerm,
+      }
+    }
+  }
+
+  static removeCodeProject(
+    codeProjectUuid: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
       }
     }
   }

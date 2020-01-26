@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKnowledgeSourceDialogComponent } from '../modals/addKnowledgeSource/add-knowledge-source.component';
+import {NewCodeProjectDialogComponent} from "../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
+import {HttpModel} from "../../../model/http/HttpModel";
+import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
 
 @Component({
   selector: 'cms-overview-menu',
@@ -22,6 +25,7 @@ export class OverviewMenuComponent {
   constructor(
     private router: Router,
     private dialog: MatDialog,
+    private codeProjectsRepository: CodeProjectsRepository,
   ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -40,7 +44,28 @@ export class OverviewMenuComponent {
         data: {},
       });
     } else if (cp.test(this.router.url)) {
-      console.log('Code project new');
+      const dialogRef = this.dialog.open(NewCodeProjectDialogComponent, {
+        width: '480px',
+        data: {
+          name: '',
+          description: '',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((data) => {
+        if (!data) return;
+
+        this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
+          data.name,
+          data.description,
+          data.environment,
+        )).subscribe((codeProject: any) => {
+          this.router.navigate([
+            '/cms/code-editor',
+            codeProject.shortId,
+          ]);
+        })
+      });
     }
   }
 }

@@ -11,7 +11,7 @@ import {SelectEnvironmentDialog} from "../../modals/selectEnvironment/select-env
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 import {AppContextInitializer} from "../../../../logic/PageComponent/context/AppContextInitializer";
 import {ImportCodeProjectDialogComponent} from "../../modals/importCodeProject/import-code-project.component";
-import {NewCodeProjectDialogComponent} from "../../modals/newCodeProject/new-code-project.component";
+import {NewCodeProjectDialogComponent} from "../../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
@@ -311,6 +311,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         data: {
           name: '',
           description: '',
+          info: 'This code project will automatically be imported into this knowledge source',
         },
       });
 
@@ -318,7 +319,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         if (!data) return;
 
         this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
-          this.source.uuid,
           data.name,
           data.description,
           data.environment,

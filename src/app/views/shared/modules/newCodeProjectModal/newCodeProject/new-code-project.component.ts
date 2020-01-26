@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
+import {EnvironmentEmulatorRepository} from "../../../../../repository/EnvironmentEmulatorRepository";
 
 @Component({
   selector: 'cms-new-code-project-modal',
   templateUrl: './new-code-project.component.html',
   styleUrls: [
-    '../../../../main/global-dialog.component.scss',
+    '../../../../../main/global-dialog.component.scss',
     './new-code-project.component.scss',
   ]
 })

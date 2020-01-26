@@ -13,6 +13,7 @@ export class ProjectRouteResolver {
     getProjects: `${this.bookApiUri}/api/v1/code-projects`,
     getProjectUuidByShortId: `${this.bookApiUri}/api/v1/code-projects/get-project-uuid`,
     getSingleProject: `${this.bookApiUri}/api/v1/code-projects/get`,
+    removeCodeProject: `${this.bookApiUri}/api/v1/code-projects/remove`,
   };
 
   createCodeProject(): string {
@@ -33,5 +34,9 @@ export class ProjectRouteResolver {
 
   getSingleProject(uuid: string): string {
     return `${this.routes.getSingleProject}/${uuid}`;
+  }
+
+  removeCodeProject(): string {
+    return this.routes.removeCodeProject;
   }
 }

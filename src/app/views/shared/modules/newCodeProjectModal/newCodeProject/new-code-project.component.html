@@ -8,12 +8,14 @@
     <p>New code project</p>
   </div>
 
-  <div class="info">
+  <div
+    *ngIf="model.info"
+    class="info">
     <h1 class="title">
       <i class="fas fa-info icon"></i>
     </h1>
 
-    <p>This code project will automatically be imported into this knowledge source</p>
+    <p>{{model.info}}</p>
   </div>
 
   <div class="col-xs-12 col-md-12 col-lg-12 code-project-form">
