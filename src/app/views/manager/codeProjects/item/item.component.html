@@ -1,17 +1,36 @@
-<div class="col-xs-12 col-md-3 col-lg-3 item">
-  <p class="name">{{item.name}}</p>
+<div
+  class="col-xs-6 col-md-3 col-lg-3 item">
+
+  <i
+    (click)="onRemove($event)"
+    class="remove-icon fas fa-trash-alt"></i>
+
+  <p
+    *ngIf="!componentState.noTitle"
+    class="title">{{componentState.realTitle}}
+  </p>
+
+  <p
+    *ngIf="componentState.noTitle"
+    class="no-title">No title</p>
+
+  <div class="createdAt">
+    {{formattedDate()}}
+  </div>
 
   <div class="actions col-xs-12 col-md-12 col-lg-12">
     <button
-        class="item-button"
-        (click)="goToManager()">
-        Manage
+      class="item-button"
+      (click)="onManage($event)">
+      Publish
+      <i class="icon fas fa-wifi"></i>
     </button>
 
     <button
-        class="item-button"
-        (click)="goToEditor()">
-        Go to editor
+      class="item-button"
+      (click)="onGoToEditor($event)">
+      Publish
+      <i class="icon fas fa-wifi"></i>
     </button>
   </div>
 

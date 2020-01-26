@@ -38,11 +38,10 @@
         border-top: 2px solid $mainAppColor;
       }
     }
-  }
 
-  .selected {
-    background-color: $almostWhiteGray;
-    border-left: 2px solid $editorMainColor;
+    .selected {
+      border-top: 2px solid $mainAppColor;
+    }
   }
 
   .new-action {

@@ -35,14 +35,6 @@ export class ItemComponent {
 
   ngOnInit() {
     if (!this.item.title) this.componentState.noTitle = true;
-
-    if (this.item.title) {
-      if (this.item.title.length > 37) {
-        this.componentState.realTitle = `${this.item.title.substring(0, 37)}...`;
-      } else {
-        this.componentState.realTitle = this.item.title;
-      }
-    }
   }
 
   onRemove($event) {

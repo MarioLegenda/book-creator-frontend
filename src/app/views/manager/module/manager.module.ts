@@ -3,7 +3,7 @@ import { ManagerRoutingModule } from './manager-routing.module';
 import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { ProjectManagerComponent } from '../projectManager/project-manager.component';
 import { CodeProjectsComponent } from '../codeProjects/code-projects.component';
-import { ItemComponent } from '../codeProjects/item/item.component';
+import { ItemComponent as CPItem } from '../codeProjects/item/item.component';
 import { ItemComponent as KSItem } from '../knowledgeSources/item/item.component';
 import { AddKnowledgeSourceDialogComponent } from '../modals/addKnowledgeSource/add-knowledge-source.component';
 import { KnowledgeSourceListingComponent } from '../knowledgeSources/listing/knowledge-source-listing.component';
@@ -14,7 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { OverviewComponent } from '../overview/overview.component';
 import { OverviewMenuComponent } from '../menu/menu.component';
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
-import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
 import {SearchComponent} from "../../shared/search/search.component";
@@ -25,7 +25,7 @@ import {SearchComponent} from "../../shared/search/search.component";
     ProjectManagerComponent,
     OverviewMenuComponent,
     CodeProjectsComponent,
-    ItemComponent,
+    CPItem,
     AddKnowledgeSourceDialogComponent,
     KnowledgeSourceListingComponent,
     OverviewComponent,

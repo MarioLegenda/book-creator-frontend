@@ -25,7 +25,7 @@ export class OverviewMenuComponent {
   ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.type = event.url.split("/")[3];
+        this.type = event.url.split("/")[4];
       }
     });
   }

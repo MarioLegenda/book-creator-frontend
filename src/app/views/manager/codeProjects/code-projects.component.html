@@ -1,6 +1,35 @@
-<div class="col-xs-12 col-md-10 col-lg-10 code-projects">
-  <cms-code-project-item 
-    *ngFor="let item of listing" 
-    [item]="item">
-  </cms-code-project-item>
+<div class="col-xs-12 col-md-12 col-lg-12 code-projects">
+
+  <div
+    class="col-xs-12 col-md-12 col-lg-12 cp-search-wrapper">
+    <cms-search></cms-search>
+    <span class="hint col-xs-6 col-md-6 col-lg-6">* Type <i>@no-title</i> to search for sources with no title</span>
+  </div>
+
+  <div class="col-xs-12 col-md-12 col-lg-12 cp-list">
+    <cms-cp-item
+      *ngFor="let item of items"
+      (itemDeleted)="onItemDeleted(item)"
+      [item]="item">
+    </cms-cp-item>
+  </div>
+
+  <div
+    *ngIf="items.length === 0"
+    class="col-xs-12 col-md-12 col-lg-12 no-items">
+    No items
+  </div>
+
+  <div
+    *ngIf="items.length >= size"
+    class="col-xs-12 col-md-12 col-lg-12 more-button-wrapper">
+    <button
+      *ngIf="paginationPossible"
+      class="btn more-button">More</button>
+
+    <div
+      *ngIf="!paginationPossible"
+      class="no-more-items"
+    >No more items</div>
+  </div>
 </div>

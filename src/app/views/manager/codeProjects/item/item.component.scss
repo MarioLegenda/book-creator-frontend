@@ -1,9 +1,10 @@
 @import '../../../../../styles/variables';
 
 .item {
-  margin: 20px;
+  margin: 0 40px 40px 40px;
   color: $textColor;
   background-color: white;
+  position: relative;
 
   border-bottom: 1px solid $lightestGray;
 
@@ -13,19 +14,38 @@
   -moz-transition: box-shadow 0.5s;
 
   &:hover {
+    cursor: pointer;
     -webkit-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
     -moz-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
     box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
   }
 
-  .name {
-    font-size: 1.2em;
+  .remove-icon {
+    position: absolute;
+    color: $lightGray;
+    top: 7px; right: 7px;
+
+    &:hover {
+      color: $dangerRed;
+    }
+  }
+
+  .title {
     font-weight: bolder;
-    padding: 10px;
+  }
+
+  .no-title {
+    color: $lightGray;
+    font-style: italic;
   }
 
   .actions {
+    margin-top: 40px;
     padding: 10px 0 0 10px;
+
+    .icon {
+      color: $mainAppColor;
+    }
   }
 
   .item-button {
@@ -41,8 +61,18 @@
 
     border-top: 2px solid white;
 
+    margin-left: 5px;
+
     &:hover {
       border-top: 2px solid $mainAppColor;
     }
+  }
+
+  .createdAt {
+    position: absolute;
+    font-size: 0.75em;
+    color: $lightGray;
+
+    bottom: 5px; left: 0;
   }
 }
