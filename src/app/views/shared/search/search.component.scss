@@ -1,0 +1,16 @@
+@import '../../../../styles/variables';
+
+.search-wrapper {
+  float: none;
+
+  .input-wrapper {
+    float: none;
+    margin: 0 auto;
+
+    .input-component {
+      width: 100%;
+      padding: 10px;
+
+    }
+  }
+}

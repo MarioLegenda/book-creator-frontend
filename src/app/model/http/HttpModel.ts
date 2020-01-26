@@ -230,4 +230,26 @@ export class HttpModel {
       }
     }
   }
+
+  static removeBlog(
+    sourceId: string,
+  ) {
+    return {
+      data: {
+        sourceId,
+      }
+    }
+  }
+
+  static searchBlogs(
+    pagination: object,
+    searchTerm: string,
+  ) {
+    return {
+      data: {
+        pagination: pagination,
+        searchTerm: searchTerm,
+      }
+    }
+  }
 }

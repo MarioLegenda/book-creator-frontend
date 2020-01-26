@@ -1,0 +1,31 @@
+<div
+   [routerLink]="'/page/blog/' + item.shortId + '/' + item.pageShortId"
+  class="col-xs-6 col-md-3 col-lg-3 item">
+
+  <i
+    (click)="onRemove($event)"
+    class="remove-icon fas fa-trash-alt"></i>
+
+  <p
+    *ngIf="!componentState.noTitle"
+    class="title">{{componentState.realTitle}}
+  </p>
+
+  <p
+    *ngIf="componentState.noTitle"
+    class="no-title">No title</p>
+
+  <div class="createdAt">
+    {{formattedDate()}}
+  </div>
+
+  <div class="actions col-xs-12 col-md-12 col-lg-12">
+    <button
+      class="item-button"
+      (click)="onPublish($event)">
+      Publish
+      <i class="icon fas fa-wifi"></i>
+    </button>
+  </div>
+
+</div>

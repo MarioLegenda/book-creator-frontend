@@ -15,6 +15,9 @@ export class BlogRoutesResolver {
     linkPageToBlog: `${this.bookApiUri}/api/v1/knowledge-source/link-page-to-blog`,
     linkCodeProject: `${this.bookApiUri}/api/v1/knowledge-source/link-code-project`,
     unLinkCodeProject: `${this.bookApiUri}/api/v1/knowledge-source/unlink-code-project`,
+    getBlogs: `${this.bookApiUri}/api/v1/knowledge-source/get-blogs`,
+    removeBlog: `${this.bookApiUri}/api/v1/knowledge-source/blog/remove`,
+    searchBlog: `${this.bookApiUri}/api/v1/knowledge-source/search/blogs`,
   };
 
   createBlankBlog(): string {
@@ -43,5 +46,17 @@ export class BlogRoutesResolver {
 
   unLinkCodeProject(): string {
     return `${this.routes.unLinkCodeProject}`;
+  }
+
+  getBlogs(size: number, page: number): string {
+    return `${this.routes.getBlogs}?pagination.size=${size}&pagination.page=${page}`;
+  }
+
+  removeBlog(): string {
+    return this.routes.removeBlog;
+  }
+
+  searchBlog(): string {
+    return this.routes.searchBlog;
   }
 }

@@ -1,0 +1,13 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <p>Are you sure you wish to remove this blog? This action cannot be undone.</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn danger" cdkFocusInitial (click)="confirmDelete()">Remove</button>
+  </div>
+</div>

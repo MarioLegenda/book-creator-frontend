@@ -1,0 +1,38 @@
+<div
+  class="col-xs-12 col-md-12 col-lg-12 knowledge-sources-listing">
+
+  <div
+    class="col-xs-12 col-md-12 col-lg-12 ks-search-wrapper">
+    <cms-search
+      (onSearchTermEvent)="onSearchTerm($event)"></cms-search>
+    <span class="hint col-xs-6 col-md-6 col-lg-6">* Type <i>@no-title</i> to search for sources with no title</span>
+  </div>
+
+  <div class="col-xs-12 col-md-12 col-lg-12 ks-list">
+    <cms-ks-item
+      *ngFor="let item of items"
+      (itemDeleted)="onItemDeleted(item)"
+      [item]="item">
+    </cms-ks-item>
+  </div>
+
+  <div
+    *ngIf="items.length === 0"
+    class="col-xs-12 col-md-12 col-lg-12 no-items">
+    No items
+  </div>
+
+  <div
+    *ngIf="items.length >= size"
+    class="col-xs-12 col-md-12 col-lg-12 more-button-wrapper">
+    <button
+      *ngIf="paginationPossible"
+      (click)="onMoreItems()"
+      class="btn more-button">More</button>
+
+    <div
+      *ngIf="!paginationPossible"
+      class="no-more-items"
+      >No more items</div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div
+  class="search-wrapper col-lg-12 col-md-12 col-xs-12">
+  <div class="input-wrapper col-xs-6 col-md-6 col-lg-6">
+    <input
+      [(ngModel)]="componentState.searchTerm"
+      (keyup)="onChange()"
+      class="input-component"
+      type="text"
+      placeholder="Search" />
+  </div>
+</div>

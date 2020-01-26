@@ -31,9 +31,16 @@ export class OverviewMenuComponent {
   }
 
   addKsDialog(): void {
-    const dialogRef = this.dialog.open(AddKnowledgeSourceDialogComponent, {
-      width: '400px',
-      data: {},
-    });
+    let ksUrl = new RegExp("knowledge-source");
+    let cp = new RegExp("code-projects");
+
+    if (ksUrl.test(this.router.url)) {
+      this.dialog.open(AddKnowledgeSourceDialogComponent, {
+        width: '400px',
+        data: {},
+      });
+    } else if (cp.test(this.router.url)) {
+      console.log('Code project new');
+    }
   }
 }

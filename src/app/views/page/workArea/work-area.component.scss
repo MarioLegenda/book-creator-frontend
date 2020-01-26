@@ -4,7 +4,7 @@
   position: relative;
   float: left;
 
-  background-color: $almostWhiteGray;
+  background-color: white;
 
   .no-components {
     text-align: center;
@@ -25,6 +25,7 @@
     padding: 4%;
 
     background-color: white;
+    border-bottom: 1px solid $almostWhiteGray;
   }
 
   .component-wrapper {

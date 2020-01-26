@@ -65,6 +65,8 @@ export class AppContextInitializer {
   destroy() {
     this.whenSubscriber.unsubscribe();
     this.whenFns = [];
+    this.context = null;
+    this.contextInitiated = false;
   }
 
   private dispatchAllBlocks(

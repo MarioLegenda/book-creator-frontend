@@ -26,16 +26,16 @@ export class BlogTitleComponent {
     private blogRepository: BlogRepository,
   ) {}
 
-  onTyping() {
-    if (this.form.form.status === 'VALID') {
-      this.typeAheadSource.next(this.model.title);
-    }
-  }
-
   ngOnInit() {
     this.model.title = this.source.title;
 
     this.subscribeTypeahead();
+  }
+
+  onTyping() {
+    if (this.form.form.status === 'VALID') {
+      this.typeAheadSource.next(this.model.title);
+    }
   }
 
   ngOnDestroy() {

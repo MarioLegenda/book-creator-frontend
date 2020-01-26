@@ -17,8 +17,10 @@ export class BootstrapComponent implements OnDestroy {
     private componentTracker: ComponentTracker,
     private viewActionSubscriber: ViewActionSubscriber,
     private httpActionsSubscriber: HttpActionSubscriber,
-  ) {
-    appContextInitializer.initContext(activatedRoute);
+  ) {}
+
+  ngOnInit() {
+    this.appContextInitializer.initContext(this.activatedRoute);
   }
 
   ngOnDestroy() {

@@ -5,31 +5,37 @@
 
   background-color: white;
 
+  border-bottom: 1px solid $lightestGray;
+
   .menu-entry {
-    width: 100%;
+    display: inline-block;
     float: left;
 
     margin-top: 5px;
 
     position: relative;
 
-    .action-wrapper {
-      position: absolute;
+    .entry {
+      display: block;
+      width: 100%;
+      float: left;
 
-      right: 0;
+      position: relative;
+      text-align: left;
+      display: inline-block;
+      font-size: 0.85em;
+      color: $textColor;
+      text-decoration: none;
 
-      i {
-        display: block;
-        padding: 15px 10px 19px 10px;
+      border-top: 2px solid white;
 
-        background-color: $editorMainColor;
-
-        color: white;
-      }
+      padding: 15px;
 
       &:hover {
         cursor: pointer;
-        color: $highlightColor;
+        color: $appBlack;
+
+        border-top: 2px solid $mainAppColor;
       }
     }
   }
@@ -39,23 +45,20 @@
     border-left: 2px solid $editorMainColor;
   }
 
-  .entry {
-    display: block;
-    width: 100%;
-    float: left;
+  .new-action {
+    margin-top: 12px;
+    float: right;
 
-    position: relative;
-    text-align: left;
-    display: inline-block;
-    font-size: 0.85em;
-    color: $textColor;
-    text-decoration: none;
+    color: $mainAppColor;
 
-    padding: 15px;
+    .icon {
+      width: 42px;
+
+      padding: 10px;
+    }
 
     &:hover {
       cursor: pointer;
-      background-color: $almostWhiteGray;
     }
   }
 }

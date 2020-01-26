@@ -1,0 +1,62 @@
+@import '../../../../../styles/variables';
+
+.knowledge-sources-listing {
+  margin: 40px 40px 40px 0;
+
+  .ks-list {
+    margin-bottom: 40px;
+  }
+
+  .no-items {
+    margin: 40px 0 40px 0;
+    color: $lightGray;
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .more-button-wrapper {
+    margin: 0 0 40px 0;
+
+    .more-button {
+      display: block;
+      width: 100px;
+      border: none;
+      background-color: white;
+
+      border: 1px solid $mainAppColor;
+      color: $mainAppColor;
+
+      padding: 10px;
+
+      margin: 0 auto;
+    }
+  }
+
+  .ks-search-wrapper {
+    margin: 0 0 100px 0;
+    float: none;
+
+    .hint {
+      display: block;
+      float: none;
+      margin: 0 auto;
+
+      font-size: 0.8em;
+      color: $lightGray;
+
+      i {
+        color: $mainAppColor;
+      }
+    }
+  }
+
+  .no-more-items {
+    margin: 0 auto;
+    width: 200px;
+    color: $lightGray;
+    font-style: italic;
+  }
+}
+

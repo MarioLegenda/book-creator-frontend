@@ -44,4 +44,31 @@ export class BlogRepository {
         }, {})
       );
   }
+
+  getBlogs(size: number = 10, page: number = 1) {
+    return this.httpClient.get(this.routeResolver.getBlogs(size, page))
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
+
+  removeBlog(model) {
+    return this.httpClient.post(this.routeResolver.removeBlog(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
+
+  search(model) {
+    return this.httpClient.post(this.routeResolver.searchBlog(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
 }

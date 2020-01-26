@@ -15,7 +15,7 @@
       color: $appBlack;
 
       &:hover {
-        color: $editorMainColor;
+        color: $mainAppColor;
         cursor: pointer;
       }
     }
@@ -27,7 +27,7 @@
 
     position: relative;
 
-    border-bottom: 1px solid $editorMainColor;
+    border-bottom: 1px solid $mainAppColor;
 
     margin-bottom: 40px;
 
@@ -44,7 +44,7 @@
     }
 
     .highlight {
-      color: $editorMainColor;
+      color: $mainAppColor;
       font-weight: bolder;
     }
   }
@@ -124,7 +124,7 @@
 
     .create {
       float: right;
-      background-color: $editorMainColor;
+      background-color: $mainAppColor;
       color: white;
     }
 

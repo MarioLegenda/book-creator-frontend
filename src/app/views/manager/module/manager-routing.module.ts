@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { ProjectManagerComponent } from '../projectManager/project-manager.component';
-import { KnowledgeSourceComponent } from '../knowledgeSources/knowledge-source.component';
+import { KnowledgeSourceListingComponent } from '../knowledgeSources/listing/knowledge-source-listing.component';
 import { CodeProjectsComponent } from '../codeProjects/code-projects.component';
 import { OverviewComponent } from '../overview/overview.component';
 
@@ -20,8 +20,8 @@ const routes: Routes = [
         component: ProjectManagerComponent,
       },
       {
-        path: 'knowledge-sources',
-        component: KnowledgeSourceComponent,
+        path: 'knowledge-sources/list',
+        component: KnowledgeSourceListingComponent,
       },
       {
         path: 'code-projects/:type/:sourceShortId',

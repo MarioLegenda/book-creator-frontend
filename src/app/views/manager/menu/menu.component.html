@@ -1,23 +1,22 @@
-<div class="col-xs-12 col-md-2 col-lg-2">
-  <nav class="menu">
+<div class="col-xs-12 col-md-12 col-lg-12">
+  <nav class="menu col-xs-12 col-md-12 col-lg-12">
     <div class="menu-entry" [ngClass]="{'selected': type === 'knowledge-sources'}">
-      <a class="entry" routerLink="./knowledge-sources">
+      <a class="entry" routerLink="./knowledge-sources/list">
         Knowledge sources
       </a>
-
-      <div class="action-wrapper" (click)="addKsDialog()">
-        <i [ngClass]="componentState.icons.new" class="newIcon"></i>
-      </div>
     </div>
 
     <div class="menu-entry" [ngClass]="{'selected': type === 'code-projects'}">
       <a class="entry" routerLink="./code-projects">
         Code projects
       </a>
+    </div>
 
-      <div class="action-wrapper">
-        <i [ngClass]="componentState.icons.new" class="newIcon"></i>
-      </div>
+    <div
+      (click)="addKsDialog()"
+      class="new-action">
+      NEW
+      <i class="icon fas fa-plus"></i>
     </div>
   </nav>
 </div>
