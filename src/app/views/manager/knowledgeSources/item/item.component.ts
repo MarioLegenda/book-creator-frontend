@@ -34,7 +34,19 @@ export class ItemComponent {
   ) {}
 
   ngOnInit() {
-    if (!this.item.title) this.componentState.noTitle = true;
+    if (!this.item.title) {
+      this.componentState.noTitle = true;
+    } else {
+      const max = 37;
+
+      if (this.componentState.realTitle.length >= max) {
+        this.componentState.realTitle = `${this.item.title.substring(0, max)}...`;
+      } else {
+        this.componentState.realTitle = this.item.title;
+      }
+    }
+
+
   }
 
   onRemove($event) {

@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import { ManagerRoutingModule } from './manager-routing.module';
 import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { ProjectManagerComponent } from '../projectManager/project-manager.component';
-import { CodeProjectsComponent } from '../codeProjects/code-projects.component';
+import { CodeProjectsComponent } from '../codeProjects/listing/code-projects.component';
 import { ItemComponent as CPItem } from '../codeProjects/item/item.component';
 import { ItemComponent as KSItem } from '../knowledgeSources/item/item.component';
 import { AddKnowledgeSourceDialogComponent } from '../modals/addKnowledgeSource/add-knowledge-source.component';

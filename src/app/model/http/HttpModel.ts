@@ -260,4 +260,16 @@ export class HttpModel {
       }
     }
   }
+
+  static searchCodeProjects(
+    pagination: object,
+    searchTerm: string,
+  ) {
+    return {
+      data: {
+        pagination: pagination,
+        searchTerm: searchTerm,
+      }
+    }
+  }
 }

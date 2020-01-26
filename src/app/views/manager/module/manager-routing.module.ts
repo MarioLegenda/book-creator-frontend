@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { ProjectManagerComponent } from '../projectManager/project-manager.component';
 import { KnowledgeSourceListingComponent } from '../knowledgeSources/listing/knowledge-source-listing.component';
-import { CodeProjectsComponent } from '../codeProjects/code-projects.component';
+import { CodeProjectsComponent } from '../codeProjects/listing/code-projects.component';
 import { OverviewComponent } from '../overview/overview.component';
 
 const routes: Routes = [

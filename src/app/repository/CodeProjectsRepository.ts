@@ -54,4 +54,13 @@ export class CodeProjectsRepository {
         }, {})
       );
   }
+
+  searchCodeProjects(model) {
+    return this.httpClient.post(this.projectRouteResolver.searchCodeProjects(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
 }
