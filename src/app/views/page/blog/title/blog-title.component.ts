@@ -7,7 +7,10 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-blog-title',
-  styleUrls: ['./blog-title.component.scss'],
+  styleUrls: [
+    './blog-title.component.scss',
+    '../../shared/saved.component.scss',
+  ],
   templateUrl: './blog-title.component.html',
 })
 export class BlogTitleComponent {
@@ -17,6 +20,10 @@ export class BlogTitleComponent {
 
   private typeAheadSource = new Subject<string>();
   private typeAheadObservable: Subscription = null;
+
+  componentState = {
+    saved: false,
+  };
 
   // @ts-ignore
   @ViewChild('form') form;
@@ -51,7 +58,15 @@ export class BlogTitleComponent {
           this.source.uuid,
           this.model.title,
           null,
-        )).subscribe(() => {});
+        )).subscribe(() => {
+          if (this.componentState.saved) return;
+
+          this.componentState.saved = true;
+
+          setTimeout(() => {
+            this.componentState.saved = false;
+          }, 3000);
+        });
       });
   }
 }

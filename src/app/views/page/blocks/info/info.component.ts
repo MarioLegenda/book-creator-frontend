@@ -13,6 +13,7 @@ export class InfoComponent {
   @Input('isGist') isGist: boolean;
   @Input('isCode') isCode: boolean;
   @Input('emulator') emulator: any;
+  @Input('codeProject') codeProject: any;
 
   componentState = {
     showInfo: false,

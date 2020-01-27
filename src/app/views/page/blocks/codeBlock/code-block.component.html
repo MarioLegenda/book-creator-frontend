@@ -118,7 +118,7 @@
       class="right-block-action">
 
       <i
-        [routerLink]="'/cms/code-editor/' + componentState.codeProjectShortId"
+        [routerLink]="'/cms/code-editor/' + componentState.codeProject.shortId"
         class="icon directory-structure-icon fas fa-code"
         matTooltip="Open code editor">
       </i>
@@ -169,6 +169,11 @@
     </div>
   </div>
 
+  <p
+    class="saved saved-animation"
+    [ngClass]="{'saved-move-up': !this.componentState.saved, 'saved-move-down': this.componentState.saved}">
+    Saved</p>
+
   <cms-block-errors
     *ngIf="componentState.blockErrors"
     [errors]="componentState.blockErrors">
@@ -178,7 +183,8 @@
     [emulator]="componentState.emulator"
     [readOnly]="componentState.readonly"
     [isGist]="componentState.isGist"
-    [isCode]="componentState.isCode">
+    [isCode]="componentState.isCode"
+    [codeProject]="componentState.codeProject">
   </cms-block-info>
 
   <cms-test-run-result

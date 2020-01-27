@@ -1,9 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpCreateCodeBlock, httpCreateTextBlock} from "../../../store/page/httpActions";
 import {Router} from "@angular/router";
 import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
-import {PositionMap} from "../../../logic/PageComponent/PositionMap";
 
 @Component({
   selector: 'cms-menu',

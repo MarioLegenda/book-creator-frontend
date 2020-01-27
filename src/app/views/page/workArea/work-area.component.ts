@@ -66,7 +66,6 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.emulator,
           component.codeProjectUuid,
           component.position,
-          component.codeProjectShortId,
         ));
       } else if (ComponentType.isMultimediaBlock(component)) {
         this.components.push(new MultimediaBlockModel(

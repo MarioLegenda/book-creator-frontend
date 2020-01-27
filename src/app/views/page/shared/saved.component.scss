@@ -1,0 +1,26 @@
+@import '../../../../styles/variables';
+
+.saved {
+  position: absolute;
+  color: $mainAppColor;
+
+  left: 0;
+  z-index: 1;
+}
+
+.saved-animation {
+  transition: bottom 0.5s, opacity 0.5s;
+  -webkit-transition: bottom 0.5s, opacity 0.5s;
+  -moz-transition: bottom 0.5s, opacity 0.5s;
+  -o-transition: bottom 0.5s, opacity 0.5s;
+}
+
+.saved-move-down {
+  bottom: -37px;
+  opacity: 1;
+}
+
+.saved-move-up {
+  bottom: 0;
+  opacity: 0;
+}

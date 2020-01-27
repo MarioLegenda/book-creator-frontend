@@ -3,7 +3,7 @@
 .menu-wrapper {
   position: fixed;
 
-  z-index: 1;
+  z-index: 100;
   top: 10px;
   left: 0;
 
@@ -11,17 +11,26 @@
     position: absolute;
 
     top: 60px;
-    z-index: 2;
+    z-index: 100;
 
     background-color: white;
   }
 
   .transition-animation {
     transition: left 0.5s, box-shadow 0.5s, border-right 0.5s;
+    -webkit-transition: left 0.5s, box-shadow 0.5s, border-right 0.5s;
+    -moz-transition: left 0.5s, box-shadow 0.5s, border-right 0.5s;
+    -o-transition: left 0.5s, box-shadow 0.5s, border-right 0.5s;
   }
 
   .move-left {
     left: -190px;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    border-right: 0 solid $mainAppColor;
   }
 
   .move-right {
@@ -40,5 +49,11 @@
   .expanded-menu {
     width: 250px;
     overflow: hidden;
+  }
+
+  .saved-text {
+    width: 100%;
+    position: absolute;
+    bottom: 0; right: 0;
   }
 }

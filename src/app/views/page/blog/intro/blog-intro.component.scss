@@ -2,6 +2,7 @@
 
 .title-wrapper {
   float: none;
+  position: relative;
 
   .title-input {
     float: none;
@@ -16,5 +17,6 @@
     color: $appBlack;
 
     border-bottom: 1px solid $almostWhiteGray;
+    z-index: 2;
   }
 }

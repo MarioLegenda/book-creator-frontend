@@ -20,7 +20,8 @@ import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryS
 @Component({
   selector: 'cms-code-block',
   styleUrls: [
-    './code-block.component.scss'
+    './code-block.component.scss',
+    '../../shared/saved.component.scss',
   ],
   templateUrl: './code-block.component.html',
 })
@@ -48,9 +49,9 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     hasTestRunWindow: false,
     testRunResult: null,
     codeProjectImported: false,
-    codeProjectUuid: null,
-    codeProjectShortId: null,
+    codeProject: null,
     isCode: true,
+    saved: false,
     isCodeRunning: false,
     editorOptions: {
       theme: 'vs-light',
@@ -78,9 +79,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.componentState.emulator = this.component.emulator;
 
     if (this.component.codeProjectUuid) {
-      this.componentState.codeProjectImported = true;
-      this.componentState.codeProjectUuid = this.component.codeProjectUuid;
-      this.componentState.codeProjectShortId = this.component.codeProjectShortId;
+      this.importCodeProject(this.component.codeProjectUuid);
     }
 
     this.subscribeTypeahead();
@@ -224,9 +223,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         sourceId,
         blockUuid,
       )).subscribe(() => {
-        this.componentState.codeProjectImported = true;
-        this.componentState.codeProjectUuid = action.uuid;
-        this.componentState.codeProjectShortId = action.shortId;
+        this.importCodeProject(codeProjectUuid);
       });
     });
   }
@@ -234,8 +231,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   onRemoveCodeProject() {
     this.removeCodeProject().subscribe(() => {
       this.componentState.codeProjectImported = false;
-      this.componentState.codeProjectUuid = null;
-      this.componentState.codeProjectShortId = null;
+      this.componentState.codeProject = null;
     });
   }
 
@@ -248,7 +244,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(OpenDirectoryStructureDialogComponent, {
       width: '480px',
       height: '500px',
-      data: {codeProjectUuid: this.componentState.codeProjectUuid},
+      data: {codeProjectUuid: this.componentState.codeProject.uuid},
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -290,6 +286,14 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.componentState.blockErrors = null;
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+
+        if (this.componentState.saved) return;
+
+        this.componentState.saved = true;
+
+        setTimeout(() => {
+          this.componentState.saved = false;
+        }, 3000);
       });
   }
 
@@ -338,7 +342,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
             sourceId,
             blockUuid,
           )).subscribe(() => {
-            this.componentState.codeProjectImported = true;
+            this.importCodeProject(codeProjectUuid);
           });
         })
       });
@@ -351,7 +355,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     const sourceId: string = this.source.uuid;
 
     const model: any = HttpModel.unLinkCodeProject(
-      this.componentState.codeProjectUuid,
+      this.componentState.codeProject.uuid,
       pageUuid,
       sourceId,
       blockUuid
@@ -375,7 +379,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
     if (this.componentState.codeProjectImported) {
       this.emlRepository.BuildAndRunProject(
-        this.componentState.codeProjectUuid,
+        this.componentState.codeProject.uuid,
         this.componentState.code
       ).subscribe((res) => {
         this.componentState.isCodeRunning = false;
@@ -398,5 +402,13 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.componentState.hasTestRunWindow = true;
       });
     }
+  }
+
+  private importCodeProject(uuid: string) {
+    this.codeProjectsRepository.getSingleProject(uuid).subscribe((res) => {
+      this.componentState.codeProjectImported = true;
+
+      this.componentState.codeProject = res;
+    });
   }
 }

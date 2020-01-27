@@ -7,12 +7,19 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-blog-intro',
-  styleUrls: ['./blog-intro.component.scss'],
+  styleUrls: [
+    './blog-intro.component.scss',
+    '../../shared/saved.component.scss',
+  ],
   templateUrl: './blog-intro.component.html',
 })
 export class BlogIntroComponent implements OnInit, OnDestroy {
   model = {
     description: '',
+  };
+
+  componentState = {
+    saved: false,
   };
 
   private typeAheadSource = new Subject<string>();
@@ -51,7 +58,15 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
           this.source.uuid,
           null,
           this.model.description,
-        )).subscribe(() => {});
+        )).subscribe(() => {
+          if (this.componentState.saved) return;
+
+          this.componentState.saved = true;
+
+          setTimeout(() => {
+            this.componentState.saved = false;
+          }, 3000);
+        });
       });
   }
 }

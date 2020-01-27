@@ -52,5 +52,15 @@
       </div>
     </div>
 
+    <div *ngIf="codeProject" class="info-entry col-xs-12 col-md-12 col-lg-12">
+      <div class="designation">
+        <i class="fas fa-laptop-code"></i>
+      </div>
+
+      <div class="message">
+        <p><span class="highlight">Code project imported.</span> A code project <span class="text-highlight">{{codeProject.name}}</span> has been imported</p>
+      </div>
+    </div>
+
   </div>
 </div>
