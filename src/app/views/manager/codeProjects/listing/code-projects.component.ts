@@ -62,7 +62,6 @@ export class CodeProjectsComponent implements OnInit {
     });
   }
 
-
   private getInitialItems() {
     this.codeProjectsRepository.getProjects(this.size, this.currentPage).subscribe((res) => {
       this.items = res;

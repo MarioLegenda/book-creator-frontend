@@ -5,7 +5,7 @@
 
   <div class="header">
     <i class="fas fa-link icon"></i>
-    <p>New code project</p>
+    <p>{{model.title}}</p>
   </div>
 
   <div
@@ -41,7 +41,7 @@
           <textarea
             matInput
             class="input-textarea form-control col-xs-12 col-md-12 col-lg-12"
-            name="name"
+            name="description"
             [(ngModel)]="model.description"
             maxlength="200"
             placeholder="Code project description"></textarea>
@@ -73,7 +73,7 @@
           class="btn create"
           cdkFocusInitial
           (click)="onCreate()">
-          Create
+          {{model.buttonText}}
         </button>
       </div>
     </form>

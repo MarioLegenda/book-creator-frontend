@@ -7,7 +7,7 @@
     class="remove-icon fas fa-trash-alt"></i>
 
   <p
-    class="title">{{item.name}}
+    class="title">{{componentState.realTitle}}
   </p>
 
   <p
@@ -22,8 +22,14 @@
   <div class="actions col-xs-12 col-md-12 col-lg-12">
     <button
       class="item-button"
-      (click)="onManage()">
+      (click)="onManage($event)">
       Manage
+    </button>
+
+    <button
+      class="item-button"
+      (click)="onEdit($event)">
+      Edit
     </button>
   </div>
 

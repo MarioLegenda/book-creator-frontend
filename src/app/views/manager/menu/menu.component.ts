@@ -49,6 +49,8 @@ export class OverviewMenuComponent {
         data: {
           name: '',
           description: '',
+          buttonText: 'Create',
+          title: 'New code project'
         },
       });
 

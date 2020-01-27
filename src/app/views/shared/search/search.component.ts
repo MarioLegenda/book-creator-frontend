@@ -18,6 +18,7 @@ export class SearchComponent implements OnInit {
 
   componentState = {
     searchTerm: '',
+    placeholder: true,
   };
 
   ngOnInit() {
@@ -26,6 +27,16 @@ export class SearchComponent implements OnInit {
 
   onChange() {
     this.typeAheadSource.next(this.componentState.searchTerm);
+  }
+
+  onFocus() {
+    this.componentState.placeholder = false;
+  }
+
+  onBlur() {
+    if (!this.componentState.searchTerm) {
+      this.componentState.placeholder = true;
+    }
   }
 
   private subscribeTypeahead() {

@@ -272,4 +272,20 @@ export class HttpModel {
       }
     }
   }
+
+  static updateCodeProject(
+    uuid: string,
+    name: string,
+    description: string,
+    environment: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid: uuid,
+        name: name,
+        description: description,
+        environment: environment,
+      }
+    }
+  }
 }

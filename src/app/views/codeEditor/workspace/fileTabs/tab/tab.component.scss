@@ -13,7 +13,7 @@
   padding: 5px 10px 5px 15px;
 
   background-color: $lighterGray;
-  border-top: 2px solid $editorMainColor;
+  border-top: 2px solid $mainAppColor;
 
   &:hover {
     cursor: pointer;
@@ -33,7 +33,7 @@
     right: 5px;
 
     &:hover {
-      color: $editorMainColor;
+      color: $mainAppColor;
       cursor: pointer;
     }
   }

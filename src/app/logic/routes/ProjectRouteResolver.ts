@@ -15,6 +15,7 @@ export class ProjectRouteResolver {
     getSingleProject: `${this.bookApiUri}/api/v1/code-projects/get`,
     removeCodeProject: `${this.bookApiUri}/api/v1/code-projects/remove`,
     searchCodeProjects: `${this.bookApiUri}/api/v1/code-projects/search`,
+    updateCodeProject: `${this.bookApiUri}/api/v1/code-projects/update`,
   };
 
   createCodeProject(): string {
@@ -43,5 +44,9 @@ export class ProjectRouteResolver {
 
   searchCodeProjects(): string {
     return this.routes.searchCodeProjects;
+  }
+
+  updateCodeProject(): string {
+    return this.routes.updateCodeProject;
   }
 }

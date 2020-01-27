@@ -3,6 +3,9 @@ import {BlogRepository} from "../../../../repository/BlogRepository";
 import {MatDialog} from "@angular/material/dialog";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {Month} from "../../../../library/Month";
+import {RemoveItemService} from "../../sharedServices/RemoveItemService";
+import {titleResolver} from "../../sharedServices/titleResolver";
 
 @Component({
   selector: 'cms-ks-item',
@@ -16,13 +19,6 @@ export class ItemComponent {
 
   @Output('itemDeleted') itemDeleted = new EventEmitter();
 
-  private months = [
-    "Jan", "Feb", "Mar",
-    "Apr", "May", "June", "July",
-    "Aug", "Sep", "Oct",
-    "Nov", "Dec",
-  ];
-
   componentState = {
     noTitle: false,
     realTitle: '',
@@ -31,39 +27,28 @@ export class ItemComponent {
   constructor(
     private blogRepository: BlogRepository,
     private dialog: MatDialog,
+    private removeItemService: RemoveItemService,
   ) {}
 
   ngOnInit() {
     if (!this.item.title) {
       this.componentState.noTitle = true;
     } else {
-      const max = 37;
-
-      if (this.componentState.realTitle.length >= max) {
-        this.componentState.realTitle = `${this.item.title.substring(0, max)}...`;
-      } else {
-        this.componentState.realTitle = this.item.title;
-      }
+      this.componentState.realTitle = titleResolver(this.item.title, 37);
     }
-
-
   }
 
   onRemove($event) {
     $event.stopPropagation();
 
-    const dialog = this.dialog.open(RemoveConfirmDialogComponent, {
-      width: '400px',
-      data: {},
-    });
-
-    dialog.afterClosed().subscribe((confirm: boolean) => {
-      if (confirm) {
-        this.blogRepository.removeBlog(HttpModel.removeBlog(this.item.uuid)).subscribe(() => {
-          this.itemDeleted.emit();
-        });
-      }
-    });
+    this.removeItemService.remove(
+      this.blogRepository,
+      'removeBlog',
+      () => HttpModel.removeBlog(this.item.uuid),
+      this.item,
+      this.itemDeleted,
+      'Are you sure you wish to remove this blog? This action cannot be undone.',
+    );
   }
 
   onPublish($event) {
@@ -73,7 +58,7 @@ export class ItemComponent {
   formattedDate() {
     const d = new Date(this.item.createdAt);
 
-    const month = this.months[d.getMonth()];
+    const month = Month.get(d.getMonth());
     const date = d.getDate();
     const year = d.getFullYear();
 

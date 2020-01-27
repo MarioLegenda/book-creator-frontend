@@ -1,11 +1,16 @@
 <div
   class="search-wrapper col-lg-12 col-md-12 col-xs-12">
   <div class="input-wrapper col-xs-6 col-md-6 col-lg-6">
+    <i
+      *ngIf="componentState.placeholder"
+      class="search-icon fas fa-search"></i>
+
     <input
       [(ngModel)]="componentState.searchTerm"
       (keyup)="onChange()"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
       class="input-component"
-      type="text"
-      placeholder="Search" />
+      type="text" />
   </div>
 </div>

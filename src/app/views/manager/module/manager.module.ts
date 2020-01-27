@@ -18,9 +18,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
 import {SearchComponent} from "../../shared/search/search.component";
-import {NewCodeProjectDialogComponent} from "../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 import {MatSelectModule} from "@angular/material/select";
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
+import {RemoveItemService} from "../sharedServices/RemoveItemService";
 
 @NgModule({
   declarations: [
@@ -49,7 +49,9 @@ import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new
     MatSelectModule,
     NewCodeProjectModule,
   ],
-  providers: [],
+  providers: [
+    {useClass: RemoveItemService, provide: RemoveItemService},
+  ],
   entryComponents: [
     AddKnowledgeSourceDialogComponent,
     RemoveConfirmDialogComponent,

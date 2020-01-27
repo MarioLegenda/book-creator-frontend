@@ -26,6 +26,12 @@ export class AddKnowledgeSourceDialogComponent {
     }
 
     onSelect(type: string) {
+      if (type === 'blog') {
+        this.createBlog();
+      }
+    }
+
+    private createBlog() {
       const createBlogData = async () => {
         const emptyPage: any = await this.pageRepository.createEmptyPage().toPromise();
         const blankBlog: any = await this.blogRepository.createBlankBlog().toPromise();
@@ -42,10 +48,9 @@ export class AddKnowledgeSourceDialogComponent {
       };
 
       createBlogData().then(({emptyPageShortId, blankBlogShortId}) => {
-        this.router.navigate(['/page', type, blankBlogShortId, emptyPageShortId]);
+        this.router.navigate(['/page', 'blog', blankBlogShortId, emptyPageShortId]);
 
         this.dialogRef.close();
       });
-
     }
 }

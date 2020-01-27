@@ -1,17 +1,17 @@
 @import '../../../../../styles/variables';
 
 .source-listing {
-
     .item {
         padding: 10px;
         margin-bottom: 30px;
 
         border-bottom: 1px solid $lightestGray;
-        border-right: 2px solid $editorMainColor;
+        border-right: 2px solid $mainAppColor;
 
         .title {
             width: 80%;
             float: right;
+            color: $appBlack;
 
             margin-top: 5px;
         }
@@ -29,11 +29,43 @@
         }
 
         &:hover .icon {
-            color: $editorMainColor;
+            color: $mainAppColor;
         }
 
         &:hover {
             cursor: pointer;
         }
     }
+
+  .disabled {
+    border-bottom: 1px solid $lightestGray;
+    border-right: 2px solid $lightestGray;
+
+    .title {
+      color: $lightGray;
+      font-style: italic;
+
+      span {
+        display: inline-block;
+        margin-left: 5px;
+        font-size: 0.7em;
+      }
+    }
+
+    .icon {
+      color: $lightestGray;
+      transition: none;
+      -o-transition: none;
+      -moz-transition: none;
+      -webkit-transition: none;
+    }
+
+    &:hover .icon {
+      color: $lightestGray;
+    }
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
 }

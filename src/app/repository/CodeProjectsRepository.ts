@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {RouteResolver} from "../logic/routes/RouteResolver";
 import {reduce} from "rxjs/operators";
-import {CodeProjectHttpModel} from "../model/http/codeEditor/CodeProjectHttpModel";
 import {ProjectRouteResolver} from "../logic/routes/ProjectRouteResolver";
 
 @Injectable({
@@ -57,6 +56,15 @@ export class CodeProjectsRepository {
 
   searchCodeProjects(model) {
     return this.httpClient.post(this.projectRouteResolver.searchCodeProjects(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
+
+  updateCodeProject(model) {
+    return this.httpClient.post(this.projectRouteResolver.updateCodeProject(), model)
       .pipe(
         reduce((acc, res: any) => {
           return (res as any).data;
