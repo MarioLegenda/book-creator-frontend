@@ -49,6 +49,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     testRunResult: null,
     codeProjectImported: false,
     codeProjectUuid: null,
+    codeProjectShortId: null,
     isCode: true,
     isCodeRunning: false,
     editorOptions: {
@@ -79,6 +80,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     if (this.component.codeProjectUuid) {
       this.componentState.codeProjectImported = true;
       this.componentState.codeProjectUuid = this.component.codeProjectUuid;
+      this.componentState.codeProjectShortId = this.component.codeProjectShortId;
     }
 
     this.subscribeTypeahead();
@@ -224,6 +226,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       )).subscribe(() => {
         this.componentState.codeProjectImported = true;
         this.componentState.codeProjectUuid = action.uuid;
+        this.componentState.codeProjectShortId = action.shortId;
       });
     });
   }
@@ -232,6 +235,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.removeCodeProject().subscribe(() => {
       this.componentState.codeProjectImported = false;
       this.componentState.codeProjectUuid = null;
+      this.componentState.codeProjectShortId = null;
     });
   }
 

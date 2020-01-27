@@ -5,7 +5,6 @@ import {
   httpCreateCodeBlock,
   httpCreateMultimediaBlock,
   httpCreateTextBlock, httpUpdateBlockPosition,
-  httpUpdateTextBlock
 } from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
 import {addPosition} from "../../../logic/utilFns";
@@ -67,6 +66,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.emulator,
           component.codeProjectUuid,
           component.position,
+          component.codeProjectShortId,
         ));
       } else if (ComponentType.isMultimediaBlock(component)) {
         this.components.push(new MultimediaBlockModel(
@@ -138,14 +138,5 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
     }));
 
     moveItemInArray(this.components, event.previousIndex, event.currentIndex);
-  }
-
-  private createTextModel(component): any {
-    const model: any = {};
-    model.blockUuid = component.blockUuid;
-    model.text = component.text;
-    model.position = component.position;
-
-    return model;
   }
 }

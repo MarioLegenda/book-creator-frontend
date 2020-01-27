@@ -112,6 +112,18 @@
       </i>
     </div>
 
+    <div
+      *ngIf="componentState.codeProjectImported"
+      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      class="right-block-action">
+
+      <i
+        [routerLink]="'/cms/code-editor/' + componentState.codeProjectShortId"
+        class="icon directory-structure-icon fas fa-code"
+        matTooltip="Open code editor">
+      </i>
+    </div>
+
   </div>
 
   <div
