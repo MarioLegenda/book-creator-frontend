@@ -62,7 +62,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit() {
-    this.componentState.internalName = this.component.internalName;
+    this.componentState.internalName = (this.component.internalName === '') ? 'click to view text' : this.component.internalName;
     this.componentState.comment = this.component.comment;
   }
 
@@ -75,9 +75,13 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   }
 
   addInternalName() {
+    const data = {
+      name: (this.componentState.internalName === 'click to view text') ? '' : this.componentState.internalName,
+    };
+
     const dialogRef = this.dialog.open(AddInternalNameModalComponent, {
       width: '480px',
-      data: {name: this.componentState.internalName},
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((internalName: string) => {

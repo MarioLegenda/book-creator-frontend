@@ -79,7 +79,7 @@
     [ngClass]="{'editor-not-created': !componentState.expanded}">
 
     <p class="editor-not-created-text col-lg-12 col-md-12 col-xs-12" *ngIf="!componentState.expanded">
-      Text block - <span *ngIf="component.internalName">{{componentState.internalName}}</span><span *ngIf="!componentState.internalName">click to view text</span>
+      Text block - <span>{{componentState.internalName}}</span>
     </p>
 
     <ckeditor
