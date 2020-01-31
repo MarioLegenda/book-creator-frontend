@@ -6,6 +6,7 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 import {Month} from "../../../../library/Month";
 import {RemoveItemService} from "../../sharedServices/RemoveItemService";
 import {titleResolver} from "../../sharedServices/titleResolver";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'cms-ks-item',
@@ -53,6 +54,10 @@ export class ItemComponent {
 
   onPublish($event) {
     $event.stopPropagation();
+  }
+
+  onPreview() {
+    window.location.href = `${environment.protocol}://${environment.bookApiUri}/blog/preview/${this.item.slug}/${this.item.shortId}`;
   }
 
   formattedDate() {
