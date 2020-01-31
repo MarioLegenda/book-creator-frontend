@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpRemoveBlock, httpUpdateCodeBlock} from "../../../../store/page/httpActions";
+import {httpRemoveBlock, httpUpdateCodeBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
@@ -16,6 +16,7 @@ import {CodeProjectsRepository} from "../../../../repository/CodeProjectsReposit
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryStructure/open-directory-structure.component";
+import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
 
 @Component({
   selector: 'cms-code-block',
@@ -46,6 +47,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     isGist: false,
     blockErrors: null,
     emulator: null,
+    internalName: '',
+    comment: '',
     hasTestRunWindow: false,
     testRunResult: null,
     codeProjectImported: false,
@@ -77,6 +80,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.componentState.isCode = this.component.isCode;
     this.componentState.gistData = this.component.gistData;
     this.componentState.emulator = this.component.emulator;
+    this.componentState.internalName = this.component.internalName;
+    this.componentState.comment = this.component.comment;
 
     if (this.component.codeProjectUuid) {
       this.importCodeProject(this.component.codeProjectUuid);

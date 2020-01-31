@@ -53,6 +53,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.shortId,
           component.text,
           component.position,
+          component.internalName,
+          component.comment,
         ));
       } else if (ComponentType.isCodeBlock(component)) {
         this.components.push(new CodeBlockModel(
@@ -66,6 +68,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.emulator,
           component.codeProjectUuid,
           component.position,
+          component.internalName,
+          component.comment,
         ));
       } else if (ComponentType.isMultimediaBlock(component)) {
         this.components.push(new MultimediaBlockModel(

@@ -29,6 +29,8 @@ export class HttpModel {
     blockUuid: string,
     text: string,
     position: number,
+    internalName: string,
+    comment: string,
   ) {
     return {
       data: {
@@ -36,6 +38,8 @@ export class HttpModel {
         blockUuid,
         text,
         position,
+        internalName,
+        comment,
       }
     }
   }

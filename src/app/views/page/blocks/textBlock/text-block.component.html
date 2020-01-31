@@ -12,6 +12,40 @@
         <div class="icon-group">
           <i (click)="remove()" class="icon remove-icon" [ngClass]="icons.remove"></i>
         </div>
+      </div>
+
+      <div
+        matTooltip="Add internal name"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <div class="icon-group">
+          <i (click)="addInternalName()" class="icon fas fa-file-signature"></i>
+        </div>
+      </div>
+
+      <div
+        matTooltip="Add internal comment"
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <div
+          *ngIf="componentState.comment"
+          class="icon-group">
+          <i
+            (click)="addComment()"
+            class="icon fas fa-comment">
+          </i>
+        </div>
+
+        <div
+          *ngIf="!componentState.comment"
+          class="icon-group">
+          <i
+            (click)="addComment()"
+            class="icon far fa-comment">
+          </i>
+        </div>
 
       </div>
 
@@ -24,7 +58,6 @@
         <div class="icon-group">
           <i (click)="onExpandBlock()" class="icon fas fa-expand"></i>
         </div>
-
       </div>
 
       <div
@@ -36,7 +69,6 @@
         <div class="icon-group">
           <i (click)="onCompressBlock()" class="icon fas fa-compress"></i>
         </div>
-
       </div>
     </div>
   </div>
@@ -46,7 +78,9 @@
     (click)="onExpandBlock()"
     [ngClass]="{'editor-not-created': !componentState.expanded}">
 
-    <p class="editor-not-created-text col-lg-12 col-md-12 col-xs-12" *ngIf="!componentState.expanded">Click to view text</p>
+    <p class="editor-not-created-text col-lg-12 col-md-12 col-xs-12" *ngIf="!componentState.expanded">
+      Text block - <span *ngIf="component.internalName">{{componentState.internalName}}</span><span *ngIf="!componentState.internalName">click to view text</span>
+    </p>
 
     <ckeditor
       #editorComponent

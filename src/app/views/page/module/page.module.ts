@@ -40,6 +40,8 @@ import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-blo
 import {AddYoutubeLinkDialogComponent} from "../modals/embedYoutubeLink/embed-youtube-link.component";
 import {EmbedUnsplashDialogComponent} from "../modals/embedUnsplashImage/embed-unsplash-modal.component";
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
+import {AddInternalNameModalComponent} from "../modals/addInternalName/add-internal-name-modal.component";
+import {AddCommentModalComponent} from "../modals/addComment/add-comment-modal.component";
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new
     MultimediaBlockComponent,
     AddYoutubeLinkDialogComponent,
     EmbedUnsplashDialogComponent,
+    AddInternalNameModalComponent,
+    AddCommentModalComponent,
   ],
   imports: [
     MatCardModule,
@@ -99,6 +103,8 @@ import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new
     OpenDirectoryStructureDialogComponent,
     AddYoutubeLinkDialogComponent,
     EmbedUnsplashDialogComponent,
+    AddInternalNameModalComponent,
+    AddCommentModalComponent,
   ]
 })
 export class PageModule { }

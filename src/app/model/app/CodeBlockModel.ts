@@ -12,6 +12,8 @@ export class CodeBlockModel {
     public emulator: any,
     public codeProjectUuid: string,
     public position: number,
+    public internalName: string,
+    public comment: string,
     public blockType: string = ComponentType.CODE_BLOCK_TYPE,
   ) {}
 }

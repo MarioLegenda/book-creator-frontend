@@ -7,9 +7,10 @@ import {environment} from "../../../../../environments/environment";
 import {AddYoutubeLinkDialogComponent} from "../../modals/embedYoutubeLink/embed-youtube-link.component";
 import {MatDialog} from "@angular/material/dialog";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
-import {httpRemoveBlock} from "../../../../store/page/httpActions";
+import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import {Store} from "@ngrx/store";
 import {EmbedUnsplashDialogComponent} from "../../modals/embedUnsplashImage/embed-unsplash-modal.component";
+import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
 
 @Component({
   selector: 'cms-multimedia-block',

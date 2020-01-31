@@ -1,0 +1,36 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <i class="fas fa-link icon"></i>
+    <p>Add internal name</p>
+  </div>
+
+  <div class="info">
+    <h1 class="title">
+      <i class="fas fa-info icon"></i>
+    </h1>
+
+    <p>Name this block with an internal name that means something for you in regards to this block. The block name will be shown when the block is not expanded.</p>
+  </div>
+
+  <div class="dialog-content form-group">
+    <input
+      cdkFocusInitial
+      (keyup.enter)="addInternalName()"
+      [(ngModel)]="model.name"
+      placeholder="Internal name"
+      class="form-input form-control"
+      maxlength="50">
+    <cms-text-counter
+      [text]="model.name"
+      [max]="50">
+    </cms-text-counter>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn create" cdkFocusInitial (click)="addInternalName()">Add</button>
+  </div>
+</div>

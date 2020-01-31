@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as BaloonEditor from "@ckeditor/ckeditor5-build-balloon";
@@ -7,17 +7,21 @@ import {debounceTime} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {TextBlockModel} from "../../../../model/app/TextBlockModel";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
+import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
+import {AddCommentModalComponent} from "../../modals/addComment/add-comment-modal.component";
 
 @Component({
   selector: 'cms-view-text-block',
   styleUrls: ['./text-block.component.scss'],
   templateUrl: './text-block.component.html',
 })
-export class TextBlockComponent implements OnDestroy {
+export class TextBlockComponent implements OnDestroy, OnInit {
   componentState = {
     hovered: false,
     updateWanted: false,
     expanded: false,
+    internalName: '',
+    comment: '',
   };
 
   editor = BaloonEditor;
@@ -57,12 +61,63 @@ export class TextBlockComponent implements OnDestroy {
     public dialog: MatDialog,
   ) {}
 
+  ngOnInit() {
+    this.componentState.internalName = this.component.internalName;
+    this.componentState.comment = this.component.comment;
+  }
+
   onExpandBlock() {
     this.componentState.expanded = true;
   }
 
   onCompressBlock() {
     this.componentState.expanded = false;
+  }
+
+  addInternalName() {
+    const dialogRef = this.dialog.open(AddInternalNameModalComponent, {
+      width: '480px',
+      data: {name: this.componentState.internalName},
+    });
+
+    dialogRef.afterClosed().subscribe((internalName: string) => {
+      if (internalName === null) return;
+
+      const model = {
+        blockUuid: this.component.blockUuid,
+        position: this.component.position,
+        text: this.component.text,
+        internalName: internalName,
+        comment: this.component.comment,
+      };
+
+      this.store.dispatch(httpUpdateTextBlock(model));
+
+      this.componentState.internalName = internalName;
+    });
+  }
+
+  addComment() {
+    const dialogRef = this.dialog.open(AddCommentModalComponent, {
+      width: '480px',
+      data: {name: this.componentState.comment},
+    });
+
+    dialogRef.afterClosed().subscribe((comment: string) => {
+      if (comment === null) return;
+
+      const model = {
+        blockUuid: this.component.blockUuid,
+        position: this.component.position,
+        text: this.component.text,
+        internalName: this.componentState.internalName,
+        comment: comment,
+      };
+
+      this.store.dispatch(httpUpdateTextBlock(model));
+
+      this.componentState.comment = comment;
+    });
   }
 
   onEditorReady($event: any) {
@@ -78,6 +133,8 @@ export class TextBlockComponent implements OnDestroy {
           blockUuid: this.component.blockUuid,
           position: this.component.position,
           text: this.component.text,
+          internalName: this.component.internalName,
+          comment: this.component.comment,
         };
 
         this.store.dispatch(httpUpdateTextBlock(model));

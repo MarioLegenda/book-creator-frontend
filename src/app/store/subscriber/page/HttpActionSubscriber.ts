@@ -164,12 +164,16 @@ export class HttpActionSubscriber {
     const blockUuid: string = action.blockUuid;
     const text: string = action.text;
     const position: number = action.position;
+    const internalName: string = action.internalName;
+    const comment: string = action.comment;
 
     const model = HttpModel.updateTextBlock(
       pageUuid,
       blockUuid,
       text,
       position,
+      internalName,
+      comment,
     );
 
     this.pageRepository.updateTextBlock(model).subscribe(() => {});
