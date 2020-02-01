@@ -2,7 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {
-  httpCreateCodeBlock,
+  httpCreateCodeBlock, httpCreateMainHeader,
   httpCreateMultimediaBlock,
   httpCreateTextBlock, httpUpdateBlockPosition,
 } from 'src/app/store/page/httpActions';
@@ -15,6 +15,7 @@ import {Subject} from "rxjs";
 import {AppContext} from "../../../logic/PageComponent/context/AppContext";
 import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {MultimediaBlockModel} from "../../../model/app/MultimediaBlockModel";
+import {MainHeaderBlock} from "../../../model/app/MainHeaderBlock";
 
 @Component({
   selector: 'cms-work-area',
@@ -79,6 +80,13 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.unsplash,
           component.position,
         ));
+      } else if (ComponentType.isMainHeaderBlock(component)) {
+        this.components.push(new MainHeaderBlock(
+          component.uuid,
+          component.shortId,
+          component.text,
+          component.position,
+        ));
       }
     });
 
@@ -105,13 +113,27 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
         break;
       }
+
       case 'code-block': {
         this.store.dispatch(httpCreateCodeBlock({position: this.componentTracker.getNextPosition()}));
 
         break;
       }
+
       case 'multimedia-block': {
         this.store.dispatch(httpCreateMultimediaBlock({position: this.componentTracker.getNextPosition()}));
+
+        break;
+      }
+
+      case 'main-header': {
+        this.store.dispatch(httpCreateMainHeader({position: this.componentTracker.getNextPosition()}));
+
+        break;
+      }
+
+      case 'subheader': {
+        break;
       }
     }
   }

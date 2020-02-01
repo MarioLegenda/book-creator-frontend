@@ -10,4 +10,5 @@ export class MenuButtonComponent {
   @Input('title') title = false;
   @Input('isOffPage') isOffPage: boolean = false;
   @Input('isSingleIcon') isSingleIcon: boolean = false;
+  @Input('iconText') iconText: string = '';
 }

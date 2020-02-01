@@ -12,6 +12,20 @@
       <div class="expanded-menu">
 
         <cms-menu-button
+          (mouseup)="appendMainHeader()"
+          [icon]="icons.header1"
+          [iconText]="1"
+          [title]="'Add main header block'">
+        </cms-menu-button>
+
+        <cms-menu-button
+          (mouseup)="appendSubHeader()"
+          [icon]="icons.header1"
+          [iconText]="2"
+          [title]="'Add subheader block'">
+        </cms-menu-button>
+
+        <cms-menu-button
           (mouseup)="appendTextBlock()"
           [icon]="icons.paragraph"
           [title]="'Add text block'">

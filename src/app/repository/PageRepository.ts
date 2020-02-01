@@ -108,4 +108,13 @@ export class PageRepository {
         }, {}),
       );
   }
+
+  addMainHeader(model) {
+    return this.httpClient.put(this.blockRouteResolver.addMainHeader(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
 }

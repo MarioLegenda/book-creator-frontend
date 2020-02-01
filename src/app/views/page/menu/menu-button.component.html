@@ -1,10 +1,10 @@
 <div class="menu-entry">
   <i *ngIf="!isSingleIcon" class="far fa-circle desc-icon"></i>
-  
+
   <p *ngIf="title" class="title">{{title}}</p>
   <div class="button-wrapper">
     <button class="empty-button ripple">
-      <i class="button-icon" [ngClass]="icon"></i>
+      <i class="button-icon" [ngClass]="icon">{{iconText}}</i>
     </button>
   </div>
 </div>

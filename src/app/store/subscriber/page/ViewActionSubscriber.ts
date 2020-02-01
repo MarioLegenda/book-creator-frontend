@@ -29,6 +29,12 @@ export class ViewActionSubscriber {
           break;
         }
 
+        case actionTypes.VIEW_ADD_MAIN_HEADER_BLOCK: {
+          this.addMainHeaderBlock(action);
+
+          break;
+        }
+
         case actionTypes.VIEW_TEXT_BLOCK_REMOVED: {
           this.removeBlock(action);
 
@@ -69,6 +75,12 @@ export class ViewActionSubscriber {
     }
 
     this.componentTracker.init(components);
+  }
+
+  private addMainHeaderBlock(action) {
+    const component = ComponentFactory.createComponent(action);
+
+    this.componentTracker.add(component);
   }
 
   private addCodeBlock(action) {

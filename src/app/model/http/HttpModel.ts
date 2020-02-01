@@ -292,4 +292,18 @@ export class HttpModel {
       }
     }
   }
+
+  static createMainHeader(
+    pageUuid: string,
+    position: number,
+    text: string,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        position: position,
+        text: text,
+      }
+    }
+  }
 }

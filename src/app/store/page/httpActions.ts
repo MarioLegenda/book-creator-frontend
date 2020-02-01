@@ -11,10 +11,16 @@ export const actionTypes = {
   HTTP_CREATE_CODE_BLOCK_FINISHED: '[Http] Create code block',
   HTTP_CREATE_MULTIMEDIA_BLOCK: '[Http] Create multimedia block',
   HTTP_UPDATE_BLOCK_POSITION: '[Http] Update block position',
+  HTTP_CREATE_MAIN_HEADER: '[Http] Create main header',
 };
 
 export const httpCreateMultimediaBlock = createAction(
   actionTypes.HTTP_CREATE_MULTIMEDIA_BLOCK,
+  props<{}>(),
+);
+
+export const httpCreateMainHeader = createAction(
+  actionTypes.HTTP_CREATE_MAIN_HEADER,
   props<{}>(),
 );
 

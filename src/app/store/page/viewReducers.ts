@@ -6,6 +6,7 @@ import {
   viewCreateCodeBlock,
   viewAddAllBlocks,
   viewAddMultimediaBlock,
+  viewAddMainHeaderBlock,
 } from './viewActions';
 import deepcopy from 'deepcopy';
 
@@ -16,6 +17,7 @@ const viewActionReducers = createReducer(null,
   on(viewCreateCodeBlock, (state, action) => deepcopy(action)),
   on(viewAddAllBlocks, (state, action) => deepcopy(action)),
   on(viewAddMultimediaBlock, (state, action) => deepcopy(action)),
+  on(viewAddMainHeaderBlock, (state, action) => deepcopy(action)),
 );
 
 export function viewActionReducer(state, action) {

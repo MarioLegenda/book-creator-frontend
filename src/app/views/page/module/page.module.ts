@@ -42,6 +42,7 @@ import {EmbedUnsplashDialogComponent} from "../modals/embedUnsplashImage/embed-u
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
 import {AddInternalNameModalComponent} from "../modals/addInternalName/add-internal-name-modal.component";
 import {AddCommentModalComponent} from "../modals/addComment/add-comment-modal.component";
+import {MainHeaderBlockComponent} from "../blocks/mainHeaderBlock/main-header-block.component";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {AddCommentModalComponent} from "../modals/addComment/add-comment-modal.c
     EmbedUnsplashDialogComponent,
     AddInternalNameModalComponent,
     AddCommentModalComponent,
+    MainHeaderBlockComponent,
   ],
   imports: [
     MatCardModule,

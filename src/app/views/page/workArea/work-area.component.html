@@ -61,6 +61,13 @@
           [component]="item"
           [page]="sourceContext.page">
         </cms-multimedia-block>
+
+        <cms-main-header-block
+          *ngIf="item.blockType === 'main_header_block'"
+          [component]="item"
+          [page]="sourceContext.page">
+        </cms-main-header-block>
+
       </div>
     </div>
 

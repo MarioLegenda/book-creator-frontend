@@ -7,10 +7,16 @@ export const actionTypes = {
   VIEW_ADD_ALL_BLOCKS: '[View] View add all blocks',
   VIEW_ADD_CODE_BLOCK: '[View] Create code block',
   VIEW_ADD_MULTIMEDIA_BLOCK: '[View] Create multimedia block',
+  VIEW_ADD_MAIN_HEADER_BLOCK: '[View] Create main header block',
 };
 
 export const viewCreateCodeBlock = createAction(
   actionTypes.VIEW_ADD_CODE_BLOCK,
+  props<{}>(),
+);
+
+export const viewAddMainHeaderBlock = createAction(
+  actionTypes.VIEW_ADD_MAIN_HEADER_BLOCK,
   props<{}>(),
 );
 

@@ -9,6 +9,7 @@ export class BlockRouteResolver {
 
   private readonly routes = {
     addNewTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/add-new-block`,
+    addMainHeader: `${this.bookApiUri}/api/v1/pages/header/add-main-header-block`,
     addNewCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/add-new-block`,
     addNewMultimediaBlock: `${this.bookApiUri}/api/v1/pages/multimedia-block/add-new-block`,
     removeBlock: `${this.bookApiUri}/api/v1/pages/block/remove`,
@@ -53,5 +54,9 @@ export class BlockRouteResolver {
 
   updatePosition(): string {
     return this.routes.updatePosition;
+  }
+
+  addMainHeader(): string {
+    return this.routes.addMainHeader;
   }
 }

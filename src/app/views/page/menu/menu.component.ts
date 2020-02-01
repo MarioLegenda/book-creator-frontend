@@ -26,12 +26,21 @@ export class MenuComponent {
     'footnote': 'fas fa-file',
     'dynamicForms': 'fab fa-wpforms',
     'codeProjects': 'fas fa-laptop-code',
+    'header1': 'fas fa-heading',
   };
 
   menuExpanded = false;
 
   appendTextBlock() {
     this.blockAddedEvent.emit('text-block');
+  }
+
+  appendMainHeader() {
+    this.blockAddedEvent.emit('main-header');
+  }
+
+  appendSubHeader() {
+    this.blockAddedEvent.emit('subheader');
   }
 
   appendCodeBlock() {

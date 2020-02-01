@@ -5,6 +5,7 @@ import {actionTypes, httpCreateTextBlockFinished} from "../../page/httpActions";
 import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {PageRepository} from "../../../repository/PageRepository";
 import {
+  viewAddMainHeaderBlock,
   viewAddMultimediaBlock,
   viewAddTextBlock,
   viewCreateCodeBlock,
@@ -40,6 +41,18 @@ export class HttpActionSubscriber {
             this.pageContextInitializer.whenInit(((data) => {
               return () => this.addTextBlock(data);
             })(deepcopy(action)))
+          }
+
+          break;
+        }
+
+        case actionTypes.HTTP_CREATE_MAIN_HEADER: {
+          if (this.pageContextInitializer.isInitialized()) {
+            this.addMainHeader(action);
+          } else {
+            this.pageContextInitializer.whenInit(((data) => {
+              return () => this.addMainHeader(data);
+            })(deepcopy(action)));
           }
 
           break;
@@ -93,6 +106,18 @@ export class HttpActionSubscriber {
           break;
         }
       }
+    });
+  }
+
+  private addMainHeader(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const position: number = action.position;
+    const text: string = '';
+
+    const model = HttpModel.createMainHeader(pageUuid, position, text);
+
+    this.pageRepository.addMainHeader(model).subscribe((data) => {
+      this.store.dispatch(viewAddMainHeaderBlock(data));
     });
   }
 
