@@ -5,17 +5,17 @@ import {MatDialog} from "@angular/material/dialog";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
-import {httpRemoveBlock, httpUpdateMainHeader} from "../../../../store/page/httpActions";
+import {httpRemoveBlock, httpUpdateMainHeader, httpUpdateSubheader} from "../../../../store/page/httpActions";
 
 @Component({
-  selector: 'cms-main-header-block',
+  selector: 'cms-subheader-block',
   styleUrls: [
-    './main-header-block.component.scss',
+    './subheader-block.component.scss',
     '../../shared/saved.component.scss',
   ],
-  templateUrl: './main-header-block.component.html',
+  templateUrl: './subheader-block.component.html',
 })
-export class MainHeaderBlockComponent {
+export class SubheaderBlockComponent {
   @Input('page') page: any;
   @Input('component') component: MainHeaderBlock;
 
@@ -46,7 +46,7 @@ export class MainHeaderBlockComponent {
           text: this.componentState.text,
         };
 
-        this.store.dispatch(httpUpdateMainHeader(model));
+        this.store.dispatch(httpUpdateSubheader(model));
 
         if (this.componentState.saved) return;
 

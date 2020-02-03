@@ -43,6 +43,7 @@ import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new
 import {AddInternalNameModalComponent} from "../modals/addInternalName/add-internal-name-modal.component";
 import {AddCommentModalComponent} from "../modals/addComment/add-comment-modal.component";
 import {MainHeaderBlockComponent} from "../blocks/mainHeaderBlock/main-header-block.component";
+import {SubheaderBlockComponent} from "../blocks/subheaderBlock/subheader-block.component";
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import {MainHeaderBlockComponent} from "../blocks/mainHeaderBlock/main-header-bl
     AddInternalNameModalComponent,
     AddCommentModalComponent,
     MainHeaderBlockComponent,
+    SubheaderBlockComponent,
   ],
   imports: [
     MatCardModule,

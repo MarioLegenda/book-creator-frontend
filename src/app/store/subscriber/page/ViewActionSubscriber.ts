@@ -35,6 +35,12 @@ export class ViewActionSubscriber {
           break;
         }
 
+        case actionTypes.VIEW_ADD_SUBHEADER: {
+          this.addSubheader(action);
+
+          break;
+        }
+
         case actionTypes.VIEW_TEXT_BLOCK_REMOVED: {
           this.removeBlock(action);
 
@@ -78,6 +84,12 @@ export class ViewActionSubscriber {
   }
 
   private addMainHeaderBlock(action) {
+    const component = ComponentFactory.createComponent(action);
+
+    this.componentTracker.add(component);
+  }
+
+  private addSubheader(action) {
     const component = ComponentFactory.createComponent(action);
 
     this.componentTracker.add(component);

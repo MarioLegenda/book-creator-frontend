@@ -35,6 +35,14 @@ export class ComponentFactory {
 
         return d;
       }
+
+      case ComponentType.SUBHEADER_BLOCK: {
+        const d = deepcopy(data);
+
+        delete d.type;
+
+        return d;
+      }
     }
   }
 }

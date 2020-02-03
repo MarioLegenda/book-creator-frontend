@@ -117,4 +117,31 @@ export class PageRepository {
         }, {}),
       );
   }
+
+  updateMainHeader(model) {
+    return this.httpClient.post(this.blockRouteResolver.updateMainHeader(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
+
+  addSubheader(model) {
+    return this.httpClient.put(this.blockRouteResolver.addSubheader(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
+
+  updateSubheader(model) {
+    return this.httpClient.post(this.blockRouteResolver.updateSubheader(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
 }

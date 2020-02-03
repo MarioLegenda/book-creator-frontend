@@ -8,10 +8,22 @@ export const actionTypes = {
   VIEW_ADD_CODE_BLOCK: '[View] Create code block',
   VIEW_ADD_MULTIMEDIA_BLOCK: '[View] Create multimedia block',
   VIEW_ADD_MAIN_HEADER_BLOCK: '[View] Create main header block',
+  VIEW_ADD_SUBHEADER: '[View] Create subheader block',
+  VIEW_UPDATE_SUBHEADER: '[View] Update subheader block',
 };
 
 export const viewCreateCodeBlock = createAction(
   actionTypes.VIEW_ADD_CODE_BLOCK,
+  props<{}>(),
+);
+
+export const viewUpdateSubheaderBlock = createAction(
+  actionTypes.VIEW_UPDATE_SUBHEADER,
+  props<{}>(),
+);
+
+export const viewAddSubheader = createAction(
+  actionTypes.VIEW_ADD_SUBHEADER,
   props<{}>(),
 );
 

@@ -10,6 +10,7 @@ export class BlockRouteResolver {
   private readonly routes = {
     addNewTextBlock: `${this.bookApiUri}/api/v1/pages/text-block/add-new-block`,
     addMainHeader: `${this.bookApiUri}/api/v1/pages/header/add-main-header-block`,
+    addSubheader: `${this.bookApiUri}/api/v1/pages/header/add-subheader-block`,
     addNewCodeBlock: `${this.bookApiUri}/api/v1/pages/code-block/add-new-block`,
     addNewMultimediaBlock: `${this.bookApiUri}/api/v1/pages/multimedia-block/add-new-block`,
     removeBlock: `${this.bookApiUri}/api/v1/pages/block/remove`,
@@ -18,6 +19,8 @@ export class BlockRouteResolver {
     updateMultimediaBlock: `${this.bookApiUri}/api/v1/pages/multimedia-block/update-block`,
     removeMultimediaBlock: `${this.bookApiUri}/api/v1/pages/block/remove-multimedia-block`,
     updatePosition: `${this.bookApiUri}/api/v1/pages/block/update-position`,
+    updateMainHeader: `${this.bookApiUri}/api/v1/pages/header/update-main-header-block`,
+    updateSubheader: `${this.bookApiUri}/api/v1/pages/header/update-subheader-block`,
   };
 
   addNewTextBlock(): string {
@@ -58,5 +61,17 @@ export class BlockRouteResolver {
 
   addMainHeader(): string {
     return this.routes.addMainHeader;
+  }
+
+  updateMainHeader(): string {
+    return this.routes.updateMainHeader;
+  }
+
+  addSubheader(): string {
+    return this.routes.addSubheader;
+  }
+
+  updateSubheader(): string {
+    return this.routes.updateSubheader;
   }
 }

@@ -3,7 +3,7 @@ import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {
   httpCreateCodeBlock, httpCreateMainHeader,
-  httpCreateMultimediaBlock,
+  httpCreateMultimediaBlock, httpCreateSubheader,
   httpCreateTextBlock, httpUpdateBlockPosition,
 } from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
@@ -16,6 +16,7 @@ import {AppContext} from "../../../logic/PageComponent/context/AppContext";
 import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {MultimediaBlockModel} from "../../../model/app/MultimediaBlockModel";
 import {MainHeaderBlock} from "../../../model/app/MainHeaderBlock";
+import {SubheaderBlock} from "../../../model/app/SubheaderBlock";
 
 @Component({
   selector: 'cms-work-area',
@@ -87,6 +88,13 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.text,
           component.position,
         ));
+      } else if (ComponentType.isSubheaderBlock(component)) {
+        this.components.push(new SubheaderBlock(
+          component.uuid,
+          component.shortId,
+          component.text,
+          component.position,
+        ));
       }
     });
 
@@ -133,6 +141,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
       }
 
       case 'subheader': {
+        this.store.dispatch(httpCreateSubheader({position: this.componentTracker.getNextPosition()}));
+
         break;
       }
     }

@@ -68,6 +68,12 @@
           [page]="sourceContext.page">
         </cms-main-header-block>
 
+        <cms-subheader-block
+          *ngIf="item.blockType === 'subheader_block'"
+          [component]="item"
+          [page]="sourceContext.page">
+        </cms-subheader-block>
+
       </div>
     </div>
 

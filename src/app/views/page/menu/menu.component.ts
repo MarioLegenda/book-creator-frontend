@@ -39,7 +39,7 @@ export class MenuComponent {
     this.blockAddedEvent.emit('main-header');
   }
 
-  appendSubHeader() {
+  appendSubheader() {
     this.blockAddedEvent.emit('subheader');
   }
 

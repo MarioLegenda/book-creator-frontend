@@ -41,7 +41,7 @@ export class EnvironmentEmulatorRepository {
         pageShortId,
         blockShortId,
         code,
-        environment
+        environment,
       },
     })
       .pipe(

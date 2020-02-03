@@ -15,11 +15,17 @@ export class HttpModel {
   static addMultimediaBlock(
     pageUuid: string,
     position: number,
+    fileInfo: null,
+    video: null,
+    unsplash: null,
   ) {
     return {
       data: {
         pageUuid,
         position,
+        fileInfo,
+        video,
+        unsplash,
       }
     }
   }
@@ -301,6 +307,52 @@ export class HttpModel {
     return {
       data: {
         pageUuid: pageUuid,
+        position: position,
+        text: text,
+      }
+    }
+  }
+
+  static updateMainHeader(
+    pageUuid: string,
+    blockUuid: string,
+    position: number,
+    text: string,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        blockUuid: blockUuid,
+        position: position,
+        text: text,
+      }
+    }
+  }
+
+  static createSubheader(
+    pageUuid: string,
+    position: number,
+    text: string,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        position: position,
+        text: text,
+      }
+    }
+  }
+
+  static updateSubheader(
+    pageUuid: string,
+    blockUuid: string,
+    position: number,
+    text: string,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        blockUuid: blockUuid,
         position: position,
         text: text,
       }

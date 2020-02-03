@@ -19,7 +19,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   componentState = {
     hovered: false,
     updateWanted: false,
-    expanded: false,
+    expanded: true,
     internalName: '',
     comment: '',
   };
@@ -38,6 +38,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
       'link',
       'bulletedList',
       'numberedList',
+      'code',
       '|',
       'indent',
       'outdent',
@@ -154,7 +155,6 @@ export class TextBlockComponent implements OnDestroy, OnInit {
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm === true) this.store.dispatch(httpRemoveBlock(this.component));
     });
-
   }
 
   componentHovered() {

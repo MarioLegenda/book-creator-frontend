@@ -16,7 +16,6 @@ import {CodeProjectsRepository} from "../../../../repository/CodeProjectsReposit
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryStructure/open-directory-structure.component";
-import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
 
 @Component({
   selector: 'cms-code-block',

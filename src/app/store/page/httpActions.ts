@@ -12,10 +12,28 @@ export const actionTypes = {
   HTTP_CREATE_MULTIMEDIA_BLOCK: '[Http] Create multimedia block',
   HTTP_UPDATE_BLOCK_POSITION: '[Http] Update block position',
   HTTP_CREATE_MAIN_HEADER: '[Http] Create main header',
+  HTTP_UPDATE_MAIN_HEADER: '[Http] Update main header',
+  HTTP_CREATE_SUBHEADER: '[Http] Create subheader',
+  HTTP_UPDATE_SUBHEADER: '[Http] Update subheader',
 };
+
+export const httpCreateSubheader = createAction(
+  actionTypes.HTTP_CREATE_SUBHEADER,
+  props<{}>(),
+);
+
+export const httpUpdateSubheader = createAction(
+  actionTypes.HTTP_UPDATE_SUBHEADER,
+  props<{}>(),
+);
 
 export const httpCreateMultimediaBlock = createAction(
   actionTypes.HTTP_CREATE_MULTIMEDIA_BLOCK,
+  props<{}>(),
+);
+
+export const httpUpdateMainHeader = createAction(
+  actionTypes.HTTP_UPDATE_MAIN_HEADER,
   props<{}>(),
 );
 

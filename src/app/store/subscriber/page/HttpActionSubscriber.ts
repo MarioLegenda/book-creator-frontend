@@ -6,10 +6,10 @@ import {AppContextInitializer} from "../../../logic/PageComponent/context/AppCon
 import {PageRepository} from "../../../repository/PageRepository";
 import {
   viewAddMainHeaderBlock,
-  viewAddMultimediaBlock,
+  viewAddMultimediaBlock, viewAddSubheader,
   viewAddTextBlock,
   viewCreateCodeBlock,
-  viewTextBlockRemoved
+  viewTextBlockRemoved, viewUpdateSubheaderBlock
 } from "../../page/viewActions";
 import {HttpModel} from "../../../model/http/HttpModel";
 import deepcopy from 'deepcopy';
@@ -58,6 +58,18 @@ export class HttpActionSubscriber {
           break;
         }
 
+        case actionTypes.HTTP_CREATE_SUBHEADER: {
+          if (this.pageContextInitializer.isInitialized()) {
+            this.createSubheader(action);
+          } else {
+            this.pageContextInitializer.whenInit(((data) => {
+              return () => this.createSubheader(data);
+            })(deepcopy(action)));
+          }
+
+          break;
+        }
+
         case actionTypes.HTTP_CREATE_MULTIMEDIA_BLOCK: {
           if (this.pageContextInitializer.isInitialized()) {
             this.addMultimediaBlock(action);
@@ -78,6 +90,18 @@ export class HttpActionSubscriber {
 
         case actionTypes.HTTP_UPDATE_TEXT_BLOCK: {
           this.updateTextBlock(action);
+
+          break;
+        }
+
+        case actionTypes.HTTP_UPDATE_SUBHEADER: {
+          this.updateSubheader(action);
+
+          break;
+        }
+
+        case actionTypes.HTTP_UPDATE_MAIN_HEADER: {
+          this.updateMainHeader(action);
 
           break;
         }
@@ -107,6 +131,47 @@ export class HttpActionSubscriber {
         }
       }
     });
+  }
+
+  private updateSubheader(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const position: number = action.position;
+    const text: string = action.text;
+    const blockUuid: string = action.blockUuid;
+
+    const model = HttpModel.updateSubheader(pageUuid, blockUuid, position, text);
+
+    this.pageRepository.updateSubheader(model).subscribe((data) => {
+      this.store.dispatch(viewUpdateSubheaderBlock(data));
+    });
+  }
+
+  private createSubheader(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const position: number = action.position;
+    const text: string = '';
+
+    const model = HttpModel.createSubheader(pageUuid, position, text);
+
+    this.pageRepository.addSubheader(model).subscribe((data) => {
+      this.store.dispatch(viewAddSubheader(data));
+    });
+  }
+
+  private updateMainHeader(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const blockUuid: string = action.blockUuid;
+    const text: string = action.text;
+    const position: number = action.position;
+
+    const model = HttpModel.updateMainHeader(
+      pageUuid,
+      blockUuid,
+      position,
+      text,
+    );
+
+    this.pageRepository.updateMainHeader(model).subscribe(() => {});
   }
 
   private addMainHeader(action) {
@@ -160,7 +225,7 @@ export class HttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const position: number = action.position;
 
-    const model = HttpModel.addMultimediaBlock(pageUuid, position);
+    const model = HttpModel.addMultimediaBlock(pageUuid, position, null, null, null);
 
     this.pageRepository.addMultimediaBlock(model).subscribe((data) => {
       this.store.dispatch(viewAddMultimediaBlock(data));

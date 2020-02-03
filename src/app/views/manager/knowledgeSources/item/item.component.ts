@@ -56,8 +56,10 @@ export class ItemComponent {
     $event.stopPropagation();
   }
 
-  onPreview() {
-    window.location.href = `${environment.protocol}://${environment.bookApiUri}/blog/preview/${this.item.slug}/${this.item.shortId}`;
+  onPreview($event) {
+    $event.stopPropagation();
+
+    window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.item.slug}/${this.item.shortId}`;
   }
 
   formattedDate() {
