@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {FileAppModel} from "../../../../model/app/codeEditor/FileAppModel";
 
 @Component({
   selector: 'cms-remove-confirm-modal',
@@ -13,7 +12,7 @@ import {FileAppModel} from "../../../../model/app/codeEditor/FileAppModel";
 export class RemoveConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<RemoveConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public model: {}) {}
+    @Inject(MAT_DIALOG_DATA) public model: any) {}
 
   close(): void {
     this.dialogRef.close();
