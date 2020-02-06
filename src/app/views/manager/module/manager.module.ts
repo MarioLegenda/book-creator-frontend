@@ -21,6 +21,8 @@ import {SearchComponent} from "../../shared/search/search.component";
 import {MatSelectModule} from "@angular/material/select";
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
 import {RemoveItemService} from "../sharedServices/RemoveItemService";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {TokenInterceptor} from "../../../interceptors/Token.interceptor";
 
 @NgModule({
   declarations: [

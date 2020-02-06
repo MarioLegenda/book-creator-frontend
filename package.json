@@ -29,6 +29,7 @@
     "@ngrx/store": "^8.6.0",
     "deepcopy": "^2.0.0",
     "hammerjs": "^2.0.8",
+    "js-cookie": "^2.2.1",
     "ngx-gist": "^1.0.4",
     "ngx-monaco-editor": "^8.1.1",
     "rxjs": "~6.4.0",

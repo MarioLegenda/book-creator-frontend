@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +14,7 @@ import {httpActionReducer as knowledgeSourceHttpActionReducer} from "../store/kn
 import {viewActionReducer as knowledgeSourceViewActionReducer} from "../store/knowledgeSource/viewReducers";
 import {TabSession} from "../store/sessions/TabSession";
 import {clearState} from "../store/globalReducers";
-import {NewCodeProjectDialogComponent} from "../views/shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
+import {TokenInterceptor} from "../interceptors/Token.interceptor";
 
 @NgModule({
   declarations: [
@@ -40,6 +39,11 @@ import {NewCodeProjectDialogComponent} from "../views/shared/modules/newCodeProj
   ],
   providers: [
     {provide: TabSession, useClass: TabSession},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })
