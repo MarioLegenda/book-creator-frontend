@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,10 +15,16 @@ import {viewActionReducer as knowledgeSourceViewActionReducer} from "../store/kn
 import {TabSession} from "../store/sessions/TabSession";
 import {clearState} from "../store/globalReducers";
 import {TokenInterceptor} from "../interceptors/Token.interceptor";
+import {GlobalErrorHandler} from "../error/GlobalErrorHandler";
+import {HttpErrorInterceptor} from "../interceptors/HttpError.interceptor";
+import {globalErrorReducer} from "../store/global/reducers";
+import {GlobalErrorComponentModal} from "../views/shared/modals/global-error.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
     AppComponent,
+    GlobalErrorComponentModal,
   ],
   imports: [
     BrowserModule,
@@ -31,20 +37,23 @@ import {TokenInterceptor} from "../interceptors/Token.interceptor";
       knowledgeSourceViewActions: knowledgeSourceViewActionReducer,
       editorViewActions: editorViewReducer,
       editorHttpActions: editorHttpReducer,
+      globalErrorActions: globalErrorReducer,
     }, {
       metaReducers: [clearState]
     }),
     HttpClientModule,
     MonacoEditorModule.forRoot(),
+    MatDialogModule,
   ],
   providers: [
     {provide: TabSession, useClass: TabSession},
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+    {provide: ErrorHandler, useClass: GlobalErrorHandler}
   ],
   bootstrap: [AppComponent],
+  entryComponents: [
+    GlobalErrorComponentModal,
+  ]
 })
 export class AppModule { }

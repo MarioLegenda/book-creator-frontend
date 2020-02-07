@@ -49,6 +49,10 @@
     }
   }
 
+  .header-error {
+    border-bottom: 1px solid $lightRed;
+  }
+
   .info {
     width: 100%;
     float: left;
@@ -75,6 +79,11 @@
       color: $appBlack;
       font-weight: bolder;
     }
+  }
+
+  .info-error {
+    background-color: $lightRed;
+    color: white;
   }
 
   .error {

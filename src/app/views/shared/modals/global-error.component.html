@@ -1,0 +1,19 @@
+<div class="dialog">
+  <div class="header header-error">
+    <i class="fas fa-link icon"></i>
+    <p>{{model.title}}</p>
+  </div>
+
+  <div class="info info-error">
+    <h1 class="title">
+      <i class="fas fa-info icon"></i>
+    </h1>
+
+    <p>{{model.description}}</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button *ngIf="model.runCounter" class="btn create" cdkFocusInitial (click)="onRefresh()">Refresh {{counter}}</button>
+    <button *ngIf="!model.runCounter" class="btn create" cdkFocusInitial (click)="onRefresh()">Refresh</button>
+  </div>
+</div>

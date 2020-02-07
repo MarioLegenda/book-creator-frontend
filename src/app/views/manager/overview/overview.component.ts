@@ -8,5 +8,4 @@ import {Component} from '@angular/core';
   templateUrl: './overview.component.html',
 })
 export class OverviewComponent {
-  
 }
