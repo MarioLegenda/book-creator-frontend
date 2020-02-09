@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKnowledgeSourceDialogComponent } from '../modals/addKnowledgeSource/add-knowledge-source.component';
 import {NewCodeProjectDialogComponent} from "../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'cms-overview-menu',
@@ -19,31 +20,34 @@ export class OverviewMenuComponent {
   componentState = {
     icons: {
       'new': 'fa fa-plus',
-    }
+    },
+    newButton: true,
   };
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private codeProjectsRepository: CodeProjectsRepository,
-  ) {
-    router.events.subscribe((event) => {
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
+
+  ngOnInit() {
+    this.determineType();
+
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.type = event.url.split("/")[4];
+        this.determineType();
       }
     });
   }
 
   addKsDialog(): void {
-    let ksUrl = new RegExp("knowledge-source");
-    let cp = new RegExp("code-projects");
-
-    if (ksUrl.test(this.router.url)) {
+    if (this.type === 'blogs') {
       this.dialog.open(AddKnowledgeSourceDialogComponent, {
         width: '400px',
         data: {},
       });
-    } else if (cp.test(this.router.url)) {
+    } else if (this.type === 'code-projects') {
       const dialogRef = this.dialog.open(NewCodeProjectDialogComponent, {
         width: '480px',
         data: {
@@ -68,6 +72,32 @@ export class OverviewMenuComponent {
           ]);
         })
       });
+    }
+  }
+
+  private determineType() {
+    const url = this.document.location.pathname;
+    let type = null;
+
+    const re = {
+      'blogs': new RegExp("blogs/list"),
+      'code-projects': new RegExp("code-projects/list"),
+    };
+
+    const keys = Object.keys(re);
+
+    for (const k of keys) {
+      if (re[k].test(url)) {
+        type = k;
+
+        break;
+      }
+    }
+
+    if (type) {
+      this.type = type;
+    } else {
+      this.type = null;
     }
   }
 }

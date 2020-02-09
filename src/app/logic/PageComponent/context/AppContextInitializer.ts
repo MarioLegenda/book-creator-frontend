@@ -104,22 +104,25 @@ export class AppContextInitializer {
   private async getPageByShortId(shortId: string) {
     const uuidModel: any = await this.pageRepository.findUuidByShortId(shortId).toPromise();
 
-    return await this.pageRepository.getPageByUuid(uuidModel.data.uuid).toPromise();
+    if (uuidModel) return await this.pageRepository.getPageByUuid(uuidModel.data.uuid).toPromise();
   }
 
   private async getKnowledgeSourceByShortId(type: string, shortId: string) {
     if (type === 'blog') {
       const uuid: any = await this.blogRepository.getUuid(shortId).toPromise();
-      const blog: any = await this.blogRepository.getBlog(uuid.data.uuid).toPromise();
 
-      return {
-        uuid: blog.data.uuid,
-        title: blog.data.title,
-        description: blog.data.description,
-        shortId: blog.data.shortId,
-        codeProject: blog.codeProjects,
-        type: type,
-      };
+      if (uuid) {
+        const blog: any = await this.blogRepository.getBlog(uuid.data.uuid).toPromise();
+
+        return {
+          uuid: blog.data.uuid,
+          title: blog.data.title,
+          description: blog.data.description,
+          shortId: blog.data.shortId,
+          codeProject: blog.codeProjects,
+          type: type,
+        };
+      }
     }
   }
 }

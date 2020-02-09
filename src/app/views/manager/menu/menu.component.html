@@ -3,22 +3,23 @@
     <div class="menu-entry">
       <a
         class="entry"
-        routerLink="./knowledge-sources/list"
-        [ngClass]="{'entry': true, 'selected': type === 'knowledge-sources'}">
-        Knowledge sources
+        routerLink="./blogs/list"
+        [ngClass]="{'entry': true, 'selected': type === 'blogs'}">
+        Blogs
       </a>
     </div>
 
     <div class="menu-entry">
       <a
         class="entry"
-        routerLink="./code-projects"
+        routerLink="./code-projects/list"
         [ngClass]="{'selected': type === 'code-projects'}">
         Code projects
       </a>
     </div>
 
     <div
+      *ngIf="type"
       (click)="addKsDialog()"
       class="new-action">
       NEW

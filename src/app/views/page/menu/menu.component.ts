@@ -56,6 +56,6 @@ export class MenuComponent {
   }
 
   navigateToCodeProjects() {
-    this.router.navigate(['/cms/managment/overview/code-projects']);
+    this.router.navigate(['/cms/management/overview/code-projects']);
   }
 }

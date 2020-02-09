@@ -1,0 +1,185 @@
+@import '../../../../../styles/variables';
+
+.profile-bar-wrapper {
+  float: left;
+  margin-bottom: 40px;
+
+  position: relative;
+}
+
+.logo-wrapper {
+  font-family: $logoFont;
+  width: 190px;
+
+  margin-left: 20px;
+
+  float: left;
+
+  position: relative;
+
+  .the, .title {
+    padding: 0; margin: 0;
+  }
+
+  .the {
+    font-size: 1em;
+    position: absolute;
+
+    top: 12px; left: 0;
+  }
+
+  .title {
+    font-size: 1.5em;
+
+    margin-top: 25px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.profile-action-wrapper {
+  float: right;
+
+  .sign-in {
+    float: left;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .get-started {
+    width: 150px;
+    float: right;
+
+    padding: 10px;
+    text-align: center;
+    background-color: $mainAppColor;
+    color: white;
+
+    margin: 6px 50px 0 0;
+
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .profile-image {
+    float: right;
+    width: 50px;
+    height: 50px;
+
+    margin-right: 20px;
+    margin-top: 14px;
+
+    img {
+      float: right;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .falling-menu {
+    z-index: 1000;
+    overflow: scroll;
+
+    top: 70px; right: 23px;
+
+    position: absolute;
+
+    border: 1px solid $lightestGray;
+
+    background-color: white;
+
+    -webkit-box-shadow: 0px 2px 27px -4px rgba(186,186,186,1);
+    -moz-box-shadow: 0px 2px 27px -4px rgba(186,186,186,1);
+    box-shadow: 0px 2px 27px -4px rgba(186,186,186,1);
+
+    border-radius: 5px;
+
+    .display-name {
+      display: block;
+      font-size: 1em;
+      color: $appBlack;
+      font-weight: bolder;
+
+      font-family: $logoFont;
+    }
+
+    .email {
+      color: $lightGray;
+    }
+
+    .basic-info {
+      padding: 20px;
+      border-bottom: 1px solid $lightestGray;
+    }
+
+    .items {
+      padding: 20px;
+      border-bottom: 1px solid $lightestGray;
+
+      .item {
+        display: block;
+        color: $lightGray;
+        margin-bottom: 10px;
+
+        padding: 10px 0 10px 10px;
+
+        border-left: 4px solid white;
+
+        text-decoration: none;
+
+        transition: border-left 0.5s, color 0.5s;
+        -webkit-transition: border-left 0.5s, color 0.5s;
+        -moz-transition: border-left 0.5s, color 0.5s;
+        -o-transition: border-left 0.5s, color 0.5s;
+
+        &:hover {
+          color: $mainAppColor;
+          border-left: 4px solid $mainAppColor;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      }
+
+      .in-dev {
+        font-style: italic;
+        color: $lighterGray;
+
+        &:hover {
+          border-left: 4px solid white;
+          color: $lighterGray;
+          text-decoration: none;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .options, .settings {
+      a:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .overview {
+      i {
+        display: inline-block;
+        margin-left: 20px;
+      }
+    }
+  }
+}

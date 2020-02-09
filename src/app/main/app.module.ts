@@ -20,11 +20,15 @@ import {HttpErrorInterceptor} from "../interceptors/HttpError.interceptor";
 import {globalErrorReducer} from "../store/global/reducers";
 import {GlobalErrorComponentModal} from "../views/shared/modals/global-error.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import {NotFoundComponent} from "../views/notFound/not-found.component";
+import {ProfileBarModule} from "../views/shared/profileBar/profile-bar.module";
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
     AppComponent,
     GlobalErrorComponentModal,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,17 +43,19 @@ import {MatDialogModule} from "@angular/material/dialog";
       editorHttpActions: editorHttpReducer,
       globalErrorActions: globalErrorReducer,
     }, {
-      metaReducers: [clearState]
+      metaReducers: [clearState],
     }),
     HttpClientModule,
     MonacoEditorModule.forRoot(),
     MatDialogModule,
+    ProfileBarModule,
   ],
   providers: [
     {provide: TabSession, useClass: TabSession},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
-    {provide: ErrorHandler, useClass: GlobalErrorHandler}
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    CookieService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [

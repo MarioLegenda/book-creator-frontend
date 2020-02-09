@@ -14,6 +14,9 @@ export const environment = {
   envEmulatorUri: '11.11.11.12',
   envEmulatorPort: 80,
 
+  staticWeb: '11.11.11.12',
+  staticWebPort: 80,
+
   publicDir: 'images',
 
   composeBookApiBaseUrl(): string {
@@ -26,6 +29,10 @@ export const environment = {
 
   composeRebelCdnUrl(): string {
     return `${environment.protocol}://${environment.rebelCdnApiUri}:${environment.rebelCdnApiPort}`;
+  },
+
+  composeStaticWebUrl(): string {
+    return `${environment.protocol}://${environment.staticWeb}:${environment.staticWebPort}`;
   },
 };
 

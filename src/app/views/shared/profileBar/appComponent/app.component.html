@@ -1,0 +1,39 @@
+<div class="profile-bar-wrapper col-xs-12 col-md-12 col-lg-12">
+  <div
+    (click)="onHome()"
+    class="logo-wrapper col-xs-2 col-md-2 col-lg-2">
+    <p class="the">the</p>
+    <p class="title">Rebel Source</p>
+  </div>
+
+  <div
+    class="profile-action-wrapper col-xs-3 col-md-3 col-lg-3">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+      <div class="click-anchor profile-image main-menu" (click)="onShowMenu()">
+        <img class="click-anchor main-menu" src="http://tinygraphs.com/labs/isogrids/hexa16/tinygraphs?theme=heatwave&numcolors=4&size=220&fmt=svg"/>
+      </div>
+    </div>
+
+    <div style="display: none" class="falling-menu click-anchor col-xs-12 col-md-10 col-lg-10" id="mainMenu" #mainMenuRef>
+      <div class="click-anchor basic-info col-xs-12 col-md-12 col-lg-12">
+        <label class="click-anchor display-name">{{account.name}} {{account.lastName}}</label>
+        <label class="click-anchor email">{{account.email}}</label>
+      </div>
+
+      <div class="click-anchor options items col-xs-12 col-md-12 col-lg-12">
+        <a class="click-anchor item" (click)="onNewBlog()">New Blog</a>
+        <a class="click-anchor item in-dev">New Book (in development)</a>
+      </div>
+
+      <div class="click-anchor overview items col-xs-12 col-md-12 col-lg-12">
+        <a (click)="onOverview()" class="click-anchor item">Overview<i class="fas fa-chalkboard"></i></a>
+      </div>
+
+      <div class="click-anchor settings items col-xs-12 col-md-12 col-lg-12">
+        <a class="click-anchor item">Profile</a>
+        <a class="click-anchor item">Settings</a>
+        <a class="click-anchor item" (click)="onSignOut()">Sign out</a>
+      </div>
+    </div>
+  </div>
+</div>

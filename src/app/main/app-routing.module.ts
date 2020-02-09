@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {NotFoundComponent} from "../views/notFound/not-found.component";
 
 const routes: Routes = [
   {
@@ -7,7 +8,7 @@ const routes: Routes = [
     loadChildren: () => import('../views/page/module/page.module').then(m => m.PageModule)
   },
   {
-    path: 'cms/managment/overview',
+    path: 'cms/management',
     loadChildren: () => import('../views/manager/module/manager.module').then(m => m.ManagerModule)
   },
   {
@@ -17,8 +18,10 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'cms/managment/overview',
+    redirectTo: 'cms/management',
   },
+  {path: 'cms/management/404', component: NotFoundComponent},
+  {path: '**', redirectTo: 'cms/management/404'}
 ];
 
 @NgModule({

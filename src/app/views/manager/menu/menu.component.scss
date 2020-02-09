@@ -5,13 +5,12 @@
 
   background-color: white;
 
+  border-top: 1px solid $lightestGray;
   border-bottom: 1px solid $lightestGray;
 
   .menu-entry {
     display: inline-block;
     float: left;
-
-    margin-top: 5px;
 
     position: relative;
 
@@ -23,7 +22,7 @@
       position: relative;
       text-align: left;
       display: inline-block;
-      font-size: 0.85em;
+      font-size: 1em;
       color: $textColor;
       text-decoration: none;
 
@@ -45,7 +44,7 @@
   }
 
   .new-action {
-    margin-top: 12px;
+    margin-top: 8px;
     float: right;
 
     color: $mainAppColor;
