@@ -5,7 +5,7 @@ import {DOCUMENT} from "@angular/common";
 @Component({
   selector: 'cms-user-section-menu',
   styleUrls: [
-    './menu.component.scss',
+    './../../../shared/styles/menu.component.scss',
   ],
   templateUrl: './menu.component.html',
 })

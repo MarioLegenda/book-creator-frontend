@@ -10,7 +10,7 @@ import {DOCUMENT} from "@angular/common";
 @Component({
   selector: 'cms-overview-menu',
   styleUrls: [
-    './menu.component.scss',
+    './../../shared/styles/menu.component.scss',
   ],
   templateUrl: './menu.component.html',
 })

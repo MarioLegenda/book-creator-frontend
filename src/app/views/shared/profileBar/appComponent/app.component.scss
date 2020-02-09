@@ -167,6 +167,10 @@
           cursor: not-allowed;
         }
       }
+
+      .item:last-child {
+        margin-bottom: 0;
+      }
     }
 
     .options, .settings {
