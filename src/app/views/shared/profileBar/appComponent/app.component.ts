@@ -73,6 +73,18 @@ export class AppComponent {
     this.document.location.href = '/';
   }
 
+  onProfile() {
+    this.mainMenuRef.nativeElement.style = 'display: none';
+
+    this.router.navigate(['/cms/management/user-section/profile']);
+  }
+
+  onSettings() {
+    this.mainMenuRef.nativeElement.style = 'display: none';
+
+    this.router.navigate(['/cms/management/user-section/settings']);
+  }
+
   onNewBlog() {
     if (this.isBlogPage) {
       this.mainMenuRef.nativeElement.style = 'display: none';
@@ -83,20 +95,5 @@ export class AppComponent {
     this.mainMenuRef.nativeElement.style = 'display: none';
 
     createBlog(this.router, this.matDialog, this.pageRepository, this.blogRepository);
-  }
-
-  private createBasicInfo() {
-    const max = 30;
-    const displayName = `${this.account.name} ${this.account.lastName}`;
-
-    if (displayName.length > max) {
-      this.displayName = displayName.substring(0, max);
-    }
-
-    const email = this.account.email;
-
-    if (email.length > max) {
-      this.email = email.substring(0, max);
-    }
   }
 }

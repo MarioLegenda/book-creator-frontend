@@ -26,8 +26,12 @@ const routes: Routes = [
         path: 'code-projects/:type/:sourceShortId',
         component: CodeProjectsComponent,
       },
-    ]
-  }
+    ],
+  },
+  {
+    path: 'user-section',
+    loadChildren: () => import('./../userSectionModule/module/user-section.module').then(m => m.UserSectionModule)
+  },
 ];
 
 @NgModule({
