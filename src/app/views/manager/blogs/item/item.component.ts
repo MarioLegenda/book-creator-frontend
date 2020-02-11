@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {MatDialog} from "@angular/material/dialog";
-import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {Month} from "../../../../library/Month";
 import {RemoveItemService} from "../../sharedServices/RemoveItemService";
@@ -57,6 +56,8 @@ export class ItemComponent {
   }
 
   onPreview($event) {
+    if (this.componentState.noTitle) return;
+
     $event.stopPropagation();
 
     window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.item.slug}/${this.item.shortId}`;

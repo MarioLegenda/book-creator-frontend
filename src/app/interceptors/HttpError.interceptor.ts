@@ -12,6 +12,7 @@ import {Inject, Injectable} from "@angular/core";
 import {globalServerError} from "../store/global/actions";
 import {Router} from "@angular/router";
 import { DOCUMENT } from '@angular/common';
+import {AccountProvider} from "../logic/AccountProvider";
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(
     private store: Store<any>,
     private router: Router,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private accountProvider: AccountProvider,
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -32,6 +34,21 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           if (error.error instanceof ErrorEvent) {
           } else {
             message = 'http_error';
+            let authorized = false;
+
+            if (error.status === 0) {
+              this.store.dispatch(globalServerError({
+                title: 'Network error',
+                description: 'There has been a network connectivity problem. Please, check your internet connection and refresh the application when ready.',
+                runCounter: false,
+              }));
+
+              return throwError(error);
+            }
+
+            if (error.status !== 403) {
+              authorized = true;
+            }
 
             if (error.status === 404 && error.error.type && error.error.type === 'error') {
               const path = error.error.originUrl;
@@ -51,6 +68,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
                   break;
                 }
+              }
+
+              if (!authorized) {
+                this.accountProvider.clearAccount();
+
+                this.document.location.href = '/';
               }
 
               if (!pathFound) {

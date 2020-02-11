@@ -23,6 +23,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {NotFoundComponent} from "../views/notFound/not-found.component";
 import {ProfileBarModule} from "../views/shared/profileBar/profile-bar.module";
 import {CookieService} from 'ngx-cookie-service';
+import {DeviceDetectorModule} from "ngx-device-detector";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {CookieService} from 'ngx-cookie-service';
     MonacoEditorModule.forRoot(),
     MatDialogModule,
     ProfileBarModule,
+    DeviceDetectorModule.forRoot(),
   ],
   providers: [
     {provide: TabSession, useClass: TabSession},

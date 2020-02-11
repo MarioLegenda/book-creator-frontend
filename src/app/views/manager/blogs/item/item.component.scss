@@ -75,4 +75,17 @@
 
     bottom: 5px; left: 0;
   }
+
+  .preview-disabled {
+    color: $lighterGray;
+
+    .icon {
+      color: $lighterGray;
+    }
+
+    &:hover {
+      cursor: not-allowed;
+      border-top: 2px solid white;
+    }
+  }
 }

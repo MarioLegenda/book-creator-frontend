@@ -358,4 +358,12 @@ export class HttpModel {
       }
     }
   }
+
+  static remoteLog(
+    data: any,
+  ) {
+    return {
+      data: data,
+    }
+  }
 }
