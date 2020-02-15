@@ -9,10 +9,18 @@
   </div>
 
   <div class="dialog-content form-group">
-      <input cdkFocusInitial (keyup.enter)="createDirectory()" [(ngModel)]="model.name"  placeholder="Name" class="form-input form-control">
+      <input cdkFocusInitial (keyup.enter)="createDirectory()" [(ngModel)]="model.name" (ngModelChange)="onModelChange()" placeholder="Name" class="form-input form-control">
   </div>
 
+  <p *ngIf="directoryExists" class="error col-xs-12 col-md-12 col-lg-12">
+    {{directoryExists}}
+  </p>
+
+  <p *ngIf="noWhitespace" class="error col-xs-12 col-md-12 col-lg-12">
+    {{noWhitespace}}
+  </p>
+
   <div class="dialog-actions">
-    <button class="btn create" cdkFocusInitial (click)="createDirectory()">Create</button>
+    <button [disabled]="createDisabled" class="btn create" cdkFocusInitial (click)="createDirectory()">Create</button>
   </div>
 </div>

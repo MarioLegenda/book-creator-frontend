@@ -152,11 +152,11 @@ export class DirectoryComponent {
       data: data,
     });
 
-    dialogRef.afterClosed().subscribe((model) => {
-      if (model) {
+    dialogRef.afterClosed().subscribe((resolver) => {
+      if (resolver) {
         this.addDirectoryEvent.emit({
           parent: this.directory,
-          created: model,
+          created: resolver.factory(this.directory.codeProjectUuid, resolver.originalModel),
         });
 
         if (!this.componentState.expanded) {

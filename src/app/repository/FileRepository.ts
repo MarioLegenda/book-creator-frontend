@@ -32,7 +32,7 @@ export class FileRepository {
     private routeResolver: CodeEditorRouteResolver
   ) {}
 
-  public async addFileToDirectory(model) {
+  async addFileToDirectory(model) {
     try {
       const res: any = await this.httpClient.put(this.routeResolver.addFileToDirectory(), model).toPromise();
 
@@ -47,18 +47,6 @@ export class FileRepository {
         error: e.error,
       }
     }
-/*    return this.httpClient.put(this.routeResolver.addFileToDirectory(), model)
-      .pipe(
-        reduce((acc, res: any) => {
-          return {
-            factory: singleFileFactory,
-            originalModel: res.data,
-          };
-        }, {}),
-        catchError((e) => {
-          return throwError('recoverable');
-        }),
-      )*/
   }
 
   public removeFileById(model) {

@@ -55,16 +55,19 @@ export class DirectoryRepository {
       )
   }
 
-  createDirectory(model) {
-    return this.httpClient.put(this.routeResolver.createDirectory(), model)
-      .pipe(
-        reduce(((acc, res: any) => {
-          return {
-            factory: singleDirectoryFactory,
-            originalModel: res.data,
-          }
-        }), {})
-      );
+  async createDirectory(model) {
+    try {
+      const response: any = await this.httpClient.put(this.routeResolver.createDirectory(), model).toPromise();
+
+      return {
+        factory: singleDirectoryFactory,
+        originalModel: response.data,
+      };
+    } catch (e) {
+      return {
+        error: e.error,
+      }
+    }
   }
 
   removeDirectory(model) {

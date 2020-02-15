@@ -28,6 +28,10 @@ export class AddFileDialogComponent {
 
   onModelChange() {
     this.fileExists = null;
+    this.fileExists = null;
+    this.noWhitespace = null;
+    this.noExtension = null;
+    this.invalidExtension = null;
   }
 
   createFile() {
