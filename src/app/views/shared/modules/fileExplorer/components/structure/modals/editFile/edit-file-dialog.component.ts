@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FileAppModel} from "../../../../../../../../model/app/codeEditor/FileAppModel";
 import {FileRepository} from "../../../../../../../../repository/FileRepository";
+import {HttpModel} from "../../../../../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-edit-directory-modal',
@@ -14,7 +14,7 @@ export class EditFileDialogComponent {
   constructor(
     private fileRepository: FileRepository,
     public dialogRef: MatDialogRef<EditFileDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public model: FileAppModel)
+    @Inject(MAT_DIALOG_DATA) public model: any)
   {
     this.placeholderName = model.name;
   }
@@ -26,13 +26,15 @@ export class EditFileDialogComponent {
   editFile() {
     if (!this.placeholderName) return this.dialogRef.close();
 
-    this.fileRepository.renameFile({
-      name: this.model.name,
-      fileId: this.model.id,
-      codeProjectUuid: this.model.codeProjectUuid,
-      directoryId: this.model.directoryId,
-      newName: this.placeholderName,
-    }).subscribe((res: any) => {
+    const model = HttpModel.renameFileModel(
+      this.model.name,
+      this.model.id,
+      this.model.codeProjectUuid,
+      this.model.directoryId,
+      this.placeholderName,
+    );
+
+    this.fileRepository.renameFile(model).subscribe((res: any) => {
       this.dialogRef.close(res.data);
     });
   }

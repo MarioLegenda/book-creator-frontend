@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FileAppModel} from "../../../../../../../../model/app/codeEditor/FileAppModel";
 
 @Component({
   selector: 'cms-add-directory-modal',
@@ -10,7 +9,7 @@ import {FileAppModel} from "../../../../../../../../model/app/codeEditor/FileApp
 export class DeleteFileDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteFileDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public model: FileAppModel) {}
+    @Inject(MAT_DIALOG_DATA) public model: any) {}
 
   close(): void {
     this.dialogRef.close();

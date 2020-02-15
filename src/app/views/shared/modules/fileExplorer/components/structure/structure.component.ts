@@ -1,10 +1,8 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
-import {FileHttpModel} from "../../../../../../model/http/codeEditor/FileHttpModel";
 import {FileRepository} from "../../../../../../repository/FileRepository";
 import {Subject} from "rxjs";
 import {StructureTracker} from "../../../../../../library/StructureTracker";
-import {FileAppModel} from "../../../../../../model/app/codeEditor/FileAppModel";
 import {Store} from "@ngrx/store";
 import {viewEditorDirectoryEmptied} from "../../../../../../store/editor/viewActions";
 import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions";
@@ -119,7 +117,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
   addFileEvent(data) {
     const parent = data.parent;
-    const file: FileAppModel = data.file;
+    const file = data.file;
 
     if (!this.structureTracker.hasStructure(parent.id)) {
       this.structureTracker.createStructure(parent.id);
@@ -132,7 +130,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
     this.structure.splice(idx + this.structureTracker.getStructureLen(parent.id), 0, file);
   }
 
-  removeFileEvent(file: FileAppModel) {
+  removeFileEvent(file) {
     this.structureTracker.removeItemFromStructure(file.directoryId, file.id);
 
     const idx = this.structure.findIndex(val => {
@@ -209,9 +207,10 @@ export class StructureComponent implements OnInit, AfterViewInit {
         structure.push(model);
       }
 
-      this.fileRepository.getFilesFromDirectory(this.project.uuid, directory.id).subscribe((files: FileHttpModel[]) => {
+      this.fileRepository.getFilesFromDirectory(this.project.uuid, directory.id).subscribe((resolver) => {
+        const files = resolver.factory(this.project.uuid, resolver.originalModel);
         for (const file of files) {
-          structure.push(file.convertToAppModel(this.project.uuid, file.id));
+          structure.push(file);
         }
 
         subject.next(structure);

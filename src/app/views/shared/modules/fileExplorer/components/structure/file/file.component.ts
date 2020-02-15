@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FileAppModel} from "../../../../../../../model/app/codeEditor/FileAppModel";
 import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
 import {httpGetFileContentAction, httpRemoveFile} from "../../../../../../../store/editor/httpActions";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog.component";
 import {EditFileDialogComponent} from "../modals/editFile/edit-file-dialog.component";
+import {StaticFileWrapper} from "../../../../../../../library/StaticFileWrapper";
 
 @Component({
   selector: 'cms-file',
@@ -16,7 +16,7 @@ import {EditFileDialogComponent} from "../modals/editFile/edit-file-dialog.compo
   templateUrl: './file.component.html',
 })
 export class FileComponent implements OnInit {
-  @Input('file') file: FileAppModel;
+  @Input('file') file;
 
   @Input('extension') extension: string;
 
@@ -40,11 +40,9 @@ export class FileComponent implements OnInit {
   };
 
   ngOnInit() {
-    if (this.file.isJavascript()) {
+    if (StaticFileWrapper.isJavascript(this.file)) {
       this.componentState.icons.file = "fab fa-js-square";
     }
-
-
 
     let wBase = 15;
     let p = 0;
@@ -77,17 +75,19 @@ export class FileComponent implements OnInit {
   }
 
   editFileDialog() {
+    const data = {
+      name: this.file.name,
+      id: this.file.id,
+      directoryId: this.file.directoryId,
+      content: this.file.content,
+      type: 'file',
+      depth: this.file.depth,
+      codeProjectUuid: this.file.codeProjectUuid,
+    };
+
     const dialogRef = this.dialog.open(EditFileDialogComponent, {
       width: '400px',
-      data: new FileAppModel(
-        this.file.name,
-        this.file.id,
-        this.file.directoryId,
-        this.file.content,
-        'file',
-        this.file.depth,
-        this.file.codeProjectUuid,
-      ),
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((newFile) => {

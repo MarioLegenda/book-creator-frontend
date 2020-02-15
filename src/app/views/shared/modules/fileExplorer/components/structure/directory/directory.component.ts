@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
-import {FileAppModel} from "../../../../../../../model/app/codeEditor/FileAppModel";
 import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
 import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
 import {select, Store} from "@ngrx/store";
@@ -98,20 +97,21 @@ export class DirectoryComponent {
   }
 
   newFileDialog(): void {
+    const data = {
+      name: '',
+      id: '',
+      directoryId: this.directory.id,
+      content: '',
+      type: '',
+      depth: this.directory.depth,
+      codeProjectUuid: this.directory.codeProjectUuid,
+    };
     const dialogRef = this.dialog.open(AddFileDialogComponent, {
       width: '400px',
-      data: new FileAppModel(
-        '',
-        '',
-        this.directory.id,
-        '',
-        '',
-        this.directory.depth,
-        this.directory.codeProjectUuid,
-      ),
+      data: data,
     });
 
-    dialogRef.afterClosed().subscribe((model: FileAppModel) => {
+    dialogRef.afterClosed().subscribe((model) => {
       if (model) {
         this.store.dispatch(viewEditorShowFile(model));
 
@@ -213,5 +213,4 @@ export class DirectoryComponent {
       this.componentState.icons.dirCaret = 'far fa-folder-open';
     }
   }
-
 }

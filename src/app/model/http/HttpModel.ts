@@ -402,4 +402,38 @@ export class HttpModel {
       }
     }
   }
+
+  static newFileModel(
+    codeProjectUuid: string,
+    name: string,
+    directoryId: string,
+    content: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        name,
+        directoryId,
+        content,
+      }
+    }
+  }
+
+  static renameFileModel(
+    name: string,
+    fileId: string,
+    codeProjectUuid: string,
+    directoryId: string,
+    newName: string,
+  ) {
+    return {
+      data: {
+        name,
+        fileId,
+        codeProjectUuid,
+        directoryId,
+        newName,
+      }
+    }
+  }
 }

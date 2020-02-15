@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {reduce} from "rxjs/operators";
-import {FileHttpModel} from "../model/http/codeEditor/FileHttpModel";
 import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
 
 @Injectable({
@@ -17,16 +16,17 @@ export class FileRepository {
     return this.httpClient.put(this.routeResolver.addFileToDirectory(), model)
       .pipe(
         reduce((acc, res: any) => {
-          const data = res.data;
+          const modelFactory = function modelFactory(codeProjectUuid, originalModel) {
+            return Object.assign({}, {
+              codeProjectUuid: codeProjectUuid,
+              type: 'file',
+            }, originalModel);
+          };
 
-          return new FileHttpModel(
-            'file',
-            data.name,
-            data.id,
-            data.directoryId,
-            data.depth,
-            data.content,
-          );
+          return {
+            factory: modelFactory,
+            originalModel: res.data,
+          };
         }, {})
       )
   }
@@ -39,21 +39,22 @@ export class FileRepository {
     return this.httpClient.get(this.routeResolver.getFilesFromDirectory(codeProjectUuid, directoryId))
       .pipe(
         reduce((acc, res: any) => {
-          const files = res.data;
+          const modelFactory = function modelFactory(codeProjectUuid, originalModel) {
+            const models = [];
+            for (const file of originalModel) {
+              models.push(Object.assign({}, {
+                codeProjectUuid: codeProjectUuid,
+                type: 'file',
+              }, file));
+            }
 
-          const fileModels: FileHttpModel[] = [];
-          for (const file of files) {
-            fileModels.push(new FileHttpModel(
-              'file',
-              file.name,
-              file.id,
-              file.directoryId,
-              file.depth,
-              file.content,
-            ));
-          }
+            return models;
+          };
 
-          return fileModels;
+          return {
+            factory: modelFactory,
+            originalModel: res.data,
+          };
         }, {})
       );
   }
@@ -69,12 +70,10 @@ export class FileRepository {
         fileId: fileId,
         content: content,
       },
-    })
+    });
   }
 
   public renameFile(model) {
-    return this.httpClient.post(this.routeResolver.renameFile(), {
-      data: model,
-    });
+    return this.httpClient.post(this.routeResolver.renameFile(), model);
   }
 }

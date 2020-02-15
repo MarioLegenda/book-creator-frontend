@@ -1,8 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FileRepository} from "../../../../../../../../repository/FileRepository";
-import {FileAppModel} from "../../../../../../../../model/app/codeEditor/FileAppModel";
-import {FileHttpModel} from "../../../../../../../../model/http/codeEditor/FileHttpModel";
+import {HttpModel} from "../../../../../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-add-file-modal',
@@ -13,7 +12,7 @@ export class AddFileDialogComponent {
   constructor(
     private fileRepository: FileRepository,
     public dialogRef: MatDialogRef<AddFileDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public model: FileAppModel) {}
+    @Inject(MAT_DIALOG_DATA) public model: any) {}
 
   close(): void {
     this.dialogRef.close();
@@ -22,8 +21,17 @@ export class AddFileDialogComponent {
   createFile() {
     if (!this.model.name) return this.dialogRef.close();
 
-    this.fileRepository.addFileToDirectory(this.model.createNewFileHttpModel()).subscribe((model: FileHttpModel) => {
-      this.dialogRef.close(model.convertToAppModel(this.model.codeProjectUuid, model.id));
+    const model = HttpModel.newFileModel(
+      this.model.codeProjectUuid,
+      this.model.name,
+      this.model.directoryId,
+      this.model.content,
+    );
+
+    this.fileRepository.addFileToDirectory(model).subscribe((resolver) => {
+      const model = resolver.factory(this.model.codeProjectUuid, resolver.originalModel);
+
+      this.dialogRef.close(model);
     });
   }
 }
