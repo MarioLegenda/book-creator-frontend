@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {reduce} from "rxjs/operators";
+import {catchError, map, reduce, switchMap} from "rxjs/operators";
 import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
+import {of, throwError} from "rxjs";
 
 function singleFileFactory(codeProjectUuid, originalModel) {
   return Object.assign({}, {
@@ -31,16 +32,33 @@ export class FileRepository {
     private routeResolver: CodeEditorRouteResolver
   ) {}
 
-  public addFileToDirectory(model) {
-    return this.httpClient.put(this.routeResolver.addFileToDirectory(), model)
+  public async addFileToDirectory(model) {
+    try {
+      const res: any = await this.httpClient.put(this.routeResolver.addFileToDirectory(), model).toPromise();
+
+      return {
+        success: true,
+        factory: singleFileFactory,
+        originalModel: res.data
+      };
+    } catch (e) {
+      return {
+        success: false,
+        error: e.error,
+      }
+    }
+/*    return this.httpClient.put(this.routeResolver.addFileToDirectory(), model)
       .pipe(
         reduce((acc, res: any) => {
           return {
             factory: singleFileFactory,
             originalModel: res.data,
           };
-        }, {})
-      )
+        }, {}),
+        catchError((e) => {
+          return throwError('recoverable');
+        }),
+      )*/
   }
 
   public removeFileById(model) {

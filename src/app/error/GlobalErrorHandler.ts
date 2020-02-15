@@ -14,7 +14,8 @@ export class GlobalErrorHandler implements ErrorHandler {
   ) {}
 
   handleError(error) {
-    if (error.toString() === 'http_error') return;
+    if (error.toString() === 'unrecoverable') return;
+    if (error.toString() === 'recoverable') return;
 
     const data = {
       message: 'Angular frontend error occurred',

@@ -111,14 +111,18 @@ export class DirectoryComponent {
       type: '',
       depth: this.directory.depth,
       codeProjectUuid: this.directory.codeProjectUuid,
+      extension: this.extension,
     };
+
     const dialogRef = this.dialog.open(AddFileDialogComponent, {
       width: '400px',
       data: data,
     });
 
     dialogRef.afterClosed().subscribe((model) => {
-      if (model) {
+      if (model.type && model.type === 'error') {
+
+      } else {
         this.store.dispatch(viewEditorShowFile(model));
 
         this.addFileEvent.emit({

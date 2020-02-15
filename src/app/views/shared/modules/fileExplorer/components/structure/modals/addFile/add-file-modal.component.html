@@ -9,10 +9,26 @@
   </div>
 
   <div class="dialog-content form-group">
-      <input cdkFocusInitial (keyup.enter)="createFile()" [(ngModel)]="model.name"  placeholder="Name" class="form-input form-control">
+      <input cdkFocusInitial (keyup.enter)="createFile()" [(ngModel)]="model.name" (ngModelChange)="onModelChange()" placeholder="Name" class="form-input form-control">
   </div>
 
+  <p *ngIf="fileExists" class="error col-xs-12 col-md-12 col-lg-12">
+    {{fileExists}}
+  </p>
+
+  <p *ngIf="noWhitespace" class="error col-xs-12 col-md-12 col-lg-12">
+    {{noWhitespace}}
+  </p>
+
+  <p *ngIf="noExtension" class="error col-xs-12 col-md-12 col-lg-12">
+    {{noExtension}}
+  </p>
+
+  <p *ngIf="invalidExtension" class="error col-xs-12 col-md-12 col-lg-12">
+    {{invalidExtension}}
+  </p>
+
   <div class="dialog-actions">
-    <button class="btn create" cdkFocusInitial (click)="createFile()">Create</button>
+    <button [disabled]="createDisabled" class="btn create" cdkFocusInitial (click)="createFile()">Create</button>
   </div>
 </div>

@@ -11,4 +11,6 @@ export class ErrorCodes {
   static readonly InvalidAccountType = 7;
   static readonly InvalidAccountProvider = 8;
   static readonly AccountNotVerified = 9;
+
+
 }

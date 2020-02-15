@@ -30,12 +30,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       .pipe(
         retry(1),
         catchError((error: HttpErrorResponse) => {
-          let message = '';
           if (error.error instanceof ErrorEvent) {
           } else {
-            message = 'http_error';
             let authorized = false;
 
+            // unrecoverable, no internet
             if (error.status === 0) {
               this.store.dispatch(globalServerError({
                 title: 'Network error',
@@ -53,6 +52,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             if (error.status === 404 && error.error.type && error.error.type === 'error') {
               const path = error.error.originUrl;
 
+              // the api is not static, so when the api does this http calls
+              // it has to manually redirect to 404
               const pages = [
                 new RegExp('pages/get-uuid-by-shortId'),
                 new RegExp('knowledge-source/get/blog/uuid'),
@@ -76,23 +77,31 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 this.document.location.href = '/';
               }
 
+              // unrecoverable
               if (!pathFound) {
                 this.store.dispatch(globalServerError({
                   title: 'Server error',
                   description: 'There has been a server error. Sorry about that. We are working hard on solving the problem. Thank you for your patience. In order to try to solve the problem, please refresh the page or press \'Refresh\'',
                   runCounter: false,
                 }));
+
+                return throwError('unrecoverable');
               }
-            } else {
+            }
+
+            // unrecoverable
+            if (error.status >= 500 && error.status <= 599) {
               this.store.dispatch(globalServerError({
                 title: 'Server error',
                 description: 'There has been a server error. Sorry about that. We are working hard on solving the problem. Thank you for your patience. In order to try to solve the problem, please refresh the page or press \'Refresh\'',
                 runCounter: false,
               }));
+
+              return throwError('unrecoverable');
             }
           }
 
-          return throwError(message);
+          return throwError(error);
         })
       )
   }
