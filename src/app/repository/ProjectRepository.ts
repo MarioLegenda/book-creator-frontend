@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {concatMap, reduce} from "rxjs/operators";
-import {CodeProjectHttpModel} from "../model/http/codeEditor/CodeProjectHttpModel";
 import {ProjectRouteResolver} from "../logic/routes/ProjectRouteResolver";
 
 @Injectable({
@@ -21,15 +20,7 @@ export class ProjectRepository {
         })
       ).pipe(
         reduce((acc, res: any) => {
-          const data = (res as any).data;
-
-          return new CodeProjectHttpModel(
-            data.uuid,
-            data.shortId,
-            data.sourceId,
-            data.name,
-            data.description,
-          )
+          return (res as any).data;
         }, {})
       );
   }

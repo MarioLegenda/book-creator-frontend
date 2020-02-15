@@ -7,7 +7,6 @@ import {actionTypes as httpActionTypes} from "../../../store/editor/httpActions"
 import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions";
 import {FileRepository} from "../../../repository/FileRepository";
 import {Subject} from "rxjs";
-import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppModel";
 
 @Component({
   selector: 'cms-editor-workspace',
@@ -23,7 +22,7 @@ export class WorkspaceComponent {
   selectedTab: FileTab = null;
   contentLoadedEvent = new Subject();
 
-  @Input('project') project: CodeProjectAppModel;
+  @Input('project') project: any;
 
   private indexMap = {};
 

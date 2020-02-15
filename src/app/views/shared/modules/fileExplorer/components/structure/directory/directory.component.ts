@@ -27,11 +27,6 @@ export class DirectoryComponent {
   @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
   @Output('addFileEvent') addFileEvent = new EventEmitter();
 
-  @Input('enableAddDirectory') enableAddDirectory: boolean = true;
-  @Input('enableRemoveDirectory') enableRemoveDirectory: boolean = true;
-  @Input('enableEditDirectory') enableEditDirectory: boolean = true;
-  @Input('enableAddFile') enableAddFile: boolean = true;
-
   private editorViewActions;
 
   componentState = {

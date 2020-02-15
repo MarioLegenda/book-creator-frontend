@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
-import {CodeProjectHttpModel} from "../../../../model/http/codeEditor/CodeProjectHttpModel";
 import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({

@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
-import {CodeProjectAppModel} from "../../../../../../model/app/codeEditor/CodeProjectAppModel";
 import {DirectoryHttpModel} from "../../../../../../model/http/codeEditor/DirectoryHttpModel";
 import {DirectoryAppModel} from "../../../../../../model/app/codeEditor/DirectoryAppModel";
 import {FileHttpModel} from "../../../../../../model/http/codeEditor/FileHttpModel";
@@ -25,14 +24,7 @@ import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions
 export class StructureComponent implements OnInit, AfterViewInit {
   structure = [];
 
-  @Input('project') project: CodeProjectAppModel;
-
-  @Input('enableAddDirectory') enableAddDirectory: boolean = true;
-  @Input('enableAddFile') enableAddFile: boolean = true;
-  @Input('enableRemoveDirectory') enableRemoveDirectory: boolean = true;
-  @Input('enableRemoveFile') enableRemoveFile: boolean = true;
-  @Input('enableEditFile') enableEditFile: boolean = true;
-  @Input('enableEditDirectory') enableEditDirectory: boolean = true;
+  @Input('project') project: any;
 
   // @ts-ignore
   @ViewChild('structureWrapper') structureWrapper: ElementRef;
@@ -103,8 +95,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   addDirectoryEvent(data) {
-    if (!this.enableAddDirectory) return;
-
     const parent: DirectoryAppModel = data.parent;
     const created: DirectoryAppModel = data.created;
 
@@ -120,8 +110,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   addFileEvent(data) {
-    if (!this.enableAddFile) return false;
-
     const parent: DirectoryAppModel = data.parent;
     const file: FileAppModel = data.file;
 
@@ -137,8 +125,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   removeFileEvent(file: FileAppModel) {
-    if (!this.enableRemoveFile) return;
-
     this.structureTracker.removeItemFromStructure(file.directoryId, file.id);
 
     const idx = this.structure.findIndex(val => {
@@ -155,8 +141,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   removeDirectoryEvent(directory: DirectoryAppModel) {
-    if (!this.enableRemoveDirectory) return false;
-
     if (!this.structureTracker.hasStructure(directory.directoryId)) {
       for (const s of this.structure) {
         if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.directoryId)) {

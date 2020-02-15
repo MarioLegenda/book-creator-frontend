@@ -8,19 +8,13 @@
       (removeDirectoryEvent)="removeDirectoryEvent($event)"
       *ngIf="isDirectory(item)"
 
-      [enableRemoveDirectory]="enableRemoveDirectory"
-      [enableEditDirectory]="enableEditDirectory"
-      [enableAddFile]="enableAddFile"
-      [enableAddDirectory]="enableAddDirectory"
-
       [directory]="item">
     </cms-directory>
 
     <cms-file
-      [enableEditFile]="enableEditFile"
-      [enableRemoveFile]="enableRemoveFile"
       *ngIf="isFile(item)"
       [file]="item"
+      [extension]="project.extension"
       (fileRemovedEvent)="removeFileEvent($event)">
     </cms-file>
   </div>

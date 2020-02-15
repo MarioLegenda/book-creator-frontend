@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {CodeProjectHttpModel} from "../../../../../../model/http/codeEditor/CodeProjectHttpModel";
 import Util from "../../../../../../library/Util";
 
 @Component({
@@ -10,7 +9,7 @@ import Util from "../../../../../../library/Util";
   templateUrl: './file-explorer.component.html',
 })
 export class FileExplorerComponent implements AfterViewInit {
-  @Input('project') project: CodeProjectHttpModel;
+  @Input('project') project: any;
   @Input('showEditorActions') showEditorActions: boolean = true;
 
   @Input('enableAddDirectory') enableAddDirectory: boolean = true;

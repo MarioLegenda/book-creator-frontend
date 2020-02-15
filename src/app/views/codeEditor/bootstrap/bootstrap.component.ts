@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ProjectRepository} from "../../../repository/ProjectRepository";
 import {ActivatedRoute} from "@angular/router";
-import {CodeProjectHttpModel} from "../../../model/http/codeEditor/CodeProjectHttpModel";
-import {CodeProjectAppModel} from "../../../model/app/codeEditor/CodeProjectAppModel";
 import {HttpActionSubscriber} from "../../../store/subscriber/editor/HttpActionSubscriber";
 import {ViewActionSubscriber} from "../../../store/subscriber/editor/ViewActionSubscriber";
 import {Store} from "@ngrx/store";
@@ -18,7 +16,7 @@ import {TabSession} from "../../../store/sessions/TabSession";
   templateUrl: './bootstrap.component.html',
 })
 export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
-  project: CodeProjectAppModel;
+  project: any;
 
   // @ts-ignore
   @ViewChild('wrapperRef') wrapperRef: ElementRef;
@@ -33,8 +31,9 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).subscribe((model: CodeProjectHttpModel) => {
-      this.project = model.convertToAppModel();
+    this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).subscribe((model: any) => {
+      console.log(model);
+      this.project = model;
     });
   }
 

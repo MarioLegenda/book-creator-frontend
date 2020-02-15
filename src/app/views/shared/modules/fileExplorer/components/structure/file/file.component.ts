@@ -18,8 +18,7 @@ import {EditFileDialogComponent} from "../modals/editFile/edit-file-dialog.compo
 export class FileComponent implements OnInit {
   @Input('file') file: FileAppModel;
 
-  @Input('enableRemoveFile') enableRemoveFile: boolean = true;
-  @Input('enableEditFile') enableEditFile: boolean = true;
+  @Input('extension') extension: string;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
 
@@ -97,8 +96,6 @@ export class FileComponent implements OnInit {
   }
 
   showFile() {
-    if (this.enableEditFile || this.enableRemoveFile) return;
-
     this.store.dispatch(httpGetFileContentAction(this.file));
   }
 
