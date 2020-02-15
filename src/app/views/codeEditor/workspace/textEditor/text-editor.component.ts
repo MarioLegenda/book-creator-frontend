@@ -4,6 +4,7 @@ import {BehaviorSubject, of, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {FileRepository} from "../../../../repository/FileRepository";
 import {FileTab} from "../../../../model/app/codeEditor/FileTab";
+import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-text-editor',
@@ -55,11 +56,13 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
     )
       .subscribe(() => {
         if (this.componentState.code) {
-          this.fileRepository.updateFileContent(
+          const model = HttpModel.updateFileContentModel(
             this.codeProjectUuid,
             this.tab.id,
-            this.componentState.code
-          ).subscribe(() => {
+            this.componentState.code,
+          );
+
+          this.fileRepository.updateFileContent(model).subscribe(() => {
           });
         }
       });

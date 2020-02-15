@@ -3,6 +3,25 @@ import {HttpClient} from "@angular/common/http";
 import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
 import {reduce} from "rxjs/operators";
 
+function singleDirectoryFactory(codeProjectUuid, originalModel) {
+  return Object.assign({}, {
+    codeProjectUuid: codeProjectUuid,
+    type: 'directory',
+  }, originalModel);
+}
+
+function directoryCollectionFactory(codeProjectUuid, originalModel) {
+  const directoryModels = [];
+  for (const dir of originalModel) {
+    directoryModels.push(Object.assign({}, {
+      codeProjectUuid: codeProjectUuid,
+      type: 'directory',
+    }, dir));
+  }
+
+  return directoryModels;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,15 +35,8 @@ export class DirectoryRepository {
     return this.httpClient.get(this.routeResolver.getRootDirectory(codeProjectUuid))
       .pipe(
         reduce((acc, res: any) => {
-          const modelFactory = function modelFactory(codeProjectUuid, originalModel) {
-            return Object.assign({}, {
-              codeProjectUuid: codeProjectUuid,
-              type: 'directory',
-            }, originalModel);
-          };
-
           return {
-            factory: modelFactory,
+            factory: singleDirectoryFactory,
             originalModel: res.data,
           }
         }, {})
@@ -35,20 +47,8 @@ export class DirectoryRepository {
     return this.httpClient.get(this.routeResolver.getSubdirectories(codeProjectUuid, directoryId))
       .pipe(
         reduce((acc, res: any) => {
-          const modelFactory = function modelFactory(codeProjectUuid, originalModel) {
-            const directoryModels = [];
-            for (const dir of originalModel) {
-              directoryModels.push(Object.assign({}, {
-                codeProjectUuid: codeProjectUuid,
-                type: 'directory',
-              }, dir));
-            }
-
-            return directoryModels;
-          };
-
           return {
-            factory: modelFactory,
+            factory: directoryCollectionFactory,
             originalModel: res.data,
           };
         }, {})
@@ -59,28 +59,16 @@ export class DirectoryRepository {
     return this.httpClient.put(this.routeResolver.createDirectory(), model)
       .pipe(
         reduce(((acc, res: any) => {
-          const modelFactory = function modelFactory(codeProjectUuid, originalModel) {
-            return Object.assign({}, {
-              codeProjectUuid: codeProjectUuid,
-              type: 'directory',
-            }, originalModel);
-          };
-
           return {
-            factory: modelFactory,
+            factory: singleDirectoryFactory,
             originalModel: res.data,
           }
         }), {})
       );
   }
 
-  removeDirectory(codeProjectUuid: string, directoryId: string) {
-    return this.httpClient.post(this.routeResolver.removeDirectory(), {
-      data: {
-        codeProjectUuid: codeProjectUuid,
-        directoryId: directoryId,
-      },
-    });
+  removeDirectory(model) {
+    return this.httpClient.post(this.routeResolver.removeDirectory(), model);
   }
 
   renameDirectory(model) {

@@ -436,4 +436,30 @@ export class HttpModel {
       }
     }
   }
+
+  static removeDirectoryModel(
+    codeProjectUuid: string,
+    directoryId: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        directoryId,
+      }
+    }
+  }
+
+  static updateFileContentModel(
+    codeProjectUuid: string,
+    fileId: string,
+    content: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        fileId,
+        content,
+      },
+    }
+  }
 }
