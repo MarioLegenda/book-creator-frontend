@@ -366,4 +366,40 @@ export class HttpModel {
       data: data,
     }
   }
+
+  static renameDirectoryModel(
+    codeProjectUuid: string,
+    name: string,
+    directoryId: string,
+    depth: number,
+    newName: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        name,
+        directoryId,
+        depth,
+        newName,
+      }
+    }
+  }
+
+  static createDirectoryModel(
+    codeProjectUuid: string,
+    depth: number,
+    name: string,
+    parent: string,
+    isRoot: boolean,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        depth,
+        name,
+        parent,
+        isRoot,
+      }
+    }
+  }
 }

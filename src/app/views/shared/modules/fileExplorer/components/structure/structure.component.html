@@ -6,6 +6,7 @@
       (addDirectoryEvent)="addDirectoryEvent($event)"
       (addFileEvent)="addFileEvent($event)"
       (removeDirectoryEvent)="removeDirectoryEvent($event)"
+      [extension]="project.extension"
       *ngIf="isDirectory(item)"
 
       [directory]="item">

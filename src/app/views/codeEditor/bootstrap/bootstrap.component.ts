@@ -32,7 +32,6 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).subscribe((model: any) => {
-      console.log(model);
       this.project = model;
     });
   }

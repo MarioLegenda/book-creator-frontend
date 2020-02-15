@@ -44,6 +44,8 @@ export class FileComponent implements OnInit {
       this.componentState.icons.file = "fab fa-js-square";
     }
 
+
+
     let wBase = 15;
     let p = 0;
     if (this.file.depth === 1) {

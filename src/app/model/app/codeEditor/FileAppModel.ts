@@ -6,6 +6,7 @@ export class FileAppModel {
   public type: string;
   public depth: number;
   public codeProjectUuid: string;
+  public extension: string;
 
   constructor(
     name: string,
@@ -26,7 +27,9 @@ export class FileAppModel {
   }
 
   getExtension(): string {
-    return this.name.split(".")[1];
+    const splitted = this.name.split('.');
+
+    return splitted[splitted.length - 1];
   }
 
   isJavascript(): boolean {

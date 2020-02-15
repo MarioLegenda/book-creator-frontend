@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DirectoryRepository} from "../../../../../../../../repository/DirectoryRepository";
-import {DirectoryAppModel} from "../../../../../../../../model/app/codeEditor/DirectoryAppModel";
+import {HttpModel} from "../../../../../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-edit-directory-modal',
@@ -14,7 +14,7 @@ export class EditDirectoryDialogComponent {
   constructor(
     private directoryRepository: DirectoryRepository,
     public dialogRef: MatDialogRef<EditDirectoryDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public model: DirectoryAppModel)
+    @Inject(MAT_DIALOG_DATA) public model: any)
   {
     this.placeholderName = model.name;
   }
@@ -26,13 +26,15 @@ export class EditDirectoryDialogComponent {
   editDirectory() {
     if (!this.placeholderName) return this.dialogRef.close();
 
-    this.directoryRepository.renameDirectory({
-      codeProjectUuid: this.model.codeProjectUuid,
-      name: this.model.name,
-      newName: this.placeholderName,
-      directoryId: this.model.directoryId,
-      depth: this.model.depth,
-    }).subscribe((res: any) => {
+    const model = HttpModel.renameDirectoryModel(
+      this.model.codeProjectUuid,
+      this.model.name,
+      this.model.id,
+      this.model.depth,
+      this.placeholderName,
+    );
+
+    this.directoryRepository.renameDirectory(model).subscribe((res: any) => {
       this.dialogRef.close(res.data);
     });
   }

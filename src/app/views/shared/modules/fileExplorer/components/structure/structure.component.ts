@@ -1,7 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
-import {DirectoryHttpModel} from "../../../../../../model/http/codeEditor/DirectoryHttpModel";
-import {DirectoryAppModel} from "../../../../../../model/app/codeEditor/DirectoryAppModel";
 import {FileHttpModel} from "../../../../../../model/http/codeEditor/FileHttpModel";
 import {FileRepository} from "../../../../../../repository/FileRepository";
 import {Subject} from "rxjs";
@@ -38,6 +36,16 @@ export class StructureComponent implements OnInit, AfterViewInit {
     private store: Store<any>,
   ) {}
 
+  ngOnInit() {
+    this.expandRootDirectory();
+  }
+
+  ngAfterViewInit() {
+    const height = document.body.offsetHeight - 87;
+
+    this.structureWrapper.nativeElement.setAttribute('style', `height: ${height}px`);
+  }
+
   isDirectory(entry): boolean {
     return entry.type === 'directory';
   }
@@ -46,7 +54,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
     return entry.type === 'file';
   }
 
-  expandDirectoryEvent(directory: DirectoryAppModel) {
+  expandDirectoryEvent(directory: any) {
     this.expanding = true;
 
     if (!directory.isRoot) {
@@ -55,13 +63,13 @@ export class StructureComponent implements OnInit, AfterViewInit {
       this.getSubstructure(directory, tempSubject);
 
       tempSubject.subscribe((structure: any[]) => {
-        if (!this.structureTracker.hasStructure(directory.directoryId)) {
-          this.structureTracker.createStructure(directory.directoryId);
+        if (!this.structureTracker.hasStructure(directory.id)) {
+          this.structureTracker.createStructure(directory.id);
         }
 
         let inx = null;
         for (let i = 0; i < this.structure.length; i++) {
-          if (this.structure[i].type === 'directory' && this.structure[i].directoryId === directory.directoryId) {
+          if (this.structure[i].type === 'directory' && this.structure[i].id === directory.id) {
             inx = i;
 
             break;
@@ -71,11 +79,11 @@ export class StructureComponent implements OnInit, AfterViewInit {
         const ids: string[] = [];
         for (const s of structure) {
           if (!ids.includes(s)) {
-            ids.push((s.type === 'file') ? s.id : s.directoryId);
+            ids.push((s.type === 'file') ? s.id : s.id);
           }
         }
 
-        this.structureTracker.addToStructure(directory.directoryId, ids);
+        this.structureTracker.addToStructure(directory.id, ids);
 
         this.structure.splice(inx + 1, 0, ...structure);
 
@@ -84,44 +92,44 @@ export class StructureComponent implements OnInit, AfterViewInit {
     }
   }
 
-  unExpandDirectoryEvent(directory: DirectoryAppModel) {
+  unExpandDirectoryEvent(directory) {
     if (this.expanding) return;
 
-    const structures = this.structureTracker.getStructure(directory.directoryId);
+    const structures = this.structureTracker.getStructure(directory.id);
 
     this.removeStructures(structures);
 
-    this.structureTracker.clearStructure(directory.directoryId);
+    this.structureTracker.clearStructure(directory.id);
   }
 
   addDirectoryEvent(data) {
-    const parent: DirectoryAppModel = data.parent;
-    const created: DirectoryAppModel = data.created;
+    const parent = data.parent;
+    const created = data.created;
 
-    if (!this.structureTracker.hasStructure(parent.directoryId)) {
-      this.structureTracker.createStructure(parent.directoryId);
+    if (!this.structureTracker.hasStructure(parent.id)) {
+      this.structureTracker.createStructure(parent.id);
     }
 
-    this.structureTracker.addItemToStructure(parent.directoryId, created.directoryId);
+    this.structureTracker.addItemToStructure(parent.id, created.id);
 
-    const idx: number = this.structure.findIndex(val => val.directoryId === parent.directoryId);
+    const idx: number = this.structure.findIndex(val => val.id === parent.id);
 
     this.structure.splice(idx + 1, 0, created);
   }
 
   addFileEvent(data) {
-    const parent: DirectoryAppModel = data.parent;
+    const parent = data.parent;
     const file: FileAppModel = data.file;
 
-    if (!this.structureTracker.hasStructure(parent.directoryId)) {
-      this.structureTracker.createStructure(parent.directoryId);
+    if (!this.structureTracker.hasStructure(parent.id)) {
+      this.structureTracker.createStructure(parent.id);
     }
 
-    this.structureTracker.addItemToStructure(parent.directoryId, file.id);
+    this.structureTracker.addItemToStructure(parent.id, file.id);
 
-    const idx: number = this.structure.findIndex(val => val.directoryId === parent.directoryId);
+    const idx: number = this.structure.findIndex(val => val.id === parent.id);
 
-    this.structure.splice(idx + this.structureTracker.getStructureLen(parent.directoryId), 0, file);
+    this.structure.splice(idx + this.structureTracker.getStructureLen(parent.id), 0, file);
   }
 
   removeFileEvent(file: FileAppModel) {
@@ -140,76 +148,68 @@ export class StructureComponent implements OnInit, AfterViewInit {
     }
   }
 
-  removeDirectoryEvent(directory: DirectoryAppModel) {
-    if (!this.structureTracker.hasStructure(directory.directoryId)) {
+  removeDirectoryEvent(directory) {
+    if (!this.structureTracker.hasStructure(directory.id)) {
       for (const s of this.structure) {
-        if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.directoryId)) {
-          this.structureTracker.clearStructure(s.directoryId);
-          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.directoryId}));
+        if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.id)) {
+          this.structureTracker.clearStructure(s.id);
+          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.id}));
         }
       }
 
-      this.removeDirectoryStructure(directory.directoryId);
+      this.removeDirectoryStructure(directory.id);
 
-      return this.sendDirectoryEmptied(directory.directoryId);
+      return this.sendDirectoryEmptied(directory.id);
     }
 
-    const structures = this.structureTracker.getStructure(directory.directoryId);
+    const structures = this.structureTracker.getStructure(directory.id);
 
     this.removeStructures(structures);
 
-    this.structureTracker.clearStructure(directory.directoryId);
+    this.structureTracker.clearStructure(directory.id);
 
-    this.removeDirectoryStructure(directory.directoryId);
+    this.removeDirectoryStructure(directory.id);
 
-    this.sendDirectoryEmptied(directory.directoryId);
-  }
-
-  ngOnInit() {
-    this.expandRootDirectory();
-  }
-
-  ngAfterViewInit() {
-    const height = document.body.offsetHeight - 87;
-
-    this.structureWrapper.nativeElement.setAttribute('style', `height: ${height}px`);
+    this.sendDirectoryEmptied(directory.id);
   }
 
   private expandRootDirectory() {
-    this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((model: DirectoryHttpModel) => {
-      const directoryModel: DirectoryAppModel = model.convertToAppModel(this.project.uuid);
+    this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((resolver) => {
+      const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 
-      if (!this.structureTracker.hasStructure(directoryModel.directoryId)) {
-        this.structureTracker.createStructure(directoryModel.directoryId);
+      if (!this.structureTracker.hasStructure(directory.id)) {
+        this.structureTracker.createStructure(directory.id);
       }
 
-      this.structure.push(directoryModel);
+      this.structure.push(directory);
 
       let tempSubject = new Subject();
 
-      this.getSubstructure(directoryModel, tempSubject);
+      this.getSubstructure(directory, tempSubject);
 
       tempSubject.subscribe((structure: any[]) => {
         this.structure = [...this.structure, ...structure];
 
         const ids: string[] = [];
         for (const s of structure) {
-          ids.push(s.directoryId);
+          ids.push(s.id);
         }
 
-        this.structureTracker.addToStructure(directoryModel.directoryId, ids);
+        this.structureTracker.addToStructure(directory.id, ids);
       });
     });
   }
 
-  private getSubstructure(directory: DirectoryAppModel, subject: Subject<any>) {
-    this.directoryRepository.getSubdirectories(this.project.uuid, directory.directoryId).subscribe((models: DirectoryHttpModel[]) => {
+  private getSubstructure(directory: any, subject: Subject<any>) {
+    this.directoryRepository.getSubdirectories(this.project.uuid, directory.id).subscribe((resolver) => {
       const structure = [];
-      for (const dir of models) {
-        structure.push(dir.convertToAppModel(directory.codeProjectUuid));
+      const models = resolver.factory(this.project.uuid, resolver.originalModel);
+
+      for (const model of models) {
+        structure.push(model);
       }
 
-      this.fileRepository.getFilesFromDirectory(this.project.uuid, directory.directoryId).subscribe((files: FileHttpModel[]) => {
+      this.fileRepository.getFilesFromDirectory(this.project.uuid, directory.id).subscribe((files: FileHttpModel[]) => {
         for (const file of files) {
           structure.push(file.convertToAppModel(this.project.uuid, file.id));
         }
@@ -232,7 +232,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
       const idx: number = this.structure.findIndex((v) => {
         if (v.type === 'file' && v.id === s) return true;
-        if (v.type === 'directory' && v.directoryId === s) return true;
+        if (v.type === 'directory' && v.id === s) return true;
 
         return false;
       });
@@ -266,7 +266,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   private removeDirectoryStructure(directoryId: string) {
-    const idx = this.structure.findIndex(val => val.type === 'directory' && val.directoryId === directoryId);
+    const idx = this.structure.findIndex(val => val.type === 'directory' && val.id === directoryId);
 
     this.structure.splice(idx, 1);
   }
@@ -274,8 +274,8 @@ export class StructureComponent implements OnInit, AfterViewInit {
   private sendDirectoryEmptied(directoryId: string) {
     if (this.structureTracker.getStructureLen(directoryId) === 0) {
       for (const s of this.structure) {
-        if (s.type === 'directory' && directoryId === s.directoryId) {
-          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.directoryId}));
+        if (s.type === 'directory' && directoryId === s.id) {
+          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.id}));
 
           break;
         }

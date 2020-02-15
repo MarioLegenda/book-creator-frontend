@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
-import {DirectoryAppModel} from "../../../../../../../model/app/codeEditor/DirectoryAppModel";
 import {FileAppModel} from "../../../../../../../model/app/codeEditor/FileAppModel";
 import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
 import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
@@ -19,7 +18,8 @@ import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directo
   templateUrl: './directory.component.html',
 })
 export class DirectoryComponent {
-  @Input('directory') directory: DirectoryAppModel;
+  @Input('directory') directory;
+  @Input('extension') extension: string;
 
   @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter();
   @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter();
@@ -65,7 +65,7 @@ export class DirectoryComponent {
 
       switch (action.type) {
         case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
-          if (action.directoryId === this.directory.directoryId) {
+          if (action.directoryId === this.directory.id) {
             this.unExpandDirectory();
             this.sendUnExpandDirectoryEvent();
           }
@@ -91,7 +91,7 @@ export class DirectoryComponent {
     dialogRef.afterClosed().subscribe((decision) => {
       if (decision !== true) return;
 
-      this.directoryRepository.removeDirectory(this.directory.codeProjectUuid, this.directory.directoryId).subscribe(() => {
+      this.directoryRepository.removeDirectory(this.directory.codeProjectUuid, this.directory.id).subscribe(() => {
         this.removeDirectoryEvent.emit(this.directory);
       });
     });
@@ -103,7 +103,7 @@ export class DirectoryComponent {
       data: new FileAppModel(
         '',
         '',
-        this.directory.directoryId,
+        this.directory.id,
         '',
         '',
         this.directory.depth,
@@ -128,19 +128,21 @@ export class DirectoryComponent {
   }
 
   newDirectoryDialog(): void {
+    const data = {
+      codeProjectUuid: this.directory.codeProjectUuid,
+      name: '',
+      id: this.directory.id,
+      depth: this.directory.depth,
+      type: 'directory',
+      isRoot: false,
+    };
+
     const dialogRef = this.dialog.open(AddDirectoryDialogComponent, {
       width: '400px',
-      data: new DirectoryAppModel(
-        this.directory.codeProjectUuid,
-        '',
-        this.directory.directoryId,
-        this.directory.depth,
-        'directory',
-        false,
-      ),
+      data: data,
     });
 
-    dialogRef.afterClosed().subscribe((model: DirectoryAppModel) => {
+    dialogRef.afterClosed().subscribe((model) => {
       if (model) {
         this.addDirectoryEvent.emit({
           parent: this.directory,
@@ -155,16 +157,18 @@ export class DirectoryComponent {
   }
 
   editDirectoryDialog(): void {
+    const data = {
+      codeProjectUuid: this.directory.codeProjectUuid,
+      name: this.directory.name,
+      id: this.directory.id,
+      depth: this.directory.depth,
+      type: 'directory',
+      isRoot: false,
+    };
+
     const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
       width: '400px',
-      data: new DirectoryAppModel(
-        this.directory.codeProjectUuid,
-        this.directory.name,
-        this.directory.directoryId,
-        this.directory.depth,
-        'directory',
-        false,
-      ),
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((data) => {
