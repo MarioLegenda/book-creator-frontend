@@ -25,8 +25,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
   // @ts-ignore
   @ViewChild('structureWrapper') structureWrapper: ElementRef;
 
-  private expanding = false;
-
   constructor(
     private directoryRepository: DirectoryRepository,
     private fileRepository: FileRepository,
@@ -53,45 +51,41 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   expandDirectoryEvent(directory: any) {
-    this.expanding = true;
+    if (directory.isRoot) return;
 
-    if (!directory.isRoot) {
-      let tempSubject = new Subject();
+    let tempSubject = new Subject();
 
-      this.getSubstructure(directory, tempSubject);
+    this.getSubstructure(directory, tempSubject);
 
-      tempSubject.subscribe((structure: any[]) => {
-        if (!this.structureTracker.hasStructure(directory.id)) {
-          this.structureTracker.createStructure(directory.id);
+    tempSubject.subscribe((structure: any[]) => {
+      if (!this.structureTracker.hasStructure(directory.id)) {
+        this.structureTracker.createStructure(directory.id);
+      }
+
+      let inx = null;
+      for (let i = 0; i < this.structure.length; i++) {
+        if (this.structure[i].type === 'directory' && this.structure[i].id === directory.id) {
+          inx = i;
+
+          break;
         }
+      }
 
-        let inx = null;
-        for (let i = 0; i < this.structure.length; i++) {
-          if (this.structure[i].type === 'directory' && this.structure[i].id === directory.id) {
-            inx = i;
-
-            break;
-          }
+      const ids: string[] = [];
+      for (const s of structure) {
+        if (!ids.includes(s)) {
+          ids.push((s.type === 'file') ? s.id : s.id);
         }
+      }
 
-        const ids: string[] = [];
-        for (const s of structure) {
-          if (!ids.includes(s)) {
-            ids.push((s.type === 'file') ? s.id : s.id);
-          }
-        }
+      this.structureTracker.addToStructure(directory.id, ids);
 
-        this.structureTracker.addToStructure(directory.id, ids);
-
-        this.structure.splice(inx + 1, 0, ...structure);
-
-        this.expanding = false;
-      });
-    }
+      this.structure.splice(inx + 1, 0, ...structure);
+    });
   }
 
   unExpandDirectoryEvent(directory) {
-    if (this.expanding) return;
+    if (directory.isRoot) return;
 
     const structures = this.structureTracker.getStructure(directory.id);
 

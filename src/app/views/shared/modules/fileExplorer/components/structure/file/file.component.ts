@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
 import {httpGetFileContentAction, httpRemoveFile} from "../../../../../../../store/editor/httpActions";
@@ -21,6 +21,9 @@ export class FileComponent implements OnInit {
   @Input('extension') extension: string;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
+
+  // @ts-ignore
+  @ViewChild('iconRef') iconRef: ElementRef;
 
   constructor(
     private fileRepository: FileRepository,
@@ -50,7 +53,7 @@ export class FileComponent implements OnInit {
       depth = depth + 1;
     }
 
-    let wBase = 15;
+    let wBase = (depth === 1) ? 17 : 15;
     const w = 269 + (depth * wBase);
     const pl = depth * wBase;
 
@@ -102,9 +105,13 @@ export class FileComponent implements OnInit {
 
   fileHovered() {
     this.componentState.hovered = true;
+
+    this.iconRef.nativeElement.setAttribute('style', 'color: #f0b500');
   }
 
   fileUnHovered() {
     this.componentState.hovered = false;
+
+    this.iconRef.nativeElement.setAttribute('style', 'color: #b5b5b5');
   }
 }

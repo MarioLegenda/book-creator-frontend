@@ -190,7 +190,7 @@ export class DirectoryComponent {
     });
   }
 
-  handleExpandDirectory(): void {
+  onExpandDirectory(): void {
     if (!this.componentState.expanded) {
       this.expandDirectory();
       this.sendExpandDirectoryEvent();
@@ -200,13 +200,15 @@ export class DirectoryComponent {
     }
   }
 
-  expandDirectory(): void {
+  private expandDirectory(): void {
     this.componentState.icons.dirCaret = 'far fa-folder-open';
 
     this.componentState.expanded = true;
   }
 
   private unExpandDirectory(): void {
+    if (this.directory.isRoot) return;
+
     this.componentState.icons.dirCaret = 'far fa-folder';
 
     this.componentState.expanded = false;
