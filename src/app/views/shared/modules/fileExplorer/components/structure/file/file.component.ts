@@ -61,7 +61,9 @@ export class FileComponent implements OnInit {
     this.componentState.fileStyles['padding-left'] = `${pl}px`;
   }
 
-  removeFileDialog() {
+  removeFileDialog($event) {
+    $event.stopPropagation();
+
     const dialogRef = this.dialog.open(DeleteFileDialogComponent, {
       width: '400px',
       data: {name: this.file.name},
@@ -76,7 +78,9 @@ export class FileComponent implements OnInit {
     });
   }
 
-  editFileDialog() {
+  editFileDialog($event) {
+    $event.stopPropagation();
+
     const data = {
       name: this.file.name,
       id: this.file.id,
@@ -106,7 +110,9 @@ export class FileComponent implements OnInit {
   fileHovered() {
     this.componentState.hovered = true;
 
-    this.iconRef.nativeElement.setAttribute('style', 'color: #f0b500');
+    if (StaticFileWrapper.isJavascript(this.file)) {
+      this.iconRef.nativeElement.setAttribute('style', 'color: #f0b500');
+    }
   }
 
   fileUnHovered() {

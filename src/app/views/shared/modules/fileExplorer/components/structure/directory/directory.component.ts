@@ -84,7 +84,9 @@ export class DirectoryComponent {
     this.componentState.hovered = false;
   }
 
-  removeDirectoryDialog() {
+  removeDirectoryDialog($event) {
+    $event.stopPropagation();
+
     const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
       width: '400px',
       data: {name: this.directory.name},
@@ -104,7 +106,9 @@ export class DirectoryComponent {
     });
   }
 
-  newFileDialog(): void {
+  newFileDialog($event): void {
+    $event.stopPropagation();
+
     const data = {
       name: '',
       id: '',
@@ -122,6 +126,8 @@ export class DirectoryComponent {
     });
 
     dialogRef.afterClosed().subscribe((model) => {
+      if (!model) return;
+
       if (model.type && model.type === 'error') {
 
       } else {
@@ -139,7 +145,9 @@ export class DirectoryComponent {
     });
   }
 
-  newDirectoryDialog(): void {
+  newDirectoryDialog($event): void {
+    $event.stopPropagation();
+
     const data = {
       codeProjectUuid: this.directory.codeProjectUuid,
       name: '',
@@ -155,6 +163,8 @@ export class DirectoryComponent {
     });
 
     dialogRef.afterClosed().subscribe((resolver) => {
+      if (!resolver) return;
+
       if (resolver) {
         this.addDirectoryEvent.emit({
           parent: this.directory,
@@ -168,7 +178,9 @@ export class DirectoryComponent {
     });
   }
 
-  editDirectoryDialog(): void {
+  editDirectoryDialog($event): void {
+    $event.stopPropagation();
+
     const data = {
       codeProjectUuid: this.directory.codeProjectUuid,
       name: this.directory.name,
@@ -183,10 +195,14 @@ export class DirectoryComponent {
       data: data,
     });
 
-    dialogRef.afterClosed().subscribe((data) => {
-      if (!data) return;
+    dialogRef.afterClosed().subscribe((resolver) => {
+      if (!resolver) return;
 
-      this.directory.name = data.name;
+      if (resolver) {
+        const directory = resolver.factory(this.directory.codeProjectUuid, resolver.originalModel);
+
+        this.directory.name = directory.name;
+      }
     });
   }
 

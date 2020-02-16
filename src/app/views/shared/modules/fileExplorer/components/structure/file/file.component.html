@@ -15,8 +15,8 @@
     <h1 class="text">{{file.name}}</h1>
 
     <div class="action-set" *ngIf="componentState.hovered">
-      <i class="action" (click)="removeFileDialog()" [ngClass]="this.componentState.icons.removeFile"></i>
-      <i class="action" (click)="editFileDialog()" [ngClass]="this.componentState.icons.editFile"></i>
+      <i class="action" (click)="removeFileDialog($event)" [ngClass]="this.componentState.icons.removeFile"></i>
+      <i class="action" (click)="editFileDialog($event)" [ngClass]="this.componentState.icons.editFile"></i>
     </div>
   </div>
 </div>

@@ -74,7 +74,17 @@ export class DirectoryRepository {
     return this.httpClient.post(this.routeResolver.removeDirectory(), model);
   }
 
-  renameDirectory(model) {
-    return this.httpClient.post(this.routeResolver.renameDirectory(), model);
+  async renameDirectory(model) {
+    try {
+      const response: any = await this.httpClient.post(this.routeResolver.renameDirectory(), model).toPromise();
+      return {
+        factory: singleDirectoryFactory,
+        originalModel: response.data,
+      };
+    } catch (e) {
+      return {
+        error: e.error,
+      }
+    }
   }
 }

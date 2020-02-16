@@ -7,6 +7,7 @@ export class ErrorCodes {
   static readonly RootDeleteTried = 6;
   static readonly InvalidModel = 10;
   static readonly InternalError = 11;
+  static readonly RootRenameTried = 12;
 
   static readonly InvalidAccountType = 7;
   static readonly InvalidAccountProvider = 8;
