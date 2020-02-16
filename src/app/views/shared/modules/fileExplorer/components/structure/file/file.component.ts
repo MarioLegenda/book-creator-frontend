@@ -44,19 +44,18 @@ export class FileComponent implements OnInit {
       this.componentState.icons.file = "fab fa-js-square";
     }
 
-    let wBase = 15;
-    let p = 0;
-    if (this.file.depth === 1) {
-      p = 33;
-    } else if (this.file.depth === 2) {
-      p = (this.file.depth * 24);
-    } else if (this.file.depth > 2) {
-      p = (this.file.depth * 24) - 10;
+    let depth = this.file.depth;
+
+    if (depth > 1) {
+      depth = depth + 1;
     }
 
-    const w = 269 + (this.file.depth * wBase);
+    let wBase = 15;
+    const w = 269 + (depth * wBase);
+    const pl = depth * wBase;
+
     this.componentState.fileStyles['width'] = `${w}px`;
-    this.componentState.fileStyles['padding-left'] = `${p}px`;
+    this.componentState.fileStyles['padding-left'] = `${pl}px`;
   }
 
   removeFileDialog() {

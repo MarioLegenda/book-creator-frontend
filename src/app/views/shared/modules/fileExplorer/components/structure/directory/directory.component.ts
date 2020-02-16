@@ -50,8 +50,10 @@ export class DirectoryComponent {
 
   ngOnInit() {
     const w = 269 + (this.directory.depth * 15);
+    const pl = this.directory.depth * 15;
+
     this.componentState.dirStyles['width'] = `${w}px`;
-    this.componentState.dirStyles['padding-left'] = `${this.directory.depth * 15}px`;
+    this.componentState.dirStyles['padding-left'] = `${pl}px`;
     if (this.directory.isRoot) {
       this.expandDirectory();
       this.sendExpandDirectoryEvent();
