@@ -45,6 +45,10 @@ export class FileComponent implements OnInit {
   ngOnInit() {
     if (StaticFileWrapper.isJavascript(this.file)) {
       this.componentState.icons.file = "fab fa-js-square";
+    } else if (StaticFileWrapper.isHtml(this.file)) {
+      this.componentState.icons.file = "fab fa-html5";
+    } else if (StaticFileWrapper.isJson(this.file)) {
+      this.componentState.icons.file = "fab fa-js-square";
     }
 
     let depth = this.file.depth;
@@ -111,7 +115,9 @@ export class FileComponent implements OnInit {
   fileHovered() {
     this.componentState.hovered = true;
 
-    if (StaticFileWrapper.isJavascript(this.file)) {
+    if (StaticFileWrapper.isJavascript(this.file) ||
+        StaticFileWrapper.isHtml(this.file) ||
+        StaticFileWrapper.isJson(this.file)) {
       this.iconRef.nativeElement.setAttribute('style', 'color: #f0b500');
     }
   }

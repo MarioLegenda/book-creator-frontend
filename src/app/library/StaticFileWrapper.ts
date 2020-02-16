@@ -8,4 +8,13 @@ export class StaticFileWrapper {
   static isJavascript(file): boolean {
     return StaticFileWrapper.getExtension(file) === 'js';
   }
+
+  static isHtml(file): boolean {
+    return StaticFileWrapper.getExtension(file) === 'html' ||
+      StaticFileWrapper.getExtension(file) === 'htm';
+  }
+
+  static isJson(file): boolean {
+    return StaticFileWrapper.getExtension(file) === 'json';
+  }
 }

@@ -15,6 +15,7 @@ import {PlaygroundComponent} from "../workspace/playground/playground.component"
 import {WorkingAreaComponent} from "../workspace/playground/workingArea/working-area.component";
 import {ResultAreaComponent} from "../workspace/playground/resultArea/result-area.component";
 import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [

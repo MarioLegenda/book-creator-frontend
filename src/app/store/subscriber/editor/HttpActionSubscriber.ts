@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {actionTypes, httpRemoveFileFinished} from "../../editor/httpActions";
 import {viewEditorShowFile} from "../../editor/viewActions";
 import {FileRepository} from "../../../repository/FileRepository";
+import {TabSession} from "../../sessions/TabSession";
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class HttpActionSubscriber {
   constructor(
     private store: Store<any>,
     private fileRepository: FileRepository,
+    private tabSession: TabSession,
   ) {
     this.subscribeToHttpActions(store.pipe(select('editorHttpActions')));
   }
@@ -24,6 +26,12 @@ export class HttpActionSubscriber {
 
       switch (action.type) {
         case actionTypes.EDITOR_HTTP_GET_FILE_CONTENT: {
+          if (this.tabSession.has(action.id)) {
+            this.store.dispatch(viewEditorShowFile(action));
+
+            break;
+          }
+
           this.fileRepository.getFileContent(action.codeProjectUuid, action.id).subscribe((res: any) => {
             action.content = res.data.content;
 

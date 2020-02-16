@@ -23,6 +23,7 @@ import {NotFoundComponent} from "../views/notFound/not-found.component";
 import {ProfileBarModule} from "../views/shared/profileBar/profile-bar.module";
 import {CookieService} from 'ngx-cookie-service';
 import {DeviceDetectorModule} from "ngx-device-detector";
+import {TabSession} from "../store/sessions/TabSession";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {DeviceDetectorModule} from "ngx-device-detector";
     DeviceDetectorModule.forRoot(),
   ],
   providers: [
+    {provide: TabSession, useClass: TabSession},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},

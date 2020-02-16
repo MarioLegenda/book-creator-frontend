@@ -1,4 +1,7 @@
-<div class="tab" [ngClass]="{'selected-tab': selectedTab && fileTab.id === selectedTab.id}" (click)="onSelected($event)">
+<div
+  class="tab"
+  [ngClass]="{'selected-tab': selectedTab && fileTab.id === selectedTab.id}"
+  (click)="onSelected($event)">
   <p>{{fileTab.name}}</p>
   <i (click)="onClose()" class="fas fa-times"></i>
 </div>

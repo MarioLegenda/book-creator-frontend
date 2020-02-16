@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../model/app/codeEditor/FileTab";
 import Util from "../../../library/Util";
@@ -6,6 +6,8 @@ import {actionTypes as httpActionTypes} from "../../../store/editor/httpActions"
 import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions";
 import {FileRepository} from "../../../repository/FileRepository";
 import {Subject} from "rxjs";
+import {TabSession} from "../../../store/sessions/TabSession";
+import {moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'cms-editor-workspace',
@@ -14,7 +16,7 @@ import {Subject} from "rxjs";
   ],
   templateUrl: './workspace.component.html',
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements OnDestroy, OnInit {
   tabs = [];
   hasTabs = false;
   selectedTab: FileTab = null;
@@ -28,6 +30,7 @@ export class WorkspaceComponent {
   constructor(
     private store: Store<any>,
     private fileRepository: FileRepository,
+    private tabSession: TabSession,
   ) {}
 
   ngOnInit() {
@@ -62,10 +65,16 @@ export class WorkspaceComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.tabSession.clear();
+  }
+
   onTabClose(tab: FileTab) {
     if (Util.hasKey(this.indexMap, tab.id)) {
       delete this.indexMap[tab.id];
       this.tabs.splice(this.findTabIndex(tab.id), 1);
+
+      this.tabSession.remove(tab.id);
     }
 
     this.updateHasTabs();
@@ -76,6 +85,7 @@ export class WorkspaceComponent {
   }
 
   onTabSelect(tab: FileTab) {
+    this.tabSession.add(tab.id);
     this.loadFileContent(tab.id);
   }
 
