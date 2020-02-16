@@ -73,7 +73,18 @@ export class FileRepository {
     return this.httpClient.post(this.routeResolver.updateFileContent(), model);
   }
 
-  public renameFile(model) {
-    return this.httpClient.post(this.routeResolver.renameFile(), model);
+  public async renameFile(model) {
+    try {
+      const res: any = await this.httpClient.post(this.routeResolver.renameFile(), model).toPromise();
+
+      return {
+        factory: singleFileFactory,
+        originalModel: res.data
+      };
+    } catch (e) {
+      return {
+        error: e.error,
+      }
+    }
   }
 }

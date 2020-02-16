@@ -89,6 +89,7 @@ export class FileComponent implements OnInit {
       type: 'file',
       depth: this.file.depth,
       codeProjectUuid: this.file.codeProjectUuid,
+      extension: this.extension,
     };
 
     const dialogRef = this.dialog.open(EditFileDialogComponent, {

@@ -11,7 +11,11 @@ import {ErrorCodes} from "../../../../../../../../error/ErrorCodes";
 })
 export class EditDirectoryDialogComponent {
   directoryExists = null;
+  directoryNotExists = null;
+  rootRenameTried = null;
   noWhitespace = null;
+
+  newName = '';
 
   createDisabled = false;
 
@@ -21,6 +25,10 @@ export class EditDirectoryDialogComponent {
     @Inject(MAT_DIALOG_DATA) public model: any)
   {}
 
+  ngOnInit() {
+    this.newName = this.model.name;
+  }
+
   close(): void {
     this.dialogRef.close();
   }
@@ -28,13 +36,17 @@ export class EditDirectoryDialogComponent {
   onModelChange() {
     this.directoryExists = null;
     this.noWhitespace = null;
+    this.directoryNotExists = null;
+    this.rootRenameTried = null;
   }
 
   editDirectory() {
-    if (!this.model.name) return;
+    if (!this.newName) return;
 
     this.directoryExists = null;
     this.noWhitespace = null;
+    this.directoryNotExists = null;
+    this.rootRenameTried = null;
 
     this.createDisabled = true;
 
@@ -45,15 +57,19 @@ export class EditDirectoryDialogComponent {
       this.model.name,
       this.model.id,
       this.model.depth,
-      this.model.name,
+      this.newName,
     );
 
     this.directoryRepository.renameDirectory(model).then((resolver: any) => {
       if (resolver.error) {
         const errResponse = resolver.error;
 
-        if (errResponse.errorCode === ErrorCodes.ResourceExists) {
-          this.directoryExists = `Directory with name '${this.model.name}' already exists.`;
+        if (errResponse.errorCode === ErrorCodes.ResourceNotExists) {
+          this.directoryNotExists = `Directory with name '${this.newName}' doesn't seem to exist anymore`;
+        } else if (errResponse.errorCode === ErrorCodes.ResourceExists) {
+          this.directoryExists = `Directory with name '${this.newName}' already exists.`;
+        } else if (errResponse.errorCode === ErrorCodes.RootRenameTried) {
+          this.directoryExists = `Directory with name '${this.newName}' is a root directory and cannot be renamed.`;
         }
 
         this.createDisabled = false;
@@ -64,11 +80,9 @@ export class EditDirectoryDialogComponent {
   }
 
   private validateInput(): boolean {
-    this.noWhitespace = null;
-
     const invalid = /\s/;
 
-    if (invalid.test(this.model.name)) {
+    if (invalid.test(this.newName)) {
       this.noWhitespace = `Invalid directory name. Whitespace in directory names are not allowed.`;
 
       this.createDisabled = false;

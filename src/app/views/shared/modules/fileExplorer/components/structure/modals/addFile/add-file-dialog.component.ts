@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FileRepository} from "../../../../../../../../repository/FileRepository";
 import {HttpModel} from "../../../../../../../../model/http/HttpModel";
@@ -9,7 +9,7 @@ import {ErrorCodes} from "../../../../../../../../error/ErrorCodes";
   templateUrl: './add-file-modal.component.html',
   styleUrls: ['../../../../../../../../main/global-dialog.component.scss']
 })
-export class AddFileDialogComponent {
+export class AddFileDialogComponent implements OnInit {
   fileExists = null;
   noWhitespace = null;
   noExtension = null;
@@ -17,10 +17,16 @@ export class AddFileDialogComponent {
 
   createDisabled = false;
 
+  private validExtensions = [];
+
   constructor(
     private fileRepository: FileRepository,
     public dialogRef: MatDialogRef<AddFileDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public model: any) {}
+
+  ngOnInit() {
+    this.validExtensions = [this.model.extension, ...['html', 'htm', 'json']];
+  }
 
   close(): void {
     this.dialogRef.close();
@@ -101,8 +107,8 @@ export class AddFileDialogComponent {
       return false;
     }
 
-    if (split[split.length - 1] !== this.model.extension) {
-      this.invalidExtension = `Invalid file extension. For this project, a file name must have a .${this.model.extension} extension.`;
+    if (!this.validExtensions.includes(split[split.length - 1])) {
+      this.invalidExtension = `Invalid file extension. For this project, a file name must have either ${this.validExtensions.join(', ')} extension.`;
 
       this.createDisabled = false;
 

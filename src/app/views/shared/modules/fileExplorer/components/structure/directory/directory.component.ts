@@ -188,6 +188,7 @@ export class DirectoryComponent {
       depth: this.directory.depth,
       type: 'directory',
       isRoot: false,
+      extension: this.extension,
     };
 
     const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {

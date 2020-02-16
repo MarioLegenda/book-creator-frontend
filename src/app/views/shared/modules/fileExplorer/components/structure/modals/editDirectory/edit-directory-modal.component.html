@@ -5,14 +5,14 @@
 
   <div class="header">
     <i class="far fa-edit icon"></i>
-    <p>Rename directory <span class="highlight">{{model.name}}</span></p>
+    <p>Rename directory <span class="highlight">{{this.model.name}}</span></p>
   </div>
 
   <div class="dialog-content form-group">
       <input
         cdkFocusInitial
         (keyup.enter)="editDirectory()"
-        [(ngModel)]="model.name"
+        [(ngModel)]="newName"
         (ngModelChange)="onModelChange()"
         placeholder="Name"
         class="form-input form-control">
@@ -20,6 +20,14 @@
 
   <p *ngIf="directoryExists" class="error col-xs-12 col-md-12 col-lg-12">
     {{directoryExists}}
+  </p>
+
+  <p *ngIf="directoryNotExists" class="error col-xs-12 col-md-12 col-lg-12">
+    {{directoryNotExists}}
+  </p>
+
+  <p *ngIf="rootRenameTried" class="error col-xs-12 col-md-12 col-lg-12">
+    {{rootRenameTried}}
   </p>
 
   <p *ngIf="noWhitespace" class="error col-xs-12 col-md-12 col-lg-12">

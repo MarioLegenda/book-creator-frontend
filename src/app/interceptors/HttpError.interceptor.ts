@@ -76,17 +76,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
                 this.document.location.href = '/';
               }
-
-              // unrecoverable
-              if (!pathFound) {
-                this.store.dispatch(globalServerError({
-                  title: 'Server error',
-                  description: 'There has been a server error. Sorry about that. We are working hard on solving the problem. Thank you for your patience. In order to try to solve the problem, please refresh the page or press \'Refresh\'',
-                  runCounter: false,
-                }));
-
-                return throwError('unrecoverable');
-              }
             }
 
             // unrecoverable

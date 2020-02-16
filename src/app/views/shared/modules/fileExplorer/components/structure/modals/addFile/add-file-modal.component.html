@@ -8,6 +8,14 @@
     <p>Add a new file</p>
   </div>
 
+  <div class="info">
+    <h1 class="title">
+      <i class="fas fa-info icon"></i>
+    </h1>
+
+    <p>Permitted file extensions for this project are <span class="highlight">{{this.validExtensions.join(', ')}}</span>.</p>
+  </div>
+
   <div class="dialog-content form-group">
       <input cdkFocusInitial (keyup.enter)="createFile()" [(ngModel)]="model.name" (ngModelChange)="onModelChange()" placeholder="Name" class="form-input form-control">
   </div>

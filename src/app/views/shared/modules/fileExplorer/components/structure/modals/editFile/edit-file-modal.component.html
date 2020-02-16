@@ -8,9 +8,33 @@
     <p>Rename file <span class="highlight">{{model.name}}</span></p>
   </div>
 
-  <div class="dialog-content form-group">
-      <input cdkFocusInitial (keyup.enter)="editFile()" [(ngModel)]="placeholderName"  placeholder="Name" class="form-input form-control">
+  <div class="info">
+    <h1 class="title">
+      <i class="fas fa-info icon"></i>
+    </h1>
+
+    <p>Permitted file extensions for this project are <span class="highlight">{{this.validExtensions.join(', ')}}</span>.</p>
   </div>
+
+  <div class="dialog-content form-group">
+      <input cdkFocusInitial (keyup.enter)="editFile()" [(ngModel)]="newName"  placeholder="Name" class="form-input form-control">
+  </div>
+
+  <p *ngIf="fileExists" class="error col-xs-12 col-md-12 col-lg-12">
+    {{fileExists}}
+  </p>
+
+  <p *ngIf="noWhitespace" class="error col-xs-12 col-md-12 col-lg-12">
+    {{noWhitespace}}
+  </p>
+
+  <p *ngIf="noExtension" class="error col-xs-12 col-md-12 col-lg-12">
+    {{noExtension}}
+  </p>
+
+  <p *ngIf="invalidExtension" class="error col-xs-12 col-md-12 col-lg-12">
+    {{invalidExtension}}
+  </p>
 
   <div class="dialog-actions">
     <button class="btn create" cdkFocusInitial (click)="editFile()">Rename</button>
