@@ -22,7 +22,7 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
     icons: {
       minimize: "fa fa-minus",
     }
-  }
+  };
 
   ngOnInit() {
     this.resultCommSubscription = this.resultCommunicator.subscribe(data => {
@@ -58,7 +58,7 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
 
   private maximize() {
     this.resultAreaRef.nativeElement.setAttribute('style', 'height: 200px; top: 200px; -webkit-box-shadow: -3px -8px 19px -1px rgba(232,232,232,1); -moz-box-shadow: -3px -8px 19px -1px rgba(232,232,232,1); box-shadow: -3px -8px 19px -1px rgba(232,232,232,1)');
-    
+
     this.componentState.icons.minimize = 'fa fa-minus';
   }
 }
