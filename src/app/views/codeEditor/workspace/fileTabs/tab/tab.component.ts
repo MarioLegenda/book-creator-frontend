@@ -15,7 +15,7 @@ export class TabComponent {
   @Output('tabCloseEvent') tabCloseEvent = new EventEmitter();
   @Output('tabSelectEvent') tabSelectEvent = new EventEmitter();
 
-  private selected = false;
+  private selected = null;
 
   onClose() {
     this.tabCloseEvent.emit(this.fileTab);

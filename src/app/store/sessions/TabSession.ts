@@ -17,6 +17,16 @@ export class TabSession {
     }
   }
 
+  get(fileId) {
+    const index = this.openTabs.indexOf(fileId);
+
+    return this.openTabs[index];
+  }
+
+  first() {
+    return this.openTabs[0];
+  }
+
   clear(): void {
     this.openTabs = [];
   }

@@ -26,7 +26,11 @@ export class HttpActionSubscriber {
 
       switch (action.type) {
         case actionTypes.EDITOR_HTTP_GET_FILE_CONTENT: {
-          if (this.tabSession.has(action.id)) return;
+          if (this.tabSession.has(action.id)) {
+            this.store.dispatch(viewEditorShowFile(action));
+
+            break;
+          }
 
           this.fileRepository.getFileContent(action.codeProjectUuid, action.id).subscribe((res: any) => {
             action.content = res.data.content;

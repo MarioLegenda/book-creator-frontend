@@ -18,8 +18,8 @@ import {Subject} from "rxjs";
 export class WorkspaceComponent {
   tabs = [];
   hasTabs = false;
-
   selectedTab: FileTab = null;
+
   contentLoadedEvent = new Subject();
 
   @Input('project') project: any;
@@ -35,15 +35,16 @@ export class WorkspaceComponent {
   ngOnInit() {
     this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
       if (action) {
-
         switch (action.type) {
           case viewActionTypes.VIEW_EDITOR_SHOW_FILE: {
-            if (!Util.hasKey(this.tabs, action.id)) {
+            if (!Util.hasKey(this.indexMap, action.id)) {
               const tab: FileTab = new FileTab(action.id, action.name);
               this.tabs.unshift(tab);
               this.indexMap[action.id] = this.findTabIndex(action.id);
 
               this.onTabSelect(tab);
+            } else {
+              this.onExistingTabSelect(action.id);
             }
 
             break;
@@ -67,20 +68,23 @@ export class WorkspaceComponent {
     if (Util.hasKey(this.indexMap, tab.id)) {
       delete this.indexMap[tab.id];
       this.tabs.splice(this.findTabIndex(tab.id), 1);
-
-      this.tabSession.remove(tab.id);
     }
 
     this.updateHasTabs();
-    this.selectedTab = null;
+
+    if (this.hasTabs) {
+      this.onExistingTabSelect(this.tabs[0].id);
+    }
   }
 
   onTabSelect(tab: FileTab) {
-    this.selectedTab = tab;
+    this.loadFileContent(tab.id);
+  }
 
-    this.fileRepository.getFileContent(this.project.uuid, tab.id).subscribe((body: any) => {
-      this.contentLoadedEvent.next(body.data.content);
-    });
+  onExistingTabSelect(tabId: string) {
+    if (Util.hasKey(this.indexMap, tabId)) {
+      this.loadFileContent(tabId);
+    }
   }
 
   private updateHasTabs(): void {
@@ -90,6 +94,7 @@ export class WorkspaceComponent {
       this.hasTabs = true;
     } else if (keyNum <= 0) {
       this.hasTabs = false;
+      this.selectedTab = null;
     }
   }
 
@@ -101,5 +106,17 @@ export class WorkspaceComponent {
     }
 
     return null;
+  }
+
+  private loadFileContent(tabId: string) {
+    this.fileRepository.getFileContent(this.project.uuid, tabId).subscribe((body: any) => {
+      this.contentLoadedEvent.next(body.data.content);
+
+      const idx = this.findTabIndex(tabId);
+
+      this.selectedTab = this.tabs[idx];
+
+      this.tabs = [].concat(this.tabs);
+    });
   }
 }
