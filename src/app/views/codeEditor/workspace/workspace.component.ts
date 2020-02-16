@@ -1,8 +1,7 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../model/app/codeEditor/FileTab";
 import Util from "../../../library/Util";
-import {TabSession} from "../../../store/sessions/TabSession";
 import {actionTypes as httpActionTypes} from "../../../store/editor/httpActions";
 import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions";
 import {FileRepository} from "../../../repository/FileRepository";
@@ -28,7 +27,6 @@ export class WorkspaceComponent {
 
   constructor(
     private store: Store<any>,
-    private tabSession: TabSession,
     private fileRepository: FileRepository,
   ) {}
 
