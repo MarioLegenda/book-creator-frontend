@@ -462,4 +462,16 @@ export class HttpModel {
       },
     }
   }
+
+  static searchDirsAndFiles(
+    codeProjectUuid: string,
+    searchTerm: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        searchTerm,
+      }
+    }
+  }
 }

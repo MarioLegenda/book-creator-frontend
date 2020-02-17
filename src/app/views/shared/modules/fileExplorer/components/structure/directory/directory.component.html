@@ -21,6 +21,7 @@
     <h1 class="text">{{directory.name}}</h1>
 
     <div class="action-set" *ngIf="componentState.hovered">
+
       <i class="action" *ngIf="!directory.isRoot" (click)="removeDirectoryDialog($event)" [ngClass]="this.componentState.icons.removeDirectory"></i>
       <i class="action" (click)="newDirectoryDialog($event)" [ngClass]="this.componentState.icons.newDir"></i>
       <i class="action" (click)="newFileDialog($event)" [ngClass]="this.componentState.icons.newFile"></i>

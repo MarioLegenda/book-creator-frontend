@@ -17,7 +17,7 @@ import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions
     {useClass: StructureTracker, provide: StructureTracker}
   ]
 })
-export class StructureComponent implements OnInit, AfterViewInit {
+export class StructureComponent implements OnInit {
   structure = [];
 
   @Input('project') project: any;
@@ -34,12 +34,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.expandRootDirectory();
-  }
-
-  ngAfterViewInit() {
-    const height = document.body.offsetHeight - 87;
-
-    this.structureWrapper.nativeElement.setAttribute('style', `height: ${height}px`);
   }
 
   isDirectory(entry): boolean {
@@ -86,7 +80,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
   unExpandDirectoryEvent(directory) {
     if (directory.isRoot) return;
-
+    
     const structures = this.structureTracker.getStructure(directory.id);
 
     this.removeStructures(structures);
@@ -179,7 +173,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
       this.getSubstructure(directory, tempSubject);
 
-      tempSubject.subscribe((structure: any[]) => {
+      tempSubject.subscribe((structure: any) => {
         this.structure = [...this.structure, ...structure];
 
         const ids: string[] = [];
@@ -195,6 +189,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
   private getSubstructure(directory: any, subject: Subject<any>) {
     this.directoryRepository.getSubdirectories(this.project.uuid, directory.id).subscribe((resolver) => {
       const structure = [];
+
       const models = resolver.factory(this.project.uuid, resolver.originalModel);
 
       for (const model of models) {
@@ -202,9 +197,9 @@ export class StructureComponent implements OnInit, AfterViewInit {
       }
 
       this.fileRepository.getFilesFromDirectory(this.project.uuid, directory.id).subscribe((resolver) => {
-        const files = resolver.factory(this.project.uuid, resolver.originalModel);
-        for (const file of files) {
-          structure.push(file);
+        const models = resolver.factory(this.project.uuid, resolver.originalModel);
+        for (const model of models) {
+          structure.push(model);
         }
 
         subject.next(structure);

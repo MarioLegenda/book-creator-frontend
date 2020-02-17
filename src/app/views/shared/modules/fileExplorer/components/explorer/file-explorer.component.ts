@@ -2,6 +2,8 @@ import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@a
 import Util from "../../../../../../library/Util";
 import {Subject, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
+import {HttpModel} from "../../../../../../model/http/HttpModel";
+import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 
 @Component({
   selector: 'cms-file-explorer',
@@ -37,16 +39,18 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
   private typeAheadSource = new Subject<string>();
   private typeAheadObservable: Subscription = null;
 
+  constructor(
+    private directoryRepository: DirectoryRepository
+  ) {}
+
   ngOnInit() {
     this.subscribeTypeahead();
   }
 
   ngAfterViewInit(): void {
-    Util.setHeightFromWrapper(document.body, this.wrapperRef.nativeElement);
+    const height = window.innerHeight;
 
-    if (this.actionWrapperRef) {
-      Util.setHeightFromWrapper(document.body, this.actionWrapperRef.nativeElement);
-    }
+    this.wrapperRef.nativeElement.setAttribute('style', `max-height: ${height}px`)
   }
 
   onSearchFocus() {
@@ -54,6 +58,8 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
   }
 
   onSearchBlur() {
+    if (this.componentState.searchTerm) return;
+
     this.searchFocused = false;
   }
 
@@ -70,7 +76,16 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
       debounceTime(500),
     )
       .subscribe(() => {
-        
+        if (!this.componentState.searchTerm) return;
+
+        const model = HttpModel.searchDirsAndFiles(
+          this.project.uuid,
+          this.componentState.searchTerm,
+        );
+
+        this.directoryRepository.searchDirsAndFiles(model).subscribe((data) => {
+          console.log(data);
+        });
       });
   }
 }

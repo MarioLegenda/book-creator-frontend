@@ -57,7 +57,7 @@ export class FileComponent implements OnInit {
       depth = depth + 1;
     }
 
-    let wBase = (depth === 1) ? 17 : 15;
+    let wBase = (depth === 1) ? 31 : 15;
     const w = 269 + (depth * wBase);
     const pl = depth * wBase;
 

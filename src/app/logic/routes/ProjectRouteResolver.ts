@@ -16,6 +16,7 @@ export class ProjectRouteResolver {
     removeCodeProject: `${this.bookApiUri}/api/v1/code-projects/remove`,
     searchCodeProjects: `${this.bookApiUri}/api/v1/code-projects/search`,
     updateCodeProject: `${this.bookApiUri}/api/v1/code-projects/update`,
+    searchDirsAndFiles: `${this.bookApiUri}/api/v1/directory/search`,
   };
 
   createCodeProject(): string {
@@ -48,5 +49,9 @@ export class ProjectRouteResolver {
 
   updateCodeProject(): string {
     return this.routes.updateCodeProject;
+  }
+
+  searchDirsAndFiles(): string {
+    return this.routes.searchDirsAndFiles;
   }
 }

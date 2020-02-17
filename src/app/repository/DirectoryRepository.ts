@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
 import {reduce} from "rxjs/operators";
+import {ProjectRouteResolver} from "../logic/routes/ProjectRouteResolver";
 
 function singleDirectoryFactory(codeProjectUuid, originalModel) {
   return Object.assign({}, {
@@ -28,7 +29,8 @@ function directoryCollectionFactory(codeProjectUuid, originalModel) {
 export class DirectoryRepository {
   constructor(
     private httpClient: HttpClient,
-    private routeResolver: CodeEditorRouteResolver
+    private routeResolver: CodeEditorRouteResolver,
+    private projectRouteResolver: ProjectRouteResolver,
   ) {}
 
   getRootDirectory(codeProjectUuid: string) {
@@ -86,5 +88,14 @@ export class DirectoryRepository {
         error: e.error,
       }
     }
+  }
+
+  searchDirsAndFiles(model) {
+    return this.httpClient.post(this.projectRouteResolver.searchDirsAndFiles(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      )
   }
 }
