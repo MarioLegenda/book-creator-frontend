@@ -13,17 +13,26 @@
       </div>
 
       <div
-        class="action"
-        [ngClass]="{'selected-action': componentState.selectedAction === 'search'}"
-        (click)="selectAction('search')">
-        <i class="fas fa-search"></i>
+        class="action github-disabled"
+        matTooltip="Github integration - coming soon">
+        <i class="fab fa-github"></i>
       </div>
     </div>
   </div>
 
   <div class="editor-dir-structure">
     <div class="title">
-      <h1>FILE EXPLORER</h1>
+      <h1>Rebel Explorer</h1>
+    </div>
+
+    <div class="search">
+      <i *ngIf="!searchFocused" class="fas fa-search"></i>
+      <input
+        [(ngModel)]="componentState.searchTerm"
+        (keyup)="onSearchTerm()"
+        (focus)="onSearchFocus()"
+        (blur)="onSearchBlur()"
+        type="text"/>
     </div>
 
     <div class="project-name">

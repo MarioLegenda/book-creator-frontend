@@ -14,13 +14,12 @@
       padding: 15px;
 
       border-bottom: 1px solid white;
-
-      font-size: 14px;
     }
 
     .title h1 {
       color: $textColor;
-      font-size: 14px;
+      font-size: 1.1em;
+      font-family: $logoFont;
 
       margin: 0;
     }
@@ -41,6 +40,27 @@
 
         font-size: 14px;
         color: $textColor;
+      }
+    }
+
+    .search {
+      position: relative;
+
+      border-top: 1px solid $lightestGray;
+
+      input {
+        display: block;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+        padding: 15px;
+      }
+
+      i {
+        position: absolute;
+        bottom: 18px; left: 15px;
+        font-size: 1.2em;
+        color: $lighterGray;
       }
     }
   }
@@ -79,6 +99,16 @@
 
     .selected-action {
       border-left: 4px solid $editorMainColor;
+    }
+
+    .github-disabled {
+      color: $lightestGray;
+      border-left: 4px solid $lightestGray;
+
+      &:hover {
+        color: $lightestGray;
+        cursor: not-allowed;
+      }
     }
   }
 }

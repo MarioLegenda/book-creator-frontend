@@ -11,6 +11,7 @@ import {EditDirectoryDialogComponent} from "./components/structure/modals/editDi
 import {EditFileDialogComponent} from "./components/structure/modals/editFile/edit-file-dialog.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTooltipModule,
   ],
   entryComponents: [
     AddDirectoryDialogComponent,
