@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 import {FileRepository} from "../../../../../../repository/FileRepository";
 import {Subject} from "rxjs";
@@ -80,7 +80,7 @@ export class StructureComponent implements OnInit {
 
   unExpandDirectoryEvent(directory) {
     if (directory.isRoot) return;
-    
+
     const structures = this.structureTracker.getStructure(directory.id);
 
     this.removeStructures(structures);
@@ -113,9 +113,18 @@ export class StructureComponent implements OnInit {
 
     this.structureTracker.addItemToStructure(parent.id, file.id);
 
-    const idx: number = this.structure.findIndex(val => val.id === parent.id);
+    let idx = 0;
+    for (let i = 0; i < this.structure.length; i++) {
+      const s = this.structure[i];
 
-    this.structure.splice(idx + this.structureTracker.getStructureLen(parent.id), 0, file);
+      if (s.type === 'file' && s.directoryId === file.directoryId) {
+        idx = i;
+      }
+    }
+
+    console.log(idx);
+
+    this.structure.splice(idx + 1, 0, file);
   }
 
   removeFileEvent(file) {
