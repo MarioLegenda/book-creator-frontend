@@ -113,7 +113,7 @@ export class StructureComponent implements OnInit {
 
     this.structureTracker.addItemToStructure(parent.id, file.id);
 
-    let idx = 0;
+    let idx = null;
     for (let i = 0; i < this.structure.length; i++) {
       const s = this.structure[i];
 
@@ -122,7 +122,15 @@ export class StructureComponent implements OnInit {
       }
     }
 
-    console.log(idx);
+    if (idx === null) {
+      for (let i = 0; i < this.structure.length; i++) {
+        const s = this.structure[i];
+
+        if (s.type === 'directory' && s.id === file.directoryId) {
+          idx = i;
+        }
+      }
+    }
 
     this.structure.splice(idx + 1, 0, file);
   }
