@@ -20,6 +20,7 @@ import {SearchComponent} from "../../shared/search/search.component";
 import {MatSelectModule} from "@angular/material/select";
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
 import {RemoveItemService} from "../sharedServices/RemoveItemService";
+import {CodeProjectsManagerRoutingModule} from "../codeProjectsManagerModule/module/code-projects-manager-routing.module";
 
 @NgModule({
   declarations: [

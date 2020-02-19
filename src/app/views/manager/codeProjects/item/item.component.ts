@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BlogRepository} from "../../../../repository/BlogRepository";
 import {MatDialog} from "@angular/material/dialog";
-import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {Router} from "@angular/router";
@@ -40,6 +38,8 @@ export class ItemComponent implements OnInit {
 
   onManage($event) {
     $event.stopPropagation();
+
+    this.router.navigate([`/cms/management/code-projects-manager/manage/${this.item.shortId}`])
   }
 
   onEdit($event) {

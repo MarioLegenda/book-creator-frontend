@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'user-section',
     loadChildren: () => import('./../userSectionModule/module/user-section.module').then(m => m.UserSectionModule)
   },
+  {
+    path: 'code-projects-manager/manage/:shortId',
+    loadChildren: () => import('./../codeProjectsManagerModule/module/code-projects-manager.module').then(m => m.CodeProjectsManagerModule)
+  },
 ];
 
 @NgModule({
