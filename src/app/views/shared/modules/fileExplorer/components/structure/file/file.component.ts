@@ -53,6 +53,10 @@ export class FileComponent implements OnInit {
 
     let depth = this.file.depth;
 
+    if (this.file.searched) {
+      depth = 1;
+    }
+
     if (depth > 1) {
       depth = depth + 1;
     }

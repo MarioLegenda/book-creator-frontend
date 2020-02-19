@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import Util from "../../../../../../library/Util";
-import {Subject, Subscription} from "rxjs";
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ReplaySubject, Subject, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {HttpModel} from "../../../../../../model/http/HttpModel";
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
@@ -24,6 +23,8 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
   @Input('enableRemoveFile') enableRemoveFile: boolean = true;
   @Input('enableEditFile') enableEditFile: boolean = true;
   @Input('enableEditDirectory') enableEditDirectory: boolean = true;
+
+  searchSubject = new ReplaySubject();
 
   // @ts-ignore
   @ViewChild('wrapperRef') wrapperRef: ElementRef;
@@ -76,7 +77,14 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
       debounceTime(500),
     )
       .subscribe(() => {
-        if (!this.componentState.searchTerm) return;
+        if (!this.componentState.searchTerm) {
+          return this.searchSubject.next({
+            directories: [],
+            files: [],
+            isEmpty: true,
+            restart: true,
+          });
+        }
 
         const model = HttpModel.searchDirsAndFiles(
           this.project.uuid,
@@ -84,7 +92,14 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
         );
 
         this.directoryRepository.searchDirsAndFiles(model).subscribe((data) => {
-          console.log(data);
+          const searchResult = {
+            directories: data.directories.map(d => {d.type = 'directory'; return d}),
+            files: data.files.map(f => {f.type = 'file'; return f}),
+            isEmpty: data.isEmpty,
+            restart: (!this.componentState.searchTerm),
+          };
+
+          this.searchSubject.next(searchResult);
         });
       });
   }

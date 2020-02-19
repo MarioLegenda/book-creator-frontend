@@ -6,7 +6,6 @@ import {Injectable} from "@angular/core";
 })
 export class StructureTracker {
   private structure = {};
-  private opened = 0;
 
   hasStructure(key: string): boolean {
     return Util.hasKey(this.structure, key);

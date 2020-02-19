@@ -94,7 +94,14 @@ export class DirectoryRepository {
     return this.httpClient.post(this.projectRouteResolver.searchDirsAndFiles(), model)
       .pipe(
         reduce((acc, res: any) => {
-          return res.data;
+          const data = res.data;
+          if (data.directories.length === 0 && data.files.length === 0) {
+            data.isEmpty = true;
+          } else {
+            data.isEmpty = false;
+          }
+
+          return data;
         }, {}),
       )
   }

@@ -1,7 +1,7 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 import {FileRepository} from "../../../../../../repository/FileRepository";
-import {Subject} from "rxjs";
+import {ReplaySubject, Subject} from "rxjs";
 import {StructureTracker} from "../../../../../../library/StructureTracker";
 import {Store} from "@ngrx/store";
 import {viewEditorDirectoryEmptied} from "../../../../../../store/editor/viewActions";
@@ -17,13 +17,16 @@ import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions
     {useClass: StructureTracker, provide: StructureTracker}
   ]
 })
-export class StructureComponent implements OnInit {
+export class StructureComponent implements OnInit, OnDestroy {
   structure = [];
 
   @Input('project') project: any;
+  @Input('searchSubject') searchSubject: ReplaySubject<any>;
 
   // @ts-ignore
   @ViewChild('structureWrapper') structureWrapper: ElementRef;
+
+  private searchSubscriber;
 
   constructor(
     private directoryRepository: DirectoryRepository,
@@ -33,7 +36,15 @@ export class StructureComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.searchSubscriber = this.searchSubject.subscribe((data) => {
+      this.onDirectorySearch(data);
+    });
+
     this.expandRootDirectory();
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscriber.unsubscribe();
   }
 
   isDirectory(entry): boolean {
@@ -83,7 +94,9 @@ export class StructureComponent implements OnInit {
 
     const structures = this.structureTracker.getStructure(directory.id);
 
-    this.removeStructures(structures);
+    if (structures) {
+      this.removeStructures(structures, false);
+    }
 
     this.structureTracker.clearStructure(directory.id);
   }
@@ -117,18 +130,16 @@ export class StructureComponent implements OnInit {
     for (let i = 0; i < this.structure.length; i++) {
       const s = this.structure[i];
 
+      if (s.type === 'directory' && s.id === file.directoryId) {
+        idx = i;
+      }
+
       if (s.type === 'file' && s.directoryId === file.directoryId) {
         idx = i;
       }
-    }
 
-    if (idx === null) {
-      for (let i = 0; i < this.structure.length; i++) {
-        const s = this.structure[i];
-
-        if (s.type === 'directory' && s.id === file.directoryId) {
-          idx = i;
-        }
+      if (s.type === 'directory' && s.parent === parent.id) {
+        idx = i;
       }
     }
 
@@ -167,7 +178,7 @@ export class StructureComponent implements OnInit {
 
     const structures = this.structureTracker.getStructure(directory.id);
 
-    this.removeStructures(structures);
+    this.removeStructures(structures, true);
 
     this.structureTracker.clearStructure(directory.id);
 
@@ -224,13 +235,13 @@ export class StructureComponent implements OnInit {
     });
   }
 
-  private removeStructures(structures: string[]): void {
+  private removeStructures(structures: string[], closeTab: boolean = false): void {
     for (const s of structures) {
       if (this.structureTracker.hasStructure(s)) {
         const st = this.structureTracker.getStructure(s);
         this.structureTracker.clearStructure(s);
 
-        this.removeStructures(st);
+        if (st) this.removeStructures(st);
       }
 
       this.structureTracker.clearStructure(s);
@@ -244,7 +255,7 @@ export class StructureComponent implements OnInit {
 
       if (idx !== -1) {
         if (this.structure[idx].type === 'file') {
-          this.store.dispatch(httpRemoveFileFinished(this.structure[idx]));
+          if (closeTab) this.store.dispatch(httpRemoveFileFinished(this.structure[idx]));
         }
 
         this.structure.splice(idx, 1);
@@ -285,6 +296,47 @@ export class StructureComponent implements OnInit {
           break;
         }
       }
+    }
+  }
+
+  private onDirectorySearch(data) {
+    const restart = data.restart;
+
+    if (restart) {
+      this.structureTracker.clearStructure(this.structure[0].id);
+      this.structure = [];
+
+      this.expandRootDirectory();
+
+      return;
+    }
+
+    this.structure.splice(1, this.structure.length);
+
+    const root = this.structure[0];
+    const directories = data.directories;
+    const files = data.files;
+
+    for (const dir of directories) {
+      if (!this.structureTracker.hasStructure(dir.id)) {
+        this.structureTracker.createStructure(dir.id);
+      }
+
+      this.structure.push(dir);
+
+      this.structureTracker.addItemToStructure(dir.id, dir);
+    }
+
+    for (const file of files) {
+      if (!this.structureTracker.hasStructure(file.id)) {
+        this.structureTracker.createStructure(file.id);
+      }
+
+      file.searched = true;
+
+      this.structure.push(file);
+
+      this.structureTracker.addItemToStructure(root.id, file);
     }
   }
 }
