@@ -1,4 +1,14 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
 import {httpGetFileContentAction, httpRemoveFile} from "../../../../../../../store/editor/httpActions";
@@ -15,12 +25,14 @@ import {StaticFileWrapper} from "../../../../../../../library/StaticFileWrapper"
   ],
   templateUrl: './file.component.html',
 })
-export class FileComponent implements OnInit {
+export class FileComponent implements OnInit, OnChanges {
   @Input('file') file;
 
   @Input('extension') extension: string;
+  @Input('selectedItem') selectedItem: any;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
+  @Output('fileAttachedEvent') fileAttachedEvent = new EventEmitter();
 
   // @ts-ignore
   @ViewChild('iconRef') iconRef: ElementRef;
@@ -34,6 +46,8 @@ export class FileComponent implements OnInit {
   componentState = {
     showed: false,
     hovered: false,
+    attachActionSet: false,
+    selected: false,
     fileStyles: {},
     icons: {
       removeFile: 'far fa-trash-alt remove',
@@ -67,6 +81,19 @@ export class FileComponent implements OnInit {
 
     this.componentState.fileStyles['width'] = `${w}px`;
     this.componentState.fileStyles['padding-left'] = `${pl}px`;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.selectedItem && !changes.selectedItem.firstChange) {
+      const data = changes.selectedItem.currentValue;
+
+      if (data.type !== 'file') return;
+
+      if (data.id !== this.file.id) {
+        this.componentState.attachActionSet = false;
+        this.componentState.selected = false;
+      }
+    }
   }
 
   removeFileDialog($event) {
@@ -114,6 +141,15 @@ export class FileComponent implements OnInit {
 
   showFile() {
     this.store.dispatch(httpGetFileContentAction(this.file));
+  }
+
+  onAttachActionSet() {
+    this.componentState.attachActionSet = true;
+    this.componentState.selected = true;
+    this.fileAttachedEvent.emit({
+      type: 'file',
+      id: this.file.id,
+    });
   }
 
   fileHovered() {

@@ -4,6 +4,8 @@
   width: 269px;
   float: left;
 
+  border-left: 2px solid white;
+
   .dir-name {
     width: 100%;
     float: left;
@@ -35,9 +37,24 @@
   &:hover {
     background-color: $lightestGray;
     cursor: pointer;
+    border-left: 2px solid $lightestGray;
   }
 
   &:hover .dir-name .icon {
     color: $appBlack;
+  }
+}
+
+.dir-selected {
+  background-color: $lightestGray;
+  border-left: 2px solid $mainAppColor;
+
+  .dir-name .icon {
+    color: $appBlack;
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-left: 2px solid $mainAppColor;
   }
 }

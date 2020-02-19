@@ -19,6 +19,7 @@ import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions
 })
 export class StructureComponent implements OnInit, OnDestroy {
   structure = [];
+  selectedItem = null;
 
   @Input('project') project: any;
   @Input('searchSubject') searchSubject: ReplaySubject<any>;
@@ -187,6 +188,10 @@ export class StructureComponent implements OnInit, OnDestroy {
     this.sendDirectoryEmptied(directory.id);
   }
 
+  onItemAttachEvent(item) {
+    this.selectedItem = item;
+  }
+
   private expandRootDirectory() {
     this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((resolver) => {
       const directory = resolver.factory(this.project.uuid, resolver.originalModel);
@@ -261,24 +266,6 @@ export class StructureComponent implements OnInit, OnDestroy {
         this.structure.splice(idx, 1);
       }
     }
-  }
-
-  private sortStructure() {
-    this.structure.sort((a, b) => {
-      if (a.type === 'file' || b.type === 'file') {
-        return 0;
-      }
-
-      if (a.name < b.name) {
-        return -1;
-      }
-
-      if (a.name > b.name) {
-        return 1;
-      }
-
-      return 0;
-    });
   }
 
   private removeDirectoryStructure(directoryId: string) {

@@ -8,6 +8,8 @@
         (addDirectoryEvent)="addDirectoryEvent($event)"
         (addFileEvent)="addFileEvent($event)"
         (removeDirectoryEvent)="removeDirectoryEvent($event)"
+        (directoryAttachedEvent)="onItemAttachEvent($event)"
+        [selectedItem]="selectedItem"
         [extension]="project.extension"
         *ngIf="isDirectory(item)"
 
@@ -16,6 +18,8 @@
 
       <cms-file
         *ngIf="isFile(item)"
+        (fileAttachedEvent)="onItemAttachEvent($event)"
+        [selectedItem]="selectedItem"
         [file]="item"
         [extension]="project.extension"
         (fileRemovedEvent)="removeFileEvent($event)">

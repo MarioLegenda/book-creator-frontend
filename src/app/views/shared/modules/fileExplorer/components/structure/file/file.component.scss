@@ -37,3 +37,11 @@
     color: $appBlack;
   }
 }
+
+.file-selected {
+  background-color: rgba(107, 149, 255, 0.4);
+
+  .file-name .icon {
+    color: $appBlack;
+  }
+}

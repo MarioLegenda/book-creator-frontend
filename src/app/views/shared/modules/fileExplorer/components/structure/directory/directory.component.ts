@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
 import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
@@ -17,28 +17,32 @@ import {HttpModel} from "../../../../../../../model/http/HttpModel";
   ],
   templateUrl: './directory.component.html',
 })
-export class DirectoryComponent {
+export class DirectoryComponent implements OnInit, OnChanges {
   @Input('directory') directory;
   @Input('extension') extension: string;
+  @Input('selectedItem') selectedItem: any;
 
   @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter();
   @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter();
   @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter();
   @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
   @Output('addFileEvent') addFileEvent = new EventEmitter();
+  @Output('directoryAttachedEvent') directoryAttachedEvent = new EventEmitter();
 
   private editorViewActions;
 
   componentState = {
     expanded: false,
     hovered: false,
+    selected: false,
+    attachActionSet: false,
     dirStyles: {},
     icons: {
       editDirectory: 'far fa-edit',
       dirCaret: 'far fa-folder',
       newFile: 'far fa-file-code',
       newDir: 'fas fa-folder-plus',
-      removeDirectory: 'far fa-trash-alt remove',
+      removeDirectory: 'far fa-trash-alt',
     },
   };
 
@@ -49,31 +53,22 @@ export class DirectoryComponent {
   ) {}
 
   ngOnInit() {
-    const w = 269 + (this.directory.depth * 15);
-    const pl = this.directory.depth * 15;
+    this.setNestedPosition();
+    this.runRootSpecificActions();
+    this.subscribeToActions();
+  }
 
-    this.componentState.dirStyles['width'] = `${w}px`;
-    this.componentState.dirStyles['padding-left'] = `${pl}px`;
-    if (this.directory.isRoot) {
-      this.expandDirectory();
-      this.sendExpandDirectoryEvent();
-      this.changeIconIfRoot();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.selectedItem && !changes.selectedItem.firstChange) {
+      const data = changes.selectedItem.currentValue;
+
+      if (data.type !== 'directory') return;
+
+      if (data.id !== this.directory.id) {
+        this.componentState.attachActionSet = false;
+        this.componentState.selected = false;
+      }
     }
-
-    this.editorViewActions = this.store.pipe(select('editorViewActions')).subscribe((action) => {
-      if (!action) {
-        return;
-      }
-
-      switch (action.type) {
-        case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
-          if (action.directoryId === this.directory.id) {
-            this.unExpandDirectory();
-            this.sendUnExpandDirectoryEvent();
-          }
-        }
-      }
-    });
   }
 
   directoryHovered() {
@@ -208,6 +203,13 @@ export class DirectoryComponent {
   }
 
   onExpandDirectory(): void {
+    this.componentState.selected = true;
+    this.componentState.attachActionSet = true;
+    this.directoryAttachedEvent.emit({
+      type: 'directory',
+      id: this.directory.id,
+    });
+
     if (!this.componentState.expanded) {
       this.expandDirectory();
       this.sendExpandDirectoryEvent();
@@ -243,5 +245,38 @@ export class DirectoryComponent {
     if (this.directory.isRoot) {
       this.componentState.icons.dirCaret = 'far fa-folder-open';
     }
+  }
+
+  private setNestedPosition() {
+    const w = 269 + (this.directory.depth * 15);
+    const pl = this.directory.depth * 15;
+
+    this.componentState.dirStyles['width'] = `${w}px`;
+    this.componentState.dirStyles['padding-left'] = `${pl}px`;
+  }
+
+  private runRootSpecificActions() {
+    if (this.directory.isRoot) {
+      this.expandDirectory();
+      this.sendExpandDirectoryEvent();
+      this.changeIconIfRoot();
+    }
+  }
+
+  private subscribeToActions() {
+    this.editorViewActions = this.store.pipe(select('editorViewActions')).subscribe((action) => {
+      if (!action) {
+        return;
+      }
+
+      switch (action.type) {
+        case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
+          if (action.directoryId === this.directory.id) {
+            this.unExpandDirectory();
+            this.sendUnExpandDirectoryEvent();
+          }
+        }
+      }
+    });
   }
 }
