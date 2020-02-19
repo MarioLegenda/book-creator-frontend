@@ -62,9 +62,10 @@ export class DirectoryComponent implements OnInit, OnChanges {
     if (changes.selectedItem && !changes.selectedItem.firstChange) {
       const data = changes.selectedItem.currentValue;
 
-      if (data.type !== 'directory') return;
-
-      if (data.id !== this.directory.id) {
+      if (data.type === 'file') {
+        this.componentState.attachActionSet = false;
+        this.componentState.selected = false;
+      } else if (data.id !== this.directory.id) {
         this.componentState.attachActionSet = false;
         this.componentState.selected = false;
       }

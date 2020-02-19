@@ -87,9 +87,10 @@ export class FileComponent implements OnInit, OnChanges {
     if (changes.selectedItem && !changes.selectedItem.firstChange) {
       const data = changes.selectedItem.currentValue;
 
-      if (data.type !== 'file') return;
-
-      if (data.id !== this.file.id) {
+      if (data.type === 'directory') {
+        this.componentState.attachActionSet = false;
+        this.componentState.selected = false;
+      } else if (data.id !== this.file.id) {
         this.componentState.attachActionSet = false;
         this.componentState.selected = false;
       }
