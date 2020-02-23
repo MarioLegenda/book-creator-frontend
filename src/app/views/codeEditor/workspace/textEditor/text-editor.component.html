@@ -6,7 +6,7 @@
   </p>
 
   <ngx-monaco-editor
-    *ngIf="hasTabs && tab"
+    *ngIf="hasTabs && tab && componentState.editorOptions"
     style="height: 600px"
     [options]="componentState.editorOptions"
     [(ngModel)]="componentState.code"

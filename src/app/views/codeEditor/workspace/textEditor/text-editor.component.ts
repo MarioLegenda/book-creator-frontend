@@ -17,7 +17,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   @Input('hasTabs') hasTabs: boolean;
   @Input('tab') tab: FileTab;
   @Input('contentLoadedEvent') contentLoadedEvent;
-  @Input('codeProjectUuid') codeProjectUuid: string;
+  @Input('project') project: any;
 
   // @ts-ignore
   @ViewChild('wrapperRef') wrapperRef: ElementRef;
@@ -27,15 +27,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   private contentLoadedSubscription: Subscription;
 
   componentState = {
-    editorOptions: {
-      theme: 'vs-light',
-      language: 'javascript',
-      codeLens: false,
-      formatOnPaste: true,
-      minimap: {
-        enabled: false,
-      },
-    },
+    editorOptions: null,
     code: '',
   };
 
@@ -45,6 +37,18 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    const editorOptions = {
+      theme: 'vs-light',
+      language: this.project.environment.language,
+      codeLens: false,
+      formatOnPaste: true,
+      minimap: {
+        enabled: false,
+      },
+    };
+
+    this.componentState.editorOptions = editorOptions;
+
     this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
       if (action) {
         this.componentState.code = action.content;
@@ -57,7 +61,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => {
         if (this.componentState.code) {
           const model = HttpModel.updateFileContentModel(
-            this.codeProjectUuid,
+            this.project.uuid,
             this.tab.id,
             this.componentState.code,
           );

@@ -8,4 +8,5 @@ import {Component} from '@angular/core';
   templateUrl: './packages.component.html',
 })
 export class PackagesComponent {
+
 }
