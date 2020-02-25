@@ -13,7 +13,7 @@ export class PlaygroundComponent {
   // @ts-ignore
   @ViewChild('playgroundWrapperRef') playgroundWrapperRef: ElementRef;
 
-  @Input('codeProjectUuid') codeProjectUuid: string;
+  @Input('project') project: any;
 
   resultCommunicator: Subject<any> = new ReplaySubject();
 
@@ -54,7 +54,7 @@ export class PlaygroundComponent {
 
   onRunProject(code) {
     this.componentState.isRunning = true;
-    this.envEmulatorRepository.BuildAndRunProject(this.codeProjectUuid, code.code).subscribe((data: any) => {
+    this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, code.code).subscribe((data: any) => {
       this.componentState.resultAvailable = true;
       this.componentState.isRunning = false;
 

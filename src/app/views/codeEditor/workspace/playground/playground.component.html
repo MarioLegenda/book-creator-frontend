@@ -11,6 +11,7 @@
   </div>
 
   <cms-playground-working-area
+    [project]="project"
     [isRunning]="componentState.isRunning"
     (runProjectEvent)="onRunProject($event)"
     *ngIf="componentState.expandedOnce">
@@ -19,7 +20,7 @@
   <cms-result-area
     *ngIf="componentState.resultAvailable"
     [resultCommunicator]="resultCommunicator">
-    
+
   </cms-result-area
   >
 </div>

@@ -9,6 +9,7 @@
   </div>
 
   <ngx-monaco-editor
+    *ngIf="componentState.editorOptions"
     class="col-xs-12 col-md-12 col-lg-12 editor"
     [options]="componentState.editorOptions"
     [(ngModel)]="componentState.code">

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, Input} from '@angular/core';
+import {Component, EventEmitter, Output, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'cms-playground-working-area',
@@ -7,27 +7,34 @@ import {Component, EventEmitter, Output, Input} from '@angular/core';
   ],
   templateUrl: './working-area.component.html',
 })
-export class WorkingAreaComponent {
+export class WorkingAreaComponent implements OnInit {
   @Output('runProjectEvent') runProjectEvent = new EventEmitter();
 
+  @Input('project') project: any;
   @Input('isRunning') isRunning: boolean = false;
 
   componentState = {
-    editorOptions: {
+    editorOptions: null,
+    code: '',
+  };
+
+  ngOnInit() {
+    const editorOptions = {
       theme: 'vs-light',
-      language: 'javascript',
+      language: this.project.environment.language,
       codeLens: false,
       formatOnPaste: true,
       minimap: {
         enabled: false,
       }
-    },
-    code: '',
-  };
+    };
+
+    this.componentState.editorOptions = editorOptions;
+  }
 
   onRunProject() {
     if (!this.componentState.code) return;
-    
+
     this.runProjectEvent.emit({
       code: this.componentState.code,
     });
