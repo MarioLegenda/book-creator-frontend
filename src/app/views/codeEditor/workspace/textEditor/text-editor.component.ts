@@ -25,6 +25,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   private typeAheadSource = new BehaviorSubject([]);
   private typeAheadObservable = null;
   private contentLoadedSubscription: Subscription;
+  private editorViewActionUns;
 
   componentState = {
     editorOptions: null,
@@ -49,7 +50,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
 
     this.componentState.editorOptions = editorOptions;
 
-    this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
+    this.editorViewActionUns = this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
       if (action) {
         this.componentState.code = action.content;
       }
@@ -89,6 +90,6 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.typeAheadObservable.unsubscribe();
     this.contentLoadedSubscription.unsubscribe();
+    this.editorViewActionUns.unsubscribe();
   }
-
 }

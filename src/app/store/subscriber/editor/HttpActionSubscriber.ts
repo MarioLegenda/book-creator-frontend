@@ -27,6 +27,9 @@ export class HttpActionSubscriber {
       switch (action.type) {
         case actionTypes.EDITOR_HTTP_GET_FILE_CONTENT: {
           if (this.tabSession.has(action.id)) {
+            if (this.tabSession.getSelected() === action.id) break;
+
+            this.tabSession.setSelected(action.id);
             this.store.dispatch(viewEditorShowFile(action));
 
             break;

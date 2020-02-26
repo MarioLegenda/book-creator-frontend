@@ -10,7 +10,6 @@ export const clearStateAction = createAction(
 
 export function clearState(reducer) {
   return function (state, action) {
-
     if (action.type === actionTypes.CLEAR_STATE) {
       state = undefined;
     }

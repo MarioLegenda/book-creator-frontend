@@ -10,7 +10,7 @@
         (removeDirectoryEvent)="removeDirectoryEvent($event)"
         (directoryAttachedEvent)="onItemAttachEvent($event)"
         [selectedItem]="selectedItem"
-        [extension]="project.extension"
+        [extension]="project.environment.extension"
         *ngIf="isDirectory(item)"
 
         [directory]="item">
@@ -21,7 +21,7 @@
         (fileAttachedEvent)="onItemAttachEvent($event)"
         [selectedItem]="selectedItem"
         [file]="item"
-        [extension]="project.extension"
+        [extension]="project.environment.extension"
         (fileRemovedEvent)="removeFileEvent($event)">
       </cms-file>
     </div>

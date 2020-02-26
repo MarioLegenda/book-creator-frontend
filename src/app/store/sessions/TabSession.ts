@@ -1,5 +1,6 @@
 export class TabSession {
-  openTabs = [];
+  private openTabs = [];
+  private selected = null;
 
   has(fileId: string): boolean {
     return this.openTabs.includes(fileId);
@@ -23,11 +24,24 @@ export class TabSession {
     return this.openTabs[index];
   }
 
+  getSelected(): string {
+    return this.selected;
+  }
+
+  setSelected(id: string): void {
+    this.selected = id;
+  }
+
+  clearSelected(): void {
+    this.selected = null;
+  }
+
   first() {
     return this.openTabs[0];
   }
 
   clear(): void {
     this.openTabs = [];
+    this.clearSelected();
   }
 }

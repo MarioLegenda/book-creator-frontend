@@ -6,6 +6,7 @@ import {ViewActionSubscriber} from "../../../store/subscriber/editor/ViewActionS
 import {Store} from "@ngrx/store";
 import {clearStateAction} from "../../../store/globalReducers";
 import Util from "../../../library/Util";
+import {TabSession} from "../../../store/sessions/TabSession";
 
 @Component({
   selector: 'cms-code-editor',
@@ -26,6 +27,7 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
     private viewActionSubscriber: ViewActionSubscriber,
     private projectRepository: ProjectRepository,
     private route: ActivatedRoute,
+    private tabSession: TabSession,
   ) {}
 
   ngOnInit(): void {
@@ -39,8 +41,12 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
+    this.project = null;
+
     this.httpActionSubscriber.destroy();
 
     this.store.dispatch(clearStateAction());
+
+    this.tabSession.clear();
   }
 }
