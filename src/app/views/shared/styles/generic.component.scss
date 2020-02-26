@@ -1,0 +1,17 @@
+@import '../../../../styles/variables';
+
+.error {
+  background-color: $lightRed;
+  border-left: 4px solid $dangerRed;
+  color: white;
+
+  font-size: 0.9em;
+
+  padding: 10px;
+
+  margin-bottom: 40px;
+
+  p {
+    padding: 0; margin: 0;
+  }
+}

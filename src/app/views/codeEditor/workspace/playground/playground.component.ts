@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 import { Subject, ReplaySubject } from 'rxjs';
+import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-playground',
@@ -54,7 +55,9 @@ export class PlaygroundComponent {
 
   onRunProject(code) {
     this.componentState.isRunning = true;
-    this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, code.code).subscribe((data: any) => {
+    const model = HttpModel.buildAndRunProject(code.code, 'dev');
+
+    this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, model).subscribe((data: any) => {
       this.componentState.resultAvailable = true;
       this.componentState.isRunning = false;
 

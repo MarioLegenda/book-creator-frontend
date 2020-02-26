@@ -474,4 +474,16 @@ export class HttpModel {
       }
     }
   }
+
+  static buildAndRunProject(
+    content: string,
+    state: string,
+  ) {
+    return {
+      data: {
+        content,
+        state,
+      }
+    }
+  }
 }

@@ -19,10 +19,8 @@ export class EnvironmentEmulatorRepository {
     private envRouteResolver: EnvEmulatorRouteResolver,
   ) {}
 
-  public BuildAndRunProject(codeProjectUuid: string, content: string) {
-    return this.httpClient.post(this.routeResolver.runProject(codeProjectUuid), {
-      data: content,
-    })
+  public BuildAndRunProject(codeProjectUuid: string, model) {
+    return this.httpClient.post(this.routeResolver.runProject(codeProjectUuid), model)
       .pipe(
         reduce((acc, res: any) => {
           return res.data;

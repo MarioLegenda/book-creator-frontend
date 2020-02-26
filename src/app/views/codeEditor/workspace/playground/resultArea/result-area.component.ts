@@ -5,11 +5,12 @@ import { Subject } from 'rxjs';
   selector: 'cms-result-area',
   styleUrls: [
     './result-area.component.scss',
+    './../../../../shared/styles/generic.component.scss'
   ],
   templateUrl: './result-area.component.html',
 })
 export class ResultAreaComponent implements OnDestroy, OnInit {
-  result: string|null;
+  result: any;
 
   // @ts-ignore
   @ViewChild('resultAreaRef') resultAreaRef: ElementRef;
@@ -28,6 +29,8 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
     this.resultCommSubscription = this.resultCommunicator.subscribe(data => {
       this.result = data;
 
+      console.log(this.result);
+
       if (this.componentState.minimized) {
         this.maximize();
         this.componentState.minimized = false;
@@ -37,7 +40,6 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
 
   ngOnDestroy() {
     this.resultCommSubscription.unsubscribe();
-    this.resultCommSubscription = null;
   }
 
   onMinimize() {
