@@ -29,8 +29,6 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
     this.resultCommSubscription = this.resultCommunicator.subscribe(data => {
       this.result = data;
 
-      console.log(this.result);
-
       if (this.componentState.minimized) {
         this.maximize();
         this.componentState.minimized = false;
