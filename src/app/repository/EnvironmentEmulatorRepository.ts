@@ -28,20 +28,8 @@ export class EnvironmentEmulatorRepository {
       );
   }
 
-  public buildAndRunSingleFile(
-    pageShortId: string,
-    blockShortId: string,
-    code: string,
-    environment: string
-  ) {
-    return this.httpClient.post(this.envRouteResolver.singleFileBuildAndRun(), {
-      data: {
-        pageShortId,
-        blockShortId,
-        code,
-        environment,
-      },
-    })
+  public buildAndRunSingleFile(model) {
+    return this.httpClient.post(this.envRouteResolver.singleFileBuildAndRun(), model)
       .pipe(
       reduce((acc, res: any) => {
         return res.data;

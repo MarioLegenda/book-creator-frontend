@@ -290,14 +290,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.componentState.blockErrors = null;
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
-
-        if (this.componentState.saved) return;
-
-        this.componentState.saved = true;
-
-        setTimeout(() => {
-          this.componentState.saved = false;
-        }, 3000);
       });
   }
 
@@ -393,12 +385,15 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.componentState.hasTestRunWindow = true;
       });
     } else {
-      this.emlRepository.buildAndRunSingleFile(
+      const model = HttpModel.buildAndRunSingleFile(
         this.pageContext.getContext().page.shortId,
         this.component.shortId,
         this.componentState.code,
         this.componentState.emulator.name,
-      ).subscribe((res) => {
+        'single_file',
+      );
+
+      this.emlRepository.buildAndRunSingleFile(model).subscribe((res) => {
         this.componentState.isCodeRunning = false;
 
         this.componentState.testRunResult = res;

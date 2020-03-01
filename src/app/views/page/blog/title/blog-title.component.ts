@@ -21,10 +21,6 @@ export class BlogTitleComponent {
   private typeAheadSource = new Subject<string>();
   private typeAheadObservable: Subscription = null;
 
-  componentState = {
-    saved: false,
-  };
-
   // @ts-ignore
   @ViewChild('form') form;
   @Input('source') source: IBlogSource;
@@ -60,13 +56,6 @@ export class BlogTitleComponent {
           null,
           null,
         )).subscribe(() => {
-          if (this.componentState.saved) return;
-
-          this.componentState.saved = true;
-
-          setTimeout(() => {
-            this.componentState.saved = false;
-          }, 3000);
         });
       });
   }

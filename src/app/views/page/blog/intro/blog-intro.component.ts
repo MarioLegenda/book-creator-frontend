@@ -18,10 +18,6 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
     description: '',
   };
 
-  componentState = {
-    saved: false,
-  };
-
   private typeAheadSource = new Subject<string>();
   private typeAheadObservable: Subscription = null;
 
@@ -60,13 +56,6 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
           this.model.description,
           null,
         )).subscribe(() => {
-          if (this.componentState.saved) return;
-
-          this.componentState.saved = true;
-
-          setTimeout(() => {
-            this.componentState.saved = false;
-          }, 3000);
         });
       });
   }

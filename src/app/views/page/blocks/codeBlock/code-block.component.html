@@ -169,11 +169,6 @@
     </div>
   </div>
 
-  <p
-    class="saved saved-animation"
-    [ngClass]="{'saved-move-up': !this.componentState.saved, 'saved-move-down': this.componentState.saved}">
-    Saved</p>
-
   <cms-block-errors
     *ngIf="componentState.blockErrors"
     [errors]="componentState.blockErrors">

@@ -6,7 +6,7 @@
     </i>
 
     <pre *ngIf="result.success && result.result !== ''" class="result-block">{{result.result}}</pre>
-    <pre *ngIf="result.success && result.result === ''" class="result-block">The result is success but there is nothing to show.</pre>
+    <pre *ngIf="result.success && result.result === ''" class="result-block">The result is a success but there is nothing to show.</pre>
 
     <p *ngIf="!result.success && result.result !== 'timeout'" class="error col-xs-12 col-md-12 col-lg-12">There has been an error executing your code. Please, try again later.</p>
     <p *ngIf="!result.success && result.result === 'timeout'" class="error col-xs-12 col-md-12 col-lg-12">Executing code timed out. Current timeout is {{result.timeout}} seconds.</p>

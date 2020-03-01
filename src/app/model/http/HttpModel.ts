@@ -536,4 +536,22 @@ export class HttpModel {
       }
     }
   }
+
+  static buildAndRunSingleFile(
+    pageShortId: string,
+    blockShortId: string,
+    code: string,
+    environment: string,
+    state: string,
+  ) {
+    return {
+      data: {
+        pageShortId,
+        blockShortId,
+        code,
+        environment,
+        state,
+      }
+    }
+  }
 }
