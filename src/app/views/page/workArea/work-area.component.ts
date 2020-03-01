@@ -3,7 +3,7 @@ import {ComponentTracker} from "../../../logic/PageComponent/ComponentTracker";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {
   httpCreateCodeBlock, httpCreateMainHeader,
-  httpCreateMultimediaBlock, httpCreateSubheader,
+  httpCreateMultimediaBlock, httpCreateQuoteBlock, httpCreateSubheader,
   httpCreateTextBlock, httpUpdateBlockPosition,
 } from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
@@ -17,6 +17,7 @@ import {AppContextInitializer} from "../../../logic/PageComponent/context/AppCon
 import {MultimediaBlockModel} from "../../../model/app/MultimediaBlockModel";
 import {MainHeaderBlock} from "../../../model/app/MainHeaderBlock";
 import {SubheaderBlock} from "../../../model/app/SubheaderBlock";
+import {QuoteBlock} from "../../../model/app/QuoteBlock";
 
 @Component({
   selector: 'cms-work-area',
@@ -95,6 +96,13 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
           component.text,
           component.position,
         ));
+      } else if (ComponentType.isQuoteBlock(component)) {
+        this.components.push(new QuoteBlock(
+          component.uuid,
+          component.shortId,
+          component.text,
+          component.position,
+        ));
       }
     });
 
@@ -142,6 +150,12 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
       case 'subheader': {
         this.store.dispatch(httpCreateSubheader({position: this.componentTracker.getNextPosition()}));
+
+        break;
+      }
+
+      case 'quote-block': {
+        this.store.dispatch(httpCreateQuoteBlock({position: this.componentTracker.getNextPosition()}));
 
         break;
       }

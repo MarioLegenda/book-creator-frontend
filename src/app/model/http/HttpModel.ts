@@ -347,7 +347,37 @@ export class HttpModel {
     }
   }
 
+  static createQuoteBlock(
+    pageUuid: string,
+    position: number,
+    text: string,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        position: position,
+        text: text,
+      }
+    }
+  }
+
   static updateSubheader(
+    pageUuid: string,
+    blockUuid: string,
+    position: number,
+    text: string,
+  ) {
+    return {
+      data: {
+        pageUuid: pageUuid,
+        blockUuid: blockUuid,
+        position: position,
+        text: text,
+      }
+    }
+  }
+
+  static updateQuoteBlock(
     pageUuid: string,
     blockUuid: string,
     position: number,

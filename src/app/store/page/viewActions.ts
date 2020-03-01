@@ -10,6 +10,7 @@ export const actionTypes = {
   VIEW_ADD_MAIN_HEADER_BLOCK: '[View] Create main header block',
   VIEW_ADD_SUBHEADER: '[View] Create subheader block',
   VIEW_UPDATE_SUBHEADER: '[View] Update subheader block',
+  VIEW_ADD_QUOTE_BLOCK: '[View] Create quote block',
 };
 
 export const viewCreateCodeBlock = createAction(
@@ -19,6 +20,11 @@ export const viewCreateCodeBlock = createAction(
 
 export const viewUpdateSubheaderBlock = createAction(
   actionTypes.VIEW_UPDATE_SUBHEADER,
+  props<{}>(),
+);
+
+export const viewAddQuoteBlock = createAction(
+  actionTypes.VIEW_ADD_QUOTE_BLOCK,
   props<{}>(),
 );
 

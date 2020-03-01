@@ -144,4 +144,22 @@ export class PageRepository {
         }, {}),
       );
   }
+
+  addQuoteBlock(model) {
+    return this.httpClient.put(this.blockRouteResolver.addQuoteBlock(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
+
+  updateQuoteBlock(model) {
+    return this.httpClient.post(this.blockRouteResolver.updateQuoteBlock(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
 }

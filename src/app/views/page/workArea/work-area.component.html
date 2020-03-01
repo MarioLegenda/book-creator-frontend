@@ -82,6 +82,12 @@
           [page]="sourceContext.page">
         </cms-subheader-block>
 
+        <cms-quote-block
+          *ngIf="item.blockType === 'quote_block'"
+          [component]="item"
+          [page]="sourceContext.page">
+        </cms-quote-block>
+
       </div>
     </div>
 

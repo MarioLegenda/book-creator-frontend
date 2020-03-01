@@ -10,7 +10,7 @@ import {
   httpCreateMultimediaBlock,
   httpUpdateBlockPosition,
   httpCreateMainHeader,
-  httpUpdateMainHeader, httpCreateSubheader, httpUpdateSubheader,
+  httpUpdateMainHeader, httpCreateSubheader, httpUpdateSubheader, httpCreateQuoteBlock, httpUpdateQuoteBlock,
 } from './httpActions';
 import deepcopy from 'deepcopy';
 
@@ -28,6 +28,8 @@ const httpActionsReducers = createReducer(null,
   on(httpUpdateMainHeader, (state, action) => deepcopy(action)),
   on(httpCreateSubheader, (state, action) => deepcopy(action)),
   on(httpUpdateSubheader, (state, action) => deepcopy(action)),
+  on(httpCreateQuoteBlock, (state, action) => deepcopy(action)),
+  on(httpUpdateQuoteBlock, (state, action) => deepcopy(action)),
 );
 
 export function httpActionReducer(state, action) {

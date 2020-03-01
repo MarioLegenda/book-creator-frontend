@@ -44,10 +44,9 @@
         </cms-menu-button>
 
         <cms-menu-button
-          [icon]="icons.codeProjects"
-          [title]="'Code projects'"
-          [isOffPage]="true"
-          (click)="navigateToCodeProjects()">
+          (mouseup)="appendQuoteBlock()"
+          [icon]="icons.quote"
+          [title]="'Add quote block'">
         </cms-menu-button>
 
       </div>

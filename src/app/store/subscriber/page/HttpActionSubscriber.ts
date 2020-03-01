@@ -6,7 +6,7 @@ import {AppContextInitializer} from "../../../logic/PageComponent/context/AppCon
 import {PageRepository} from "../../../repository/PageRepository";
 import {
   viewAddMainHeaderBlock,
-  viewAddMultimediaBlock, viewAddSubheader,
+  viewAddMultimediaBlock, viewAddQuoteBlock, viewAddSubheader,
   viewAddTextBlock,
   viewCreateCodeBlock,
   viewTextBlockRemoved, viewUpdateSubheaderBlock
@@ -70,6 +70,18 @@ export class HttpActionSubscriber {
           break;
         }
 
+        case actionTypes.HTTP_CREATE_QUOTE_BLOCK: {
+          if (this.pageContextInitializer.isInitialized()) {
+            this.createQuoteBlock(action);
+          } else {
+            this.pageContextInitializer.whenInit(((data) => {
+              return () => this.createQuoteBlock(data);
+            })(deepcopy(action)));
+          }
+
+          break;
+        }
+
         case actionTypes.HTTP_CREATE_MULTIMEDIA_BLOCK: {
           if (this.pageContextInitializer.isInitialized()) {
             this.addMultimediaBlock(action);
@@ -90,6 +102,12 @@ export class HttpActionSubscriber {
 
         case actionTypes.HTTP_UPDATE_TEXT_BLOCK: {
           this.updateTextBlock(action);
+
+          break;
+        }
+
+        case actionTypes.HTTP_UPDATE_QUOTE_BLOCK: {
+          this.updateQuoteBlock(action);
 
           break;
         }
@@ -155,6 +173,18 @@ export class HttpActionSubscriber {
 
     this.pageRepository.addSubheader(model).subscribe((data) => {
       this.store.dispatch(viewAddSubheader(data));
+    });
+  }
+
+  private createQuoteBlock(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const position: number = action.position;
+    const text: string = '';
+
+    const model = HttpModel.createQuoteBlock(pageUuid, position, text);
+
+    this.pageRepository.addQuoteBlock(model).subscribe((data) => {
+      this.store.dispatch(viewAddQuoteBlock(data));
     });
   }
 
@@ -293,5 +323,21 @@ export class HttpActionSubscriber {
     );
 
     this.pageRepository.updateCodeBlock(model).subscribe(() => {});
+  }
+
+  private updateQuoteBlock(action) {
+    const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
+    const blockUuid: string = action.blockUuid;
+    const text: string = action.text;
+    const position: number = action.position;
+
+    const model = HttpModel.updateQuoteBlock(
+      pageUuid,
+      blockUuid,
+      position,
+      text,
+    );
+
+    this.pageRepository.updateQuoteBlock(model).subscribe(() => {});
   }
 }

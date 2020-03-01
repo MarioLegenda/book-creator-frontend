@@ -45,6 +45,7 @@ import {AddCommentModalComponent} from "../modals/addComment/add-comment-modal.c
 import {MainHeaderBlockComponent} from "../blocks/mainHeaderBlock/main-header-block.component";
 import {SubheaderBlockComponent} from "../blocks/subheaderBlock/subheader-block.component";
 import {CoverComponent} from "../blog/cover/cover.component";
+import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {CoverComponent} from "../blog/cover/cover.component";
     MainHeaderBlockComponent,
     SubheaderBlockComponent,
     CoverComponent,
+    QuoteBlockComponent,
   ],
   imports: [
     MatCardModule,

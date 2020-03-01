@@ -4,6 +4,7 @@ export class ComponentType {
   public static readonly MULTIMEDIA_BLOCK_TYPE = 'multimedia_block';
   public static readonly MAIN_HEADER_BLOCK = 'main_header_block';
   public static readonly SUBHEADER_BLOCK = 'subheader_block';
+  public static readonly QUOTE_BLOCK = 'quote_block';
 
   static isTextBlock(component): boolean {
     return ComponentType.TEXT_BLOCK_TYPE === component.blockType;
@@ -23,5 +24,9 @@ export class ComponentType {
 
   static isSubheaderBlock(component): boolean {
     return ComponentType.SUBHEADER_BLOCK === component.blockType;
+  }
+
+  static isQuoteBlock(component): boolean {
+    return ComponentType.QUOTE_BLOCK === component.blockType;
   }
 }

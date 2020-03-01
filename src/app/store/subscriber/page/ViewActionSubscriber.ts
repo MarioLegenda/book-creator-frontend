@@ -41,6 +41,12 @@ export class ViewActionSubscriber {
           break;
         }
 
+        case actionTypes.VIEW_ADD_QUOTE_BLOCK: {
+          this.addQuoteBlock(action);
+
+          break;
+        }
+
         case actionTypes.VIEW_TEXT_BLOCK_REMOVED: {
           this.removeBlock(action);
 
@@ -112,6 +118,12 @@ export class ViewActionSubscriber {
   }
 
   private addMultimediaBlock(action) {
+    const component = ComponentFactory.createComponent(action);
+
+    this.componentTracker.add(component);
+  }
+
+  private addQuoteBlock(action) {
     const component = ComponentFactory.createComponent(action);
 
     this.componentTracker.add(component);

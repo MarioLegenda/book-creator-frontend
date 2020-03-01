@@ -21,10 +21,16 @@ export class BlockRouteResolver {
     updatePosition: `${this.bookApiUri}/api/v1/pages/block/update-position`,
     updateMainHeader: `${this.bookApiUri}/api/v1/pages/header/update-main-header-block`,
     updateSubheader: `${this.bookApiUri}/api/v1/pages/header/update-subheader-block`,
+    addQuoteBlock: `${this.bookApiUri}/api/v1/pages/quote/add-new-block`,
+    updateQuoteBlock: `${this.bookApiUri}/api/v1/pages/quote/update-block`,
   };
 
   addNewTextBlock(): string {
     return this.routes.addNewTextBlock;
+  }
+
+  addQuoteBlock(): string {
+    return this.routes.addQuoteBlock;
   }
 
   addNewCodeBlock(): string {
@@ -73,5 +79,9 @@ export class BlockRouteResolver {
 
   updateSubheader(): string {
     return this.routes.updateSubheader;
+  }
+
+  updateQuoteBlock(): string {
+    return this.routes.updateQuoteBlock;
   }
 }

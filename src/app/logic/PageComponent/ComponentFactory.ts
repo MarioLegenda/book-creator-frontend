@@ -43,6 +43,14 @@ export class ComponentFactory {
 
         return d;
       }
+
+      case ComponentType.QUOTE_BLOCK: {
+        const d = deepcopy(data);
+
+        delete d.type;
+
+        return d;
+      }
     }
   }
 }

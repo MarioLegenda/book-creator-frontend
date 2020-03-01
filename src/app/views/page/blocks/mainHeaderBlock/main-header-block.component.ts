@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MainHeaderBlock} from "../../../../model/app/MainHeaderBlock";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -15,14 +15,13 @@ import {httpRemoveBlock, httpUpdateMainHeader} from "../../../../store/page/http
   ],
   templateUrl: './main-header-block.component.html',
 })
-export class MainHeaderBlockComponent {
+export class MainHeaderBlockComponent implements OnInit, OnDestroy {
   @Input('page') page: any;
   @Input('component') component: MainHeaderBlock;
 
   componentState = {
     hovered: false,
     text: '',
-    saved: false,
   };
 
   private typeAheadSource = new Subject();
@@ -47,15 +46,11 @@ export class MainHeaderBlockComponent {
         };
 
         this.store.dispatch(httpUpdateMainHeader(model));
-
-        if (this.componentState.saved) return;
-
-        this.componentState.saved = true;
-
-        setTimeout(() => {
-          this.componentState.saved = false;
-        }, 3000);
       });
+  }
+
+  ngOnDestroy() {
+    this.typeAheadObservable.unsubscribe();
   }
 
   componentHovered() {

@@ -9,12 +9,6 @@ import {AppContextInitializer} from "../../../logic/PageComponent/context/AppCon
   templateUrl: './menu.component.html',
 })
 export class MenuComponent {
-  constructor(
-    private store: Store<{menu: string}>,
-    private pageContext: AppContextInitializer,
-    private router: Router,
-  ) {}
-
   @Output('blockAddedEvent') blockAddedEvent: EventEmitter<any> = new EventEmitter();
 
   icons = {
@@ -25,8 +19,8 @@ export class MenuComponent {
     'code': 'fas fa-code',
     'footnote': 'fas fa-file',
     'dynamicForms': 'fab fa-wpforms',
-    'codeProjects': 'fas fa-laptop-code',
     'header1': 'fas fa-heading',
+    'quote': 'fas fa-quote-right',
   };
 
   menuExpanded = false;
@@ -51,11 +45,11 @@ export class MenuComponent {
     this.blockAddedEvent.emit('multimedia-block');
   }
 
-  expandMenu() {
-    this.menuExpanded = !this.menuExpanded;
+  appendQuoteBlock() {
+    this.blockAddedEvent.emit('quote-block');
   }
 
-  navigateToCodeProjects() {
-    this.router.navigate(['/cms/management/overview/code-projects']);
+  expandMenu() {
+    this.menuExpanded = !this.menuExpanded;
   }
 }

@@ -15,6 +15,8 @@ export const actionTypes = {
   HTTP_UPDATE_MAIN_HEADER: '[Http] Update main header',
   HTTP_CREATE_SUBHEADER: '[Http] Create subheader',
   HTTP_UPDATE_SUBHEADER: '[Http] Update subheader',
+  HTTP_CREATE_QUOTE_BLOCK: '[Http] Create quote block',
+  HTTP_UPDATE_QUOTE_BLOCK: '[Http] Update quote block',
 };
 
 export const httpCreateSubheader = createAction(
@@ -22,8 +24,18 @@ export const httpCreateSubheader = createAction(
   props<{}>(),
 );
 
+export const httpCreateQuoteBlock = createAction(
+  actionTypes.HTTP_CREATE_QUOTE_BLOCK,
+  props<{}>(),
+);
+
 export const httpUpdateSubheader = createAction(
   actionTypes.HTTP_UPDATE_SUBHEADER,
+  props<{}>(),
+);
+
+export const httpUpdateQuoteBlock = createAction(
+  actionTypes.HTTP_UPDATE_QUOTE_BLOCK,
   props<{}>(),
 );
 

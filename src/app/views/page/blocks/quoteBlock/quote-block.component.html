@@ -1,0 +1,40 @@
+<div
+  (mouseenter)="componentHovered()"
+  (mouseleave)="componentUnHovered()"
+  class="quote-block-wrapper col-lg-12 col-md-12 col-xs-12">
+
+  <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
+    <div class="block-actions col-lg-12 col-md-12 col-xs-12">
+      <div
+        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <div class="icon-group">
+          <i (click)="remove()" class="icon remove-icon fas fa-trash-alt"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="text-editor-wrapper col-lg-12 col-md-12 col-xs-12">
+
+    <textarea
+      class="concrete-editor col-xs-12 col-md-12 col-xs-12"
+      (keyup)="onChange()"
+      [(ngModel)]="componentState.text"
+      data="componentData.value.text"
+      maxlength="200"
+      rows="5"
+      name="text">
+    </textarea>
+
+    <cms-text-counter
+      [text]="componentState.text"
+      [max]="300">
+    </cms-text-counter>
+  </div>
+
+  <p class="block-name col-xs-12 col-lg-12 col-md-12">QUOTE BLOCK</p>
+
+</div>
