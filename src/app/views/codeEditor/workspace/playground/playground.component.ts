@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 import { Subject, ReplaySubject } from 'rxjs';
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {Environments} from "../../../../library/Environments";
 
 @Component({
   selector: 'cms-playground',
@@ -15,6 +16,7 @@ export class PlaygroundComponent {
   @ViewChild('playgroundWrapperRef') playgroundWrapperRef: ElementRef;
 
   @Input('project') project: any;
+  @Input('environments') environments: Environments;
 
   resultCommunicator: Subject<any> = new ReplaySubject();
 

@@ -105,7 +105,7 @@ export class ItemComponent implements OnInit {
   }
 
   formatEnvironment(): string {
-    return Environments.get(this.item.environment);
+    return this.item.environment.text;
   }
 
   private resolveName(): void {

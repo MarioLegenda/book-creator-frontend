@@ -7,6 +7,7 @@ import {actionTypes as viewActionTypes} from "../../../store/editor/viewActions"
 import {FileRepository} from "../../../repository/FileRepository";
 import {Subject} from "rxjs";
 import {TabSession} from "../../../store/sessions/TabSession";
+import {Environments} from "../../../library/Environments";
 
 @Component({
   selector: 'cms-editor-workspace',
@@ -23,6 +24,7 @@ export class WorkspaceComponent implements OnDestroy, OnInit {
   contentLoadedEvent = new Subject();
 
   @Input('project') project: any;
+  @Input('environments') environments: Environments;
 
   private editorViewActionsUns;
   private editorHttpActionsUns;

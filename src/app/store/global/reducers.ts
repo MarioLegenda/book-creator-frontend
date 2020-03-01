@@ -5,11 +5,11 @@ import {
 } from './actions';
 import deepcopy from 'deepcopy';
 
-const globalErrorReducers = createReducer(null,
+const globalActionsReducers = createReducer(null,
   on(globalClientError, (state, action) => deepcopy(action)),
   on(globalServerError, (state, action) => deepcopy(action)),
 );
 
-export function globalErrorReducer(state, action) {
-  return globalErrorReducers(state, action);
+export function globalActionsReducer(state, action) {
+  return globalActionsReducers(state, action);
 }

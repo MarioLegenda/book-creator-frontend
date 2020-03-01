@@ -1,15 +1,31 @@
-export class Environments {
-  private static environments = {
-    'node_v8_17_0': 'Javascript (Node v8.17.0)',
-    'node_v10_18_0': 'Javascript (Node v10.18.0)',
-    'node_v12_14_1': 'Javascript (Node v12.14.1)',
-    'node_latest': 'Javascript (Node latest)',
-    'go_v1_13_5': 'Go v1.13.5',
-    'python2': 'Python2',
-    'python3': 'Python3',
-  };
+import Util from "./Util";
 
-  static get(name: string): string {
-    return Environments.environments[name];
+export class Environments {
+  private environments: any;
+
+  constructor(environments: any[]) {
+    const resolved = {};
+
+    for (const env of environments) {
+      resolved[env.name] = name;
+    }
+
+    this.environments = resolved;
   }
+
+  byName(name: string) {
+    if (!Util.hasKey(this.environments, name)) return null;
+
+    return this.environments[name];
+  }
+
+  isGoLang(name: string): boolean {
+    const env = this.byName(name);
+
+    if (!env) return false;
+
+    return (env.name === name);
+  }
+
+
 }

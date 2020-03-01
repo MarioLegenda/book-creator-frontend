@@ -12,6 +12,7 @@
 
   <cms-playground-working-area
     [project]="project"
+    [environments]="environments"
     [isRunning]="componentState.isRunning"
     (runProjectEvent)="onRunProject($event)"
     *ngIf="componentState.expandedOnce">

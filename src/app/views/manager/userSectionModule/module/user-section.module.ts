@@ -5,6 +5,7 @@ import {ProfileComponent} from "../profile/profile.component";
 import {SettingsComponent} from "../settings/settings.component";
 import {CommonModule} from "@angular/common";
 import {UserSectionRoutingModule} from "./user-section-routing.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -13,10 +14,11 @@ import {UserSectionRoutingModule} from "./user-section-routing.module";
     ProfileComponent,
     SettingsComponent,
   ],
-  imports: [
-    CommonModule,
-    UserSectionRoutingModule,
-  ],
+    imports: [
+        CommonModule,
+        UserSectionRoutingModule,
+        FormsModule,
+    ],
   providers: [
   ],
   entryComponents: [

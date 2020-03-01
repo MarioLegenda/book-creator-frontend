@@ -7,9 +7,8 @@ import {createBlog} from "../../../../library/helpers";
 import {NavigationEnd, Router} from "@angular/router";
 import {PageRepository} from "../../../../repository/PageRepository";
 import {BlogRepository} from "../../../../repository/BlogRepository";
-import {NewCodeProjectDialogComponent} from "../../modules/newCodeProjectModal/newCodeProject/new-code-project.component";
-import {HttpModel} from "../../../../model/http/HttpModel";
-import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
+import {select, Store} from "@ngrx/store";
+import {actionTypes} from "../../../../store/account/actions";
 
 @Component({
   selector: 'app-profile-bar',
@@ -21,7 +20,10 @@ export class AppComponent {
   isBlogPage: boolean = false;
 
   displayName = '';
+  name = '';
+  lastName = '';
   email = '';
+  avatar = '';
   // @ts-ignore
   @ViewChild('mainMenuRef') mainMenuRef: ElementRef;
 
@@ -32,11 +34,40 @@ export class AppComponent {
     private router: Router,
     private pageRepository: PageRepository,
     private blogRepository: BlogRepository,
+    private store: Store<any>,
   ) {
     this.account = accountProvider.getAccount();
   }
 
   ngOnInit() {
+    const avatar = this.account.profile.avatar;
+    this.avatar = avatar.path;
+
+    this.name = this.account.name;
+    this.lastName = this.account.lastName;
+
+    this.store.pipe(select('accountActions')).subscribe((action) => {
+      if (!action) return;
+
+      switch(action.type) {
+        case actionTypes.AVATAR_CHANGED: {
+          this.account = this.accountProvider.getAccount();
+
+          const avatar = this.account.profile.avatar;
+          this.avatar = avatar.path;
+
+          break;
+        }
+
+        case actionTypes.BASIC_INFO_CHANGED: {
+          const account = this.accountProvider.getAccount();
+
+          this.name = account.name;
+          this.lastName = account.lastName;
+        }
+      }
+    });
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const re = new RegExp('/page/blog/');
@@ -70,7 +101,7 @@ export class AppComponent {
   onSignOut() {
     this.accountProvider.clearAccount();
 
-    this.document.location.href = '/';
+    window.location.href = '/';
   }
 
   onProfile() {

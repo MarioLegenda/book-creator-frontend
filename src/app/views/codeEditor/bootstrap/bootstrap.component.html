@@ -3,5 +3,9 @@
     <cms-file-explorer *ngIf="project" [project]="project"></cms-file-explorer>
   </div>
 
-  <cms-editor-workspace *ngIf="project" [project]="project"></cms-editor-workspace>
+  <cms-editor-workspace
+    *ngIf="project"
+    [project]="project"
+    [environments]="environments">
+  </cms-editor-workspace>
 </div>

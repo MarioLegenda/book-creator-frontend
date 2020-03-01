@@ -26,6 +26,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     this.loggerRepository.remoteLog(HttpModel.remoteLog(data)).subscribe(() => {});
 
+    console.error(error);
     if (!environment.production) {
       throw new Error(error);
     }

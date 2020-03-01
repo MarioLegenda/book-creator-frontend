@@ -50,29 +50,11 @@ export class EnvironmentEmulatorRepository {
   }
 
   public getEnvironments() {
-    if (!this.cacheObservable) {
-      this.cacheObservable = new Observable<object>(subscriber => {
-        if (this.cache['getEnvironments']) {
-          subscriber.next(this.cache['getEnvironments']);
-
-          return;
-        }
-
-        this.httpClient.get(this.envRouteResolver.getEnvironment())
-          .pipe(
-            reduce((acc, res: any) => {
-              return res.data;
-            }, {})
-          ).subscribe((data) => {
-            this.cache['getEnvironments'] = data;
-
-            subscriber.next(this.cache['getEnvironments']);
-        });
-      });
-
-      return this.cacheObservable;
-    }
-
-    return this.cacheObservable;
+    return this.httpClient.get(this.envRouteResolver.getEnvironment())
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {})
+      );
   }
 }

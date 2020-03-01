@@ -20,7 +20,7 @@ export class AppComponent {
     private matDialog: MatDialog,
     @Inject(DOCUMENT) private document: Document,
   ) {
-    this.subscribeToErrorActions(store.pipe(select('globalErrorActions')));
+    this.subscribeToErrorActions(store.pipe(select('globalActions')));
   }
 
   ngOnInit() {

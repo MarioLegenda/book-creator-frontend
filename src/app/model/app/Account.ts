@@ -7,6 +7,7 @@ export class Account {
   public readonly confirmed: boolean;
   public readonly shortId: string;
   public readonly uuid: string;
+  public readonly profile: any;
   public readonly token: string;
 
   constructor(
@@ -19,6 +20,7 @@ export class Account {
     shortId: string,
     uuid: string,
     token: string,
+    profile: any,
   ) {
     this.type = type;
     this.name = name;
@@ -29,5 +31,6 @@ export class Account {
     this.shortId = shortId;
     this.uuid = uuid;
     this.token = token;
+    this.profile = profile;
   }
 }

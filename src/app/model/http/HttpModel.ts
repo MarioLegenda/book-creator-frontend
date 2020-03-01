@@ -1,3 +1,5 @@
+import {last} from "rxjs/operators";
+
 export class HttpModel {
   static addTextBlock(
     pageUuid: string,
@@ -483,6 +485,22 @@ export class HttpModel {
       data: {
         content,
         state,
+      }
+    }
+  }
+
+  static updateAccount(
+    uuid: string,
+    name: string,
+    lastName: string,
+    profile: object,
+  ) {
+    return {
+      data: {
+        uuid: uuid,
+        name: name,
+        lastName: lastName,
+        profile: profile,
       }
     }
   }

@@ -8,7 +8,7 @@ export class FileUploadRouteResolver {
   private cndUri = environment.composeBookApiBaseUrl();
 
   private readonly routes = {
-    uploadFile: `${this.cndUri}/api/v1/uploads/upload-file`,
+    uploadFile: `${this.cndUri}/cms/upload-file`,
   };
 
   uploadFile(): string {

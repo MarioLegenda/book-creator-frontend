@@ -12,12 +12,7 @@ export class FileUploadRepository {
     private rebelCdnRouteResolver: FileUploadRouteResolver
   ) {}
 
-  uploadFile(model) {
-    return this.httpClient.put(this.rebelCdnRouteResolver.uploadFile(), model)
-      .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
-      );
+  uploadFile(model: any) {
+    return this.httpClient.put(this.rebelCdnRouteResolver.uploadFile(), model.formData);
   }
 }

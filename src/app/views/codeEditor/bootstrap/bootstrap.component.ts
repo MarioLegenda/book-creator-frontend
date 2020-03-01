@@ -7,6 +7,8 @@ import {Store} from "@ngrx/store";
 import {clearStateAction} from "../../../store/globalReducers";
 import Util from "../../../library/Util";
 import {TabSession} from "../../../store/sessions/TabSession";
+import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
+import {Environments} from "../../../library/Environments";
 
 @Component({
   selector: 'cms-code-editor',
@@ -17,6 +19,7 @@ import {TabSession} from "../../../store/sessions/TabSession";
 })
 export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
   project: any;
+  environments: Environments;
 
   // @ts-ignore
   @ViewChild('wrapperRef') wrapperRef: ElementRef;
@@ -26,13 +29,15 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
     private httpActionSubscriber: HttpActionSubscriber,
     private viewActionSubscriber: ViewActionSubscriber,
     private projectRepository: ProjectRepository,
+    private environmentEmulatorRepository: EnvironmentEmulatorRepository,
     private route: ActivatedRoute,
     private tabSession: TabSession,
   ) {}
 
   ngOnInit(): void {
-    this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).subscribe((model: any) => {
-      this.project = model;
+    this.bootstrap().then(({project, environments}) => {
+      this.environments = new Environments(environments);
+      this.project = project;
     });
   }
 
@@ -48,5 +53,12 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.store.dispatch(clearStateAction());
 
     this.tabSession.clear();
+  }
+
+  private async bootstrap() {
+    const project = await this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).toPromise();
+    const environments = await this.environmentEmulatorRepository.getEnvironments().toPromise();
+
+    return {project, environments};
   }
 }

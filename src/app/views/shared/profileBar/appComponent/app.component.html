@@ -10,13 +10,13 @@
     class="profile-action-wrapper col-xs-3 col-md-3 col-lg-3">
     <div class="col-xs-12 col-md-12 col-lg-12">
       <div class="click-anchor profile-image main-menu" (click)="onShowMenu()">
-        <img class="click-anchor main-menu" src="http://tinygraphs.com/labs/isogrids/hexa16/tinygraphs?theme=heatwave&numcolors=4&size=220&fmt=svg"/>
+        <img class="click-anchor main-menu" [src]="avatar"/>
       </div>
     </div>
 
     <div style="display: none" class="falling-menu click-anchor col-xs-12 col-md-10 col-lg-10" id="mainMenu" #mainMenuRef>
       <div class="click-anchor basic-info col-xs-12 col-md-12 col-lg-12">
-        <label class="click-anchor display-name">{{account.name}} {{account.lastName}}</label>
+        <label class="click-anchor display-name">{{name}} {{lastName}}</label>
         <label class="click-anchor email">{{account.email}}</label>
       </div>
 

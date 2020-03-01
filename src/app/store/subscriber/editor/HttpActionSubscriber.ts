@@ -20,9 +20,7 @@ export class HttpActionSubscriber {
 
   private subscribeToHttpActions(observable: Observable<any>) {
     observable.subscribe((action: any) => {
-      if (!action) {
-        return;
-      }
+      if (!action) return;
 
       switch (action.type) {
         case actionTypes.EDITOR_HTTP_GET_FILE_CONTENT: {
