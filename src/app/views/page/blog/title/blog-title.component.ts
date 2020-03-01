@@ -58,6 +58,7 @@ export class BlogTitleComponent {
           this.source.uuid,
           this.model.title,
           null,
+          null,
         )).subscribe(() => {
           if (this.componentState.saved) return;
 

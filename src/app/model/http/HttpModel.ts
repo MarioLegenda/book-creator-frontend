@@ -107,12 +107,14 @@ export class HttpModel {
     uuid: string,
     title: string,
     description: string,
+    cover: string,
   ) {
     return {
       data: {
         uuid,
         title,
         description,
+        cover,
       },
     };
   }

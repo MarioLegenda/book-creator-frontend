@@ -1,0 +1,17 @@
+<div
+  class="cover-wrapper col-lg-12 col-md-12 col-xs-12">
+  <input
+    class="cover-input col-xs-12 col-md-12 col-lg-12"
+    type="text"
+    name="title"
+    maxlength="200"
+    [(ngModel)]="componentState.cover"
+    (ngModelChange)="onChange($event)"
+    placeholder="Cover image url (Unsplash only)" />
+
+  <div
+    *ngIf="componentState.hasCover"
+    class="image-wrapper col-xs-12 col-md-12 col-lg-12">
+    <img [src]="componentState.realUrl" />
+  </div>
+</div>

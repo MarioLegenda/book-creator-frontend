@@ -118,6 +118,7 @@ export class AppContextInitializer {
           uuid: blog.data.uuid,
           title: blog.data.title,
           description: blog.data.description,
+          cover: blog.data.cover,
           shortId: blog.data.shortId,
           codeProject: blog.codeProjects,
           type: type,

@@ -19,6 +19,14 @@
     </div>
 
     <div
+      *ngIf="sourceContext && sourceContext.knowledgeSource.type === 'blog'"
+      class="source-block col-xs-12 col-md-12 col-lg-12">
+      <cms-cover
+        [source]="sourceContext.knowledgeSource">
+      </cms-cover>
+    </div>
+
+    <div
       cdkDropList
       class="container row page col-xs-12 col-lg-12 col-md-12"
       (cdkDropListDropped)="drop($event)">

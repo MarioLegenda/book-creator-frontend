@@ -1,0 +1,32 @@
+@import '../../../../../styles/variables';
+
+.cover-wrapper {
+  float: none;
+
+  .cover-input {
+    float: none;
+    display: block;
+    padding: 10px 0 10px 0;
+    border: none;
+
+    font-family: $mainFont;
+
+    font-size: 1.2em;
+
+    color: $appBlack;
+
+    border-bottom: 1px solid $almostWhiteGray;
+    z-index: 2;
+  }
+
+  .image-wrapper {
+    float: none;
+    margin-top: 20px;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+

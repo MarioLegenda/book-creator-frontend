@@ -58,6 +58,7 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
           this.source.uuid,
           null,
           this.model.description,
+          null,
         )).subscribe(() => {
           if (this.componentState.saved) return;
 
