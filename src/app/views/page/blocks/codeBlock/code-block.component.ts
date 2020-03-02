@@ -21,7 +21,6 @@ import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryS
   selector: 'cms-code-block',
   styleUrls: [
     './code-block.component.scss',
-    '../../shared/saved.component.scss',
   ],
   templateUrl: './code-block.component.html',
 })
@@ -374,10 +373,12 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.componentState.hasTestRunWindow = false;
 
     if (this.componentState.codeProjectImported) {
-      this.emlRepository.BuildAndRunProject(
-        this.componentState.codeProject.uuid,
-        this.componentState.code
-      ).subscribe((res) => {
+      const model = HttpModel.buildAndRunProject(
+        this.componentState.code,
+        'dev',
+      );
+
+      this.emlRepository.BuildAndRunProject(this.componentState.codeProject.uuid, model).subscribe((res) => {
         this.componentState.isCodeRunning = false;
 
         this.componentState.testRunResult = res;
