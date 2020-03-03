@@ -15,6 +15,8 @@ export class AccountProvider {
   }
 
   getAccount(): Account {
+    this.loadAccount();
+
     return this.account;
   }
 

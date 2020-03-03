@@ -22,9 +22,7 @@ export class ProfileComponent {
     private fileUploadRepository: FileUploadRepository,
     private store: Store<any>,
     private accountRepository: AccountRepository,
-  ) {
-    this.account = accountProvider.getAccount();
-  }
+  ) {}
 
   error = null;
   imageTooBig = false;
@@ -91,22 +89,26 @@ export class ProfileComponent {
 
       this.accountProvider.updateProfileAvatar(res.profile.avatar);
 
-      this.avatarSrc = this.account.profile.avatar.path;
+      this.avatarSrc = this.accountProvider.getAccount().profile.avatar.path;
 
       this.store.dispatch(avatarChanged())
     });
   }
 
   onSaveProfile() {
-    const uuid: string = this.account.uuid;
-    let name: string = this.account.name;
-    let lastName: string = this.account.lastName;
+    if (!this.isChanged()) return;
+
+    const account = this.accountProvider.getAccount();
+
+    const uuid: string = account.uuid;
+    let name: string = account.name;
+    let lastName: string = account.lastName;
     const profile = {
-      avatar: this.account.profile.avatar,
-      githubProfile: this.account.profile.githubProfile,
-      personalWebsite: this.account.profile.personalWebsite,
-      company: this.account.profile.company,
-      openSourceProject: this.account.profile.openSourceProject,
+      avatar: account.profile.avatar,
+      githubProfile: account.profile.githubProfile,
+      personalWebsite: account.profile.personalWebsite,
+      company: account.profile.company,
+      openSourceProject: account.profile.openSourceProject,
     };
 
     if (this.componentState.name) {
@@ -158,10 +160,12 @@ export class ProfileComponent {
   }
 
   private loadInitialState() {
-    this.componentState.name = this.account.name;
-    this.componentState.lastName = this.account.lastName;
+    const account = this.accountProvider.getAccount();
 
-    const profile = this.account.profile;
+    this.componentState.name = account.name;
+    this.componentState.lastName = account.lastName;
+
+    const profile = account.profile;
 
     this.componentState.githubProfile = profile.githubProfile;
     this.componentState.personalWebsite = profile.personalWebsite;
@@ -170,8 +174,31 @@ export class ProfileComponent {
   }
 
   private loadDefaultAvatar() {
-    const avatar = this.account.profile.avatar;
+    const avatar = this.accountProvider.getAccount().profile.avatar;
 
     this.avatarSrc = avatar.path;
+  }
+
+  private isChanged(): boolean {
+    const account = this.accountProvider.getAccount();
+
+    const name = this.componentState.name;
+    const lastName = this.componentState.lastName;
+    const githubProfile = this.componentState.githubProfile;
+    const personalWebsite = this.componentState.personalWebsite;
+    const company = this.componentState.company;
+    const openSourceProject = this.componentState.openSourceProject;
+
+    if (name !== account.name) return true;
+    if (lastName !== account.lastName) return true;
+
+    const profile = account.profile;
+    
+    if (githubProfile !== profile.githubProfile) return true;
+    if (personalWebsite !== profile.personalWebsite) return true;
+    if (company !== profile.company) return true;
+    if (openSourceProject !== profile.openSourceProject) return true;
+
+    return false;
   }
 }
