@@ -23,7 +23,7 @@ export class AccountProvider {
 
     unparsed['profile'].avatar = avatar;
 
-    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30);
+    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30, '/');
 
     this.account.profile.avatar = avatar;
   }
@@ -34,7 +34,7 @@ export class AccountProvider {
     unparsed['name'] = name;
     unparsed['lastName'] = lastName;
 
-    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30);
+    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30, '/');
 
     this.loadAccount();
   }
@@ -54,7 +54,7 @@ export class AccountProvider {
     profile['company'] = company;
     profile['openSourceProject'] = openSourceProject;
 
-    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30);
+    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30, '/');
 
     this.loadAccount();
   }

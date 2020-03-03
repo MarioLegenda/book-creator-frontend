@@ -54,8 +54,8 @@ export class CoverComponent implements OnInit {
   private initCover() {
     if (!this.source.cover) return;
 
-    this.componentState.cover = this.source.cover;
-    this.componentState.realUrl = `https://source.unsplash.com/${this.getId(this.componentState.cover)}/1600x900`;
+    this.componentState.cover = this.source.cover.original;
+    this.componentState.realUrl = this.source.cover.real;
     this.componentState.hasCover = true;
   }
 }
