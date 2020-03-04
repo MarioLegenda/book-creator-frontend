@@ -71,4 +71,13 @@ export class CodeProjectsRepository {
         }, {})
       );
   }
+
+  getNext(model) {
+    return this.httpClient.post(this.projectRouteResolver.getNext(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
 }

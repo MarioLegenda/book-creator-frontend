@@ -566,4 +566,16 @@ export class HttpModel {
       }
     }
   }
+
+  static getNextCodeProject(
+    uuids: string[],
+    searchTerm: string = null,
+  ) {
+    return {
+      data: {
+        uuids: uuids,
+        searchTerm: searchTerm,
+      }
+    }
+  }
 }
