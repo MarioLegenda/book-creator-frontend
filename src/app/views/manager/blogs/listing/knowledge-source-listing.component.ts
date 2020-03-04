@@ -31,6 +31,16 @@ export class KnowledgeSourceListingComponent implements OnInit {
     });
 
     this.items.splice(idx, 1);
+
+    const uuids = this.items.map((item) => {
+      return item.uuid;
+    });
+
+    const model = HttpModel.getNextBlog(uuids, this.searchTerm);
+
+    this.blogRepository.getNext(model).subscribe((item) => {
+      if (item) this.items.push(item);
+    })
   }
 
   onSearchTerm($event: string) {

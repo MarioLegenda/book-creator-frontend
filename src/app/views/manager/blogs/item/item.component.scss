@@ -52,6 +52,7 @@
     color: $appBlack;
     float: right;
     border-radius: 0px;
+    text-decoration: none;
 
     border: none;
     background-color: white;
@@ -64,6 +65,7 @@
     margin-left: 5px;
 
     &:hover {
+      text-decoration: none;
       border-top: 2px solid $mainAppColor;
     }
   }

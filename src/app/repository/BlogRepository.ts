@@ -71,4 +71,13 @@ export class BlogRepository {
         }, {})
       );
   }
+
+  getNext(model) {
+    return this.httpClient.post(this.routeResolver.getNextBlog(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
 }

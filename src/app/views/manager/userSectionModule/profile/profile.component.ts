@@ -193,7 +193,7 @@ export class ProfileComponent {
     if (lastName !== account.lastName) return true;
 
     const profile = account.profile;
-    
+
     if (githubProfile !== profile.githubProfile) return true;
     if (personalWebsite !== profile.personalWebsite) return true;
     if (company !== profile.company) return true;

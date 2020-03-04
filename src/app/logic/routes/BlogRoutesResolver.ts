@@ -18,6 +18,7 @@ export class BlogRoutesResolver {
     getBlogs: `${this.bookApiUri}/api/v1/knowledge-source/get-blogs`,
     removeBlog: `${this.bookApiUri}/api/v1/knowledge-source/blog/remove`,
     searchBlog: `${this.bookApiUri}/api/v1/knowledge-source/search/blogs`,
+    getNext: `${this.bookApiUri}/api/v1/knowledge-source/blog/get-next`,
   };
 
   createBlankBlog(): string {
@@ -58,5 +59,9 @@ export class BlogRoutesResolver {
 
   searchBlog(): string {
     return this.routes.searchBlog;
+  }
+
+  getNextBlog(): string {
+    return this.routes.getNext;
   }
 }

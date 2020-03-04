@@ -554,4 +554,16 @@ export class HttpModel {
       }
     }
   }
+
+  static getNextBlog(
+    uuids: string[],
+    searchTerm: string = null,
+  ) {
+    return {
+      data: {
+        uuids: uuids,
+        searchTerm: searchTerm,
+      }
+    }
+  }
 }

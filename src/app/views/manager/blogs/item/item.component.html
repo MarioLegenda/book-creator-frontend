@@ -20,19 +20,19 @@
   </div>
 
   <div class="actions col-xs-12 col-md-12 col-lg-12">
-    <button
+    <a
       [ngClass]="{'item-button': true, 'preview-disabled': componentState.noTitle}"
       (click)="onPublish($event)">
       Publish
       <i class="icon fas fa-wifi"></i>
-    </button>
+    </a>
 
-    <button
+    <a
       [ngClass]="{'item-button': true, 'preview-disabled': componentState.noTitle}"
       (click)="onPreview($event)">
       Preview
       <i class="icon fas fa-bullseye"></i>
-    </button>
+    </a>
   </div>
 
 </div>
