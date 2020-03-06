@@ -4,8 +4,9 @@ import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { KnowledgeSourceListingComponent } from '../blogs/listing/knowledge-source-listing.component';
 import { CodeProjectsComponent } from '../codeProjects/listing/code-projects.component';
 import { OverviewComponent } from '../overview/overview.component';
-import {SettingsComponent} from "../settings/settings.component";
 import {ProfileComponent} from "../profile/profile.component";
+import {SettingsComponent} from "../settings/settings.component";
+import {PublishComponent} from "../publishBlog/publish.component";
 
 const routes: Routes = [
   {
@@ -33,10 +34,18 @@ const routes: Routes = [
         component: ProfileComponent,
       },
       {
+        path: 'blog/publish/:shortId',
+        component: PublishComponent,
+      },
+      {
         path: 'user-section/settings',
         component: SettingsComponent,
       },
     ],
+  },
+  {
+    path: 'code-projects-manager/manage/:shortId',
+    loadChildren: () => import('./../codeProjectsManagerModule/module/code-projects-manager.module').then(m => m.CodeProjectsManagerModule)
   },
 ];
 

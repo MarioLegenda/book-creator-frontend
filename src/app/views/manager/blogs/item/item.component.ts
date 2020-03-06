@@ -6,6 +6,7 @@ import {Month} from "../../../../library/Month";
 import {RemoveItemService} from "../../sharedServices/RemoveItemService";
 import {titleResolver} from "../../sharedServices/titleResolver";
 import {environment} from "../../../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'cms-ks-item',
@@ -28,6 +29,7 @@ export class ItemComponent {
     private blogRepository: BlogRepository,
     private dialog: MatDialog,
     private removeItemService: RemoveItemService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -53,6 +55,8 @@ export class ItemComponent {
 
   onPublish($event) {
     $event.stopPropagation();
+
+    this.router.navigate(['/cms/management', 'blog', 'publish', this.item.shortId]);
   }
 
   onPreview($event) {

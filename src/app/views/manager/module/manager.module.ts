@@ -23,6 +23,7 @@ import {RemoveItemService} from "../sharedServices/RemoveItemService";
 import {CodeProjectsManagerRoutingModule} from "../codeProjectsManagerModule/module/code-projects-manager-routing.module";
 import {ProfileComponent} from "../profile/profile.component";
 import {SettingsComponent} from "../settings/settings.component";
+import {PublishComponent} from "../publishBlog/publish.component";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {SettingsComponent} from "../settings/settings.component";
     SearchComponent,
     ProfileComponent,
     SettingsComponent,
+    PublishComponent,
   ],
   imports: [
     CommonModule,
