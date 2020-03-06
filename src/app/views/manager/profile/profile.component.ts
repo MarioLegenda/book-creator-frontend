@@ -1,17 +1,17 @@
 import {Component} from '@angular/core';
-import {AccountProvider} from "../../../../logic/AccountProvider";
-import {FileUploadRepository} from "../../../../repository/FileUploadRepository";
+import {AccountProvider} from "../../../logic/AccountProvider";
+import {FileUploadRepository} from "../../../repository/FileUploadRepository";
 import {catchError, last, reduce} from "rxjs/operators";
-import {Account} from "../../../../model/app/Account";
+import {Account} from "../../../model/app/Account";
 import {Store} from "@ngrx/store";
-import {avatarChanged, basicInfoChanged} from "../../../../store/account/actions";
-import {HttpModel} from "../../../../model/http/HttpModel";
-import {AccountRepository} from "../../../../repository/AccountRepository";
+import {avatarChanged, basicInfoChanged} from "../../../store/account/actions";
+import {HttpModel} from "../../../model/http/HttpModel";
+import {AccountRepository} from "../../../repository/AccountRepository";
 
 @Component({
   selector: 'cms-user-section-profile',
   styleUrls: [
-    '../../../shared/styles/generic.component.scss',
+    '../../shared/styles/generic.component.scss',
     './profile.component.scss',
   ],
   templateUrl: './profile.component.html',

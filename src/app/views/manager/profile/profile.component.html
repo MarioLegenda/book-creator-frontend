@@ -1,0 +1,117 @@
+<div class="col-xs12 col-md-12 col-lg-12">
+  <div class="col-xs-12 col-md-12 col-lg-12 profile-wrapper">
+    <div class="col-xs-12 col-md-8 col-lg-8 profile">
+      <div class="col-xs-12 col-md-8 col-lg-8 item-wrapper first-item-wrapper avatar">
+        <div
+          class="item first-item col-xs-12 col-md-12 col-lg-12">
+          <img class="avatar" [src]="avatarSrc">
+
+          <div
+            class="upload-btn">
+            <p class="upload-text">Upload a new avatar</p>
+            <input
+              (change)="onFileUpload($event.target.files)"
+              type="file"
+              name="file"
+              class="upload-file-input"/>
+          </div>
+
+          <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 15">No file selected for upload.</p>
+          <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 16">Mime type could not be determined.</p>
+          <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 17">Invalid mime type. Supported mime types are jpg, jpeg, png and svg.</p>
+          <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 11">Internal error. Image could not be uploaded. We are very sorry about this and we are looking into it.</p>
+          <p class="error col-xs12 col-md-12 col-lg-12" *ngIf="imageTooBig">The uploaded image is too large. Permitted file size is 10MB.</p>
+
+          <div *ngIf="uploadedFile" class="button-wrapper col-xs-12 col-md-12 col-lg-12">
+            <button
+              class="btn action-button save-file col-xs-4 col-md-2 col-lg-2"
+              (click)="saveFile()">
+              Change
+            </button>
+
+            <button
+              class="btn action-button clear-file col-xs-4 col-md-2 col-lg-2"
+              (click)="clearFile()">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="item col-xs-12 col-md-12 col-lg-12">
+          <div class="input-wrapper col-xs-12 col-md-12 col-lg-12">
+            <input
+              class="col-xs-12 col-md-12 col-lg-12"
+              type="text"
+              maxlength="200"
+              placeholder="Name"
+              [(ngModel)]="componentState.name"
+              name="name"/>
+          </div>
+
+          <div class="input-wrapper col-xs-12 col-md-12 col-lg-12">
+            <input
+              class="col-xs-12 col-md-12 col-lg-12"
+              type="text"
+              maxlength="200"
+              placeholder="Last name"
+              [(ngModel)]="componentState.lastName"
+              name="lastName"/>
+          </div>
+        </div>
+
+        <div class="item col-xs-12 col-md-12 col-lg-12">
+          <div class="input-wrapper col-xs-12 col-md-12 col-lg-12">
+            <input
+              class="col-xs-12 col-md-12 col-lg-12"
+              type="text"
+              [(ngModel)]="componentState.githubProfile"
+              placeholder="Github profile"
+              name="github"/>
+
+            <p class="info col-xs-12 col-md-12 col-lg-12">* will be visible in every blog you write</p>
+          </div>
+
+          <div class="input-wrapper col-xs-12 col-md-12 col-lg-12">
+            <input
+              class="col-xs-12 col-md-12 col-lg-12"
+              type="text"
+              [(ngModel)]="componentState.personalWebsite"
+              placeholder="Personal website"
+              name="personalWebsite"/>
+
+            <p class="info col-xs-12 col-md-12 col-lg-12">* will be visible only on your public profile</p>
+          </div>
+
+          <div class="input-wrapper col-xs-12 col-md-12 col-lg-12">
+            <input
+              class="col-xs-12 col-md-12 col-lg-12"
+              type="text"
+              [(ngModel)]="componentState.company"
+              placeholder="Company"
+              name="company"/>
+
+            <p class="info col-xs-12 col-md-12 col-lg-12">* will be visible only on your public profile</p>
+          </div>
+
+          <div class="input-wrapper col-xs-12 col-md-12 col-lg-12">
+            <input
+              class="col-xs-12 col-md-12 col-lg-12"
+              type="text"
+              [(ngModel)]="componentState.openSourceProject"
+              placeholder="Favourite open source project"
+              name="openSourceProject"/>
+
+            <p class="info col-xs-12 col-md-12 col-lg-12">* will be specially highlighted in your public profile and in every blog you write so you can popularize your open source projects</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-button-wrapper col-xs-12 col-md-12 col-lg-12">
+        <button
+          (click)="onSaveProfile()"
+          class="btn save-button">
+          Save</button>
+      </div>
+    </div>
+  </div>
+</div>

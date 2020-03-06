@@ -18,6 +18,24 @@
       </a>
     </div>
 
+    <div class="menu-entry">
+      <a
+        class="entry"
+        routerLink="./user-section/profile"
+        [ngClass]="{'selected': type === 'profile'}">
+        Profile
+      </a>
+    </div>
+
+    <div class="menu-entry">
+      <a
+        class="entry"
+        routerLink="./user-section/settings"
+        [ngClass]="{'selected': type === 'settings'}">
+        Settings
+      </a>
+    </div>
+
     <div
       *ngIf="type"
       (click)="addKsDialog()"

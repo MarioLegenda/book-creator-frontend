@@ -20,6 +20,10 @@
     box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
   }
 
+  .title-bar {
+    float: left;
+  }
+
   .remove-icon {
     position: absolute;
     color: $lightGray;
@@ -67,6 +71,14 @@
     &:hover {
       text-decoration: none;
       border-top: 2px solid $mainAppColor;
+    }
+  }
+
+  .state-info {
+    float: left;
+
+    .draft {
+      color: $dangerRed;
     }
   }
 
