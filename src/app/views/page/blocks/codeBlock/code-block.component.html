@@ -56,6 +56,13 @@
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
+          *ngIf="componentState.codeProjectImported"
+          class="icon fas fa-bug action-disabled"
+          matTooltip="Environment loaded from code project">
+        </i>
+
+        <i
+          *ngIf="!componentState.codeProjectImported"
           class="icon fas fa-bug"
           matTooltip="Select environment">
         </i>

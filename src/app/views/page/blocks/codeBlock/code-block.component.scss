@@ -76,6 +76,13 @@
         color: $dangerRed;
       }
     }
+
+    .action-disabled {
+      &:hover {
+        cursor: not-allowed;
+        color: $lightestGray;
+      }
+    }
   }
 
   .editor-wrapper {

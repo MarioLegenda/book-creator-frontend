@@ -187,6 +187,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   onSelectEnvironment() {
+    if (this.componentState.codeProjectImported) return;
+
     this.emlRepository.getEnvironments().subscribe(emulators => {
       this.handleEmulatorDialog(emulators);
     });
@@ -235,6 +237,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.removeCodeProject().subscribe(() => {
       this.componentState.codeProjectImported = false;
       this.componentState.codeProject = null;
+      this.componentState.emulator = null;
     });
   }
 
@@ -408,6 +411,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.codeProjectsRepository.getSingleProject(uuid).subscribe((res) => {
       this.componentState.codeProjectImported = true;
 
+      this.componentState.emulator = res.environment;
       this.componentState.codeProject = res;
     });
   }
