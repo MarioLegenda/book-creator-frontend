@@ -7,11 +7,15 @@
   </div>
 
   <div class="col-xs-12 col-md-12 col-lg-12 cp-list">
-    <cms-cp-item
+    <div
       *ngFor="let item of items"
-      (itemDeleted)="onItemDeleted(item)"
-      [item]="item">
-    </cms-cp-item>
+      class="col-xs-6 col-md-3 col-lg-3 cp-item">
+      <cms-cp-item
+        [wrapperClasses]="'col-xs-12 col-md-12 col-lg-12'"
+        (itemDeleted)="onItemDeleted(item)"
+        [item]="item">
+      </cms-cp-item>
+    </div>
   </div>
 
   <div

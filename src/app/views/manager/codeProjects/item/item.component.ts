@@ -18,6 +18,8 @@ import {NewCodeProjectDialogComponent} from "../../../shared/modules/newCodeProj
 })
 export class ItemComponent implements OnInit {
   @Input('item') item;
+  @Input('wrapperClasses') wrapperClasses: string;
+  @Input('includeEdit') includeEdit: boolean = true;
 
   @Output('itemDeleted') itemDeleted = new EventEmitter();
 

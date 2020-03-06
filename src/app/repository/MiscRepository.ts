@@ -11,7 +11,7 @@ export class MiscRepository {
     private httpClient: HttpClient,
   ) {}
 
-  getHashtags() {
-    return this.httpClient.get(this.routeResolver.getHashtags());
+  getHashtagsAsArray() {
+    return this.httpClient.get(this.routeResolver.getHashtagsAsArray());
   }
 }

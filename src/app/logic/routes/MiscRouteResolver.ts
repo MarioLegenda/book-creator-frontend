@@ -8,10 +8,10 @@ export class MiscRouteResolver {
   private cndUri = environment.composeBookApiBaseUrl();
 
   private readonly routes = {
-    getHashtags: `${this.cndUri}/api/v1/misc/get-hashtags`,
+    getHashtagsAsArray: `${this.cndUri}/api/v1/misc/get-hashtags-as-array`,
   };
 
-  getHashtags(): string {
-    return `${this.routes.getHashtags}`;
+  getHashtagsAsArray(): string {
+    return `${this.routes.getHashtagsAsArray}`;
   }
 }
