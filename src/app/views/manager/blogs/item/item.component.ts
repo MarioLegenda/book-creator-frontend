@@ -7,6 +7,7 @@ import {RemoveItemService} from "../../sharedServices/RemoveItemService";
 import {titleResolver} from "../../sharedServices/titleResolver";
 import {environment} from "../../../../../environments/environment";
 import {Router} from "@angular/router";
+import {BlogState} from "../../../../logic/BlogState";
 
 @Component({
   selector: 'cms-ks-item',
@@ -55,6 +56,8 @@ export class ItemComponent {
 
   onPublish($event) {
     $event.stopPropagation();
+
+    if (this.item.state === BlogState.PUBLISHED) return;
 
     this.router.navigate(['/cms/management', 'blog', 'publish', this.item.shortId]);
   }

@@ -4,6 +4,7 @@ import {MiscRepository} from "../../../repository/MiscRepository";
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
 import {environment} from "../../../../environments/environment";
 import {HttpModel} from "../../../model/http/HttpModel";
+import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -18,6 +19,7 @@ export class PublishComponent implements OnInit {
   hashtags: any = null;
   selectedTags = [];
   noHtagsSelected: boolean = false;
+  publishInProgress: boolean = false;
 
   publishedUrl: string = null;
   codeProjects: any[] = [];
@@ -26,6 +28,7 @@ export class PublishComponent implements OnInit {
     private blogRepository: BlogRepository,
     private miscRepository: MiscRepository,
     private codeProjectsRepository: CodeProjectsRepository,
+    private environmentEmulatorRepository: EnvironmentEmulatorRepository,
   ) {}
 
   ngOnInit() {
@@ -76,13 +79,10 @@ export class PublishComponent implements OnInit {
       return;
     }
 
-    const hashtags = this.selectedTags.map(h => h.hashtag);
-
-    const model = HttpModel.publish(this.blog.uuid, hashtags);
-
-    this.blogRepository.publish(model).subscribe(publishedBlog => {
-      // TODO: Redirect to the view page
-    });
+    this.publishInProgress = true;
+    this.publicAction().then(() => {
+      this.publishInProgress = false;
+    })
   }
 
   onPreview($event) {
@@ -149,5 +149,22 @@ export class PublishComponent implements OnInit {
     }
 
     return hs;
+  }
+
+  private async publicAction() {
+    const hashtags = this.selectedTags.map(h => h.hashtag);
+
+    const publishModel = HttpModel.publish(this.blog.uuid, hashtags);
+    const buildStateModel = HttpModel.buildState('prod', this.blog.uuid, 'blog');
+
+    if (this.blog.codeProjects.length > 0) {
+      try {
+        await this.environmentEmulatorRepository.buildState(buildStateModel).toPromise();
+      } catch (e) {
+        console.log('BUILDING STATE FAILED');
+      }
+    }
+
+    return await this.blogRepository.publish(publishModel).toPromise();
   }
 }

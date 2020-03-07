@@ -10,6 +10,7 @@ export class EnvEmulatorRouteResolver {
   private readonly routes = {
     getEnvironment: `${this.envEmulatorUri}/api/environment-emulator/get-environments`,
     singleFileBuildAndRun: `${this.envEmulatorUri}/api/environment-emulator/build-and-run/single-file`,
+    buildState: `${this.envEmulatorUri}/api/environment-emulator/build-state`,
   };
 
   getEnvironment(): string {
@@ -18,5 +19,9 @@ export class EnvEmulatorRouteResolver {
 
   singleFileBuildAndRun(): string {
     return this.routes.singleFileBuildAndRun;
+  }
+
+  buildState(): string {
+    return this.routes.buildState;
   }
 }

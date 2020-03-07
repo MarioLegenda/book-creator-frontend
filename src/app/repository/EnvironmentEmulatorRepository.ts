@@ -3,16 +3,11 @@ import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
 import {Injectable} from "@angular/core";
 import {EnvEmulatorRouteResolver} from "../logic/routes/EnvEmulatorRouteResolver";
 import {reduce} from "rxjs/operators";
-import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class EnvironmentEmulatorRepository {
-  private cacheObservable: Observable<object>;
-
-  private cache = {};
-
   constructor(
     private httpClient: HttpClient,
     private routeResolver: CodeEditorRouteResolver,
@@ -35,6 +30,15 @@ export class EnvironmentEmulatorRepository {
         return res.data;
       }, {})
     );
+  }
+
+  public buildState(model) {
+    return this.httpClient.post(this.envRouteResolver.buildState(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {})
+      );
   }
 
   public getEnvironments() {

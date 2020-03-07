@@ -1,6 +1,5 @@
 export class BlogState {
-  public readonly states: any = {
-    DRAFT : 'draft',
-    PUBLISHED: 'published',
-  }
+  public static readonly DRAFT: string = 'draft';
+  public static readonly PUBLISHED: string = 'published';
+  public static readonly CHANGED: string = 'changed';
 }

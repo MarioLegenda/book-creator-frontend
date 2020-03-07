@@ -8,6 +8,10 @@ export class ErrorCodes {
   static readonly InvalidModel = 10;
   static readonly InternalError = 11;
   static readonly RootRenameTried = 12;
+  static readonly MaxDirectoryDepth = 13;
+  static readonly MaxFileLimit = 14;
+  static readonly UnAuthorized = 15;
+  static readonly ResourceIncomplete = 16;
 
   static readonly InvalidAccountType = 7;
   static readonly InvalidAccountProvider = 8;

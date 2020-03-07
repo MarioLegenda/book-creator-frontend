@@ -83,8 +83,17 @@
         *ngIf="noHtagsSelected"
         class="error col-xs-12 col-md-12 col-lg-12">No hashtags selected. You have to select at least one hashtag.</div>
 
-      <button class="btn" (click)="onPublish()">Publish <i class="icon fas fa-wifi"></i></button>
-      <button class="btn" (click)="onPreview($event)">Preview <i class="icon fas fa-bullseye"></i></button>
+      <button
+        class="btn"
+        [ngClass]="{'publish-in-progress': publishInProgress}"
+        (click)="onPublish()">Publish <i class="icon fas fa-wifi"></i>
+      </button>
+
+      <button
+        class="btn"
+        [ngClass]="{'publish-in-progress': publishInProgress}"
+        (click)="onPreview($event)">Preview <i class="icon fas fa-bullseye"></i>
+      </button>
     </div>
   </div>
 </div>

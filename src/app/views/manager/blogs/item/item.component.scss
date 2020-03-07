@@ -77,8 +77,17 @@
   .state-info {
     float: left;
 
+    .draft, .published {
+      font-size: 0.8em;
+      font-weight: bolder;
+    }
+
     .draft {
-      color: $dangerRed;
+      color: $lightRed;
+    }
+
+    .published {
+      color: $genericSuccess;
     }
   }
 

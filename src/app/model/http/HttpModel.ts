@@ -590,4 +590,18 @@ export class HttpModel {
       }
     }
   }
+
+  static buildState(
+    state: string,
+    sourceUuid: string,
+    type: string,
+  ) {
+    return {
+      data: {
+        state,
+        sourceUuid,
+        type,
+      }
+    }
+  }
 }

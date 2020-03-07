@@ -19,6 +19,7 @@
 
   <div class="state-info col-xs-12 col-md-12 col-lg-12">
     <p class="draft" *ngIf="item.state === 'draft'">DRAFT</p>
+    <p class="published" *ngIf="item.state === 'published'">PUBLISHED</p>
   </div>
 
   <div class="createdAt">
@@ -27,7 +28,7 @@
 
   <div class="actions col-xs-12 col-md-12 col-lg-12">
     <a
-      [ngClass]="{'item-button': true, 'preview-disabled': componentState.noTitle}"
+      [ngClass]="{'item-button': true, 'preview-disabled': componentState.noTitle || item.state === 'published'}"
       (click)="onPublish($event)">
       Publish
       <i class="icon fas fa-wifi"></i>
