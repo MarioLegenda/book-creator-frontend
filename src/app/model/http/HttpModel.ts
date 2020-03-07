@@ -578,4 +578,16 @@ export class HttpModel {
       }
     }
   }
+
+  static publish(
+    uuid: string,
+    hashtags: string[],
+  ) {
+    return {
+      data: {
+        uuid: uuid,
+        hashtags: hashtags,
+      }
+    }
+  }
 }

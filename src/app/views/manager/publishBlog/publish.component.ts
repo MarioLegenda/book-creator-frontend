@@ -3,6 +3,7 @@ import {BlogRepository} from "../../../repository/BlogRepository";
 import {MiscRepository} from "../../../repository/MiscRepository";
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
 import {environment} from "../../../../environments/environment";
+import {HttpModel} from "../../../model/http/HttpModel";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -16,6 +17,7 @@ export class PublishComponent implements OnInit {
   blog: any = null;
   hashtags: any = null;
   selectedTags = [];
+  noHtagsSelected: boolean = false;
 
   publishedUrl: string = null;
   codeProjects: any[] = [];
@@ -55,6 +57,8 @@ export class PublishComponent implements OnInit {
   onHashtagSelect(hashtag) {
     if (this.isHashtagSelected(hashtag)) return;
 
+    this.noHtagsSelected = false;
+
     if (this.selectedTags.length < 5) {
       this.selectedTags.push(hashtag);
     }
@@ -64,13 +68,30 @@ export class PublishComponent implements OnInit {
     this.selectedTags.splice(idx, 1);
   }
 
+  onPublish() {
+    this.noHtagsSelected = false;
+    if (this.selectedTags.length === 0) {
+      this.noHtagsSelected = true;
+
+      return;
+    }
+
+    const hashtags = this.selectedTags.map(h => h.hashtag);
+
+    const model = HttpModel.publish(this.blog.uuid, hashtags);
+
+    this.blogRepository.publish(model).subscribe(publishedBlog => {
+      // TODO: Redirect to the view page
+    });
+  }
+
   onPreview($event) {
     $event.stopPropagation();
 
     window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.blog.slug}/${this.blog.shortId}`;
   }
 
-  isHashtagSelected(hashtag): boolean {
+  private isHashtagSelected(hashtag): boolean {
     const exists = this.selectedTags.filter(h => h.hashtag === hashtag.hashtag);
 
     return (exists.length > 0);
