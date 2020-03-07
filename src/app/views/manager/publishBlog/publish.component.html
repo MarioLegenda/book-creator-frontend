@@ -5,40 +5,82 @@
 
     <div class="item title col-xs-12 col-md-12 col-lg-12">
       <h1>TITLE</h1>
-      <p>{{blog.title}}</p>
+      <div class="border col-xs-12 col-md-12 col-lg-12"></div>
+
+      <div class="content-wrapper col-xs-12 col-md-12 col-lg-12">
+        <p class="content">{{blog.title}}</p>
+      </div>
+
     </div>
 
     <div class="item published-url col-xs-12 col-md-12 col-lg-12">
       <h1>PUBLISHED URL</h1>
-      <p>{{publishedUrl}}</p>
+      <div class="border col-xs-12 col-md-12 col-lg-12"></div>
+
+      <div class="content-wrapper col-xs-12 col-md-12 col-lg-12">
+        <p class="content">{{publishedUrl}}</p>
+      </div>
     </div>
 
     <div class="item linked-code-projects col-xs-12 col-md-12 col-lg-12">
       <h1>LINKED CODE PROJECTS</h1>
-      <div
-        *ngIf="codeProjects.length > 0">
+      <div class="border col-xs-12 col-md-12 col-lg-12"></div>
+
+      <div class="content-wrapper col-xs-12 col-md-12 col-lg-12">
         <div
-          *ngFor="let item of codeProjects"
-          class="col-xs-8 col-md-5 col-lg-5 cp-item">
-          <cms-cp-item
-            [wrapperClasses]="'col-xs-12 col-md-12 col-lg-12'"
-            [includeEdit]="false"
-            [item]="item">
-          </cms-cp-item>
+          class="content"
+          *ngIf="codeProjects.length > 0">
+          <div
+            *ngFor="let item of codeProjects"
+            class="col-xs-8 col-md-5 col-lg-5 cp-item">
+            <cms-cp-item
+              [wrapperClasses]="'col-xs-12 col-md-12 col-lg-12'"
+              [includeEdit]="false"
+              [item]="item">
+            </cms-cp-item>
+          </div>
         </div>
       </div>
 
-
+      <p
+        class="no-code-projects col-xs-12 col-md-12 col-xs-12"
+        *ngIf="codeProjects.length === 0">No code projects to show</p>
     </div>
 
     <div class="item hashtag-area col-xs-12 col-md-12 col-lg-12">
       <h1>CHOOSE YOUR HASHTAGS</h1>
-      <p>Hashtags</p>
+      <div class="border col-xs-12 col-md-12 col-lg-12"></div>
+      <span
+        class="info col-xs-12 col-md-12 col-lg-12">* in The Rebel Source, hashtags serve the purpose of categories. Users can search all content related to a hashtag so choose your hashtags wisely. You can add up o <span class="info-highlight">5</span> hashtags</span>
+
+      <div class="content-wrapper col-xs-12 col-md-12 col-lg-12">
+        <div
+          *ngIf="selectedTags.length > 0"
+          class="selected col-xs-12 col-md-12 col-lg-12">
+          <div
+            *ngFor="let h of selectedTags; index as i"
+            class="hashtag" [ngStyle]="{width: h.width}"
+            (click)="onRemoveHashtag(i)">
+            <i class="icon fas fa-hashtag"></i>
+            <span class="text">{{h.hashtag.substring(1)}}</span>
+          </div>
+        </div>
+
+        <div class="list col-xs-12 col-md-12 col-lg-12">
+          <div
+            *ngFor="let h of hashtags"
+            class="hashtag" [ngStyle]="{width: h.width}"
+            (click)="onHashtagSelect(h)">
+            <i class="icon animated-icon fas fa-hashtag"></i>
+            <span class="text">{{h.hashtag.substring(1)}}</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="item actions-area col-xs-12 col-md-12 col-lg-12">
-      <button class="btn">Publish</button>
-      <button class="btn" (click)="onPreview($event)">Preview</button>
+      <button class="btn">Publish <i class="icon fas fa-wifi"></i></button>
+      <button class="btn" (click)="onPreview($event)">Preview <i class="icon fas fa-bullseye"></i></button>
     </div>
   </div>
 </div>

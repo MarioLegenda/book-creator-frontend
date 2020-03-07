@@ -1,17 +1,27 @@
 @import '../../../../styles/variables';
 
 .publish-wrapper {
-  margin: 0 auto;
+  margin: 40px auto;
   float: none;
 
   .item {
-    margin-bottom: 40px;
+    margin-bottom: 80px;
 
     h1 {
-      margin-bottom: 20px;
+      margin: 0;
       font-size: 1em;
-      padding: 5px 0 5px 0;
-      border-bottom: 1px solid $lightestGray;
+    }
+
+    .content-wrapper {
+      margin-top: 20px;
+    }
+
+    .border {
+      height: 4px;
+      background-color: $mainAppColor;
+      border-radius: 5px;
+
+      margin: 5px 0 0 0;
     }
   }
 
@@ -23,6 +33,7 @@
     border-bottom: none;
 
     button {
+      width: 90px;
       display: block;
       float: right;
       margin-left: 10px;
@@ -30,17 +41,32 @@
       background-color: white;
       border: 1px solid $mainAppColor;
       color: $appBlack;
+      position: relative;
+      text-align: left;
 
-      transition: background-color 0.5s, color 0.5s;
-      -moz-transition: background-color 0.5s, color 0.5s;
-      -o-transition: background-color 0.5s, color 0.5s;
-      -webkit-transition: background-color 0.5s, color 0.5s;
+      transition: background-color 0.5s;
+      -moz-transition: background-color 0.5s;
+      -o-transition: background-color 0.5s;
+      -webkit-transition: background-color 0.5s;
 
       &:hover {
         background-color: $mainAppColor;
         color: white;
+
+        .icon {
+          color: white;
+        }
       }
     }
+
+    .icon {
+      font-size: 1.2em;
+      position: absolute;
+      top: 7px; right: 3px;
+      color: $mainAppColor;
+    }
+
+
   }
 
   .title {
@@ -52,6 +78,71 @@
   .published-url {
     p {
       font-weight: bolder;
+    }
+  }
+
+  .no-code-projects {
+    text-align: center;
+    font-style: italic;
+    color: $lightGray;
+
+    margin-top: 20px;
+  }
+
+  .hashtag-area {
+    .selected {
+      margin: 20px 0 60px 0;
+    }
+
+    .info {
+      font-size: 1em;
+      color: $lightGray;
+      font-style: italic;
+      display: block;
+    }
+
+    .info-highlight {
+      color: $mainAppColor;
+      font-weight: bolder;
+      font-size: 1.1em;
+    }
+
+    .hashtag {
+      position: relative;
+      display: block;
+      float: left;
+      background-color: $mainAppColor;
+      color: white;
+      padding: 5px;
+      border-radius: 2px;
+
+      margin: 0 5px 5px 0;
+
+      &:hover {
+        cursor: pointer;
+
+        .animated-icon {
+          font-size: 1.5em;
+          top: 3px; left: 3px;
+        }
+      }
+
+      .icon {
+        position: absolute;
+        left: 2px; top: 9px;
+      }
+
+      .animated-icon {
+        transition: font-size 0.5s, top 0.5s, left 0.5s;
+        -webkit-transition: font-size 0.5s, top 0.5s, left 0.5s;
+        -o-transition: font-size 0.5s, top 0.5s, left 0.5s;
+        -moz-transition: font-size 0.5s, top 0.5s, left 0.5s;
+      }
+
+      .text {
+        display: inline-block;
+        margin-left: 20px;
+      }
     }
   }
 }

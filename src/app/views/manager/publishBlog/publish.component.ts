@@ -12,16 +12,10 @@ import {environment} from "../../../../environments/environment";
   ],
   templateUrl: './publish.component.html',
 })
-/**
- * This component must have:
- * 1. Title of the blog
- * 2. url of the future published blog
- * 3. The info for linked code projects and links to the editors of them
- * 4. A list of hashtags for the user to choose from (required)
- */
 export class PublishComponent implements OnInit {
   blog: any = null;
   hashtags: any = null;
+  selectedTags = [];
 
   publishedUrl: string = null;
   codeProjects: any[] = [];
@@ -41,10 +35,11 @@ export class PublishComponent implements OnInit {
     this.getInitialData(shortId).then(({type, data}) => {
       if (type === 'ok') {
         this.blog = data.blog;
-        this.hashtags = data.hashtags;
         this.codeProjects = data.codeProjects;
 
         this.publishedUrl = `/blog/${this.blog.slug}/${this.blog.shortId}`;
+
+        this.hashtags = this.loadHashtags(data.hashtags);
 
         return;
       }
@@ -57,10 +52,28 @@ export class PublishComponent implements OnInit {
     });
   }
 
+  onHashtagSelect(hashtag) {
+    if (this.isHashtagSelected(hashtag)) return;
+
+    if (this.selectedTags.length < 5) {
+      this.selectedTags.push(hashtag);
+    }
+  }
+
+  onRemoveHashtag(idx: number) {
+    this.selectedTags.splice(idx, 1);
+  }
+
   onPreview($event) {
     $event.stopPropagation();
 
     window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.blog.slug}/${this.blog.shortId}`;
+  }
+
+  isHashtagSelected(hashtag): boolean {
+    const exists = this.selectedTags.filter(h => h.hashtag === hashtag.hashtag);
+
+    return (exists.length > 0);
   }
 
   private async getInitialData(shortId: string) {
@@ -98,5 +111,22 @@ export class PublishComponent implements OnInit {
 
   private redirectTo500(): void {
     window.location.href = '/500';
+  }
+
+  private loadHashtags(hashtags: string[]) {
+    const hs = [];
+    for (const h of hashtags) {
+      let w = `${h.length * 13}px`;
+
+      if (h.length === 3) {
+        w = `${h.length * 18}px`;
+      } else if (h.length === 4) {
+        w = `${h.length * 20}px`;
+      }
+
+      hs.push({width: w, hashtag: h})
+    }
+
+    return hs;
   }
 }
