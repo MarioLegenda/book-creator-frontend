@@ -413,6 +413,15 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
       this.componentState.emulator = res.environment;
       this.componentState.codeProject = res;
+
+      this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+
+      this.componentState.isCode = false;
+
+      setTimeout(() => {
+        this.componentState.editorOptions.language = this.componentState.emulator.language;
+        this.componentState.isCode = true;
+      }, 1000);
     });
   }
 }

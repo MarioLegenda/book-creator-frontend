@@ -5,6 +5,8 @@ import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository
 import {environment} from "../../../../environments/environment";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
+import {BlogState} from "../../../logic/BlogState";
+import Util from "../../../library/Util";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -45,6 +47,7 @@ export class PublishComponent implements OnInit {
         this.publishedUrl = `/blog/${this.blog.slug}/${this.blog.shortId}`;
 
         this.hashtags = this.loadHashtags(data.hashtags);
+        this.selectedTags = this.loadHashtags(this.blog.hashtags);
 
         return;
       }
@@ -82,7 +85,9 @@ export class PublishComponent implements OnInit {
     this.publishInProgress = true;
     this.publicAction().then(() => {
       this.publishInProgress = false;
-    })
+
+      this.redirectToProdSource();
+    });
   }
 
   onPreview($event) {
@@ -134,15 +139,23 @@ export class PublishComponent implements OnInit {
     window.location.href = '/500';
   }
 
+  private redirectToProdSource(): void {
+    window.location.href = `${environment.protocol}://${environment.bookApiUri}/blog/${this.blog.slug}/${this.blog.shortId}`;
+  }
+
   private loadHashtags(hashtags: string[]) {
     const hs = [];
     for (const h of hashtags) {
-      let w = `${h.length * 13}px`;
+      let w = `${h.length * 11}px`;
 
       if (h.length === 3) {
         w = `${h.length * 18}px`;
       } else if (h.length === 4) {
-        w = `${h.length * 20}px`;
+        w = `${h.length * 16}px`;
+      } else if (h.length === 5) {
+        w = `${h.length * 15}px`;
+      } else if (h.length === 6) {
+        w = `${h.length * 17}px`;
       }
 
       hs.push({width: w, hashtag: h})
@@ -154,17 +167,19 @@ export class PublishComponent implements OnInit {
   private async publicAction() {
     const hashtags = this.selectedTags.map(h => h.hashtag);
 
+    const state = this.blog.state;
     const publishModel = HttpModel.publish(this.blog.uuid, hashtags);
     const buildStateModel = HttpModel.buildState('prod', this.blog.uuid, 'blog');
 
-    if (this.blog.codeProjects.length > 0) {
-      try {
-        await this.environmentEmulatorRepository.buildState(buildStateModel).toPromise();
-      } catch (e) {
-        console.log('BUILDING STATE FAILED');
-      }
+    if (this.blog.codeProjects.length > 0 && state === BlogState.CHANGED) {
+      await this.environmentEmulatorRepository.buildState(buildStateModel).toPromise();
     }
 
-    return await this.blogRepository.publish(publishModel).toPromise();
+    const prevH = this.blog.hashtags;
+    const newH = this.selectedTags.map(h => h.hashtag);
+
+    if (!Util.shallowArrayCompare(prevH, newH)) {
+      return await this.blogRepository.publish(publishModel).toPromise();
+    }
   }
 }

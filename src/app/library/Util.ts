@@ -48,4 +48,13 @@ export default class Util {
 
     return filtered;
   }
+
+  static shallowArrayCompare(arr1, arr2): boolean {
+    let state = 0;
+    for (const entry of arr1) {
+      if (arr2.includes(entry)) ++state;
+    }
+
+    return (arr1.length === state);
+  }
 }

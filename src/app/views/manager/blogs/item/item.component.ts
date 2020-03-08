@@ -57,8 +57,6 @@ export class ItemComponent {
   onPublish($event) {
     $event.stopPropagation();
 
-    if (this.item.state === BlogState.PUBLISHED) return;
-
     this.router.navigate(['/cms/management', 'blog', 'publish', this.item.shortId]);
   }
 
