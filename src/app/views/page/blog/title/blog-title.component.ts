@@ -4,6 +4,7 @@ import {IBlogSource} from "../../../../logic/PageComponent/context/IBlogSource";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {debounceTime} from "rxjs/operators";
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-blog-title',
@@ -23,14 +24,14 @@ export class BlogTitleComponent {
 
   // @ts-ignore
   @ViewChild('form') form;
-  @Input('source') source: IBlogSource;
+  @Input('appContext') appContext: AppContext;
 
   constructor(
     private blogRepository: BlogRepository,
   ) {}
 
   ngOnInit() {
-    this.model.title = this.source.title;
+    this.model.title = this.appContext.knowledgeSource.title;
 
     this.subscribeTypeahead();
   }
@@ -50,8 +51,10 @@ export class BlogTitleComponent {
       debounceTime(500),
     )
       .subscribe(() => {
+        const sourceUuid = this.appContext.knowledgeSource.uuid;
+
         this.blogRepository.updateBlog(HttpModel.updateBlog(
-          this.source.uuid,
+          sourceUuid,
           this.model.title,
           null,
           null,

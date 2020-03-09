@@ -1,4 +1,5 @@
 import {last} from "rxjs/operators";
+import {BlogState} from "../../logic/BlogState";
 
 export class HttpModel {
   static addTextBlock(
@@ -585,6 +586,20 @@ export class HttpModel {
   ) {
     return {
       data: {
+        state: BlogState.PUBLISHED,
+        uuid: uuid,
+        hashtags: hashtags,
+      }
+    }
+  }
+
+  static change(
+    uuid: string,
+    hashtags: string[],
+  ) {
+    return {
+      data: {
+        state: BlogState.CHANGED,
         uuid: uuid,
         hashtags: hashtags,
       }

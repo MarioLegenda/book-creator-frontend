@@ -179,7 +179,7 @@ export class PublishComponent implements OnInit {
     const newH = this.selectedTags.map(h => h.hashtag);
 
     if (!Util.shallowArrayCompare(prevH, newH)) {
-      return await this.blogRepository.publish(publishModel).toPromise();
+      return await this.blogRepository.changeState(publishModel).toPromise();
     }
   }
 }

@@ -5,7 +5,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
-import {httpRemoveBlock, httpUpdateMainHeader, httpUpdateSubheader} from "../../../../store/page/httpActions";
+import {httpRemoveBlock, httpUpdateSubheader} from "../../../../store/page/httpActions";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-subheader-block',
@@ -16,7 +17,7 @@ import {httpRemoveBlock, httpUpdateMainHeader, httpUpdateSubheader} from "../../
   templateUrl: './subheader-block.component.html',
 })
 export class SubheaderBlockComponent {
-  @Input('page') page: any;
+  @Input('appContext') appContext: AppContext;
   @Input('component') component: MainHeaderBlock;
 
   componentState = {

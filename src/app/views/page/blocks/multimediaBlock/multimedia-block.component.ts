@@ -7,10 +7,10 @@ import {environment} from "../../../../../environments/environment";
 import {AddYoutubeLinkDialogComponent} from "../../modals/embedYoutubeLink/embed-youtube-link.component";
 import {MatDialog} from "@angular/material/dialog";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
-import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
+import {httpRemoveBlock} from "../../../../store/page/httpActions";
 import {Store} from "@ngrx/store";
 import {EmbedUnsplashDialogComponent} from "../../modals/embedUnsplashImage/embed-unsplash-modal.component";
-import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -20,7 +20,7 @@ import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-in
   templateUrl: './multimedia-block.component.html',
 })
 export class MultimediaBlockComponent implements OnInit {
-  @Input('page') page: any;
+  @Input('appContext') appContext: AppContext;
   @Input('component') component: MultimediaBlockModel;
 
   componentState = {
@@ -73,8 +73,10 @@ export class MultimediaBlockComponent implements OnInit {
     dialogRef.afterClosed().subscribe((id: string) => {
       if (!id) return;
 
+      const pageUuid = this.appContext.page.uuid;
+
       const model = HttpModel.updateMultimediaBlock(
-        this.page.uuid,
+        pageUuid,
         this.component.blockUuid,
         null,
         null,
@@ -105,9 +107,11 @@ export class MultimediaBlockComponent implements OnInit {
       data: {},
     });
 
+    const pageUuid = this.appContext.page.uuid;
+
     dialogRef.afterClosed().subscribe((youtubeId: string) => {
       const model = HttpModel.updateMultimediaBlock(
-        this.page.uuid,
+        pageUuid,
         this.component.blockUuid,
         null,
         `https://youtube.com/embed/${youtubeId}`,
@@ -123,8 +127,10 @@ export class MultimediaBlockComponent implements OnInit {
   }
 
   onRemoveMultimedia() {
+    const pageUuid = this.appContext.page.uuid;
+
     const model = HttpModel.updateMultimediaBlock(
-      this.page.uuid,
+      pageUuid,
       this.component.blockUuid,
       null,
       null,
@@ -148,9 +154,10 @@ export class MultimediaBlockComponent implements OnInit {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
+      const pageUuid = this.appContext.page.uuid;
       // @ts-ignore
       this.rebelCdnRepository.uploadFile(HttpModel.uploadFile(
-        this.page.uuid,
+        pageUuid,
         this.component.blockUuid,
         {
           size: file.size,
@@ -158,9 +165,10 @@ export class MultimediaBlockComponent implements OnInit {
         },
         fileReader.result,
       )).subscribe((res: any) => {
+        const pageUuid = this.appContext.page.uuid;
 
         const model = HttpModel.updateMultimediaBlock(
-          this.page.uuid,
+          pageUuid,
           this.component.blockUuid,
           {
             fileName: res.fileName,

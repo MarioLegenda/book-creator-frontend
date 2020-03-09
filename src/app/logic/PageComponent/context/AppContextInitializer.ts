@@ -120,7 +120,8 @@ export class AppContextInitializer {
           description: blog.data.description,
           cover: blog.data.cover,
           shortId: blog.data.shortId,
-          codeProject: blog.codeProjects,
+          codeProject: blog.data.codeProjects,
+          state: blog.data.state,
           type: type,
         };
       }

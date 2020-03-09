@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {IBlogSource} from "../../../../logic/PageComponent/context/IBlogSource";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 @Component({
   selector: 'cms-cover',
   styleUrls: [
@@ -11,7 +12,7 @@ import {BlogRepository} from "../../../../repository/BlogRepository";
   templateUrl: './cover.component.html',
 })
 export class CoverComponent implements OnInit {
-  @Input('source') source: IBlogSource;
+  @Input('appContext') appContext: AppContext;
 
   constructor(
     private blogRepository: BlogRepository,
@@ -37,8 +38,10 @@ export class CoverComponent implements OnInit {
       this.componentState.hasCover = true;
     }
 
+    const sourceUuid = this.appContext.knowledgeSource.uuid;
+
     this.blogRepository.updateBlog(HttpModel.updateBlog(
-      this.source.uuid,
+      sourceUuid,
       null,
       null,
       this.componentState.cover,
@@ -52,10 +55,13 @@ export class CoverComponent implements OnInit {
   }
 
   private initCover() {
-    if (!this.source.cover) return;
+    if (!this.appContext.knowledgeSource.cover) return;
 
-    this.componentState.cover = this.source.cover.original;
-    this.componentState.realUrl = this.source.cover.real;
+    const original = this.appContext.knowledgeSource.cover.original;
+    const real = this.appContext.knowledgeSource.cover.real;
+
+    this.componentState.cover = original;
+    this.componentState.realUrl = real;
     this.componentState.hasCover = true;
   }
 }

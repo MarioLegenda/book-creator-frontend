@@ -14,6 +14,8 @@ import {
 import {HttpModel} from "../../../model/http/HttpModel";
 import deepcopy from 'deepcopy';
 import {ComponentType} from "../../../logic/PageComponent/ComponentType";
+import {BlogRepository} from "../../../repository/BlogRepository";
+import {BlogState} from "../../../logic/BlogState";
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +25,7 @@ export class HttpActionSubscriber {
     private store: Store<any>,
     private pageContextInitializer: AppContextInitializer,
     private pageRepository: PageRepository,
+    private blogRepository: BlogRepository,
   ) {
     this.subscribeToHttpActions(store.pipe(select('pageHttpActions')));
   }
@@ -42,6 +45,25 @@ export class HttpActionSubscriber {
               return () => this.addTextBlock(data);
             })(deepcopy(action)))
           }
+
+          break;
+        }
+
+        case actionTypes.HTTP_CHANGE_BLOG_STATE: {
+          const uuid = action.uuid;
+          const state = action.state;
+          const hashtags = action.hashtags;
+
+          if (state === BlogState.DRAFT) return;
+
+          let model = null;
+          if (state === BlogState.PUBLISHED) {
+            model = HttpModel.publish(uuid, hashtags);
+          } else if (state === BlogState.CHANGED) {
+            model = HttpModel.change(uuid, null);
+          }
+
+          this.blogRepository.changeState(model).subscribe(() => {});
 
           break;
         }

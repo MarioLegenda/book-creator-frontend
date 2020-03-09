@@ -24,6 +24,7 @@ export class ItemComponent {
   componentState = {
     noTitle: false,
     realTitle: '',
+    isPublished: false,
   };
 
   constructor(
@@ -37,7 +38,11 @@ export class ItemComponent {
     if (!this.item.title) {
       this.componentState.noTitle = true;
     } else {
-      this.componentState.realTitle = titleResolver(this.item.title, 37);
+      this.componentState.realTitle = titleResolver(this.item.title, 34);
+    }
+
+    if (this.item.state === BlogState.PUBLISHED || this.item.state === BlogState.CHANGED) {
+      this.componentState.isPublished = true;
     }
   }
 
@@ -52,6 +57,14 @@ export class ItemComponent {
       this.itemDeleted,
       'Are you sure you wish to remove this blog? This action cannot be undone.',
     );
+  }
+
+  onViewPublished($event) {
+    $event.stopPropagation();
+
+    if (!this.componentState.isPublished) return;
+
+    window.location.href = `${environment.composeStaticWebUrl()}/blog/${this.item.slug}/${this.item.shortId}`;
   }
 
   onPublish($event) {

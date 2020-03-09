@@ -6,6 +6,7 @@ import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateQuoteBlock} from "../../../../store/page/httpActions";
 import {QuoteBlock} from "../../../../model/app/QuoteBlock";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-quote-block',
@@ -16,7 +17,7 @@ import {QuoteBlock} from "../../../../model/app/QuoteBlock";
   templateUrl: './quote-block.component.html',
 })
 export class QuoteBlockComponent implements OnInit, OnDestroy {
-  @Input('page') page: any;
+  @Input('appContext') appContext: AppContext;
   @Input('component') component: QuoteBlock;
 
   componentState = {

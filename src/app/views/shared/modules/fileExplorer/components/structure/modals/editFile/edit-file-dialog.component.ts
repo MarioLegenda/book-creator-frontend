@@ -19,7 +19,7 @@ export class EditFileDialogComponent {
 
   createDisabled = false;
 
-  private validExtensions = [];
+  validExtensions = [];
 
   constructor(
     private fileRepository: FileRepository,

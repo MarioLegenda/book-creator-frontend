@@ -1,6 +1,10 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {httpRemoveBlock, httpUpdateCodeBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
+import {
+  httpChangeBlogState,
+  httpRemoveBlock,
+  httpUpdateCodeBlock,
+} from "../../../../store/page/httpActions";
 import {CodeBlockModel} from "../../../../model/app/CodeBlockModel";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
@@ -16,6 +20,8 @@ import {CodeProjectsRepository} from "../../../../repository/CodeProjectsReposit
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryStructure/open-directory-structure.component";
+import {BlogState} from "../../../../logic/BlogState";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-code-block',
@@ -69,7 +75,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   @Input('index') index: number;
   @Input('component') component: CodeBlockModel;
   @Input('componentDropped') componentDropped: Subject<any>;
-  @Input('source') source: any;
+  @Input('appContext') appContext: AppContext;
 
   ngOnInit() {
     this.componentState.code = this.component.text;
@@ -118,9 +124,11 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         if (this.componentState.codeProjectImported) {
           this.removeCodeProject().subscribe(() => {
             this.store.dispatch(httpRemoveBlock(this.component));
+            this.changeState();
           });
         } else {
           this.store.dispatch(httpRemoveBlock(this.component));
+          this.changeState();
         }
       }
     });
@@ -220,7 +228,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       const codeProjectUuid: string = action.uuid;
       const blockUuid: string = this.component.blockUuid;
       const pageUuid: string = this.pageContext.getContext().page.uuid;
-      const sourceId: string = this.source.uuid;
+      const sourceId: string = this.appContext.knowledgeSource.uuid;
 
       this.blogRepository.linkCodeProject(HttpModel.createLinkCodeProject(
         codeProjectUuid,
@@ -229,6 +237,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         blockUuid,
       )).subscribe(() => {
         this.importCodeProject(codeProjectUuid);
+
+        this.changeState();
       });
     });
   }
@@ -238,6 +248,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       this.componentState.codeProjectImported = false;
       this.componentState.codeProject = null;
       this.componentState.emulator = null;
+
+      this.changeState();
     });
   }
 
@@ -307,6 +319,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       this.componentState.emulator = eml;
 
       this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+      this.changeState();
     });
   }
 
@@ -332,7 +345,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
           const codeProjectUuid: string = codeProject.uuid;
           const blockUuid: string = this.component.blockUuid;
           const pageUuid: string = this.pageContext.getContext().page.uuid;
-          const sourceId: string = this.source.uuid;
+          const sourceId: string = this.appContext.knowledgeSource.uuid;
 
           this.blogRepository.linkCodeProject(HttpModel.createLinkCodeProject(
             codeProjectUuid,
@@ -350,7 +363,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   private removeCodeProject() {
     const blockUuid: string = this.component.blockUuid;
     const pageUuid: string = this.pageContext.getContext().page.uuid;
-    const sourceId: string = this.source.uuid;
+    const sourceId: string = this.appContext.knowledgeSource.uuid;
 
     const model: any = HttpModel.unLinkCodeProject(
       this.componentState.codeProject.uuid,
@@ -423,5 +436,21 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.componentState.isCode = true;
       }, 1000);
     });
+  }
+
+  private changeState() {
+    const currState = this.appContext.knowledgeSource.state;
+    if (currState === BlogState.PUBLISHED) {
+      const stateObj = {
+        uuid: this.appContext.knowledgeSource.uuid,
+        state: BlogState.CHANGED,
+        hashtags: null,
+      };
+
+      this.appContext.knowledgeSource.state = BlogState.CHANGED;
+
+      this.store.dispatch(httpChangeBlogState(stateObj));
+    }
+
   }
 }

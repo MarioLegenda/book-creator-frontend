@@ -81,8 +81,8 @@ export class BlogRepository {
       );
   }
 
-  publish(model) {
-    return this.httpClient.post(this.routeResolver.publish(), model)
+  changeState(model) {
+    return this.httpClient.post(this.routeResolver.changeState(), model)
       .pipe(
         reduce((acc, res: any) => {
           return (res as any).data;

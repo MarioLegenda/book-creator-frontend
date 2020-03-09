@@ -7,14 +7,14 @@
       *ngIf="sourceContext && sourceContext.knowledgeSource.type === 'blog'"
       class="source-block col-xs-12 col-md-12 col-lg-12">
       <cms-blog-title
-        [source]="sourceContext.knowledgeSource"></cms-blog-title>
+        [appContext]="sourceContext"></cms-blog-title>
     </div>
 
     <div
       *ngIf="sourceContext && sourceContext.knowledgeSource.type === 'blog'"
       class="source-block col-xs-12 col-md-12 col-lg-12">
       <cms-blog-intro
-        [source]="sourceContext.knowledgeSource">
+        [appContext]="sourceContext">
       </cms-blog-intro>
     </div>
 
@@ -22,7 +22,7 @@
       *ngIf="sourceContext && sourceContext.knowledgeSource.type === 'blog'"
       class="source-block col-xs-12 col-md-12 col-lg-12">
       <cms-cover
-        [source]="sourceContext.knowledgeSource">
+        [appContext]="sourceContext">
       </cms-cover>
     </div>
 
@@ -54,38 +54,39 @@
 
         <cms-view-text-block
           *ngIf="item.blockType == 'text_block'"
+          [appContext]="sourceContext"
           [component]="item">
         </cms-view-text-block>
 
         <cms-code-block
           *ngIf="item.blockType === 'code_block'"
           [component]="item"
-          [source]="sourceContext.knowledgeSource"
+          [appContext]="sourceContext"
           [componentDropped]="droppedSubject">
         </cms-code-block>
 
         <cms-multimedia-block
           *ngIf="item.blockType === 'multimedia_block'"
           [component]="item"
-          [page]="sourceContext.page">
+          [appContext]="sourceContext">
         </cms-multimedia-block>
 
         <cms-main-header-block
           *ngIf="item.blockType === 'main_header_block'"
           [component]="item"
-          [page]="sourceContext.page">
+          [appContext]="sourceContext">
         </cms-main-header-block>
 
         <cms-subheader-block
           *ngIf="item.blockType === 'subheader_block'"
           [component]="item"
-          [page]="sourceContext.page">
+          [appContext]="sourceContext">
         </cms-subheader-block>
 
         <cms-quote-block
           *ngIf="item.blockType === 'quote_block'"
           [component]="item"
-          [page]="sourceContext.page">
+          [appContext]="sourceContext">
         </cms-quote-block>
 
       </div>

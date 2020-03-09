@@ -9,6 +9,7 @@ import {TextBlockModel} from "../../../../model/app/TextBlockModel";
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
 import {AddCommentModalComponent} from "../../modals/addComment/add-comment-modal.component";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -53,6 +54,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
 
   @Input('index') index: number;
   @Input('component') component: TextBlockModel;
+  @Input('appContext') appContext: AppContext;
 
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;

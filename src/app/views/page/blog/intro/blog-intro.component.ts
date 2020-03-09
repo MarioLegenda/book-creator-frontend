@@ -4,6 +4,7 @@ import {debounceTime} from "rxjs/operators";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {IBlogSource} from "../../../../logic/PageComponent/context/IBlogSource";
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-blog-intro',
@@ -23,7 +24,7 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
 
   // @ts-ignore
   @ViewChild('form') form;
-  @Input('source') source: IBlogSource;
+  @Input('appContext') appContext: AppContext;
 
   constructor(
     private blogRepository: BlogRepository,
@@ -36,7 +37,7 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.model.description = this.source.description;
+    this.model.description = this.appContext.knowledgeSource.description;
 
     this.subscribeTypeahead();
   }
@@ -50,8 +51,10 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
       debounceTime(500),
     )
       .subscribe(() => {
+        const sourceUuid = this.appContext.knowledgeSource.uuid;
+
         this.blogRepository.updateBlog(HttpModel.updateBlog(
-          this.source.uuid,
+          sourceUuid,
           null,
           this.model.description,
           null,

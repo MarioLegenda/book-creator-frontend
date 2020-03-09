@@ -17,7 +17,7 @@ export class AddFileDialogComponent implements OnInit {
 
   createDisabled = false;
 
-  private validExtensions = [];
+  validExtensions = [];
 
   constructor(
     private fileRepository: FileRepository,

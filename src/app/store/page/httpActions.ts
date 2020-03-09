@@ -17,10 +17,16 @@ export const actionTypes = {
   HTTP_UPDATE_SUBHEADER: '[Http] Update subheader',
   HTTP_CREATE_QUOTE_BLOCK: '[Http] Create quote block',
   HTTP_UPDATE_QUOTE_BLOCK: '[Http] Update quote block',
+  HTTP_CHANGE_BLOG_STATE: '[Http] Change blog state',
 };
 
 export const httpCreateSubheader = createAction(
   actionTypes.HTTP_CREATE_SUBHEADER,
+  props<{}>(),
+);
+
+export const httpChangeBlogState = createAction(
+  actionTypes.HTTP_CHANGE_BLOG_STATE,
   props<{}>(),
 );
 

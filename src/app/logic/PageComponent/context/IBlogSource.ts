@@ -5,5 +5,6 @@ export interface IBlogSource {
   cover: any,
   shortId: string;
   codeProject: string[];
+  state: string;
   type: string;
 }

@@ -19,7 +19,7 @@ export class BlogRoutesResolver {
     removeBlog: `${this.bookApiUri}/api/v1/knowledge-source/blog/remove`,
     searchBlog: `${this.bookApiUri}/api/v1/knowledge-source/search/blogs`,
     getNext: `${this.bookApiUri}/api/v1/knowledge-source/blog/get-next`,
-    publish: `${this.bookApiUri}/api/v1/knowledge-source/blog/publish`,
+    changeState: `${this.bookApiUri}/api/v1/knowledge-source/blog/change-state`,
   };
 
   createBlankBlog(): string {
@@ -66,7 +66,7 @@ export class BlogRoutesResolver {
     return this.routes.getNext;
   }
 
-  publish(): string {
-    return this.routes.publish;
+  changeState(): string {
+    return this.routes.changeState;
   }
 }

@@ -6,6 +6,7 @@ import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateMainHeader} from "../../../../store/page/httpActions";
+import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 
 @Component({
   selector: 'cms-main-header-block',
@@ -16,7 +17,7 @@ import {httpRemoveBlock, httpUpdateMainHeader} from "../../../../store/page/http
   templateUrl: './main-header-block.component.html',
 })
 export class MainHeaderBlockComponent implements OnInit, OnDestroy {
-  @Input('page') page: any;
+  @Input('appContext') appContext: AppContext;
   @Input('component') component: MainHeaderBlock;
 
   componentState = {

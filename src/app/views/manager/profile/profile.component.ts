@@ -27,6 +27,7 @@ export class ProfileComponent {
   error = null;
   imageTooBig = false;
   avatarSrc = null;
+  hasFile = false;
 
   componentState = {
     name: '',
@@ -49,6 +50,7 @@ export class ProfileComponent {
     this.error = null;
     this.uploadedFile = files[0];
     this.imageTooBig = false;
+    this.hasFile = true;
     const reader = new FileReader();
 
     reader.readAsDataURL(this.uploadedFile);
@@ -82,10 +84,12 @@ export class ProfileComponent {
           this.imageTooBig = true;
         }
 
+        this.hasFile = false;
         this.uploadedFile = null;
       })
     ).subscribe((res: any) => {
       this.uploadedFile = null;
+      this.hasFile = false;
 
       this.accountProvider.updateProfileAvatar(res.profile.avatar);
 
@@ -154,6 +158,7 @@ export class ProfileComponent {
 
   clearFile() {
     this.uploadedFile = null;
+    this.hasFile = false;
     this.error = null;
     this.imageTooBig = false;
     this.loadDefaultAvatar();

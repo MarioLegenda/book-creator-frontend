@@ -20,7 +20,14 @@
   <div class="state-info col-xs-12 col-md-12 col-lg-12">
     <p class="draft" *ngIf="item.state === 'draft'">DRAFT</p>
     <p class="published" *ngIf="item.state === 'published'">PUBLISHED</p>
+    <p class="published" *ngIf="item.state === 'changed'">PUBLISHED BUT CHANGED</p>
   </div>
+
+  <button
+    (click)="onViewPublished($event)"
+    [ngClass]="{'view-published-disabled': !componentState.isPublished}"
+    class="btn view-published">
+    View published</button>
 
   <div class="createdAt">
     {{formattedDate()}}
@@ -30,7 +37,7 @@
     <a
       [ngClass]="{'item-button': true}"
       (click)="onPublish($event)">
-      Publish
+      {{(item.state === 'changed' || item.state === 'published') ? 'Republish' : 'Publish'}}
       <i class="icon fas fa-wifi"></i>
     </a>
 
