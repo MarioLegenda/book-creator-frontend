@@ -70,13 +70,15 @@ export class ItemComponent {
   onPublish($event) {
     $event.stopPropagation();
 
+    if (this.componentState.noTitle) return;
+
     this.router.navigate(['/cms/management', 'blog', 'publish', this.item.shortId]);
   }
 
   onPreview($event) {
-    if (this.componentState.noTitle) return;
-
     $event.stopPropagation();
+
+    if (this.componentState.noTitle) return;
 
     window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.item.slug}/${this.item.shortId}`;
   }

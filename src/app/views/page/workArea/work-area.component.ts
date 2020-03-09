@@ -7,7 +7,7 @@ import {
   httpCreateTextBlock, httpUpdateBlockPosition,
 } from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
-import {addPosition} from "../../../logic/utilFns";
+import {addPosition, changeState} from "../../../logic/utilFns";
 import {TextBlockModel} from "../../../model/app/TextBlockModel";
 import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
@@ -160,6 +160,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
         break;
       }
     }
+
+    changeState(this.sourceContext, this.store);
   }
 
   onDropped(component) {

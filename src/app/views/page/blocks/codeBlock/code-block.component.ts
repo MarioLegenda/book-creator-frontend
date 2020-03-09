@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {
-  httpChangeBlogState,
   httpRemoveBlock,
   httpUpdateCodeBlock,
 } from "../../../../store/page/httpActions";
@@ -20,8 +19,8 @@ import {CodeProjectsRepository} from "../../../../repository/CodeProjectsReposit
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryStructure/open-directory-structure.component";
-import {BlogState} from "../../../../logic/BlogState";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
+import {changeState} from "../../../../logic/utilFns";
 
 @Component({
   selector: 'cms-code-block',
@@ -124,11 +123,11 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         if (this.componentState.codeProjectImported) {
           this.removeCodeProject().subscribe(() => {
             this.store.dispatch(httpRemoveBlock(this.component));
-            this.changeState();
+            changeState(this.appContext, this.store);
           });
         } else {
           this.store.dispatch(httpRemoveBlock(this.component));
-          this.changeState();
+          changeState(this.appContext, this.store);
         }
       }
     });
@@ -238,7 +237,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       )).subscribe(() => {
         this.importCodeProject(codeProjectUuid);
 
-        this.changeState();
+        changeState(this.appContext, this.store);
       });
     });
   }
@@ -249,7 +248,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       this.componentState.codeProject = null;
       this.componentState.emulator = null;
 
-      this.changeState();
+      changeState(this.appContext, this.store);
     });
   }
 
@@ -319,7 +318,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       this.componentState.emulator = eml;
 
       this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
-      this.changeState();
+      changeState(this.appContext, this.store);
     });
   }
 
@@ -436,21 +435,5 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.componentState.isCode = true;
       }, 1000);
     });
-  }
-
-  private changeState() {
-    const currState = this.appContext.knowledgeSource.state;
-    if (currState === BlogState.PUBLISHED) {
-      const stateObj = {
-        uuid: this.appContext.knowledgeSource.uuid,
-        state: BlogState.CHANGED,
-        hashtags: null,
-      };
-
-      this.appContext.knowledgeSource.state = BlogState.CHANGED;
-
-      this.store.dispatch(httpChangeBlogState(stateObj));
-    }
-
   }
 }

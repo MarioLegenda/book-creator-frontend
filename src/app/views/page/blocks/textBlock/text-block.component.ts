@@ -10,6 +10,7 @@ import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-co
 import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
 import {AddCommentModalComponent} from "../../modals/addComment/add-comment-modal.component";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
+import {changeState} from "../../../../logic/utilFns";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -145,6 +146,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
         };
 
         this.store.dispatch(httpUpdateTextBlock(model));
+        changeState(this.appContext, this.store);
       });
   }
 

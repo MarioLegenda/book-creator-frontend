@@ -35,7 +35,7 @@
 
   <div class="actions col-xs-12 col-md-12 col-lg-12">
     <a
-      [ngClass]="{'item-button': true}"
+      [ngClass]="{'item-button': true, 'preview-disabled': componentState.noTitle}"
       (click)="onPublish($event)">
       {{(item.state === 'changed' || item.state === 'published') ? 'Republish' : 'Publish'}}
       <i class="icon fas fa-wifi"></i>

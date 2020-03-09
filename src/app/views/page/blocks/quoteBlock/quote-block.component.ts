@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateQuoteBlock} from "../../../../store/page/httpActions";
 import {QuoteBlock} from "../../../../model/app/QuoteBlock";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
+import {changeState} from "../../../../logic/utilFns";
 
 @Component({
   selector: 'cms-quote-block',
@@ -47,6 +48,7 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
         };
 
         this.store.dispatch(httpUpdateQuoteBlock(model));
+        changeState(this.appContext, this.store);
       });
   }
 
