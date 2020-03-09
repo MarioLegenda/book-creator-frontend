@@ -1,10 +1,11 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {Subject, Subscription} from "rxjs";
-import {IBlogSource} from "../../../../logic/PageComponent/context/IBlogSource";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {debounceTime} from "rxjs/operators";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
+import {changeState} from "../../../../logic/utilFns";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'cms-blog-title',
@@ -28,6 +29,7 @@ export class BlogTitleComponent {
 
   constructor(
     private blogRepository: BlogRepository,
+    private store: Store<any>,
   ) {}
 
   ngOnInit() {
@@ -59,6 +61,7 @@ export class BlogTitleComponent {
           null,
           null,
         )).subscribe(() => {
+          changeState(this.appContext, this.store);
         });
       });
   }

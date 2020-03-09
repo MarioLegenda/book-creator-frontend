@@ -6,7 +6,6 @@ import {environment} from "../../../../environments/environment";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {BlogState} from "../../../logic/BlogState";
-import Util from "../../../library/Util";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -175,11 +174,6 @@ export class PublishComponent implements OnInit {
       await this.environmentEmulatorRepository.buildState(buildStateModel).toPromise();
     }
 
-    const prevH = this.blog.hashtags;
-    const newH = this.selectedTags.map(h => h.hashtag);
-
-    if (!Util.shallowArrayCompare(prevH, newH)) {
-      return await this.blogRepository.changeState(publishModel).toPromise();
-    }
+    return await this.blogRepository.changeState(publishModel).toPromise();
   }
 }

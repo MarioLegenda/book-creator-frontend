@@ -10,7 +10,9 @@
       placeholder="the title of your blog" />
   </form>
 
-  <p class="info col-xs-12 col-md-12 col-lg-12">* This blog is already published once so beware of changing the title since it is relevant to SEO.</p>
+  <p
+    *ngIf="appContext.knowledgeSource.state !== 'draft'"
+    class="info col-xs-12 col-md-12 col-lg-12">* This blog is already published once so beware of changing the title since it is relevant to SEO.</p>
 
   <cms-text-counter
     [text]="model.title"

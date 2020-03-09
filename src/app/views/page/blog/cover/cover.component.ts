@@ -3,6 +3,8 @@ import {IBlogSource} from "../../../../logic/PageComponent/context/IBlogSource";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
+import {Store} from "@ngrx/store";
+import {changeState} from "../../../../logic/utilFns";
 @Component({
   selector: 'cms-cover',
   styleUrls: [
@@ -16,6 +18,7 @@ export class CoverComponent implements OnInit {
 
   constructor(
     private blogRepository: BlogRepository,
+    private store: Store<any>,
   ) {}
 
   componentState = {
@@ -45,7 +48,9 @@ export class CoverComponent implements OnInit {
       null,
       null,
       this.componentState.cover,
-    )).subscribe(() => {});
+    )).subscribe(() => {
+      changeState(this.appContext, this.store);
+    });
   }
 
   private getId(unsplashUrl: string): string {

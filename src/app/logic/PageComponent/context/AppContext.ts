@@ -6,4 +6,8 @@ export class AppContext {
     public knowledgeSource: IBlogSource,
     public page: IPage,
   ) {}
+
+  updateSource(prop: string, value: any) {
+    this.knowledgeSource[prop] = value;
+  }
 }

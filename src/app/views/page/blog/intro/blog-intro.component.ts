@@ -2,9 +2,10 @@ import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {BlogRepository} from "../../../../repository/BlogRepository";
-import {IBlogSource} from "../../../../logic/PageComponent/context/IBlogSource";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
+import {Store} from "@ngrx/store";
+import {changeState} from "../../../../logic/utilFns";
 
 @Component({
   selector: 'cms-blog-intro',
@@ -28,6 +29,7 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
 
   constructor(
     private blogRepository: BlogRepository,
+    private store: Store<any>,
   ) {}
 
   onTyping() {
@@ -59,6 +61,7 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
           this.model.description,
           null,
         )).subscribe(() => {
+          changeState(this.appContext, this.store);
         });
       });
   }
