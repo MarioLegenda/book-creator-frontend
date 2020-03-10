@@ -54,9 +54,19 @@
         class="info col-xs-12 col-md-12 col-lg-12">* in The Rebel Source, hashtags serve the purpose of categories. Users can search all content related to a hashtag so choose your hashtags wisely. You can add up o <span class="info-highlight">5</span> hashtags and you have to add at least one hashtag.</span>
 
       <div class="content-wrapper col-xs-12 col-md-12 col-lg-12">
+        <div class="search col-xs-12 col-md-12 col-lg-12">
+          <input
+            type="text"
+            placeholder="Filter hashtags"
+            [(ngModel)]="searchedHashtag"
+            (ngModelChange)="onFilterHashtags()"
+            class="col-xs-12 col-md-12 col-lg-12" />
+        </div>
+
         <div
           *ngIf="selectedTags.length > 0"
           class="selected col-xs-12 col-md-12 col-lg-12">
+
           <div
             *ngFor="let h of selectedTags; index as i"
             class="hashtag" [ngStyle]="{width: h.width}"
@@ -68,7 +78,7 @@
 
         <div class="list col-xs-12 col-md-12 col-lg-12">
           <div
-            *ngFor="let h of hashtags"
+            *ngFor="let h of filteredHashtags"
             class="hashtag" [ngStyle]="{width: h.width}"
             (click)="onHashtagSelect(h)">
             <i class="icon animated-icon fas fa-hashtag"></i>

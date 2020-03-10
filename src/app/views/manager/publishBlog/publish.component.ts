@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BlogRepository} from "../../../repository/BlogRepository";
 import {MiscRepository} from "../../../repository/MiscRepository";
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
@@ -6,6 +6,8 @@ import {environment} from "../../../../environments/environment";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {BlogState} from "../../../logic/BlogState";
+import {Subject, Subscription} from "rxjs";
+import {debounceTime} from "rxjs/operators";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -15,15 +17,20 @@ import {BlogState} from "../../../logic/BlogState";
   ],
   templateUrl: './publish.component.html',
 })
-export class PublishComponent implements OnInit {
+export class PublishComponent implements OnInit, OnDestroy {
   blog: any = null;
   hashtags: any = null;
+  filteredHashtags: any = [];
+  searchedHashtag: string = '';
   selectedTags = [];
   noHtagsSelected: boolean = false;
   publishInProgress: boolean = false;
 
   publishedUrl: string = null;
   codeProjects: any[] = [];
+
+  private typeAheadSource = new Subject<string>();
+  private typeAheadObservable: Subscription = null;
 
   constructor(
     private blogRepository: BlogRepository,
@@ -45,7 +52,8 @@ export class PublishComponent implements OnInit {
 
         this.publishedUrl = `/blog/${this.blog.slug}/${this.blog.shortId}`;
 
-        this.hashtags = this.loadHashtags(data.hashtags);
+        this.hashtags = data.hashtags;
+        this.filteredHashtags = this.loadHashtags(data.hashtags);
         this.selectedTags = this.loadHashtags(this.blog.hashtags);
 
         return;
@@ -57,6 +65,16 @@ export class PublishComponent implements OnInit {
         return this.redirectTo500();
       }
     });
+
+    this.subscribeTypeahead();
+  }
+
+  ngOnDestroy(): void {
+    this.typeAheadObservable.unsubscribe();
+  }
+
+  onFilterHashtags() {
+    this.typeAheadSource.next(this.searchedHashtag);
   }
 
   onHashtagSelect(hashtag) {
@@ -175,5 +193,20 @@ export class PublishComponent implements OnInit {
     }
 
     return await this.blogRepository.changeState(publishModel).toPromise();
+  }
+
+  private subscribeTypeahead() {
+    this.typeAheadObservable = this.typeAheadSource
+      .subscribe(() => {
+        if (!this.searchedHashtag) {
+          return this.filteredHashtags = this.loadHashtags(this.hashtags);
+        }
+        
+        const re = new RegExp(`${this.searchedHashtag}`, 'i');
+
+        const filtered = this.hashtags.filter(h => re.test(h));
+
+        this.filteredHashtags = this.loadHashtags(filtered);
+      });
   }
 }

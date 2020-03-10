@@ -161,5 +161,15 @@
         margin-left: 20px;
       }
     }
+
+    .search {
+      margin: 20px 0 40px 0;
+
+      input {
+        border: none;
+        border-bottom: 1px solid $lightestGray;
+        padding: 5px 0 5px 0;
+      }
+    }
   }
 }
