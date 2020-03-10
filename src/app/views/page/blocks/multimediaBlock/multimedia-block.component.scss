@@ -61,6 +61,7 @@
   }
 
   .block-actions {
+    position: relative;
     display: block;
     float: left;
 
@@ -116,4 +117,10 @@
       text-align: center;
     }
   }
+}
+
+.error {
+  position: absolute;
+  bottom: 35px;
+  margin-bottom: 0;
 }

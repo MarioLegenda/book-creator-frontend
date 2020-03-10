@@ -8,10 +8,20 @@ export class FileUploadRouteResolver {
   private cndUri = environment.composeBookApiBaseUrl();
 
   private readonly routes = {
-    uploadFile: `${this.cndUri}/cms/upload-file`,
+    uploadProfileAvatar: `${this.cndUri}/cms/upload-file`,
+    uploadMultimediaBlockImage: `${this.cndUri}/page/block/upload-file`,
+    deleteMultimediaBlockImage: `${this.cndUri}/page/block/delete-image`,
   };
 
-  uploadFile(): string {
-    return `${this.routes.uploadFile}`;
+  uploadProfileAvatar(): string {
+    return `${this.routes.uploadProfileAvatar}`;
+  }
+
+  uploadMultimediaBlockImage(): string {
+    return `${this.routes.uploadMultimediaBlockImage}`;
+  }
+
+  deleteMultimediaBlockImage(): string {
+    return `${this.routes.deleteMultimediaBlockImage}`;
   }
 }

@@ -203,8 +203,7 @@ export class HttpModel {
     blockUuid: string,
     fileInfo: object,
     video: string,
-    unsplash: string,
-    position: number,
+    unsplash: object,
   ) {
     return {
       data: {
@@ -213,7 +212,6 @@ export class HttpModel {
         fileInfo: fileInfo,
         video: video,
         unsplash: unsplash,
-        position: position,
       }
     }
   }

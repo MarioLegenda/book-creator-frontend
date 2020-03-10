@@ -24,7 +24,10 @@ export class EmbedUnsplashDialogComponent {
   addLink() {
     if (!this.model.name) return;
 
-    this.dialogRef.close(this.getId());
+    this.dialogRef.close({
+      id: this.getId(),
+      original: this.model.name,
+    });
   }
 
   private getId(): string {

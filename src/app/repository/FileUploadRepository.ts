@@ -12,7 +12,20 @@ export class FileUploadRepository {
     private rebelCdnRouteResolver: FileUploadRouteResolver
   ) {}
 
-  uploadFile(model: any) {
-    return this.httpClient.put(this.rebelCdnRouteResolver.uploadFile(), model.formData);
+  uploadProfileAvatar(model: any) {
+    return this.httpClient.put(this.rebelCdnRouteResolver.uploadProfileAvatar(), model.formData);
+  }
+
+  uploadMultimediaBlockImage(model: any) {
+    return this.httpClient.put(this.rebelCdnRouteResolver.uploadMultimediaBlockImage(), model.formData)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
+
+  deleteMultimediaBlockImage(model: any) {
+    return this.httpClient.post(this.rebelCdnRouteResolver.deleteMultimediaBlockImage(), model.formData);
   }
 }
