@@ -39,7 +39,6 @@ export class ProfileComponent {
   };
 
   private uploadedFile: File = null;
-  private account: Account;
 
   ngOnInit() {
     this.loadInitialState();

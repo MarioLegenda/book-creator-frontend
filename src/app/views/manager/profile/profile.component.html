@@ -22,7 +22,7 @@
           <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 11">Internal error. Image could not be uploaded. We are very sorry about this and we are looking into it.</p>
           <p class="error col-xs12 col-md-12 col-lg-12" *ngIf="imageTooBig">The uploaded image is too large. Permitted file size is 10MB.</p>
 
-          <div *ngIf="uploadedFile" class="button-wrapper col-xs-12 col-md-12 col-lg-12">
+          <div *ngIf="hasFile" class="button-wrapper col-xs-12 col-md-12 col-lg-12">
             <button
               class="btn action-button save-file col-xs-4 col-md-2 col-lg-2"
               (click)="saveFile()">
