@@ -7,7 +7,6 @@ import {HttpModel} from "../../../model/http/HttpModel";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {BlogState} from "../../../logic/BlogState";
 import {Subject, Subscription} from "rxjs";
-import {debounceTime} from "rxjs/operators";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -17,7 +16,7 @@ import {debounceTime} from "rxjs/operators";
   ],
   templateUrl: './publish.component.html',
 })
-export class PublishComponent implements OnInit, OnDestroy {
+export class PublishComponent implements OnInit {
   blog: any = null;
   hashtags: any = null;
   filteredHashtags: any = [];
@@ -28,9 +27,6 @@ export class PublishComponent implements OnInit, OnDestroy {
 
   publishedUrl: string = null;
   codeProjects: any[] = [];
-
-  private typeAheadSource = new Subject<string>();
-  private typeAheadObservable: Subscription = null;
 
   constructor(
     private blogRepository: BlogRepository,
@@ -65,16 +61,18 @@ export class PublishComponent implements OnInit, OnDestroy {
         return this.redirectTo500();
       }
     });
-
-    this.subscribeTypeahead();
-  }
-
-  ngOnDestroy(): void {
-    this.typeAheadObservable.unsubscribe();
   }
 
   onFilterHashtags() {
-    this.typeAheadSource.next(this.searchedHashtag);
+    if (!this.searchedHashtag) {
+      return this.filteredHashtags = this.loadHashtags(this.hashtags);
+    }
+
+    const re = new RegExp(`${this.searchedHashtag}`, 'i');
+
+    const filtered = this.hashtags.filter(h => re.test(h));
+
+    this.filteredHashtags = this.loadHashtags(filtered);
   }
 
   onHashtagSelect(hashtag) {
@@ -193,20 +191,5 @@ export class PublishComponent implements OnInit, OnDestroy {
     }
 
     return await this.blogRepository.changeState(publishModel).toPromise();
-  }
-
-  private subscribeTypeahead() {
-    this.typeAheadObservable = this.typeAheadSource
-      .subscribe(() => {
-        if (!this.searchedHashtag) {
-          return this.filteredHashtags = this.loadHashtags(this.hashtags);
-        }
-        
-        const re = new RegExp(`${this.searchedHashtag}`, 'i');
-
-        const filtered = this.hashtags.filter(h => re.test(h));
-
-        this.filteredHashtags = this.loadHashtags(filtered);
-      });
   }
 }
