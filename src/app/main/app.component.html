@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-md-12 col-lg-12" id="app">
+<div *ngIf="accountLoaded" class="col-xs-12 col-md-12 col-lg-12" id="app">
   <app-profile-bar></app-profile-bar>
 
   <router-outlet></router-outlet>

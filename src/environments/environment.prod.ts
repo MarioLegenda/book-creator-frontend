@@ -1,33 +1,29 @@
 export const environment = {
   production: true,
-  protocol: 'http',
-  bookApiUri: '11.11.11.12',
-  bookApiPort:80,
+  protocol: 'https',
+  bookApiUri: 'therebelsource.com',
 
-  rebelCdnApiUri: '11.11.11.12',
-  rebelCdnApiPort: 80,
+  rebelCdnApiUri: 'therebelsource.com',
 
-  envEmulatorUri: '11.11.11.12',
-  envEmulatorPort: 80,
+  envEmulatorUri: 'therebelsource.com',
 
-  staticWeb: '11.11.11.12',
-  staticWebPort: 80,
+  staticWeb: 'therebelsource.com',
 
   publicDir: 'images',
 
   composeBookApiBaseUrl(): string {
-    return `${environment.protocol}://${environment.bookApiUri}:${environment.bookApiPort}`;
+    return `${environment.protocol}://${environment.bookApiUri}`;
   },
 
   composeEnvEmulatorUrl(): string {
-    return `${environment.protocol}://${environment.envEmulatorUri}:${environment.envEmulatorPort}`;
+    return `${environment.protocol}://${environment.envEmulatorUri}`;
   },
 
   composeRebelCdnUrl(): string {
-    return `${environment.protocol}://${environment.rebelCdnApiUri}:${environment.rebelCdnApiPort}`;
+    return `${environment.protocol}://${environment.rebelCdnApiUri}`;
   },
 
   composeStaticWebUrl(): string {
-    return `${environment.protocol}://${environment.staticWeb}:${environment.staticWebPort}`;
+    return `${environment.protocol}://${environment.staticWeb}`;
   },
 };

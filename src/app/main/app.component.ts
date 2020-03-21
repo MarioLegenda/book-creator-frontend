@@ -5,6 +5,7 @@ import {select, Store} from "@ngrx/store";
 import {MatDialog} from "@angular/material/dialog";
 import {GlobalErrorComponentModal} from "../views/shared/modals/global-error.component";
 import {DOCUMENT} from "@angular/common";
+import {AccountProvider} from "../logic/AccountProvider";
 
 @Component({
   selector: 'app-root',
@@ -15,34 +16,35 @@ export class AppComponent {
   // @ts-ignore
   @ViewChild('bodyRef') bodyRef: ElementRef;
 
+  accountLoaded = false;
+
   constructor(
     private store: Store<any>,
     private matDialog: MatDialog,
     @Inject(DOCUMENT) private document: Document,
+    private accountProvider: AccountProvider,
   ) {
     this.subscribeToErrorActions(store.pipe(select('globalActions')));
   }
 
   ngOnInit() {
-    const isPage = new RegExp('/page/blog/');
+    this.accountProvider.loadAccount().then(() => {
+      this.accountLoaded = true;
 
-    if (isPage.test(location.pathname)) {
+      this.document.body.onclick = (e) => {
+        const target = e.target;
 
-    }
-
-    this.document.body.onclick = (e) => {
-      const target = e.target;
-
-      const re = new RegExp('click-anchor');
-
-      // @ts-ignore
-      if (!re.test(target.className)) {
-        let el = window.document.getElementById('mainMenu');
+        const re = new RegExp('click-anchor');
 
         // @ts-ignore
-        el.style = 'display: none';
-      }
-    };
+        if (!re.test(target.className)) {
+          let el = window.document.getElementById('mainMenu');
+
+          // @ts-ignore
+          el.style = 'display: none';
+        }
+      };
+    });
   }
 
   private subscribeToErrorActions(observable: Observable<any>) {

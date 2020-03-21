@@ -20,4 +20,13 @@ export class AccountRepository {
         }, {})
       );
   }
+
+  verifyAccount(model) {
+    return this.httpClient.post(this.routeResolver.verifyAccount(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {})
+      );
+  }
 }

@@ -99,7 +99,7 @@ export class AppComponent {
   }
 
   onSignOut() {
-    this.accountProvider.clearAccount();
+    this.accountProvider.logout();
 
     window.location.href = '/';
   }

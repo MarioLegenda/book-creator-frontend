@@ -14,15 +14,15 @@ import {Observable} from "rxjs";
 })
 export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!Cookie.get('loggedInAccount')) {
+    if (!Cookie.get('token')) {
       return next.handle(request);
     }
 
-    const loggedInAccount = JSON.parse(Cookie.get('loggedInAccount'));
+    const token = Cookie.get('token');
 
     request = request.clone({
       setHeaders: {
-        'X-REBEL-SOURCE-AUTH': loggedInAccount.token,
+        'X-REBEL-SOURCE-AUTH': token,
       }
     });
 

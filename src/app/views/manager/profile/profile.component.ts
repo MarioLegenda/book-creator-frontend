@@ -89,11 +89,14 @@ export class ProfileComponent {
       this.uploadedFile = null;
       this.hasFile = false;
 
-      this.accountProvider.updateProfileAvatar(res.profile.avatar);
+      this.accountProvider.loadAccount().then(() => {
+        const account = this.accountProvider.getAccount();
 
-      this.avatarSrc = this.accountProvider.getAccount().profile.avatar.path;
+        this.avatarSrc = account.profile.avatar.path;
 
-      this.store.dispatch(avatarChanged())
+        this.store.dispatch(avatarChanged())
+      });
+
     });
   }
 
@@ -133,24 +136,13 @@ export class ProfileComponent {
       profile,
     );
 
-    this.accountRepository.updateAccount(model).subscribe((account) => {
-      const name = account.name;
-      const lastName = account.lastName;
-      const profile = account.profile;
-
-      this.accountProvider.updateBasicData(name, lastName);
-
-      this.store.dispatch(basicInfoChanged({
-        name: name,
-        lastName: lastName,
-      }));
-
-      this.accountProvider.updateProfile(
-        profile.githubProfile,
-        profile.personalWebsite,
-        profile.company,
-        profile.openSourceProject,
-      );
+    this.accountRepository.updateAccount(model).subscribe(() => {
+      this.accountProvider.loadAccount().then(() => {
+        this.store.dispatch(basicInfoChanged({
+          name: name,
+          lastName: lastName,
+        }));
+      });
     });
   }
 

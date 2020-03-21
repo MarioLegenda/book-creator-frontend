@@ -617,4 +617,12 @@ export class HttpModel {
       }
     }
   }
+
+  static verifyAccount(token: string) {
+    return {
+      data: {
+        token: token,
+      }
+    }
+  }
 }

@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Account} from "../model/app/Account";
 import {CookieService} from "ngx-cookie-service";
+import {AccountRepository} from "../repository/AccountRepository";
+import {HttpModel} from "../model/http/HttpModel";
 
 @Injectable({
   providedIn: 'root',
@@ -10,79 +12,32 @@ export class AccountProvider {
 
   constructor(
     private cookie: CookieService,
+    private accountRepository: AccountRepository,
   ) {
-    this.loadAccount();
+
   }
 
   getAccount(): Account {
-    this.loadAccount();
-
     return this.account;
   }
 
-  updateProfileAvatar(avatar): void {
-    const unparsed = JSON.parse(this.cookie.get('loggedInAccount'));
-
-    unparsed['profile'].avatar = avatar;
-
-    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30, '/');
-
-    this.account.profile.avatar = avatar;
+  hasAccount(): boolean {
+    return !!(this.account);
   }
 
-  updateBasicData(name: string, lastName: string) {
-    const unparsed = JSON.parse(this.cookie.get('loggedInAccount'));
-
-    unparsed['name'] = name;
-    unparsed['lastName'] = lastName;
-
-    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30, '/');
-
-    this.loadAccount();
+  isLoggedIn(): boolean {
+    return !!(this.cookie.get('token'));
   }
 
-  updateProfile(
-    githubProfile: string,
-    personalWebsite: string,
-    company: string,
-    openSourceProject: string,
-  ) {
-    const unparsed = JSON.parse(this.cookie.get('loggedInAccount'));
-
-    const profile = unparsed.profile;
-
-    profile['githubProfile'] = githubProfile;
-    profile['personalWebsite'] = personalWebsite;
-    profile['company'] = company;
-    profile['openSourceProject'] = openSourceProject;
-
-    this.cookie.set('loggedInAccount', JSON.stringify(unparsed), 30, '/');
-
-    this.loadAccount();
-  }
-
-  clearAccount() {
-    this.cookie.delete('loggedInAccount', '/');
+  logout() {
+    this.cookie.delete('token', '/');
 
     this.account = null;
   }
 
-  private loadAccount() {
-    if (this.cookie.check('loggedInAccount')) {
-      const unparsed = JSON.parse(this.cookie.get('loggedInAccount'));
+  async loadAccount() {
+    const token = this.cookie.get('token');
 
-      this.account = new Account(
-        unparsed['type'],
-        unparsed['name'],
-        unparsed['lastName'],
-        unparsed['email'],
-        unparsed['provider'],
-        unparsed['confirmed'],
-        unparsed['shortId'],
-        unparsed['uuid'],
-        unparsed['token'],
-        unparsed['profile'],
-      );
-    }
+    this.account = await this.accountRepository.verifyAccount(HttpModel.verifyAccount(token)).toPromise();
   }
 }

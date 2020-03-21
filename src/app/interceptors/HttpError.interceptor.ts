@@ -72,7 +72,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               }
 
               if (!authorized) {
-                this.accountProvider.clearAccount();
+                this.accountProvider.logout();
 
                 this.document.location.href = '/';
               }
