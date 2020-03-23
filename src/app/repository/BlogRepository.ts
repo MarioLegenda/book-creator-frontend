@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {BlogRoutesResolver} from '../logic/routes/BlogRoutesResolver';
+import {BlogRoutesResolver} from './routeResolvers/BlogRoutesResolver';
 import {reduce} from "rxjs/operators";
 
 @Injectable({

@@ -28,7 +28,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.accountProvider.loadAccount().then(() => {
+    this.accountProvider.subscribe(() => {
       this.accountLoaded = true;
 
       this.document.body.onclick = (e) => {
@@ -45,6 +45,8 @@ export class AppComponent {
         }
       };
     });
+
+    this.accountProvider.loadAccount();
   }
 
   private subscribeToErrorActions(observable: Observable<any>) {

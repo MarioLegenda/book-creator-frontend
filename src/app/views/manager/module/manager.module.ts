@@ -20,10 +20,10 @@ import {SearchComponent} from "../../shared/search/search.component";
 import {MatSelectModule} from "@angular/material/select";
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
 import {RemoveItemService} from "../sharedServices/RemoveItemService";
-import {CodeProjectsManagerRoutingModule} from "../codeProjectsManagerModule/module/code-projects-manager-routing.module";
 import {ProfileComponent} from "../profile/profile.component";
 import {SettingsComponent} from "../settings/settings.component";
 import {PublishComponent} from "../publishBlog/publish.component";
+import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.component";
 
 @NgModule({
   declarations: [
@@ -40,6 +40,7 @@ import {PublishComponent} from "../publishBlog/publish.component";
     ProfileComponent,
     SettingsComponent,
     PublishComponent,
+    SubscriptionItem,
   ],
   imports: [
     CommonModule,

@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
-import {LoggerRouteResolver} from "../logic/routes/LoggerRouteResolver";
+import {LoggerRouteResolver} from "./routeResolvers/LoggerRouteResolver";
 import {HttpClient} from "@angular/common/http";
-import {catchError} from "rxjs/operators";
-import {of} from "rxjs";
 
 @Injectable({
   providedIn: 'root',

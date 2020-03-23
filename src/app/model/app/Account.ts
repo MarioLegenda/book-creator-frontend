@@ -9,6 +9,8 @@ export class Account {
   public readonly uuid: string;
   public readonly profile: any;
   public readonly token: string;
+  public readonly roles: string[];
+  public readonly subscriptions: string[];
 
   constructor(
     type: string,
@@ -21,6 +23,8 @@ export class Account {
     uuid: string,
     token: string,
     profile: any,
+    roles: string[],
+    subscriptions: string[],
   ) {
     this.type = type;
     this.name = name;
@@ -32,5 +36,7 @@ export class Account {
     this.uuid = uuid;
     this.token = token;
     this.profile = profile;
+    this.roles = roles;
+    this.subscriptions = subscriptions;
   }
 }

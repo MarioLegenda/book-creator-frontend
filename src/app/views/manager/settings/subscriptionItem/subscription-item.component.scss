@@ -1,0 +1,56 @@
+@import '../../../../../styles/variables';
+
+.subscription {
+  h1 {
+    position: relative;
+    margin: 0;
+    font-size: 1em;
+    color: $appBlack;
+
+    background-color: white;
+    padding: 15px 15px 15px 18px;
+
+    .chevron {
+      position: absolute;
+      top: 14px; right: 15px;
+      color: $lightestGray;
+    }
+  }
+
+  .content {
+    margin-top: 10px;
+  }
+
+  .content-item {
+    padding: 10px 10px 5px 10px;
+    border-bottom: 1px solid $almostWhiteGray;
+
+    .item {
+      margin-left: 10px;
+    }
+
+    .duration {
+      color: black;
+      font-weight: bolder;
+    }
+  }
+
+  .unsubscribe {
+    margin-top: 40px;
+
+    button {
+      display: block;
+      float: right;
+      border: none;
+
+      padding: 10px;
+      font-family: $mainFont;
+      border-radius: 2px;
+
+      background-color: $dangerRed;
+      color: white;
+      border-left: 1px solid $dangerRed;
+      border-top: 1px solid $dangerRed;
+    }
+  }
+}

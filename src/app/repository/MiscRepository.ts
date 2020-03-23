@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {MiscRouteResolver} from "../logic/routes/MiscRouteResolver";
+import {MiscRouteResolver} from "./routeResolvers/MiscRouteResolver";
 
 @Injectable({
   providedIn: 'root',

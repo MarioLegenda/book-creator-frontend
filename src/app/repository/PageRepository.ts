@@ -1,9 +1,8 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {reduce} from "rxjs/operators";
-import {RouteResolver} from "../logic/routes/RouteResolver";
-import {BlockRouteResolver} from "../logic/routes/BlockRouteResolver";
-import {FileUploadRepository} from "./FileUploadRepository";
+import {RouteResolver} from "./routeResolvers/RouteResolver";
+import {BlockRouteResolver} from "./routeResolvers/BlockRouteResolver";
 
 @Injectable({
   providedIn: 'root',

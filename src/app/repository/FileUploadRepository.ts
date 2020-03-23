@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {FileUploadRouteResolver} from "../logic/routes/FileUploadRouteResolver";
+import {FileUploadRouteResolver} from "./routeResolvers/FileUploadRouteResolver";
 import {reduce} from "rxjs/operators";
 
 @Injectable({

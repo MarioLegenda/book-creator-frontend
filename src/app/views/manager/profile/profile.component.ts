@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AccountProvider} from "../../../logic/AccountProvider";
 import {FileUploadRepository} from "../../../repository/FileUploadRepository";
 import {catchError, reduce} from "rxjs/operators";
@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import {avatarChanged, basicInfoChanged} from "../../../store/account/actions";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {AccountRepository} from "../../../repository/AccountRepository";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'cms-user-section-profile',
@@ -15,7 +16,7 @@ import {AccountRepository} from "../../../repository/AccountRepository";
   ],
   templateUrl: './profile.component.html',
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
     private accountProvider: AccountProvider,
     private fileUploadRepository: FileUploadRepository,
@@ -39,9 +40,17 @@ export class ProfileComponent {
 
   private uploadedFile: File = null;
 
+  private updateAccountSubscription: Subscription = null;
+  private fileUploadSubscription: Subscription = null;
+
   ngOnInit() {
     this.loadInitialState();
     this.loadDefaultAvatar();
+  }
+
+  ngOnDestroy() {
+    if (this.updateAccountSubscription) this.updateAccountSubscription.unsubscribe();
+    if (this.fileUploadSubscription) this.fileUploadSubscription.unsubscribe();
   }
 
   onFileUpload(files: FileList) {
@@ -89,13 +98,18 @@ export class ProfileComponent {
       this.uploadedFile = null;
       this.hasFile = false;
 
-      this.accountProvider.loadAccount().then(() => {
+      if (this.fileUploadSubscription) this.fileUploadSubscription.unsubscribe();
+      this.fileUploadSubscription = null;
+
+      this.fileUploadSubscription = this.accountProvider.subscribe(() => {
         const account = this.accountProvider.getAccount();
 
         this.avatarSrc = account.profile.avatar.path;
 
-        this.store.dispatch(avatarChanged())
+        this.store.dispatch(avatarChanged());
       });
+
+      this.accountProvider.loadAccount();
 
     });
   }
@@ -137,12 +151,17 @@ export class ProfileComponent {
     );
 
     this.accountRepository.updateAccount(model).subscribe(() => {
-      this.accountProvider.loadAccount().then(() => {
+      if (this.updateAccountSubscription) this.updateAccountSubscription.unsubscribe();
+      this.updateAccountSubscription = null;
+
+      this.updateAccountSubscription = this.accountProvider.subscribe(() => {
         this.store.dispatch(basicInfoChanged({
           name: name,
           lastName: lastName,
         }));
       });
+
+      this.accountProvider.loadAccount();
     });
   }
 

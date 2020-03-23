@@ -1,1 +1,58 @@
+@import '../../../../styles/variables';
 
+.settings-wrapper {
+  margin-bottom: 40px;
+  .settings {
+    float: none;
+    margin: 40px auto;
+  }
+
+  .item {
+    margin-bottom: 40px;
+    float: none;
+
+    .no-items {
+      margin-top: 40px;
+      color: $lightGray;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.3em;
+    }
+  }
+
+  .header {
+    border-left: 4px solid $mainAppColor;
+    padding: 20px 0 20px 40px;
+
+    h1 {
+      padding: 0; margin: 0;
+      font-size: 1.4em;
+    }
+  }
+
+  .entry {
+    margin: 40px 0 0 41px;
+
+    border-radius: 2px;
+    border-top: 4px solid $almostWhiteGray;
+
+    -webkit-box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
+    -moz-box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
+    box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
+
+    transition: box-shadow 0.5s, border-top 0.5s;
+    -webkit-transition: box-shadow 0.5s, border-top 0.5s;
+    -o-transition: box-shadow 0.5s, border-top 0.5s;
+    -moz-transition: box-shadow 0.5s, border-top 0.5s;
+
+    &:hover {
+      cursor: pointer;
+
+      -webkit-box-shadow: -2px 11px 10px -8px rgba(204,204,204,1);
+      -moz-box-shadow: -2px 11px 10px -8px rgba(204,204,204,1);
+      box-shadow: -2px 11px 10px -8px rgba(204,204,204,1);
+
+      border-top: 4px solid $mainAppColor;
+    }
+  }
+}

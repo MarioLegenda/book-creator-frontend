@@ -3,6 +3,7 @@ import {Account} from "../model/app/Account";
 import {CookieService} from "ngx-cookie-service";
 import {AccountRepository} from "../repository/AccountRepository";
 import {HttpModel} from "../model/http/HttpModel";
+import {ReplaySubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,13 @@ import {HttpModel} from "../model/http/HttpModel";
 export class AccountProvider {
   private account: Account = null;
 
+  private readonly accountLoader: ReplaySubject<any> = new ReplaySubject<any>();
+
+
   constructor(
     private cookie: CookieService,
     private accountRepository: AccountRepository,
-  ) {
-
-  }
+  ) {}
 
   getAccount(): Account {
     return this.account;
@@ -35,9 +37,17 @@ export class AccountProvider {
     this.account = null;
   }
 
-  async loadAccount() {
+  subscribe(cb) {
+    return this.accountLoader.subscribe(cb);
+  }
+
+  loadAccount() {
     const token = this.cookie.get('token');
 
-    this.account = await this.accountRepository.verifyAccount(HttpModel.verifyAccount(token)).toPromise();
+    this.accountRepository.verifyAccount(HttpModel.verifyAccount(token)).subscribe((account) => {
+      this.account = account;
+
+      this.accountLoader.next(this.account);
+    });
   }
 }

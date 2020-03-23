@@ -5,19 +5,27 @@
   color: $textColor;
   background-color: white;
   position: relative;
+  padding-top: 5px;
 
-  border-bottom: 1px solid $lightestGray;
+  border-top: 4px solid $almostWhiteGray;
+  border-radius: 2px;
 
-  transition: box-shadow 0.5s;
-  -webkit-transition: box-shadow 0.5s;
-  -o-transition: box-shadow 0.5s;
-  -moz-transition: box-shadow 0.5s;
+  -webkit-box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
+  -moz-box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
+  box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
+
+  transition: box-shadow 0.5s, border-top 0.5s;
+  -webkit-transition: box-shadow 0.5s, border-top 0.5s;
+  -o-transition: box-shadow 0.5s, border-top 0.5s;
+  -moz-transition: box-shadow 0.5s, border-top 0.5s;
 
   &:hover {
     cursor: pointer;
     -webkit-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
     -moz-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
     box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
+
+    border-top: 4px solid $mainAppColor;
   }
 
   .title-bar {

@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
-import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
+import {CodeEditorRouteResolver} from "./routeResolvers/CodeEditorRouteResolver";
 import {Injectable} from "@angular/core";
-import {EnvEmulatorRouteResolver} from "../logic/routes/EnvEmulatorRouteResolver";
+import {EnvEmulatorRouteResolver} from "./routeResolvers/EnvEmulatorRouteResolver";
 import {reduce} from "rxjs/operators";
 
 @Injectable({

@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
+import {CodeEditorRouteResolver} from "./routeResolvers/CodeEditorRouteResolver";
 import {reduce} from "rxjs/operators";
-import {ProjectRouteResolver} from "../logic/routes/ProjectRouteResolver";
+import {ProjectRouteResolver} from "./routeResolvers/ProjectRouteResolver";
 
 function singleDirectoryFactory(codeProjectUuid, originalModel) {
   return Object.assign({}, {

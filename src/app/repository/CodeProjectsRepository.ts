@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RouteResolver} from "../logic/routes/RouteResolver";
+import {RouteResolver} from "./routeResolvers/RouteResolver";
 import {reduce} from "rxjs/operators";
-import {ProjectRouteResolver} from "../logic/routes/ProjectRouteResolver";
+import {ProjectRouteResolver} from "./routeResolvers/ProjectRouteResolver";
 
 @Injectable({
   providedIn: 'root',

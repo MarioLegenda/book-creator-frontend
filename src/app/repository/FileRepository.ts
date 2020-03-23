@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {catchError, map, reduce, switchMap} from "rxjs/operators";
-import {CodeEditorRouteResolver} from "../logic/routes/CodeEditorRouteResolver";
-import {of, throwError} from "rxjs";
+import {reduce} from "rxjs/operators";
+import {CodeEditorRouteResolver} from "./routeResolvers/CodeEditorRouteResolver";
 
 function singleFileFactory(codeProjectUuid, originalModel) {
   return Object.assign({}, {

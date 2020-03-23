@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {AccountRouteResolver} from "../logic/routes/AccountRouteResolver";
+import {AccountRouteResolver} from "./routeResolvers/AccountRouteResolver";
 import {reduce} from "rxjs/operators";
 
 @Injectable({

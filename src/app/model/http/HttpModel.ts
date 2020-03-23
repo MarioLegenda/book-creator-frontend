@@ -625,4 +625,20 @@ export class HttpModel {
       }
     }
   }
+
+  static getActiveSubscriptions(uuids: string[]) {
+    return {
+      data: {
+        uuids: uuids,
+      }
+    }
+  }
+
+  static getStripeSubscription(subscriptionId: string) {
+    return {
+      data: {
+        subscriptionId: subscriptionId,
+      }
+    }
+  }
 }
