@@ -40,8 +40,8 @@ export class SettingsComponent implements OnInit {
         const subscriptionMetadata: SubscriptionMetadata = new SubscriptionMetadata();
 
         for (const s of res) {
-          const subMetadata = subscriptionMetadata.getSettingsListMetadata(s.subscriptionType);
-          subMetadata.subscriptionId = s.subscriptionId;
+          let subMetadata = subscriptionMetadata.getSettingsListMetadata(s.subscriptionName);
+          subMetadata = {...subMetadata, ...s};
 
           this.subscriptions.push(subMetadata);
         }

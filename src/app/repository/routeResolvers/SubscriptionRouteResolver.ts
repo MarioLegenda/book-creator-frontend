@@ -10,6 +10,7 @@ export class SubscriptionRouteResolver {
   private readonly routes = {
     getActiveSubscriptions: `${this.cndUri}/api/v1/stripe/get-active-subscriptions`,
     getStripeSubscription: `${this.cndUri}/api/v1/stripe/get-stripe-subscription`,
+    updateSubscriptionStatus: `${this.cndUri}/api/v1/stripe/update-subscription-status`,
   };
 
   getActiveSubscriptions(): string {
@@ -18,5 +19,9 @@ export class SubscriptionRouteResolver {
 
   getStripeSubscription(): string {
     return this.routes.getStripeSubscription;
+  }
+
+  updateSubscriptionStatus(): string {
+    return this.routes.updateSubscriptionStatus;
   }
 }

@@ -1,0 +1,14 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <p>Are you sure you want to unsubscribe?</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn danger" cdkFocusInitial (click)="confirmUnsubscribe()">Confirm</button>
+  </div>
+
+</div>

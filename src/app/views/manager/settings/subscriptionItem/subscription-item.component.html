@@ -1,7 +1,8 @@
 <div class="col-xs-12 col-md-12 col-lg-12 subscription">
   <h1
+    [ngClass]="{'request-in-flight': requestInFlight}"
     (click)="onSelectEntry()">
-    {{subscriptionMetadata.title}}
+    {{subscriptionMetadata.title}} <span [ngClass]="['title-highlight', parseStatusClass(status)]">/ {{parseStatus(status)}}</span>
     <i class="chevron fas" [ngClass]="{'fa-chevron-left': !this.selected, 'fa-chevron-down': this.selected}"></i>
   </h1>
 
@@ -27,7 +28,7 @@
     </div>
 
     <div class="unsubscribe col-xs-12 col-md-12 col-lg-12">
-      <button>Unsubscribe</button>
+      <button [ngClass]="['button', parseStatusButtonClass(status)]" (click)="onUnsubscribe()">Unsubscribe</button>
     </div>
   </div>
 </div>

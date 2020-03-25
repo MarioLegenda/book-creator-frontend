@@ -11,10 +11,9 @@
         <p *ngIf="noSubscriptions === true" class="no-items col-xs-12 col-lg-12 col-md-12">You have no active subscriptions</p>
 
         <div *ngIf="!noSubscriptions">
-          <div *ngFor="let subscription of subscriptions" class="entry col-xs-10 col-lg-8 col-md-8">
+          <div *ngFor="let subscription of subscriptions" class="entry col-xs-10 col-lg-10 col-md-10">
             <cms-subscription-item
-              [subscriptionMetadata]="subscription"
-              [subscriptionId]="subscription.subscriptionId">
+              [subscriptionMetadata]="subscription">
             </cms-subscription-item>
           </div>
         </div>

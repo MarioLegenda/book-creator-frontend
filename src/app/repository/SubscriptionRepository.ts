@@ -29,4 +29,13 @@ export class SubscriptionRepository {
         }, {}),
       );
   }
+
+  updateSubscriptionStatus(model: any) {
+    return this.httpClient.post(this.subscriptionRouteResolver.updateSubscriptionStatus(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      );
+  }
 }

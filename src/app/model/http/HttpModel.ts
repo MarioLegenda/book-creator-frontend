@@ -641,4 +641,16 @@ export class HttpModel {
       }
     }
   }
+
+  static updateSubscriptionStatus(
+    uuid: string,
+    status: string,
+  ) {
+    return {
+      data: {
+        uuid,
+        status,
+      }
+    }
+  }
 }

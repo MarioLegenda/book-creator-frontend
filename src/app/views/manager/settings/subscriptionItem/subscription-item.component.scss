@@ -15,6 +15,39 @@
       top: 14px; right: 15px;
       color: $lightestGray;
     }
+
+    .title-highlight {
+      color: black;
+      font-weight: bolder;
+    }
+
+    .active-status {
+      color: $genericSuccess;
+    }
+
+    .pending-status {
+      color: $lightRed;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .request-in-flight {
+    color: $lightestGray;
+
+    .title-highlight {
+      color: $lightestGray;
+    }
+
+    &:hover {
+      cursor: not-allowed;
+    }
+
+    .title-highlight:hover {
+      cursor: not-allowed;
+    }
   }
 
   .content {
@@ -38,7 +71,7 @@
   .unsubscribe {
     margin-top: 40px;
 
-    button {
+    .button {
       display: block;
       float: right;
       border: none;
@@ -51,6 +84,15 @@
       color: white;
       border-left: 1px solid $dangerRed;
       border-top: 1px solid $dangerRed;
+    }
+
+    .button-disabled {
+      background-color: $lighterRed;
+      border: 1px solid $lighterRed;
+
+      &:hover {
+        cursor: not-allowed;
+      }
     }
   }
 }

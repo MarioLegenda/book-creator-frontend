@@ -24,6 +24,7 @@ import {ProfileComponent} from "../profile/profile.component";
 import {SettingsComponent} from "../settings/settings.component";
 import {PublishComponent} from "../publishBlog/publish.component";
 import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.component";
+import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.component";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.c
     OverviewComponent,
     KSItem,
     RemoveConfirmDialogComponent,
+    UnsubscribeDialog,
     SearchComponent,
     ProfileComponent,
     SettingsComponent,
@@ -61,6 +63,7 @@ import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.c
   entryComponents: [
     AddKnowledgeSourceDialogComponent,
     RemoveConfirmDialogComponent,
+    UnsubscribeDialog,
   ]
 })
 export class ManagerModule { }

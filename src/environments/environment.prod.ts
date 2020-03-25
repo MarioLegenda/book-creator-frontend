@@ -1,13 +1,17 @@
 export const environment = {
   production: true,
   protocol: 'https',
-  bookApiUri: 'therebelsource.com',
+  bookApiUri: '11.11.11.12',
+  bookApiPort:80,
 
-  rebelCdnApiUri: 'therebelsource.com',
+  rebelCdnApiUri: '11.11.11.12',
+  rebelCdnApiPort: 80,
 
-  envEmulatorUri: 'therebelsource.com',
+  envEmulatorUri: '11.11.11.12',
+  envEmulatorPort: 80,
 
-  staticWeb: 'therebelsource.com',
+  staticWeb: '11.11.11.12',
+  staticWebPort: 80,
 
   publicDir: 'images',
 
@@ -27,3 +31,4 @@ export const environment = {
     return `${environment.protocol}://${environment.staticWeb}`;
   },
 };
+
