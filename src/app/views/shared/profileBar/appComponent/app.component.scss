@@ -87,12 +87,19 @@
       height: 100%;
     }
 
+    .icon {
+      position: absolute;
+      top: 10px; right: 20px;
+      color: $genericSuccess;
+    }
+
     &:hover {
       cursor: pointer;
     }
   }
 
   .falling-menu {
+    width: 300px;
     z-index: 1000;
     overflow: scroll;
 
@@ -109,6 +116,40 @@
     box-shadow: 0px 2px 27px -4px rgba(186,186,186,1);
 
     border-radius: 5px;
+
+    .premium-user {
+      display: block;
+      color: $genericSuccess;
+      border: 1px solid $genericSuccess;
+      padding: 10px;
+      text-align: center;
+
+      margin-top: 10px;
+
+      border-radius: 5px;
+
+      &:hover {
+        cursor: pointer;
+
+      }
+    }
+
+    .premium-user {
+      display: block;
+      color: $genericSuccess;
+      border: 1px solid $genericSuccess;
+      padding: 10px;
+      text-align: center;
+
+      margin-top: 10px;
+
+      border-radius: 5px;
+
+      &:hover {
+        cursor: pointer;
+
+      }
+    }
 
     .display-name {
       display: block;

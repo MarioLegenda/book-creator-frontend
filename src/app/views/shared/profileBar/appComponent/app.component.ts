@@ -17,6 +17,7 @@ import {actionTypes} from "../../../../store/account/actions";
 })
 export class AppComponent {
   account: Account;
+  isSubscribed: boolean = false;
   isBlogPage: boolean = false;
 
   displayName = '';
@@ -37,6 +38,7 @@ export class AppComponent {
     private store: Store<any>,
   ) {
     this.account = accountProvider.getAccount();
+    this.isSubscribed = accountProvider.isSubscribed();
   }
 
   ngOnInit() {

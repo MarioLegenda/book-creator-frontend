@@ -11,6 +11,7 @@
     <div class="col-xs-12 col-md-12 col-lg-12">
       <div class="click-anchor profile-image main-menu" (click)="onShowMenu()">
         <img class="click-anchor main-menu" [src]="avatar"/>
+        <label *ngIf="isSubscribed" class="fas fa-circle icon"></label>
       </div>
     </div>
 
@@ -18,6 +19,7 @@
       <div class="click-anchor basic-info col-xs-12 col-md-12 col-lg-12">
         <label class="click-anchor display-name">{{name}} {{lastName}}</label>
         <label class="click-anchor email">{{account.email}}</label>
+        <label class="premium-user" (click)="onSettings()">Premium</label>
       </div>
 
       <div class="click-anchor options items col-xs-12 col-md-12 col-lg-12">

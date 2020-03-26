@@ -3,7 +3,8 @@ import {Account} from "../model/app/Account";
 import {CookieService} from "ngx-cookie-service";
 import {AccountRepository} from "../repository/AccountRepository";
 import {HttpModel} from "../model/http/HttpModel";
-import {ReplaySubject} from "rxjs";
+import {ReplaySubject, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,6 @@ export class AccountProvider {
   private account: Account = null;
 
   private readonly accountLoader: ReplaySubject<any> = new ReplaySubject<any>();
-
 
   constructor(
     private cookie: CookieService,
@@ -29,6 +29,10 @@ export class AccountProvider {
 
   isLoggedIn(): boolean {
     return !!(this.cookie.get('token'));
+  }
+
+  isSubscribed(): boolean {
+    return !!(this.account.roles.includes('ROLE_BASIC_SUBSCRIPTION'));
   }
 
   logout() {
