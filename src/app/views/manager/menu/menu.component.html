@@ -37,7 +37,7 @@
     </div>
 
     <div
-      *ngIf="type"
+      *ngIf="type === 'blogs' || type === 'code-projects'"
       (click)="addKsDialog()"
       class="new-action">
       NEW
