@@ -1,0 +1,77 @@
+@import '../../../../styles/variables';
+
+.form-block {
+  .text-input {
+    display: block;
+    margin: 30px auto;
+
+    border: 1px solid $almostWhiteGray;
+    padding: 15px;
+
+    border-radius: 2px;
+
+    border-top: 4px solid $almostWhiteGray;
+
+    &:focus {
+      border-top: 4px solid $mainAppColor;
+    }
+  }
+
+  .hint {
+    margin: 0 auto;
+    color: $lightGray;
+    font-style: italic;
+    font-size: 0.8em;
+    margin-top: -25px;
+  }
+
+  .element-focused {
+    border-top: 4px solid $mainAppColor !important;
+  }
+
+  .invalid-border {
+    border-top: 4px solid $lightRed;
+  }
+
+  .error {
+    margin: 0 auto;
+    color: $lightRed;
+
+    font-size: 0.9em;
+
+    padding-left: 20px;
+
+    border-left: 4px solid $dangerRed;
+  }
+}
+
+.action-button {
+  display: block;
+  border: 1px solid $mainAppColor;
+  color: $mainAppColor;
+  padding: 15px;
+  background-color: white;
+  border-radius: 2px;
+
+  transition: background-color 0.5s, color 0.5s;
+  -webkit-transition: background-color 0.5s, color 0.5s;
+  -moz-transition: background-color 0.5s, color 0.5s;
+  -o-transition: background-color 0.5s, color 0.5s;
+
+  &:hover {
+    background-color: $mainAppColor;
+    color: white;
+  }
+}
+
+.button-disabled {
+  border: 1px solid $lightestGray;
+  color: $lightestGray;
+
+  &:hover {
+    cursor: not-allowed !important;
+    border: 1px solid $lightestGray !important;
+    color: $lightestGray !important;
+    background-color: white !important;
+  }
+}

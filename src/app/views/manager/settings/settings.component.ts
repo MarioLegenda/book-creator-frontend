@@ -21,6 +21,10 @@ export class SettingsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    //this.loadSubscriptions();
+  }
+
+  private loadSubscriptions(): void {
     const subscriptions = this.accountProvider.getAccount().subscriptions;
 
     if (subscriptions.length === 0) {

@@ -12,6 +12,7 @@ import {Subscription} from "rxjs";
   selector: 'cms-user-section-profile',
   styleUrls: [
     '../../shared/styles/generic.component.scss',
+    '../../shared/styles/form.component.scss',
     './profile.component.scss',
   ],
   templateUrl: './profile.component.html',
