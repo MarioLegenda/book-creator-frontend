@@ -51,7 +51,11 @@
       <h1>CHOOSE YOUR HASHTAGS</h1>
       <div class="border col-xs-12 col-md-12 col-lg-12"></div>
       <span
-        class="info col-xs-12 col-md-12 col-lg-12">* in The Rebel Source, hashtags serve the purpose of categories. Users can search all content related to a hashtag so choose your hashtags wisely. You can add up o <span class="info-highlight">5</span> hashtags and you have to add at least one hashtag.</span>
+        class="info col-xs-12 col-md-12 col-lg-12">
+        * in The Rebel Source, hashtags serve the purpose of categories. Users can search all
+        content related to a hashtag so choose your hashtags wisely. You can add up to
+        <span class="info-highlight">5</span> hashtags and <span class="info-highlight">you have to add at least one hashtag</span>.
+      </span>
 
       <div class="content-wrapper col-xs-12 col-md-12 col-lg-12">
         <div class="search col-xs-12 col-md-12 col-lg-12">
@@ -94,13 +98,13 @@
         class="error col-xs-12 col-md-12 col-lg-12">No hashtags selected. You have to select at least one hashtag.</div>
 
       <button
-        class="btn"
+        class="button publish-button"
         [ngClass]="{'publish-in-progress': publishInProgress}"
-        (click)="onPublish()">Publish <i class="icon fas fa-wifi"></i>
+        (click)="onPublish()">{{(this.isAlreadyPublished) ? 'Republish' : 'Publish' }} <i class="icon fas fa-wifi"></i>
       </button>
 
       <button
-        class="btn"
+        class="button"
         [ngClass]="{'publish-in-progress': publishInProgress}"
         (click)="onPreview($event)">Preview <i class="icon fas fa-bullseye"></i>
       </button>

@@ -17,6 +17,10 @@
 
     border-bottom: 1px solid $almostWhiteGray;
     z-index: 2;
+
+    &:focus {
+      border-bottom: 1px solid $mainAppColor;
+    }
   }
 
   .image-wrapper {

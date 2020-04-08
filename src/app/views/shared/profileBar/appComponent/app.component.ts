@@ -38,7 +38,6 @@ export class AppComponent {
     private store: Store<any>,
   ) {
     this.account = accountProvider.getAccount();
-    this.isSubscribed = accountProvider.isSubscribed();
   }
 
   ngOnInit() {

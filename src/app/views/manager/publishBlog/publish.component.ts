@@ -6,7 +6,6 @@ import {environment} from "../../../../environments/environment";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {BlogState} from "../../../logic/BlogState";
-import {Subject, Subscription} from "rxjs";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -24,6 +23,7 @@ export class PublishComponent implements OnInit {
   selectedTags = [];
   noHtagsSelected: boolean = false;
   publishInProgress: boolean = false;
+  isAlreadyPublished: boolean = false;
 
   publishedUrl: string = null;
   codeProjects: any[] = [];
@@ -41,26 +41,7 @@ export class PublishComponent implements OnInit {
 
     if (!shortId) this.redirectTo404();
 
-    this.getInitialData(shortId).then(({type, data}) => {
-      if (type === 'ok') {
-        this.blog = data.blog;
-        this.codeProjects = data.codeProjects;
-
-        this.publishedUrl = `/blog/${this.blog.slug}/${this.blog.shortId}`;
-
-        this.hashtags = data.hashtags;
-        this.filteredHashtags = this.loadHashtags(data.hashtags);
-        this.selectedTags = this.loadHashtags(this.blog.hashtags);
-
-        return;
-      }
-
-      if (type === 'fail') {
-        if (data.status === 404) return this.redirectTo404();
-
-        return this.redirectTo500();
-      }
-    });
+    this.loadInitialData(shortId);
   }
 
   onFilterHashtags() {
@@ -191,5 +172,31 @@ export class PublishComponent implements OnInit {
     }
 
     return await this.blogRepository.changeState(publishModel).toPromise();
+  }
+
+  private loadInitialData(shortId: string): void {
+    this.getInitialData(shortId).then(({type, data}) => {
+      if (type === 'ok') {
+        this.blog = data.blog;
+        this.codeProjects = data.codeProjects;
+
+        this.publishedUrl = `/blog/${this.blog.slug}/${this.blog.shortId}`;
+
+        this.hashtags = data.hashtags;
+        this.filteredHashtags = this.loadHashtags(data.hashtags);
+        this.selectedTags = this.loadHashtags(this.blog.hashtags);
+
+        if (this.blog.publishedAt) {
+          this.isAlreadyPublished = true;
+        }
+        return;
+      }
+
+      if (type === 'fail') {
+        if (data.status === 404) return this.redirectTo404();
+
+        return this.redirectTo500();
+      }
+    });
   }
 }

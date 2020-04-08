@@ -31,10 +31,6 @@ export class AccountProvider {
     return !!(this.cookie.get('token'));
   }
 
-  isSubscribed(): boolean {
-    return !!(this.account.roles.includes('ROLE_BASIC_SUBSCRIPTION'));
-  }
-
   logout() {
     this.cookie.delete('token', '/');
 

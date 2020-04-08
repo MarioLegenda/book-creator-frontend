@@ -32,8 +32,8 @@
   .actions-area {
     border-bottom: none;
 
-    button {
-      width: 90px;
+    .button {
+      width: 120px;
       display: block;
       float: right;
       margin-left: 10px;
@@ -43,6 +43,8 @@
       color: $appBlack;
       position: relative;
       text-align: left;
+
+      padding: 10px;
 
       transition: background-color 0.5s;
       -moz-transition: background-color 0.5s;
@@ -62,7 +64,7 @@
     .icon {
       font-size: 1.2em;
       position: absolute;
-      top: 7px; right: 3px;
+      top: 12px; right: 3px;
       color: $mainAppColor;
     }
 
