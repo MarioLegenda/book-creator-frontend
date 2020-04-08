@@ -25,6 +25,7 @@ import {SettingsComponent} from "../settings/settings.component";
 import {PublishComponent} from "../publishBlog/publish.component";
 import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.component";
 import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.component";
+import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-modal.component";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.
     SettingsComponent,
     PublishComponent,
     SubscriptionItem,
+    PublishBlogModalComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +66,7 @@ import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.
     AddKnowledgeSourceDialogComponent,
     RemoveConfirmDialogComponent,
     UnsubscribeDialog,
+    PublishBlogModalComponent,
   ]
 })
 export class ManagerModule { }

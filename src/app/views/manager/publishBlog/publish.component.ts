@@ -6,6 +6,8 @@ import {environment} from "../../../../environments/environment";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {BlogState} from "../../../logic/BlogState";
+import {MatDialog} from "@angular/material/dialog";
+import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-modal.component";
 
 @Component({
   selector: 'cms-publish-blog',
@@ -33,6 +35,7 @@ export class PublishComponent implements OnInit {
     private miscRepository: MiscRepository,
     private codeProjectsRepository: CodeProjectsRepository,
     private environmentEmulatorRepository: EnvironmentEmulatorRepository,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -82,7 +85,17 @@ export class PublishComponent implements OnInit {
     this.publicAction().then(() => {
       this.publishInProgress = false;
 
-      this.redirectToProdSource();
+      const dialogRef = this.dialog.open(PublishBlogModalComponent, {
+        width: '480px',
+        data: {
+          slug: this.blog.slug,
+          shortId: this.blog.shortId,
+        },
+        disableClose: true,
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+      });
     });
   }
 

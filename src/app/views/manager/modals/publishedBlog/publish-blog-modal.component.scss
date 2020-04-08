@@ -1,0 +1,19 @@
+@import '../../../../../styles/variables';
+
+.content {
+  margin-bottom: 40px;
+}
+
+.dialog-actions {
+  button {
+    float: left;
+    border-radius: 2px;
+
+    background-color: white;
+    border: 1px solid $lightGray;
+  }
+
+  button:first-child {
+    margin-right: 10px;
+  }
+}
