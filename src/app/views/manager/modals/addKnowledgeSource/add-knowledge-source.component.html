@@ -9,6 +9,7 @@
 
   <div class="source-listing col-xs-12 col-md-12 col-lg-12">
     <div
+      [ngClass]="{'disabled': disabled}"
       class="item col-xs-12 col-md-12 col-lg-12"
       (click)="onSelect('blog')">
       <div class="icon">

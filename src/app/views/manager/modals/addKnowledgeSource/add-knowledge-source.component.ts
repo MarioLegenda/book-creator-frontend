@@ -14,6 +14,8 @@ import {HttpModel} from "../../../../model/http/HttpModel";
   ]
 })
 export class AddKnowledgeSourceDialogComponent {
+  disabled: boolean = false;
+
   constructor(
     private router: Router,
     private blogRepository: BlogRepository,
@@ -26,6 +28,10 @@ export class AddKnowledgeSourceDialogComponent {
     }
 
     onSelect(type: string) {
+      if (this.disabled) return;
+
+      this.disabled = true;
+
       if (type === 'blog') {
         this.createBlog();
       }
