@@ -190,4 +190,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
     moveItemInArray(this.components, event.previousIndex, event.currentIndex);
   }
+
+  trackByFn(_, item) {
+    return item.blockUuid;
+  }
 }

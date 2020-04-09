@@ -38,7 +38,7 @@
       </div>
 
       <div
-        *ngFor="let item of components"
+        *ngFor="let item of components; trackBy: trackByFn"
         class="col-xs-12 col-lg-12 col-md-12 component-wrapper"
         (cdkDragDropped)="onDropped(item)"
         cdkDrag>
