@@ -12,6 +12,7 @@ import {BlogState} from "../../../../logic/BlogState";
 @Component({
   selector: 'cms-ks-item',
   styleUrls: [
+    './../../../shared/styles/item-listing.component.scss',
     './item.component.scss',
   ],
   templateUrl: './item.component.html',

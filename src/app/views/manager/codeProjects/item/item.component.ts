@@ -3,7 +3,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {Router} from "@angular/router";
-import {Environments} from "../../../../library/Environments";
 import {Month} from "../../../../library/Month";
 import {RemoveItemService} from "../../sharedServices/RemoveItemService";
 import {titleResolver} from "../../sharedServices/titleResolver";
@@ -12,6 +11,7 @@ import {NewCodeProjectDialogComponent} from "../../../shared/modules/newCodeProj
 @Component({
   selector: 'cms-cp-item',
   styleUrls: [
+    './../../../shared/styles/item-listing.component.scss',
     './item.component.scss',
   ],
   templateUrl: './item.component.html',

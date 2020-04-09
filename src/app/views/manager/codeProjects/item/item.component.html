@@ -1,7 +1,5 @@
 <div
-  [routerLink]="'/cms/code-editor/' + item.shortId"
-  [ngClass]="wrapperClasses"
-  class="item">
+  class="col-xs-10 col-md-5 col-lg-5 shared-item item">
 
   <i
     (click)="onRemove($event)"
@@ -21,18 +19,24 @@
   </div>
 
   <div class="actions col-xs-12 col-md-12 col-lg-12">
-    <button
+    <a
+      [routerLink]="'/cms/code-editor/' + item.shortId"
+      class="item-button">
+      Open
+    </a>
+
+    <a
       class="item-button"
       (click)="onManage($event)">
       Manage
-    </button>
+    </a>
 
-    <button
+    <a
       *ngIf="includeEdit"
       class="item-button"
       (click)="onEdit($event)">
       Edit
-    </button>
+    </a>
   </div>
 
 </div>

@@ -1,94 +1,9 @@
 @import '../../../../../styles/variables';
 
 .item {
-  margin: 0 40px 40px 40px;
-  color: $textColor;
-  background-color: white;
-  position: relative;
-  padding-top: 5px;
-  height: 250px;
-  display: block;
-  text-decoration: none;
-  padding-left: 5px;
-
-  border-top: 4px solid $almostWhiteGray;
-  border-radius: 2px;
-
-  -webkit-box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
-  -moz-box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
-  box-shadow: -1px 6px 10px -5px rgba(219,219,219,1);
-
-  transition: box-shadow 0.5s, border-top 0.5s;
-  -webkit-transition: box-shadow 0.5s, border-top 0.5s;
-  -o-transition: box-shadow 0.5s, border-top 0.5s;
-  -moz-transition: box-shadow 0.5s, border-top 0.5s;
-
-  &:hover {
-    cursor: auto;
-    -webkit-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
-    -moz-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
-    box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
-
-    border-top: 4px solid $mainAppColor;
-  }
-
-  .title-bar {
-    float: left;
-  }
-
-  .remove-icon {
-    position: absolute;
-    color: $lightGray;
-    top: -5px; right: 0;
-
-    padding: 12px;
-
-    &:hover {
-      color: $dangerRed;
-    }
-  }
-
-  .title {
-    font-weight: bolder;
-  }
-
   .no-title {
     color: $lightGray;
     font-style: italic;
-  }
-
-  .actions {
-    position: absolute;
-    bottom: 0; right: 0;
-    margin-top: 40px;
-    padding: 10px 0 0 10px;
-
-    .icon {
-      color: $mainAppColor;
-    }
-  }
-
-  .item-button {
-    color: $appBlack;
-    float: right;
-    border-radius: 0px;
-    text-decoration: none;
-
-    border: none;
-    background-color: white;
-    font-family: $mainFont;
-
-    padding: 5px;
-
-    border-top: 4px solid white;
-
-    margin-left: 5px;
-
-    &:hover {
-      cursor: pointer;
-      text-decoration: none;
-      border-top: 4px solid $mainAppColor;
-    }
   }
 
   .state-info {
@@ -175,17 +90,5 @@
       background-color: white;
       color: $lightestGray;
     }
-  }
-
-  &:hover {
-    text-decoration: none !important;
-  }
-
-  @media all and (max-width: 1000px) {
-    float: none;
-    overflow: hidden;
-    margin: 0 auto;
-
-    margin-bottom: 40px;
   }
 }
