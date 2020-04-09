@@ -1,6 +1,5 @@
 <div
-   [routerLink]="'/page/blog/' + item.shortId + '/' + item.pageShortId"
-   class="col-xs-6 col-md-3 col-lg-3 item">
+   class="col-xs-10 col-md-5 col-lg-5 item">
 
   <div class="title-bar col-xs-12 col-md-12 col-lg-12">
     <i
@@ -20,7 +19,7 @@
   <div class="state-info col-xs-12 col-md-12 col-lg-12">
     <p class="draft" *ngIf="item.state === 'draft'">DRAFT</p>
     <p class="published" *ngIf="item.state === 'published'">PUBLISHED</p>
-    <p class="draft" *ngIf="item.state === 'changed'">PUBLISHED BUT CHANGED
+    <p class="changed" *ngIf="item.state === 'changed'">PUBLISHED BUT CHANGED
       <i
         #tooltip="matTooltip"
         (click)="onTooltipShow($event, tooltip)"
@@ -35,7 +34,7 @@
   <button
     (click)="onViewPublished($event)"
     [ngClass]="{'view-published-disabled': !componentState.isPublished}"
-    class="btn view-published">
+    class="view-published">
     View published</button>
 
   <div class="createdAt">
@@ -43,6 +42,13 @@
   </div>
 
   <div class="actions col-xs-12 col-md-12 col-lg-12">
+    <a
+      [routerLink]="'/page/blog/' + item.shortId + '/' + item.pageShortId"
+      class="item-button">
+      Write
+      <i class="icon fas fa-wifi"></i>
+    </a>
+
     <a
       [ngClass]="{'item-button': true, 'preview-disabled': componentState.noTitle}"
       (click)="onPublish($event)">

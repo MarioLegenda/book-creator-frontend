@@ -6,6 +6,10 @@
   background-color: white;
   position: relative;
   padding-top: 5px;
+  height: 250px;
+  display: block;
+  text-decoration: none;
+  padding-left: 5px;
 
   border-top: 4px solid $almostWhiteGray;
   border-radius: 2px;
@@ -20,7 +24,7 @@
   -moz-transition: box-shadow 0.5s, border-top 0.5s;
 
   &:hover {
-    cursor: pointer;
+    cursor: auto;
     -webkit-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
     -moz-box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
     box-shadow: 7px 6px 5px -3px rgba(224,224,224,1);
@@ -35,7 +39,9 @@
   .remove-icon {
     position: absolute;
     color: $lightGray;
-    top: 7px; right: 7px;
+    top: -5px; right: 0;
+
+    padding: 12px;
 
     &:hover {
       color: $dangerRed;
@@ -52,6 +58,8 @@
   }
 
   .actions {
+    position: absolute;
+    bottom: 0; right: 0;
     margin-top: 40px;
     padding: 10px 0 0 10px;
 
@@ -72,25 +80,30 @@
 
     padding: 5px;
 
-    border-top: 2px solid white;
+    border-top: 4px solid white;
 
     margin-left: 5px;
 
     &:hover {
+      cursor: pointer;
       text-decoration: none;
-      border-top: 2px solid $mainAppColor;
+      border-top: 4px solid $mainAppColor;
     }
   }
 
   .state-info {
     float: left;
 
-    .draft, .published {
+    .draft, .published, .changed {
       font-size: 0.8em;
       font-weight: bolder;
     }
 
-    .draft {
+    .draft, .published {
+      padding: 15px;
+    }
+
+    .draft, .changed {
       color: $lightRed;
     }
 
@@ -116,7 +129,7 @@
     font-size: 0.75em;
     color: $lightGray;
 
-    bottom: 5px; left: 0;
+    bottom: 5px; left: 5px;
   }
 
   .preview-disabled {
@@ -128,14 +141,19 @@
 
     &:hover {
       cursor: not-allowed;
-      border-top: 2px solid white;
+      border-top: 4px solid white;
     }
   }
 
   .view-published {
     display: block;
     background-color: white;
-    border: 1px solid $mainAppColor;
+    text-decoration: none;
+    border: none;
+    font-family: $mainFont;
+    padding: 5px;
+
+    border-top: 2px solid $mainAppColor;
 
     transition: background-color 0.5s;
     -webkit-transition: background-color 0.5s;
@@ -150,12 +168,24 @@
 
   .view-published-disabled {
     color: $lightestGray;
-    border: 1px solid $lightestGray;
+    border-top: 2px solid $lightestGray;
 
     &:hover {
       cursor: not-allowed;
       background-color: white;
       color: $lightestGray;
     }
+  }
+
+  &:hover {
+    text-decoration: none !important;
+  }
+
+  @media all and (max-width: 1000px) {
+    float: none;
+    overflow: hidden;
+    margin: 0 auto;
+
+    margin-bottom: 40px;
   }
 }

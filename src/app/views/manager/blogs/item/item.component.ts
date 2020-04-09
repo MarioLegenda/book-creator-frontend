@@ -50,6 +50,7 @@ export class ItemComponent {
 
   onRemove($event) {
     $event.stopPropagation();
+    $event.preventDefault();
 
     this.removeItemService.remove(
       this.blogRepository,
