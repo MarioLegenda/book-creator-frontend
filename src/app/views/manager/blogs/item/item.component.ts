@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpModel} from "../../../../model/http/HttpModel";
@@ -18,6 +18,8 @@ import {BlogState} from "../../../../logic/BlogState";
 })
 export class ItemComponent {
   @Input('item') item;
+  // @ts-ignore
+  @ViewChild('tooltip') tooltip;
 
   @Output('itemDeleted') itemDeleted = new EventEmitter();
 
@@ -57,6 +59,12 @@ export class ItemComponent {
       this.itemDeleted,
       'Are you sure you wish to remove this blog? This action cannot be undone.',
     );
+  }
+
+  onTooltipShow($event, tooltip) {
+    $event.stopPropagation();
+
+    tooltip.toggle();
   }
 
   onViewPublished($event) {

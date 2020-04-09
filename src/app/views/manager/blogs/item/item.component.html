@@ -20,7 +20,16 @@
   <div class="state-info col-xs-12 col-md-12 col-lg-12">
     <p class="draft" *ngIf="item.state === 'draft'">DRAFT</p>
     <p class="published" *ngIf="item.state === 'published'">PUBLISHED</p>
-    <p class="published" *ngIf="item.state === 'changed'">PUBLISHED BUT CHANGED</p>
+    <p class="draft" *ngIf="item.state === 'changed'">PUBLISHED BUT CHANGED
+      <i
+        #tooltip="matTooltip"
+        (click)="onTooltipShow($event, tooltip)"
+        matTooltipClass="warning-tooltip"
+        matTooltipPosition="above"
+        matTooltipShowDelay="100"
+        matTooltipHideDelay="100"
+        matTooltip="This blog has been changed after it was published and it is not public! Republish the changes if you wish to make it public again."
+        class="warning-icon fas fa-exclamation-triangle"></i></p>
   </div>
 
   <button

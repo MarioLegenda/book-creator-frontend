@@ -26,6 +26,7 @@ import {PublishComponent} from "../publishBlog/publish.component";
 import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.component";
 import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.component";
 import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-modal.component";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-mo
     MatInputModule,
     MatSelectModule,
     NewCodeProjectModule,
+    MatTooltipModule,
   ],
   providers: [
     {useClass: RemoveItemService, provide: RemoveItemService},
