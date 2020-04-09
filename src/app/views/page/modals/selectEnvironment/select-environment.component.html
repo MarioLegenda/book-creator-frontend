@@ -8,21 +8,24 @@
     <p>Select environment</p>
   </div>
 
-  <div class="source-listing col-xs-12 col-md-12 col-lg-12">
-    <div
-      *ngFor="let item of model"
-      class="item col-xs-12 col-md-12 col-lg-12"
-      [ngClass]="{'disabled': item.inDevelopment}"
-      (click)="onSelect(item)">
-      <div class="icon">
-        <i class="far fa-circle"></i>
-      </div>
+  <div mat-dialog-content>
+    <div class="source-listing col-xs-12 col-md-12 col-lg-12">
+      <div
+        *ngFor="let item of model"
+        class="item col-xs-12 col-md-12 col-lg-12"
+        [ngClass]="{'disabled': item.inDevelopment}"
+        (click)="onSelect(item)">
+        <div class="icon">
+          <i class="far fa-circle"></i>
+        </div>
 
-      <p class="title">
-        {{item.text}}
-        <span *ngIf="item.inDevelopment" class="title-info">(in development)</span>
-        <span *ngIf="item.inMaintenance" class="title-info">(in maintenance)</span>
-      </p>
+        <p class="title">
+          {{item.text}}
+          <span *ngIf="item.inDevelopment" class="title-info">(in development)</span>
+          <span *ngIf="item.inMaintenance" class="title-info">(in maintenance)</span>
+        </p>
+      </div>
     </div>
   </div>
+
 </div>
