@@ -52,7 +52,7 @@ export class FileRepository {
     return this.httpClient.post(this.routeResolver.removeFile(), model);
   }
 
-  public getFilesFromDirectory(codeProjectUuid: string, directoryId: string) {
+  public getFilesFromDirectory(codeProjectUuid: string, directoryId: string): any {
     return this.httpClient.get(this.routeResolver.getFilesFromDirectory(codeProjectUuid, directoryId))
       .pipe(
         reduce((acc, res: any) => {

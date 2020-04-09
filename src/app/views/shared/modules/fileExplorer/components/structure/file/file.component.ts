@@ -35,7 +35,7 @@ export class FileComponent implements OnInit, OnChanges {
   @Output('fileAttachedEvent') fileAttachedEvent = new EventEmitter();
 
   // @ts-ignore
-  @ViewChild('iconRef') iconRef: ElementRef;
+  @ViewChild('iconRef', {static: true}) iconRef: ElementRef;
 
   constructor(
     private fileRepository: FileRepository,

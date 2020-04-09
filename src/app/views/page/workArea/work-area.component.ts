@@ -35,7 +35,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
   sourceContext: AppContext;
 
   // @ts-ignore
-  @ViewChild('workAreaRef') workAreaRef: ElementRef;
+  @ViewChild('workAreaRef', {static: true}) workAreaRef: ElementRef;
 
   constructor(
     private store: Store<any>,

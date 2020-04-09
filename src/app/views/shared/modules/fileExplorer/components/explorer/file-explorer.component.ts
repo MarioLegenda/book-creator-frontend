@@ -26,10 +26,8 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
 
   searchSubject = new ReplaySubject();
 
-  // @ts-ignore
-  @ViewChild('wrapperRef') wrapperRef: ElementRef;
-  // @ts-ignore
-  @ViewChild('actionWrapperRef') actionWrapperRef: ElementRef;
+  @ViewChild('wrapperRef', {static: true}) wrapperRef: ElementRef;
+  @ViewChild('actionWrapperRef', {static: true}) actionWrapperRef: ElementRef;
 
   componentState = {
     selectedAction: 'project',

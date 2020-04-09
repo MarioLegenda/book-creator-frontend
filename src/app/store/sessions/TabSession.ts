@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class TabSession {
   private openTabs = [];
   private selected = null;

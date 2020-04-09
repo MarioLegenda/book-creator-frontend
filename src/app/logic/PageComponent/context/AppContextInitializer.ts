@@ -8,6 +8,7 @@ import {actionTypes, viewAddAllBlocks} from "../../../store/page/viewActions";
 import {IPage} from "./IPage";
 import {IBlogSource} from "./IBlogSource";
 import {ReplaySubject, Subject} from "rxjs";
+import {IPageData} from "./IPageData";
 
 @Injectable({
   providedIn: 'root',
@@ -81,7 +82,7 @@ export class AppContextInitializer {
   }
 
   private async createContext(type: string, sourceShortId: string, pageShortId: string) {
-    const pageData = await this.getPageByShortId(pageShortId);
+    const pageData: IPageData = await this.getPageByShortId(pageShortId);
 
     const knowledgeSource: IBlogSource = await this.getKnowledgeSourceByShortId(type, sourceShortId);
 
@@ -101,10 +102,12 @@ export class AppContextInitializer {
     }
   }
 
-  private async getPageByShortId(shortId: string) {
+  private async getPageByShortId(shortId: string): Promise<IPageData> {
     const uuidModel: any = await this.pageRepository.findUuidByShortId(shortId).toPromise();
 
-    if (uuidModel) return await this.pageRepository.getPageByUuid(uuidModel.data.uuid).toPromise();
+    if (uuidModel) {
+      return await this.pageRepository.getPageByUuid(uuidModel.data.uuid).toPromise();
+    }
   }
 
   private async getKnowledgeSourceByShortId(type: string, shortId: string) {

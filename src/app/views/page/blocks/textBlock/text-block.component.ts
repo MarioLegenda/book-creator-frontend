@@ -11,6 +11,7 @@ import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-in
 import {AddCommentModalComponent} from "../../modals/addComment/add-comment-modal.component";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {changeState} from "../../../../logic/utilFns";
+import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -50,8 +51,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
     ]
   };
 
-  // @ts-ignore
-  @ViewChild('editorComponent') editorComponent: CKEditorComponent;
+  @ViewChild('editorComponent', {static: false}) editorComponent: CKEditorComponent;
 
   @Input('index') index: number;
   @Input('component') component: TextBlockModel;

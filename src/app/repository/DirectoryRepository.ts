@@ -33,7 +33,7 @@ export class DirectoryRepository {
     private projectRouteResolver: ProjectRouteResolver,
   ) {}
 
-  getRootDirectory(codeProjectUuid: string) {
+  getRootDirectory(codeProjectUuid: string): any {
     return this.httpClient.get(this.routeResolver.getRootDirectory(codeProjectUuid))
       .pipe(
         reduce((acc, res: any) => {
@@ -45,7 +45,7 @@ export class DirectoryRepository {
       )
   }
 
-  getSubdirectories(codeProjectUuid: string, directoryId: string) {
+  getSubdirectories(codeProjectUuid: string, directoryId: string): any {
     return this.httpClient.get(this.routeResolver.getSubdirectories(codeProjectUuid, directoryId))
       .pipe(
         reduce((acc, res: any) => {

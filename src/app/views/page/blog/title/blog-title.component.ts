@@ -24,7 +24,7 @@ export class BlogTitleComponent {
   private typeAheadObservable: Subscription = null;
 
   // @ts-ignore
-  @ViewChild('form') form;
+  @ViewChild('form', {static: true}) form;
   @Input('appContext') appContext: AppContext;
 
   constructor(

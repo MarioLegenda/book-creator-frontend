@@ -1,8 +1,10 @@
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {reduce} from "rxjs/operators";
 import {RouteResolver} from "./routeResolvers/RouteResolver";
 import {BlockRouteResolver} from "./routeResolvers/BlockRouteResolver";
+import {IPageData} from "../logic/PageComponent/context/IPageData";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -42,8 +44,14 @@ export class PageRepository {
       );
   }
 
-  getPageByUuid(pageUuid: string) {
-    return this.httpClient.get(this.routeResolver.getPageByUuid(pageUuid), {observe: 'response'})
+  getPageByUuid(pageUuid: string): Observable<IPageData> {
+    const seed: IPageData = {
+      uuid: null,
+      shortId: null,
+      blocks: []
+    };
+
+    return this.httpClient.get<Observable<IPageData>>(this.routeResolver.getPageByUuid(pageUuid), {observe: 'response'})
       .pipe(
         reduce((acc, res: any) => {
           const body: any = res.body;
@@ -51,12 +59,14 @@ export class PageRepository {
 
           const blocks = (body as any).data.blocks;
 
-          return {
+          const pageData: IPageData = {
             uuid: page.uuid,
             shortId: page.shortId,
             blocks: Object.values(blocks),
           };
-        }, {}),
+
+          return pageData;
+        }, seed),
       );
   }
 

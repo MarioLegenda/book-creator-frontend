@@ -13,7 +13,7 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
   result: any;
 
   // @ts-ignore
-  @ViewChild('resultAreaRef') resultAreaRef: ElementRef;
+  @ViewChild('resultAreaRef', {static: true}) resultAreaRef: ElementRef;
   @Input('resultCommunicator') resultCommunicator: Subject<any>;
 
   private resultCommSubscription;

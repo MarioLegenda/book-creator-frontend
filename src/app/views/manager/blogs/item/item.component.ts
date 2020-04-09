@@ -20,7 +20,7 @@ import {BlogState} from "../../../../logic/BlogState";
 export class ItemComponent {
   @Input('item') item;
   // @ts-ignore
-  @ViewChild('tooltip') tooltip;
+  @ViewChild('tooltip', {static: true}) tooltip;
 
   @Output('itemDeleted') itemDeleted = new EventEmitter();
 

@@ -20,7 +20,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   @Input('project') project: any;
 
   // @ts-ignore
-  @ViewChild('wrapperRef') wrapperRef: ElementRef;
+  @ViewChild('wrapperRef', {static: true}) wrapperRef: ElementRef;
 
   private typeAheadSource = new BehaviorSubject([]);
   private typeAheadObservable = null;

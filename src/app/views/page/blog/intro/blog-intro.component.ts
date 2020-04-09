@@ -24,7 +24,7 @@ export class BlogIntroComponent implements OnInit, OnDestroy {
   private typeAheadObservable: Subscription = null;
 
   // @ts-ignore
-  @ViewChild('form') form;
+  @ViewChild('form', {static: true}) form;
   @Input('appContext') appContext: AppContext;
 
   constructor(

@@ -25,7 +25,7 @@ export class StructureComponent implements OnInit, OnDestroy {
   @Input('searchSubject') searchSubject: ReplaySubject<any>;
 
   // @ts-ignore
-  @ViewChild('structureWrapper') structureWrapper: ElementRef;
+  @ViewChild('structureWrapper', {static: true}) structureWrapper: ElementRef;
 
   private searchSubscriber;
 

@@ -26,7 +26,7 @@ export class AppComponent {
   email = '';
   avatar = '';
   // @ts-ignore
-  @ViewChild('mainMenuRef') mainMenuRef: ElementRef;
+  @ViewChild('mainMenuRef', {static: true}) mainMenuRef: ElementRef;
 
   constructor(
     private accountProvider: AccountProvider,

@@ -22,7 +22,7 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
   environments: Environments;
 
   // @ts-ignore
-  @ViewChild('wrapperRef') wrapperRef: ElementRef;
+  @ViewChild('wrapperRef', {static: true}) wrapperRef: ElementRef;
 
   constructor(
     private store: Store<any>,

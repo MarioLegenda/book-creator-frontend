@@ -13,7 +13,7 @@ import {Environments} from "../../../../library/Environments";
 })
 export class PlaygroundComponent {
   // @ts-ignore
-  @ViewChild('playgroundWrapperRef') playgroundWrapperRef: ElementRef;
+  @ViewChild('playgroundWrapperRef', {static: true}) playgroundWrapperRef: ElementRef;
 
   @Input('project') project: any;
   @Input('environments') environments: Environments;
