@@ -47,6 +47,12 @@ export class ViewActionSubscriber {
           break;
         }
 
+        case actionTypes.VIEW_ADD_ALL_BLOCKS: {
+          this.addAllBlocks(action);
+
+          break;
+        }
+
         case actionTypes.VIEW_TEXT_BLOCK_REMOVED: {
           this.removeBlock(action);
 
