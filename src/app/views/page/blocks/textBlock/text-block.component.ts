@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as BaloonEditor from "@ckeditor/ckeditor5-build-balloon";

@@ -6,18 +6,20 @@ import {
   httpCreateMultimediaBlock, httpCreateQuoteBlock, httpCreateSubheader,
   httpCreateTextBlock, httpUpdateBlockPosition,
 } from 'src/app/store/page/httpActions';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {addPosition, changeState} from "../../../logic/utilFns";
 import {TextBlockModel} from "../../../model/app/TextBlockModel";
 import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 import {CodeBlockModel} from "../../../model/app/CodeBlockModel";
-import {Subject} from "rxjs";
+import {Observable, Subject, timer} from "rxjs";
 import {AppContext} from "../../../logic/PageComponent/context/AppContext";
 import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
 import {MultimediaBlockModel} from "../../../model/app/MultimediaBlockModel";
 import {MainHeaderBlock} from "../../../model/app/MainHeaderBlock";
 import {SubheaderBlock} from "../../../model/app/SubheaderBlock";
 import {QuoteBlock} from "../../../model/app/QuoteBlock";
+import {actionTypes} from "../../../store/page/viewActions";
+import {ComponentFactory} from "../../../logic/PageComponent/ComponentFactory";
 
 @Component({
   selector: 'cms-work-area',
@@ -44,6 +46,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.subscribeToViewActions(this.store.pipe(select('pageViewActions')));
+
     const h = document.body.offsetHeight;
     this.workAreaRef.nativeElement.setAttribute('style', `min-height: ${h}px`);
 
@@ -193,5 +197,32 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
   trackByFn(_, item) {
     return item.blockUuid;
+  }
+
+  private subscribeToViewActions(observable: Observable<any>) {
+    observable.subscribe((action: any) => {
+      if (!action) {
+        return;
+      }
+
+      switch (action.type) {
+        case actionTypes.VIEW_ADD_ALL_BLOCKS: {
+          const blocks = action.blocks;
+          const components: any[] = [];
+
+          for (const block of blocks) {
+            const component = ComponentFactory.createComponent({
+              ...block
+            });
+
+            components.push(component);
+          }
+
+          this.components = components;
+
+          break;
+        }
+      }
+    });
   }
 }
