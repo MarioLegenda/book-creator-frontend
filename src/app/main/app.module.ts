@@ -25,7 +25,7 @@ import {DeviceDetectorModule} from "ngx-device-detector";
 import {TabSession} from "../store/sessions/TabSession";
 import {accountReducer} from "../store/account/reducers";
 import {CookieService} from "ngx-cookie-service";
-import {AccountProvider} from "../logic/AccountProvider";
+import {NoCacheInterceptor} from "../interceptors/NoCacheInterceptor";
 
 @NgModule({
   declarations: [
@@ -59,6 +59,7 @@ import {AccountProvider} from "../logic/AccountProvider";
     {provide: TabSession, useClass: TabSession},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: NoCacheInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
     {provide: CookieService, useClass: CookieService},
   ],

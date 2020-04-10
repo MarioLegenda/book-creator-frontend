@@ -44,6 +44,7 @@ export class MultimediaBlockComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.component);
     this.loadInitialData();
   }
 
@@ -98,8 +99,6 @@ export class MultimediaBlockComponent implements OnInit {
       width: '480px',
       data: {},
     });
-
-    const pageUuid = this.appContext.page.uuid;
 
     dialogRef.afterClosed().subscribe((youtubeId: string) => {
     });

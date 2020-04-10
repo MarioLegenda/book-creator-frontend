@@ -68,6 +68,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
   }
 
   onBlockAdded(type: string) {
+    console.log(type);
     switch (type) {
       case 'text-block': {
         this.store.dispatch(httpCreateTextBlock({position: this.componentTracker.getNextPosition()}));
