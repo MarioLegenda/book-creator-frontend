@@ -6,7 +6,7 @@
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
@@ -15,19 +15,19 @@
       </div>
 
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
           (click)="onReadonlyChange()"
-          [ngClass]="{'fa-eye': componentState.readonly === false, 'fa-eye-slash': componentState.readonly}"
+          [ngClass]="{'fa-eye': readonly === false, 'fa-eye-slash': readonly}"
           class="fas icon readonly-icon"
-          [matTooltip]="(componentState.readonly) ? 'Mark as editable' : 'Mark as readonly'">
+          [matTooltip]="(readonly) ? 'Mark as editable' : 'Mark as readonly'">
         </i>
       </div>
 
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
@@ -38,8 +38,8 @@
       </div>
 
       <div
-        *ngIf="componentState.isGist"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        *ngIf="isGist"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
@@ -50,28 +50,28 @@
       </div>
 
       <div
-        *ngIf="componentState.isCode"
+        *ngIf="isCode"
         (click)="onSelectEnvironment()"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
-          *ngIf="componentState.codeProjectImported"
+          *ngIf="codeProjectImported"
           class="icon fas fa-bug action-disabled"
           matTooltip="Environment loaded from code project">
         </i>
 
         <i
-          *ngIf="!componentState.codeProjectImported"
+          *ngIf="!codeProjectImported"
           class="icon fas fa-bug"
           matTooltip="Select environment">
         </i>
       </div>
 
       <div
-        *ngIf="componentState.isCode"
+        *ngIf="isCode"
         (click)="onImportCodeProject()"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
@@ -84,9 +84,9 @@
 
   <div class="right-blog-metadata">
     <div
-      *ngIf="componentState.codeProjectImported"
+      *ngIf="codeProjectImported"
       (click)="onRemoveCodeProject()"
-      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      [style.visibility]="(hovered) ? 'visible' : 'hidden'"
       class="right-block-action">
 
       <i
@@ -96,9 +96,9 @@
     </div>
 
     <div
-      *ngIf="componentState.isGist"
+      *ngIf="isGist"
       (click)="onClearGist()"
-      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      [style.visibility]="(hovered) ? 'visible' : 'hidden'"
       class="right-block-action">
 
       <i
@@ -108,9 +108,9 @@
     </div>
 
     <div
-      *ngIf="componentState.codeProjectImported"
+      *ngIf="codeProjectImported"
       (click)="onOpenDirectoryStructure()"
-      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      [style.visibility]="(hovered) ? 'visible' : 'hidden'"
       class="right-block-action">
 
       <i
@@ -120,12 +120,12 @@
     </div>
 
     <div
-      *ngIf="componentState.codeProjectImported"
-      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      *ngIf="codeProjectImported"
+      [style.visibility]="(hovered) ? 'visible' : 'hidden'"
       class="right-block-action">
 
       <i
-        [routerLink]="'/cms/code-editor/' + componentState.codeProject.shortId"
+        [routerLink]="'/cms/code-editor/' + codeProject.shortId"
         class="icon directory-structure-icon fas fa-code"
         matTooltip="Open code editor">
       </i>
@@ -136,24 +136,24 @@
   <div
     class="code-block col-lg-12 col-md-12 col-xs-12 editor-wrapper">
 
-    <ngx-gist *ngIf="componentState.isGist" [gistId]="componentState.gistData.username + '/' + componentState.gistData.gistId"></ngx-gist>
+    <ngx-gist *ngIf="isGist" [gistId]="gistData.username + '/' + gistData.gistId"></ngx-gist>
 
     <ngx-monaco-editor
-      *ngIf="componentState.isCode"
-      [options]="componentState.editorOptions"
-      [(ngModel)]="componentState.code"
+      *ngIf="isCode"
+      [options]="editorOptions"
+      [(ngModel)]="code"
       (keyup)="onCodeChange()">
     </ngx-monaco-editor>
 
     <div
-      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
-      *ngIf="componentState.isCode"
+      [style.visibility]="(hovered) ? 'visible' : 'hidden'"
+      *ngIf="isCode"
       class="test-run-button-wrapper">
 
-      <i *ngIf="componentState.isCodeRunning" class="fas fa-atom fa-spin"></i>
+      <i *ngIf="isCodeRunning" class="fas fa-atom fa-spin"></i>
 
       <button
-        [disabled]="componentState.isCodeRunning || !componentState.emulator"
+        [disabled]="isCodeRunning || !emulator"
         (click)="onRunCode()"
         class="btn btn-success test-run-button">
         Test run
@@ -161,14 +161,14 @@
     </div>
 
     <div
-      *ngIf="componentState.emulator && componentState.isCode"
+      *ngIf="emulator && isCode"
       class="emulator-info-wrapper">
 
-      <p class="text">{{componentState.emulator.text}}<i class="fas fa-bug"></i></p>
+      <p class="text">{{emulator.text}}<i class="fas fa-bug"></i></p>
     </div>
 
     <div
-      *ngIf="!componentState.emulator && componentState.isCode"
+      *ngIf="!emulator && isCode"
       (click)="onSelectEnvironment()"
       class="emulator-info-wrapper">
 
@@ -177,21 +177,21 @@
   </div>
 
   <cms-block-errors
-    *ngIf="componentState.blockErrors"
-    [errors]="componentState.blockErrors">
+    *ngIf="blockErrors"
+    [errors]="blockErrors">
   </cms-block-errors>
 
   <cms-block-info
-    [emulator]="componentState.emulator"
-    [readOnly]="componentState.readonly"
-    [isGist]="componentState.isGist"
-    [isCode]="componentState.isCode"
-    [codeProject]="componentState.codeProject">
+    [emulator]="emulator"
+    [readOnly]="readonly"
+    [isGist]="isGist"
+    [isCode]="isCode"
+    [codeProject]="codeProject">
   </cms-block-info>
 
   <cms-test-run-result
-    *ngIf="componentState.hasTestRunWindow"
+    *ngIf="hasTestRunWindow"
     (testRunCloseEvent)="onTestRunWindowClose()"
-    [result]="componentState.testRunResult">
+    [result]="testRunResult">
   </cms-test-run-result>
 </div>

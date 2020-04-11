@@ -15,11 +15,9 @@ export class InfoComponent {
   @Input('emulator') emulator: any;
   @Input('codeProject') codeProject: any;
 
-  componentState = {
-    showInfo: false,
-  };
+  showInfo: boolean = false;
 
   toggleInfo() {
-    this.componentState.showInfo = !this.componentState.showInfo;
+    this.showInfo = !this.showInfo;
   }
 }

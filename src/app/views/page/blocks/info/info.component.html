@@ -5,12 +5,12 @@
     <button
       class="action-button"
       (click)="toggleInfo()">
-      <i class="expand-icon fas" [ngClass]="{'fa-angle-left': componentState.showInfo === false, 'fa-angle-down': componentState.showInfo}"></i>Show info
+      <i class="expand-icon fas" [ngClass]="{'fa-angle-left': showInfo === false, 'fa-angle-down': showInfo}"></i>Show info
     </button>
   </div>
 
   <div
-    *ngIf="componentState.showInfo"
+    *ngIf="showInfo"
     class="info-collection col-xs-12 col-md-12 col-lg-12">
     <div *ngIf="readOnly" class="info-entry col-xs-12 col-md-12 col-lg-12">
       <div class="designation">

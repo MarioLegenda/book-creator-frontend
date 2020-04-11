@@ -39,6 +39,24 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     private blogRepository: BlogRepository,
   ) {}
 
+  hovered: boolean = false;
+  readonly: boolean = false;
+  gistData = null;
+  isGist: boolean = false;
+  blockErrors = null;
+  emulator = null;
+  internalName: string;
+  comment: string;
+  hasTestRunWindow: boolean = false;
+  testRunResult = null;
+  codeProjectImported: boolean = false;
+  codeProject = null;
+  isCode: boolean = true;
+  saved: boolean = false;
+  isCodeRunning: boolean = false;
+
+  code: string = '';
+
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
   private onDroppedObservable = null;
@@ -59,16 +77,18 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     isCode: true,
     saved: false,
     isCodeRunning: false,
-    editorOptions: {
-      theme: 'vs-light',
-      language: 'javascript',
-      codeLens: false,
-      formatOnPaste: true,
-      minimap: {
-        enabled: false,
-      }
-    },
+
     code: '',
+  };
+
+  editorOptions: {
+    theme: 'vs-light',
+    language: 'javascript',
+    codeLens: false,
+    formatOnPaste: true,
+    minimap: {
+      enabled: false,
+    }
   };
 
   @Input('index') index: number;
@@ -77,14 +97,14 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   @Input('appContext') appContext: AppContext;
 
   ngOnInit() {
-    this.componentState.code = this.component.text;
-    this.componentState.readonly = this.component.readOnly;
-    this.componentState.isGist = this.component.isGist;
-    this.componentState.isCode = this.component.isCode;
-    this.componentState.gistData = this.component.gistData;
-    this.componentState.emulator = this.component.emulator;
-    this.componentState.internalName = this.component.internalName;
-    this.componentState.comment = this.component.comment;
+    this.code = this.component.text;
+    this.readonly = this.component.readOnly;
+    this.isGist = this.component.isGist;
+    this.isCode = this.component.isCode;
+    this.gistData = this.component.gistData;
+    this.emulator = this.component.emulator;
+    this.internalName = this.component.internalName;
+    this.comment = this.component.comment;
 
     if (this.component.codeProjectUuid) {
       this.importCodeProject(this.component.codeProjectUuid);
@@ -105,11 +125,11 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   componentHovered() {
-    this.componentState.hovered = true;
+    this.hovered = true;
   }
 
   componentUnHovered() {
-    this.componentState.hovered = false;
+    this.hovered = false;
   }
 
   remove() {
@@ -120,7 +140,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm === true) {
-        if (this.componentState.codeProjectImported) {
+        if (this.codeProjectImported) {
           this.removeCodeProject().subscribe(() => {
             this.store.dispatch(httpRemoveBlock(this.component));
             changeState(this.appContext, this.store);
@@ -142,18 +162,18 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   onReadonlyChange() {
-    if (this.componentState.isGist) return;
+    if (this.isGist) return;
 
-    this.componentState.readonly = !this.componentState.readonly;
+    this.readonly = !this.readonly;
 
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
   }
 
   onRefresh() {
-    if (this.componentState.isGist) {
-      this.componentState.isGist = false;
+    if (this.isGist) {
+      this.isGist = false;
 
-      setTimeout(() => this.componentState.isGist = true, 2000);
+      setTimeout(() => this.isGist = true, 2000);
 
       return;
     }
@@ -168,25 +188,25 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((gistData: string) => {
       if (!gistData) return;
 
-      this.componentState.hasTestRunWindow = false;
-      this.componentState.testRunResult = null;
+      this.hasTestRunWindow = false;
+      this.testRunResult = null;
 
-      if (this.componentState.isGist) {
-        this.componentState.isGist = false;
+      if (this.isGist) {
+        this.isGist = false;
 
         setTimeout(() => {
-          this.componentState.gistData = gistData;
-          this.componentState.isCode = false;
-          this.componentState.isGist = true;
-          this.componentState.readonly = true;
+          this.gistData = gistData;
+          this.isCode = false;
+          this.isGist = true;
+          this.readonly = true;
 
           this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
         }, 2000);
       } else {
-        this.componentState.gistData = gistData;
-        this.componentState.isCode = false;
-        this.componentState.isGist = true;
-        this.componentState.readonly = true;
+        this.gistData = gistData;
+        this.isCode = false;
+        this.isGist = true;
+        this.readonly = true;
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       }
@@ -194,7 +214,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   onSelectEnvironment() {
-    if (this.componentState.codeProjectImported) return;
+    if (this.codeProjectImported) return;
 
     this.emlRepository.getEnvironments().subscribe(emulators => {
       this.handleEmulatorDialog(emulators);
@@ -202,10 +222,10 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   onClearGist() {
-    this.componentState.isGist = false;
-    this.componentState.isCode = true;
-    this.componentState.gistData = null;
-    this.componentState.readonly = false;
+    this.isGist = false;
+    this.isCode = true;
+    this.gistData = null;
+    this.readonly = false;
 
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
   }
@@ -244,24 +264,24 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
   onRemoveCodeProject() {
     this.removeCodeProject().subscribe(() => {
-      this.componentState.codeProjectImported = false;
-      this.componentState.codeProject = null;
-      this.componentState.emulator = null;
+      this.codeProjectImported = false;
+      this.codeProject = null;
+      this.emulator = null;
 
       changeState(this.appContext, this.store);
     });
   }
 
   onTestRunWindowClose() {
-    this.componentState.hasTestRunWindow = false;
-    this.componentState.testRunResult = null;
+    this.hasTestRunWindow = false;
+    this.testRunResult = null;
   }
 
   onOpenDirectoryStructure() {
     const dialogRef = this.dialog.open(OpenDirectoryStructureDialogComponent, {
       width: '480px',
       height: '500px',
-      data: {codeProjectUuid: this.componentState.codeProject.uuid},
+      data: {codeProjectUuid: this.codeProject.uuid},
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -272,24 +292,24 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     return {
       blockUuid: this.component.blockUuid,
       position: this.component.position,
-      text: this.componentState.code,
-      gistData: this.componentState.gistData,
-      isGist: this.componentState.isGist,
-      isCode: this.componentState.isCode,
-      readonly: this.componentState.readonly,
-      emulator: this.componentState.emulator,
+      text: this.code,
+      gistData: this.gistData,
+      isGist: this.isGist,
+      isCode: this.isCode,
+      readonly: this.readonly,
+      emulator: this.emulator,
     };
   }
 
   private subscribeDroppedForGist() {
     this.onDroppedObservable = this.componentDropped.subscribe((blockUuid: string) => {
       if (blockUuid === this.component.blockUuid) {
-        if (!this.componentState.isGist) return;
+        if (!this.isGist) return;
 
-        this.componentState.isGist = false;
+        this.isGist = false;
 
         setTimeout(() => {
-          this.componentState.isGist = true;
+          this.isGist = true;
         }, 2000);
       }
     });
@@ -300,7 +320,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       debounceTime(500),
     )
       .subscribe(() => {
-        this.componentState.blockErrors = null;
+        this.blockErrors = null;
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       });
@@ -315,7 +335,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((eml: any) => {
       if (!eml) return;
 
-      this.componentState.emulator = eml;
+      this.emulator = eml;
 
       this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       changeState(this.appContext, this.store);
@@ -365,7 +385,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     const sourceId: string = this.appContext.knowledgeSource.uuid;
 
     const model: any = HttpModel.unLinkCodeProject(
-      this.componentState.codeProject.uuid,
+      this.codeProject.uuid,
       pageUuid,
       sourceId,
       blockUuid
@@ -375,64 +395,64 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   private runCodeProjectFlow() {
-    this.componentState.blockErrors = null;
+    this.blockErrors = null;
 
-    if (this.componentState.code === '') {
-      this.componentState.blockErrors = [];
-      this.componentState.blockErrors.push('There is no code to run');
+    if (this.code === '') {
+      this.blockErrors = [];
+      this.blockErrors.push('There is no code to run');
 
       return;
     }
 
-    this.componentState.isCodeRunning = true;
-    this.componentState.hasTestRunWindow = false;
+    this.isCodeRunning = true;
+    this.hasTestRunWindow = false;
 
-    if (this.componentState.codeProjectImported) {
+    if (this.codeProjectImported) {
       const model = HttpModel.buildAndRunProject(
-        this.componentState.code,
+        this.code,
         'dev',
       );
 
-      this.emlRepository.BuildAndRunProject(this.componentState.codeProject.uuid, model).subscribe((res) => {
-        this.componentState.isCodeRunning = false;
+      this.emlRepository.BuildAndRunProject(this.codeProject.uuid, model).subscribe((res) => {
+        this.isCodeRunning = false;
 
-        this.componentState.testRunResult = res;
+        this.testRunResult = res;
 
-        this.componentState.hasTestRunWindow = true;
+        this.hasTestRunWindow = true;
       });
     } else {
       const model = HttpModel.buildAndRunSingleFile(
         this.appContext.knowledgeSource.uuid,
         this.component.blockUuid,
-        this.componentState.code,
-        this.componentState.emulator.name,
+        this.code,
+        this.emulator.name,
         'single_file',
       );
 
       this.emlRepository.buildAndRunSingleFile(model).subscribe((res) => {
-        this.componentState.isCodeRunning = false;
+        this.isCodeRunning = false;
 
-        this.componentState.testRunResult = res;
+        this.testRunResult = res;
 
-        this.componentState.hasTestRunWindow = true;
+        this.hasTestRunWindow = true;
       });
     }
   }
 
   private importCodeProject(uuid: string) {
     this.codeProjectsRepository.getSingleProject(uuid).subscribe((res) => {
-      this.componentState.codeProjectImported = true;
+      this.codeProjectImported = true;
 
-      this.componentState.emulator = res.environment;
-      this.componentState.codeProject = res;
+      this.emulator = res.environment;
+      this.codeProject = res;
 
       this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
 
-      this.componentState.isCode = false;
+      this.isCode = false;
 
       setTimeout(() => {
-        this.componentState.editorOptions.language = this.componentState.emulator.language;
-        this.componentState.isCode = true;
+        this.editorOptions.language = this.emulator.language;
+        this.isCode = true;
       }, 1000);
     });
   }

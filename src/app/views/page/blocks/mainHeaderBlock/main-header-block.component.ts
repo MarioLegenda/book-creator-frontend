@@ -25,6 +25,9 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
     text: '',
   };
 
+  hovered: boolean = false;
+  text: string = '';
+
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
 
@@ -34,7 +37,7 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.componentState.text = this.component.text;
+    this.text = this.component.text;
 
     this.typeAheadObservable = this.typeAheadSource.pipe(
       debounceTime(500),
@@ -43,7 +46,7 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
         const model = {
           blockUuid: this.component.blockUuid,
           position: this.component.position,
-          text: this.componentState.text,
+          text: this.text,
         };
 
         this.store.dispatch(httpUpdateMainHeader(model));
@@ -55,11 +58,11 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
   }
 
   componentHovered() {
-    this.componentState.hovered = true;
+    this.hovered = true;
   }
 
   componentUnHovered() {
-    this.componentState.hovered = false;
+    this.hovered = false;
   }
 
   onChange() {
