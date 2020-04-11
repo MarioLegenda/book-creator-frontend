@@ -537,16 +537,16 @@ export class HttpModel {
   }
 
   static buildAndRunSingleFile(
-    pageShortId: string,
-    blockShortId: string,
+    blogUuid: string,
+    blockUuid: string,
     code: string,
     environment: string,
     state: string,
   ) {
     return {
       data: {
-        pageShortId,
-        blockShortId,
+        blogUuid,
+        blockUuid,
         code,
         environment,
         state,

@@ -402,8 +402,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       });
     } else {
       const model = HttpModel.buildAndRunSingleFile(
-        this.pageContext.getContext().page.shortId,
-        this.component.shortId,
+        this.appContext.knowledgeSource.uuid,
+        this.component.blockUuid,
         this.componentState.code,
         this.componentState.emulator.name,
         'single_file',
