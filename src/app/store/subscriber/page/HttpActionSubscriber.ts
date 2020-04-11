@@ -175,11 +175,10 @@ export class HttpActionSubscriber {
 
   private updateSubheader(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
-    const position: number = action.position;
     const text: string = action.text;
     const blockUuid: string = action.blockUuid;
 
-    const model = HttpModel.updateSubheader(pageUuid, blockUuid, position, text);
+    const model = HttpModel.updateSubheader(pageUuid, blockUuid, text);
 
     this.pageRepository.updateSubheader(model).subscribe((data) => {
       this.store.dispatch(viewUpdateSubheaderBlock(data));
@@ -214,12 +213,10 @@ export class HttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
     const text: string = action.text;
-    const position: number = action.position;
 
     const model = HttpModel.updateMainHeader(
       pageUuid,
       blockUuid,
-      position,
       text,
     );
 
@@ -305,7 +302,6 @@ export class HttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
     const text: string = action.text;
-    const position: number = action.position;
     const internalName: string = action.internalName;
     const comment: string = action.comment;
 
@@ -313,7 +309,6 @@ export class HttpActionSubscriber {
       pageUuid,
       blockUuid,
       text,
-      position,
       internalName,
       comment,
     );
@@ -324,7 +319,6 @@ export class HttpActionSubscriber {
   private updateCodeBlock(action) {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
-    const position: number = action.position;
     const text: string = action.text;
     const readonly: boolean = action.readonly;
     const gistData = action.gistData;
@@ -340,7 +334,6 @@ export class HttpActionSubscriber {
       isCode,
       gistData,
       emulator,
-      position,
       readonly,
     );
 
@@ -351,12 +344,10 @@ export class HttpActionSubscriber {
     const pageUuid: string = this.pageContextInitializer.getContext().page.uuid;
     const blockUuid: string = action.blockUuid;
     const text: string = action.text;
-    const position: number = action.position;
 
     const model = HttpModel.updateQuoteBlock(
       pageUuid,
       blockUuid,
-      position,
       text,
     );
 

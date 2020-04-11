@@ -20,14 +20,14 @@
     <textarea
       cdkFocusInitial
       (keyup.enter)="addComment()"
-      [(ngModel)]="model.name"
+      [(ngModel)]="name"
       placeholder="Comment"
       class="form-input form-control"
       maxlength="100">
     </textarea>
 
     <cms-text-counter
-      [text]="model.name"
+      [text]="name"
       [max]="100">
     </cms-text-counter>
   </div>

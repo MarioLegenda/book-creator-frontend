@@ -11,17 +11,26 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class AddInternalNameModalComponent {
   errors: string[] = [];
+  name = this.model.name;
 
   constructor(
     public dialogRef: MatDialogRef<AddInternalNameModalComponent>,
     @Inject(MAT_DIALOG_DATA) public model: any)
   {}
 
+  ngOnInit() {
+    this.name = this.model.name;
+  }
+
   close(): void {
-    this.dialogRef.close(null);
+    this.dialogRef.close('closed');
   }
 
   addInternalName() {
-    this.dialogRef.close(this.model.name);
+    if (!this.name) {
+      return this.dialogRef.close('');
+    }
+
+    return this.dialogRef.close(this.name);
   }
 }

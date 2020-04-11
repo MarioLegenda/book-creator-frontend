@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as BaloonEditor from "@ckeditor/ckeditor5-build-balloon";
@@ -19,13 +19,10 @@ import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
   templateUrl: './text-block.component.html',
 })
 export class TextBlockComponent implements OnDestroy, OnInit {
-  componentState = {
-    hovered: false,
-    updateWanted: false,
-    expanded: true,
-    internalName: '',
-    comment: '',
-  };
+  hovered: boolean = false;
+  expanded: boolean = true;
+  internalName: string = '';
+  comment: string = '';
 
   editor = BaloonEditor;
 
@@ -66,21 +63,21 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit() {
-    this.componentState.internalName = (this.component.internalName === '') ? 'click to view text' : this.component.internalName;
-    this.componentState.comment = this.component.comment;
+    this.internalName = (this.component.internalName === '') ? 'click to view text' : this.component.internalName;
+    this.comment = this.component.comment;
   }
 
   onExpandBlock() {
-    this.componentState.expanded = true;
+    this.expanded = true;
   }
 
   onCompressBlock() {
-    this.componentState.expanded = false;
+    this.expanded = false;
   }
 
   addInternalName() {
     const data = {
-      name: (this.componentState.internalName === 'click to view text') ? '' : this.componentState.internalName,
+      name: (this.internalName === 'click to view text') ? '' : this.internalName,
     };
 
     const dialogRef = this.dialog.open(AddInternalNameModalComponent, {
@@ -89,11 +86,11 @@ export class TextBlockComponent implements OnDestroy, OnInit {
     });
 
     dialogRef.afterClosed().subscribe((internalName: string) => {
-      if (internalName === null) return;
+      if (internalName === 'closed') return;
+      if (typeof internalName === "undefined") return;
 
       const model = {
         blockUuid: this.component.blockUuid,
-        position: this.component.position,
         text: this.component.text,
         internalName: internalName,
         comment: this.component.comment,
@@ -101,30 +98,31 @@ export class TextBlockComponent implements OnDestroy, OnInit {
 
       this.store.dispatch(httpUpdateTextBlock(model));
 
-      this.componentState.internalName = internalName;
+      this.internalName = internalName;
     });
   }
 
   addComment() {
     const dialogRef = this.dialog.open(AddCommentModalComponent, {
       width: '480px',
-      data: {name: this.componentState.comment},
+      data: {name: this.comment},
     });
 
     dialogRef.afterClosed().subscribe((comment: string) => {
-      if (comment === null) return;
+      if (comment === 'closed') return;
+      if (typeof comment === "undefined") return;
 
       const model = {
         blockUuid: this.component.blockUuid,
         position: this.component.position,
         text: this.component.text,
-        internalName: this.componentState.internalName,
+        internalName: this.internalName,
         comment: comment,
       };
 
       this.store.dispatch(httpUpdateTextBlock(model));
 
-      this.componentState.comment = comment;
+      this.comment = comment;
     });
   }
 
@@ -162,11 +160,11 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   }
 
   componentHovered() {
-    this.componentState.hovered = true;
+    this.hovered = true;
   }
 
   componentUnHovered() {
-    this.componentState.hovered = false;
+    this.hovered = false;
   }
 
   onChange() {

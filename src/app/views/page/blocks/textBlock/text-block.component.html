@@ -6,7 +6,7 @@
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
@@ -16,7 +16,7 @@
 
       <div
         matTooltip="Add internal name"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
@@ -26,11 +26,11 @@
 
       <div
         matTooltip="Add internal comment"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div
-          *ngIf="componentState.comment"
+          *ngIf="comment"
           class="icon-group">
           <i
             (click)="addComment()"
@@ -39,7 +39,7 @@
         </div>
 
         <div
-          *ngIf="!componentState.comment"
+          *ngIf="!comment"
           class="icon-group">
           <i
             (click)="addComment()"
@@ -50,9 +50,9 @@
       </div>
 
       <div
-        *ngIf="!componentState.expanded"
+        *ngIf="!expanded"
         matTooltip="Expand block"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
@@ -61,9 +61,9 @@
       </div>
 
       <div
-        *ngIf="componentState.expanded"
+        *ngIf="expanded"
         matTooltip="Compress block"
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
@@ -76,15 +76,15 @@
   <div
     class="col-lg-12 col-md-12 col-xs-12 text-editor-wrapper"
     (click)="onExpandBlock()"
-    [ngClass]="{'editor-not-created': !componentState.expanded}">
+    [ngClass]="{'editor-not-created': !expanded}">
 
-    <p class="editor-not-created-text col-lg-12 col-md-12 col-xs-12" *ngIf="!componentState.expanded">
-      Text block - <span>{{componentState.internalName}}</span>
+    <p class="editor-not-created-text col-lg-12 col-md-12 col-xs-12" *ngIf="!expanded">
+      Text block - <span>{{internalName}}</span>
     </p>
 
     <ckeditor
       #editorComponent
-      *ngIf="componentState.expanded"
+      *ngIf="expanded"
       class="concrete-editor"
       [editor]="editor"
       (change)="onChange()"

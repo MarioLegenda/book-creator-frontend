@@ -20,12 +20,12 @@
     <input
       cdkFocusInitial
       (keyup.enter)="addInternalName()"
-      [(ngModel)]="model.name"
+      [(ngModel)]="name"
       placeholder="Internal name"
       class="form-input form-control"
       maxlength="50">
     <cms-text-counter
-      [text]="model.name"
+      [text]="name"
       [max]="50">
     </cms-text-counter>
   </div>

@@ -11,6 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class AddCommentModalComponent {
   errors: string[] = [];
+  name: string = this.model.name;
 
   constructor(
     public dialogRef: MatDialogRef<AddCommentModalComponent>,
@@ -18,10 +19,14 @@ export class AddCommentModalComponent {
   {}
 
   close(): void {
-    this.dialogRef.close(null);
+    this.dialogRef.close('closed');
   }
 
   addComment() {
-    this.dialogRef.close(this.model.name);
+    if (!this.name) {
+      return this.dialogRef.close('');
+    }
+
+    return this.dialogRef.close(this.name);
   }
 }

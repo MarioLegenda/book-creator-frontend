@@ -37,7 +37,6 @@ export class HttpModel {
     pageUuid: string,
     blockUuid: string,
     text: string,
-    position: number,
     internalName: string,
     comment: string,
   ) {
@@ -46,7 +45,6 @@ export class HttpModel {
         pageUuid,
         blockUuid,
         text,
-        position,
         internalName,
         comment,
       }
@@ -61,7 +59,6 @@ export class HttpModel {
     isCode: boolean,
     gistData: any,
     emulator: any,
-    position: number,
     readonly: boolean = false,
   ) {
     return {
@@ -74,7 +71,6 @@ export class HttpModel {
         isCode,
         gistData,
         emulator,
-        position,
       }
     }
   }
@@ -319,14 +315,12 @@ export class HttpModel {
   static updateMainHeader(
     pageUuid: string,
     blockUuid: string,
-    position: number,
     text: string,
   ) {
     return {
       data: {
         pageUuid: pageUuid,
         blockUuid: blockUuid,
-        position: position,
         text: text,
       }
     }
@@ -363,14 +357,12 @@ export class HttpModel {
   static updateSubheader(
     pageUuid: string,
     blockUuid: string,
-    position: number,
     text: string,
   ) {
     return {
       data: {
         pageUuid: pageUuid,
         blockUuid: blockUuid,
-        position: position,
         text: text,
       }
     }
@@ -379,14 +371,12 @@ export class HttpModel {
   static updateQuoteBlock(
     pageUuid: string,
     blockUuid: string,
-    position: number,
     text: string,
   ) {
     return {
       data: {
         pageUuid: pageUuid,
         blockUuid: blockUuid,
-        position: position,
         text: text,
       }
     }
