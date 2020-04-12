@@ -57,19 +57,19 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
   code: string = '';
 
-  private typeAheadSource = new Subject();
-  private typeAheadObservable = null;
-  private onDroppedObservable = null;
-
-  editorOptions: {
+  editorOptions = {
     theme: 'vs-light',
     language: 'javascript',
     codeLens: false,
     formatOnPaste: true,
     minimap: {
       enabled: false,
-    }
+    },
   };
+
+  private typeAheadSource = new Subject();
+  private typeAheadObservable = null;
+  private onDroppedObservable = null;
 
   @Input('index') index: number;
   @Input('component') component: CodeBlockModel;
