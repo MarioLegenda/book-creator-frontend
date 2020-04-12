@@ -8,6 +8,8 @@ import {titleResolver} from "../../sharedServices/titleResolver";
 import {environment} from "../../../../../environments/environment";
 import {Router} from "@angular/router";
 import {BlogState} from "../../../../logic/BlogState";
+import {NotifyIfPublishedModal} from "../../modals/notifyIfPublished/notify-if-published-modal.component";
+import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 
 @Component({
   selector: 'cms-ks-item',
@@ -24,6 +26,10 @@ export class ItemComponent {
 
   @Output('itemDeleted') itemDeleted = new EventEmitter();
 
+  noTitle: boolean = false;
+  realTitle: string = '';
+  isPublished: boolean = false;
+
   componentState = {
     noTitle: false,
     realTitle: '',
@@ -39,14 +45,38 @@ export class ItemComponent {
 
   ngOnInit() {
     if (!this.item.title) {
-      this.componentState.noTitle = true;
+      this.noTitle = true;
     } else {
-      this.componentState.realTitle = titleResolver(this.item.title, 34);
+      this.realTitle = titleResolver(this.item.title, 34);
     }
 
     if (this.item.state === BlogState.PUBLISHED || this.item.state === BlogState.CHANGED) {
-      this.componentState.isPublished = true;
+      this.isPublished = true;
     }
+  }
+
+  onWrite() {
+    if (this.item.state === BlogState.PUBLISHED) {
+      const dialog = this.dialog.open(NotifyIfPublishedModal, {
+        width: '480px',
+      });
+
+      dialog.afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          const shortId: string = this.item.shortId;
+          const pageShortId: string = this.item.pageShortId;
+          
+          this.router.navigate([`/page/blog/${shortId}/${pageShortId}`]);
+        }
+      });
+
+      return;
+    }
+
+    const shortId: string = this.item.shortId;
+    const pageShortId: string = this.item.pageShortId;
+
+    this.router.navigate([`/page/blog/${shortId}/${pageShortId}`]);
   }
 
   onRemove($event) {
@@ -72,7 +102,7 @@ export class ItemComponent {
   onViewPublished($event) {
     $event.stopPropagation();
 
-    if (!this.componentState.isPublished) return;
+    if (!this.isPublished) return;
 
     window.location.href = `${environment.composeStaticWebUrl()}/blog/${this.item.slug}/${this.item.shortId}`;
   }
@@ -80,7 +110,7 @@ export class ItemComponent {
   onPublish($event) {
     $event.stopPropagation();
 
-    if (this.componentState.noTitle) return;
+    if (this.noTitle) return;
 
     this.router.navigate(['/cms/management', 'blog', 'publish', this.item.shortId]);
   }
@@ -88,7 +118,7 @@ export class ItemComponent {
   onPreview($event) {
     $event.stopPropagation();
 
-    if (this.componentState.noTitle) return;
+    if (this.noTitle) return;
 
     window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.item.slug}/${this.item.shortId}`;
   }

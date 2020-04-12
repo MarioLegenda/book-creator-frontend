@@ -84,3 +84,23 @@ textarea {
   padding: 10px;
   border: 1px solid $almostWhiteGray;
 }
+
+.button {
+  display: block;
+  background-color: white;
+  border: 1px solid $mainAppColor;
+  padding: 10px;
+  font-size: 1em;
+  font-family: $mainFont;
+  border-radius: 2px;
+
+  transition: background-color 0.5s, color 0.5s;
+  -webkittransition: background-color 0.5s, color 0.5s;
+  -moz-transition: background-color 0.5s, color 0.5s;
+  -o-transition: background-color 0.5s, color 0.5s;
+
+  &:hover {
+    background-color: $mainAppColor;
+    color: white;
+  }
+}

@@ -61,26 +61,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   private typeAheadObservable = null;
   private onDroppedObservable = null;
 
-  componentState = {
-    hovered: false,
-    readonly: false,
-    gistData: null,
-    isGist: false,
-    blockErrors: null,
-    emulator: null,
-    internalName: '',
-    comment: '',
-    hasTestRunWindow: false,
-    testRunResult: null,
-    codeProjectImported: false,
-    codeProject: null,
-    isCode: true,
-    saved: false,
-    isCodeRunning: false,
-
-    code: '',
-  };
-
   editorOptions: {
     theme: 'vs-light',
     language: 'javascript',

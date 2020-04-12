@@ -27,6 +27,7 @@ import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.c
 import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.component";
 import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-modal.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-published-modal.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     PublishComponent,
     SubscriptionItem,
     PublishBlogModalComponent,
+    NotifyIfPublishedModal,
   ],
   imports: [
     CommonModule,
@@ -69,6 +71,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     RemoveConfirmDialogComponent,
     UnsubscribeDialog,
     PublishBlogModalComponent,
+    NotifyIfPublishedModal,
   ]
 })
 export class ManagerModule { }

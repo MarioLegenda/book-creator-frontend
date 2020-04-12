@@ -44,7 +44,6 @@ export class MultimediaBlockComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.component);
     this.loadInitialData();
   }
 

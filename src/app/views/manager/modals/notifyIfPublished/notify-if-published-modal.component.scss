@@ -1,0 +1,29 @@
+@import '../../../../../styles/variables';
+
+.dialog {
+  .header {
+    border-bottom: 1px solid $dangerRed;
+
+    .icon {
+      color: $dangerRed;
+      font-size: 1.2em;
+    }
+  }
+
+  .simple-text {
+    line-height: 1.7em;
+    color: $appBlack;
+
+    .highlight {
+      font-weight: bolder;
+    }
+  }
+
+  .dialog-actions {
+    margin-top: 40px;
+
+    .button {
+      float: right;
+    }
+  }
+}
