@@ -39,7 +39,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit() {
     const editorOptions = {
-      theme: 'vs-light',
+      theme: 'vs-dark',
       language: this.project.environment.language,
       codeLens: false,
       formatOnPaste: true,

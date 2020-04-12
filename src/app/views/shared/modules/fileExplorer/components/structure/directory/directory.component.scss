@@ -3,20 +3,19 @@
 .directory {
   width: 269px;
   float: left;
+  position: relative;
 
-  border-left: 2px solid white;
+  border-left: 4px solid $appBlack;
 
   .dir-name {
     width: 100%;
     float: left;
 
-    position: relative;
-
     padding: 10px;
 
     .text {
       font-size: 13px;
-      color: $textColor;
+      color: white;
       width: 150px;
       float: left;
 
@@ -30,31 +29,49 @@
       width: 20px;
       display: inline-block;
       float: left;
-      color: $lighterGray;
+      color: white;
+    }
+  }
+
+  .root-action-set {
+    width: 120px;
+    top: 5px;
+    left: 140px;
+    position: absolute;
+    font-size: 1.2em;
+
+    .action {
+      color: white;
+      float: right;
+      margin-right: 5px;
+
+      padding: 0 7px 0 7px;
+    }
+
+    .action:hover {
+      color: white;
     }
   }
 
   &:hover {
-    background-color: $lightestGray;
+    background-color: $mainAppColor;
     cursor: pointer;
-    border-left: 2px solid $lightestGray;
   }
 
   &:hover .dir-name .icon {
-    color: $appBlack;
+    color: white;
   }
 }
 
 .dir-selected {
-  background-color: $lightestGray;
-  border-left: 2px solid $mainAppColor;
+  background-color: $mainAppColorDark;
+  border-left: 4px solid $mainAppColor;
 
   .dir-name .icon {
-    color: $appBlack;
+    color: white;
   }
 
   &:hover {
     cursor: pointer;
-    border-left: 2px solid $mainAppColor;
   }
 }

@@ -20,48 +20,46 @@ export class PlaygroundComponent {
 
   resultCommunicator: Subject<any> = new ReplaySubject();
 
-  componentState = {
-    expanded: false,
-    expandedOnce: false,
-    resultAvailable: false,
-    resultData: null,
-    expandedIcon: 'fas fa-angle-up',
-    code: '',
-    isRunning: false,
-  };
+  expanded: boolean = false;
+  expandedOnce: boolean = false;
+  resultAvailable: boolean = false;
+  resultData = null;
+  expandedIcon: string = 'fas fa-angle-up';
+  code: string = '';
+  isRunning: boolean = false;
 
   constructor(
     private envEmulatorRepository: EnvironmentEmulatorRepository
   ) {}
 
   onExpandPlayground() {
-    let height = (this.componentState.expanded) ? 40 : 400;
+    let height = (this.expanded) ? 40 : 400;
 
     const el = this.playgroundWrapperRef.nativeElement;
 
     el.setAttribute('style', `height: ${height}px`);
 
-    this.componentState.expanded = !this.componentState.expanded;
+    this.expanded = !this.expanded;
 
-    this.componentState.expandedIcon = this.componentState.expanded ? 'fas fa-angle-down' : 'fas fa-angle-up';
+    this.expandedIcon = this.expanded ? 'fas fa-angle-down' : 'fas fa-angle-up';
 
-    if (!this.componentState.expandedOnce) {
-      this.componentState.expandedOnce = true;
+    if (!this.expandedOnce) {
+      this.expandedOnce = true;
     }
   }
 
   onCloseResultWindow() {
-    this.componentState.resultAvailable = false;
-    this.componentState.resultData = null;
+    this.resultAvailable = false;
+    this.resultData = null;
   }
 
   onRunProject(code) {
-    this.componentState.isRunning = true;
+    this.isRunning = true;
     const model = HttpModel.buildAndRunProject(code.code, 'dev');
 
     this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, model).subscribe((data: any) => {
-      this.componentState.resultAvailable = true;
-      this.componentState.isRunning = false;
+      this.resultAvailable = true;
+      this.isRunning = false;
 
       this.resultCommunicator.next(data);
     });

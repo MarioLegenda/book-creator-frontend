@@ -51,13 +51,13 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
   }
 
   private minimize() {
-    this.resultAreaRef.nativeElement.setAttribute('style', 'height: 30px; top: 370px; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none');
+    this.resultAreaRef.nativeElement.setAttribute('style', 'height: 30px; top: 370px;');
 
     this.componentState.icons.minimize = 'far fa-window-maximize';
   }
 
   private maximize() {
-    this.resultAreaRef.nativeElement.setAttribute('style', 'height: 200px; top: 200px; -webkit-box-shadow: -3px -8px 19px -1px rgba(232,232,232,1); -moz-box-shadow: -3px -8px 19px -1px rgba(232,232,232,1); box-shadow: -3px -8px 19px -1px rgba(232,232,232,1)');
+    this.resultAreaRef.nativeElement.setAttribute('style', 'height: 200px; top: 200px;');
 
     this.componentState.icons.minimize = 'fa fa-minus';
   }

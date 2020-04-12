@@ -29,11 +29,9 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
   @ViewChild('wrapperRef', {static: true}) wrapperRef: ElementRef;
   @ViewChild('actionWrapperRef', {static: true}) actionWrapperRef: ElementRef;
 
-  componentState = {
-    selectedAction: 'project',
-    selectedActionClass: {},
-    searchTerm: '',
-  };
+  selectedAction: string = 'project';
+  selectedActionClass = {};
+  searchTerm: string = '';
 
   private typeAheadSource = new Subject<string>();
   private typeAheadObservable: Subscription = null;
@@ -57,17 +55,17 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
   }
 
   onSearchBlur() {
-    if (this.componentState.searchTerm) return;
+    if (this.searchTerm) return;
 
     this.searchFocused = false;
   }
 
   onSearchTerm() {
-    this.typeAheadSource.next(this.componentState.searchTerm);
+    this.typeAheadSource.next(this.searchTerm);
   }
 
   selectAction(action) {
-    this.componentState.selectedAction = action;
+    this.selectedAction = action;
   }
 
   private subscribeTypeahead() {
@@ -75,7 +73,7 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
       debounceTime(500),
     )
       .subscribe(() => {
-        if (!this.componentState.searchTerm) {
+        if (!this.searchTerm) {
           return this.searchSubject.next({
             directories: [],
             files: [],
@@ -86,7 +84,7 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
 
         const model = HttpModel.searchDirsAndFiles(
           this.project.uuid,
-          this.componentState.searchTerm,
+          this.searchTerm,
         );
 
         this.directoryRepository.searchDirsAndFiles(model).subscribe((data) => {
@@ -94,7 +92,7 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
             directories: data.directories.map(d => {d.type = 'directory'; return d}),
             files: data.files.map(f => {f.type = 'file'; return f}),
             isEmpty: data.isEmpty,
-            restart: (!this.componentState.searchTerm),
+            restart: (!this.searchTerm),
           };
 
           this.searchSubject.next(searchResult);

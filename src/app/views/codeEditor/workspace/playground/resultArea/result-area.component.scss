@@ -3,7 +3,7 @@
 .result-area {
   position: absolute;
   top: 200px;
-  border-top: 1px solid $lightestGray;
+  border-top: 1px solid white;
 
   overflow: auto;
 
@@ -11,22 +11,18 @@
 
   height: 200px;
 
-  background-color: white;
-
-  -webkit-box-shadow: -3px -8px 19px -1px rgba(232,232,232,1);
-  -moz-box-shadow: -3px -8px 19px -1px rgba(232,232,232,1);
-  box-shadow: -3px -8px 19px -1px rgba(232,232,232,1);
+  background-color: $appBlack;
 
   .minimize {
-    color: $lightestGray;
+    color: white;
     position: absolute;
 
     top: 5px; left: 5px;
 
-    color: $appBlack;
+    color: white;
 
     &:hover {
-      color: $appBlack;
+      color: $mainAppColor;
       cursor: pointer;
     }
   }

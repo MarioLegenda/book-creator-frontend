@@ -6,7 +6,7 @@
       <div
         (click)="selectAction('project')"
         class="action"
-        [ngClass]="{'selected-action': componentState.selectedAction === 'project'}">
+        [ngClass]="{'selected-action': selectedAction === 'project'}">
 
         <i class="select-project fas fa-clone"></i>
       </div>
@@ -27,7 +27,7 @@
     <div class="search">
       <i *ngIf="!searchFocused" class="fas fa-search"></i>
       <input
-        [(ngModel)]="componentState.searchTerm"
+        [(ngModel)]="searchTerm"
         (keyup)="onSearchTerm()"
         (focus)="onSearchFocus()"
         (blur)="onSearchBlur()"

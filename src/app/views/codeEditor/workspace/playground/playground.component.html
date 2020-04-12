@@ -7,19 +7,19 @@
     (click)="onExpandPlayground()">
 
     <i class="fas fa-code playground-icon"></i>
-    <i class="expand-icon" [ngClass]="componentState.expandedIcon"></i>
+    <i class="expand-icon" [ngClass]="expandedIcon"></i>
   </div>
 
   <cms-playground-working-area
     [project]="project"
     [environments]="environments"
-    [isRunning]="componentState.isRunning"
+    [isRunning]="isRunning"
     (runProjectEvent)="onRunProject($event)"
-    *ngIf="componentState.expandedOnce">
+    *ngIf="expandedOnce">
   </cms-playground-working-area>
 
   <cms-result-area
-    *ngIf="componentState.resultAvailable"
+    *ngIf="resultAvailable"
     [resultCommunicator]="resultCommunicator">
 
   </cms-result-area

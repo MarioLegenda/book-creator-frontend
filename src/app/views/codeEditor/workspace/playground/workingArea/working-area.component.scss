@@ -3,8 +3,10 @@
 .working-area {
   float:left;
 
+  background-color: $appBlack;
+
   .console {
-    border-top: 1px solid $lightestGray;
+    border-top: 1px solid white;
 
     margin-top: 10px;
     padding: 5px;

@@ -31,19 +31,17 @@ export class DirectoryComponent implements OnInit, OnChanges {
 
   private editorViewActions;
 
-  componentState = {
-    expanded: false,
-    hovered: false,
-    selected: false,
-    attachActionSet: false,
-    dirStyles: {},
-    icons: {
-      editDirectory: 'far fa-edit',
-      dirCaret: 'far fa-folder',
-      newFile: 'far fa-file-code',
-      newDir: 'fas fa-folder-plus',
-      removeDirectory: 'far fa-trash-alt',
-    },
+  expanded: boolean = false;
+  hovered: boolean = false;
+  selected: boolean = false;
+  attachActionSet: boolean = false;
+  dirStyles = {};
+  icons = {
+    editDirectory: 'far fa-edit',
+    dirCaret: 'fas fa-folder',
+    newFile: 'fas fa-file-code',
+    newDir: 'fas fa-folder-plus',
+    removeDirectory: 'far fa-trash-alt',
   };
 
   constructor(
@@ -63,26 +61,24 @@ export class DirectoryComponent implements OnInit, OnChanges {
       const data = changes.selectedItem.currentValue;
 
       if (data.type === 'file') {
-        this.componentState.attachActionSet = false;
-        this.componentState.selected = false;
+        this.attachActionSet = false;
+        this.selected = false;
       } else if (data.id !== this.directory.id) {
-        this.componentState.attachActionSet = false;
-        this.componentState.selected = false;
+        this.attachActionSet = false;
+        this.selected = false;
       }
     }
   }
 
   directoryHovered() {
-    this.componentState.hovered = true;
+    this.hovered = true;
   }
 
   directoryUnHovered() {
-    this.componentState.hovered = false;
+    this.hovered = false;
   }
 
-  removeDirectoryDialog($event) {
-    $event.stopPropagation();
-
+  removeDirectoryDialog() {
     const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
       width: '400px',
       data: {name: this.directory.name},
@@ -102,9 +98,163 @@ export class DirectoryComponent implements OnInit, OnChanges {
     });
   }
 
-  newFileDialog($event): void {
-    $event.stopPropagation();
+  newFileDialog(): void {
+    this.doNewFile();
+  }
 
+  newDirectoryFromRootDialog(): void {
+    this.doNewDirectory();
+  }
+
+  newFileFromRootDialog(): void {
+    this.doNewFile();
+  }
+
+  newDirectoryDialog(): void {
+    this.doNewDirectory();
+  }
+
+  editDirectoryDialog(): void {
+    this.doEditDirectory();
+  }
+
+  onExpandDirectory(): void {
+    this.selected = true;
+    this.attachActionSet = true;
+    this.directoryAttachedEvent.emit({
+      type: 'directory',
+      id: this.directory.id,
+    });
+
+    if (!this.expanded) {
+      this.expandDirectory();
+      this.sendExpandDirectoryEvent();
+    } else if (this.expanded) {
+      this.unExpandDirectory();
+      this.sendUnExpandDirectoryEvent();
+    }
+  }
+
+  private expandDirectory(): void {
+    this.icons.dirCaret = 'fas fa-folder-open';
+
+    this.expanded = true;
+  }
+
+  private unExpandDirectory(): void {
+    if (this.directory.isRoot) return;
+
+    this.icons.dirCaret = 'fas fa-folder';
+
+    this.expanded = false;
+  }
+
+  private sendUnExpandDirectoryEvent(): void {
+    this.unExpandDirectoryEvent.emit(this.directory);
+  }
+
+  private sendExpandDirectoryEvent(): void {
+    this.expandDirectoryEvent.emit(this.directory);
+  }
+
+  private changeIconIfRoot(): void {
+    if (this.directory.isRoot) {
+      this.icons.dirCaret = 'fas fa-folder-open';
+    }
+  }
+
+  private setNestedPosition() {
+    const w = 269 + (this.directory.depth * 15);
+    const pl = this.directory.depth * 15;
+
+    this.dirStyles['width'] = `${w}px`;
+    this.dirStyles['padding-left'] = `${pl}px`;
+  }
+
+  private runRootSpecificActions() {
+    if (this.directory.isRoot) {
+      this.expandDirectory();
+      this.sendExpandDirectoryEvent();
+      this.changeIconIfRoot();
+    }
+  }
+
+  private subscribeToActions() {
+    this.editorViewActions = this.store.pipe(select('editorViewActions')).subscribe((action) => {
+      if (!action) {
+        return;
+      }
+
+      switch (action.type) {
+        case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
+          if (action.directoryId === this.directory.id) {
+            this.unExpandDirectory();
+            this.sendUnExpandDirectoryEvent();
+          }
+        }
+      }
+    });
+  }
+
+  private doNewDirectory(): void {
+    const data = {
+      codeProjectUuid: this.directory.codeProjectUuid,
+      name: '',
+      id: this.directory.id,
+      depth: this.directory.depth,
+      type: 'directory',
+      isRoot: false,
+    };
+
+    const dialogRef = this.dialog.open(AddDirectoryDialogComponent, {
+      width: '400px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((resolver) => {
+      if (!resolver) return;
+
+      if (resolver) {
+        this.addDirectoryEvent.emit({
+          parent: this.directory,
+          created: resolver.factory(this.directory.codeProjectUuid, resolver.originalModel),
+        });
+
+        if (!this.expanded) {
+          this.expandDirectory();
+        }
+      }
+    });
+  }
+
+  private doEditDirectory(): void {
+    const data = {
+      codeProjectUuid: this.directory.codeProjectUuid,
+      name: this.directory.name,
+      id: this.directory.id,
+      depth: this.directory.depth,
+      type: 'directory',
+      isRoot: false,
+      extension: this.extension,
+    };
+
+    const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
+      width: '400px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((resolver) => {
+      if (!resolver) return;
+
+      if (resolver) {
+        const directory = resolver.factory(this.directory.codeProjectUuid, resolver.originalModel);
+
+        this.directory.name = directory.name;
+      }
+    });
+  }
+
+  private doNewFile(): void {
     const data = {
       name: '',
       id: '',
@@ -134,148 +284,8 @@ export class DirectoryComponent implements OnInit, OnChanges {
           file: model,
         });
 
-        if (!this.componentState.expanded) {
+        if (!this.expanded) {
           this.expandDirectory();
-        }
-      }
-    });
-  }
-
-  newDirectoryDialog($event): void {
-    $event.stopPropagation();
-
-    const data = {
-      codeProjectUuid: this.directory.codeProjectUuid,
-      name: '',
-      id: this.directory.id,
-      depth: this.directory.depth,
-      type: 'directory',
-      isRoot: false,
-    };
-
-    const dialogRef = this.dialog.open(AddDirectoryDialogComponent, {
-      width: '400px',
-      data: data,
-    });
-
-    dialogRef.afterClosed().subscribe((resolver) => {
-      if (!resolver) return;
-
-      if (resolver) {
-        this.addDirectoryEvent.emit({
-          parent: this.directory,
-          created: resolver.factory(this.directory.codeProjectUuid, resolver.originalModel),
-        });
-
-        if (!this.componentState.expanded) {
-          this.expandDirectory();
-        }
-      }
-    });
-  }
-
-  editDirectoryDialog($event): void {
-    $event.stopPropagation();
-
-    const data = {
-      codeProjectUuid: this.directory.codeProjectUuid,
-      name: this.directory.name,
-      id: this.directory.id,
-      depth: this.directory.depth,
-      type: 'directory',
-      isRoot: false,
-      extension: this.extension,
-    };
-
-    const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
-      width: '400px',
-      data: data,
-    });
-
-    dialogRef.afterClosed().subscribe((resolver) => {
-      if (!resolver) return;
-
-      if (resolver) {
-        const directory = resolver.factory(this.directory.codeProjectUuid, resolver.originalModel);
-
-        this.directory.name = directory.name;
-      }
-    });
-  }
-
-  onExpandDirectory(): void {
-    this.componentState.selected = true;
-    this.componentState.attachActionSet = true;
-    this.directoryAttachedEvent.emit({
-      type: 'directory',
-      id: this.directory.id,
-    });
-
-    if (!this.componentState.expanded) {
-      this.expandDirectory();
-      this.sendExpandDirectoryEvent();
-    } else if (this.componentState.expanded) {
-      this.unExpandDirectory();
-      this.sendUnExpandDirectoryEvent();
-    }
-  }
-
-  private expandDirectory(): void {
-    this.componentState.icons.dirCaret = 'far fa-folder-open';
-
-    this.componentState.expanded = true;
-  }
-
-  private unExpandDirectory(): void {
-    if (this.directory.isRoot) return;
-
-    this.componentState.icons.dirCaret = 'far fa-folder';
-
-    this.componentState.expanded = false;
-  }
-
-  private sendUnExpandDirectoryEvent(): void {
-    this.unExpandDirectoryEvent.emit(this.directory);
-  }
-
-  private sendExpandDirectoryEvent(): void {
-    this.expandDirectoryEvent.emit(this.directory);
-  }
-
-  private changeIconIfRoot(): void {
-    if (this.directory.isRoot) {
-      this.componentState.icons.dirCaret = 'far fa-folder-open';
-    }
-  }
-
-  private setNestedPosition() {
-    const w = 269 + (this.directory.depth * 15);
-    const pl = this.directory.depth * 15;
-
-    this.componentState.dirStyles['width'] = `${w}px`;
-    this.componentState.dirStyles['padding-left'] = `${pl}px`;
-  }
-
-  private runRootSpecificActions() {
-    if (this.directory.isRoot) {
-      this.expandDirectory();
-      this.sendExpandDirectoryEvent();
-      this.changeIconIfRoot();
-    }
-  }
-
-  private subscribeToActions() {
-    this.editorViewActions = this.store.pipe(select('editorViewActions')).subscribe((action) => {
-      if (!action) {
-        return;
-      }
-
-      switch (action.type) {
-        case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
-          if (action.directoryId === this.directory.id) {
-            this.unExpandDirectory();
-            this.sendUnExpandDirectoryEvent();
-          }
         }
       }
     });

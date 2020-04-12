@@ -1,8 +1,11 @@
 @import '../../../../../../../../styles/variables';
 
 .file {
+  position: relative;
   width: 269px;
   float: left;
+
+  border-left: 4px solid $appBlack;
 
   .file-name {
     width: 100%;
@@ -12,24 +15,26 @@
 
     .text {
       font-size: 13px;
-      color: $textColor;
+      color: white;
       width: 150px;
       float: left;
 
       padding: 0;
       margin: 0;
+
+      padding-left: 5px;
     }
 
     .icon {
       width: 20px;
       display: inline-block;
       float: left;
-      color: $lighterGray;
+      color: white;
     }
   }
 
   &:hover {
-    background-color: rgba(107, 149, 255, 0.4);
+    background-color: $mainAppColor;
     cursor: pointer;
   }
 
@@ -39,9 +44,14 @@
 }
 
 .file-selected {
-  background-color: rgba(107, 149, 255, 0.4);
+  background-color: $mainAppColorDark;
+  border-left: 4px solid $mainAppColor;
 
   .file-name .icon {
     color: $appBlack;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }

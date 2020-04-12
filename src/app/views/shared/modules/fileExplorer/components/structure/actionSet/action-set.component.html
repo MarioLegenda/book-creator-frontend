@@ -1,0 +1,46 @@
+<div class="action-set"
+     [ngStyle]="{'right.px': rightWidth}"
+     [ngClass]="{'one-item-expand': expandClassDeterminator === 1 && expanded, 'two-item-expand': expandClassDeterminator === 2 && expanded, 'three-item-expand': expandClassDeterminator === 3 && expanded, 'four-item-expand': expandClassDeterminator === 4 && expanded}">
+
+  <div
+    class="action-wrapper"
+    [ngClass]="{'one-item-expand': expandClassDeterminator === 1 && expanded, 'two-item-expand': expandClassDeterminator === 2 && expanded, 'three-item-expand': expandClassDeterminator === 3 && expanded, 'four-item-expand': expandClassDeterminator === 4 && expanded}">
+
+    <div class="action">
+      <i
+        [ngClass]="{'fa-angle-double-left': !expanded, 'fa-angle-double-right': expanded}"
+        (click)="onExpand($event)"
+        (dblclick)="onNotPropagate($event)"
+        class="icon fas">
+      </i>
+    </div>
+
+    <div class="action" *ngIf="showAddDirectory">
+      <i
+        (click)="onActionAddDirectory($event)"
+        class="icon fas fa-folder-plus">
+      </i>
+    </div>
+
+    <div class="action" *ngIf="showAddFile">
+      <i
+        (click)="onActionAddFile($event)"
+        class="icon far fa-file-code">
+      </i>
+    </div>
+
+    <div class="action" *ngIf="showEdit">
+      <i
+        (click)="onActionEdit($event)"
+        class="icon fas fa-edit">
+      </i>
+    </div>
+
+    <div class="action" *ngIf="showDelete">
+      <i
+        (click)="onActionDelete($event)"
+        class="icon fas fa-trash">
+      </i>
+    </div>
+  </div>
+</div>

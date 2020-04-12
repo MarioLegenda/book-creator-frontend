@@ -1,0 +1,57 @@
+@import '../../../../../../../../styles/variables';
+
+.action-set {
+  background-color: $appBlack;
+  position: absolute;
+  z-index: 5;
+
+  width: 268px;
+  height: 36px;
+
+  top: 0;
+
+  transition: right 0.5s;
+  -webkit-transition: right 0.5s;
+  -moz-transition: right 0.5s;
+  -o-transition: right 0.5s;
+
+  .action-wrapper {
+    width: 100%;
+    float: left;
+  }
+
+  .action {
+    width: 35px;
+    height: 35px;
+    float: left;
+  }
+
+  .icon {
+    display: block;
+    width: 35px;
+    height: 36px;
+    color: white;
+
+    padding: 8px 6px 6px 8px;
+
+    &:hover {
+      color: $mainAppColor;
+    }
+  }
+}
+
+.one-item-expand {
+  right: -202px !important;
+}
+
+.two-item-expand {
+  right: -165px !important;
+}
+
+.three-item-expand {
+  right: -132px !important;
+}
+
+.four-item-expand {
+  right: -99px !important;
+}

@@ -12,7 +12,7 @@ import {EditFileDialogComponent} from "./components/structure/modals/editFile/ed
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {DragDropModule} from "@angular/cdk/drag-drop";
+import {ActionSetComponent} from "./components/structure/actionSet/action-set.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     DeleteFileDialogComponent,
     EditDirectoryDialogComponent,
     EditFileDialogComponent,
+    ActionSetComponent,
   ],
   exports: [
     FileExplorerComponent,

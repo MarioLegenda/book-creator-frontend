@@ -12,8 +12,9 @@
 
   padding: 5px 10px 5px 15px;
 
-  background-color: $lighterGray;
-  border-top: 2px solid $mainAppColor;
+  background-color: $appBlack;
+  border-top: 4px solid $mainAppColorDark;
+  color: white;
 
   &:hover {
     cursor: pointer;
@@ -27,22 +28,22 @@
     display: inline-block;
     position: absolute;
 
-    color: $lightGray;
+    color: white;
 
     top: 7px;
     right: 5px;
 
     &:hover {
-      color: $mainAppColor;
+      color: white;
       cursor: pointer;
     }
   }
 }
 
 .selected-tab {
-  background-color: white;
+  background-color: $lightGray;
 
   i {
-    color: $appBlack;
+    color: white;
   }
 }

@@ -1,15 +1,19 @@
 @import '../../../../../styles/variables';
 
 .text-editor-wrapper {
-  .no-tabs-message {
-    font-size: 4em;
+  background-color: $appBlack;
 
-    color: $lightestGray;
+  .no-tabs-message {
+    font-size: 2em;
+
+    color: $lightGray;
 
     width: 100%;
     padding: 20px;
     text-align: center;
 
     margin-top: 100px;
+
+    background-color: $appBlack;
   }
 }

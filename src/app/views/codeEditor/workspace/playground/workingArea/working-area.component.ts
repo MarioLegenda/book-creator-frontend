@@ -22,7 +22,7 @@ export class WorkingAreaComponent implements OnInit {
 
   ngOnInit() {
     const editorOptions = {
-      theme: 'vs-light',
+      theme: 'vs-dark',
       language: this.project.environment.language,
       codeLens: false,
       formatOnPaste: true,

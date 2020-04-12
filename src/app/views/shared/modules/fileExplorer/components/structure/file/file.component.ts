@@ -43,26 +43,28 @@ export class FileComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
   ) {}
 
-  componentState = {
-    showed: false,
-    hovered: false,
-    attachActionSet: false,
-    selected: false,
-    fileStyles: {},
-    icons: {
-      removeFile: 'far fa-trash-alt remove',
-      file: 'far fa-file-code',
-      editFile: 'far fa-edit'
-    }
-  };
+  showed: boolean = false;
+  hovered: boolean = false;
+  attachActionSet: boolean = false;
+  selected: boolean = false;
+  fileStyles = {};
+
+  iconFile: string = 'far fa-file-code';
+  iconSpecificFile: string = '';
+
+/*  icons = {
+    removeFile: 'far fa-trash-alt remove',
+    file: 'far fa-file-code',
+    editFile: 'far fa-edit'
+  };*/
 
   ngOnInit() {
     if (StaticFileWrapper.isJavascript(this.file)) {
-      this.componentState.icons.file = "fab fa-js-square";
+      this.iconSpecificFile = "fab fa-js-square";
     } else if (StaticFileWrapper.isHtml(this.file)) {
-      this.componentState.icons.file = "fab fa-html5";
+      this.iconSpecificFile = "fab fa-html5";
     } else if (StaticFileWrapper.isJson(this.file)) {
-      this.componentState.icons.file = "fab fa-js-square";
+      this.iconSpecificFile = "fab fa-js-square";
     }
 
     let depth = this.file.depth;
@@ -79,8 +81,8 @@ export class FileComponent implements OnInit, OnChanges {
     const w = 269 + (depth * wBase);
     const pl = depth * wBase;
 
-    this.componentState.fileStyles['width'] = `${w}px`;
-    this.componentState.fileStyles['padding-left'] = `${pl}px`;
+    this.fileStyles['width'] = `${w}px`;
+    this.fileStyles['padding-left'] = `${pl}px`;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -88,18 +90,16 @@ export class FileComponent implements OnInit, OnChanges {
       const data = changes.selectedItem.currentValue;
 
       if (data.type === 'directory') {
-        this.componentState.attachActionSet = false;
-        this.componentState.selected = false;
+        this.attachActionSet = false;
+        this.selected = false;
       } else if (data.id !== this.file.id) {
-        this.componentState.attachActionSet = false;
-        this.componentState.selected = false;
+        this.attachActionSet = false;
+        this.selected = false;
       }
     }
   }
 
-  removeFileDialog($event) {
-    $event.stopPropagation();
-
+  removeFileDialog() {
     const dialogRef = this.dialog.open(DeleteFileDialogComponent, {
       width: '400px',
       data: {name: this.file.name},
@@ -114,9 +114,7 @@ export class FileComponent implements OnInit, OnChanges {
     });
   }
 
-  editFileDialog($event) {
-    $event.stopPropagation();
-
+  editFileDialog() {
     const data = {
       name: this.file.name,
       id: this.file.id,
@@ -145,8 +143,8 @@ export class FileComponent implements OnInit, OnChanges {
   }
 
   onAttachActionSet() {
-    this.componentState.attachActionSet = true;
-    this.componentState.selected = true;
+    this.attachActionSet = true;
+    this.selected = true;
     this.fileAttachedEvent.emit({
       type: 'file',
       id: this.file.id,
@@ -154,7 +152,7 @@ export class FileComponent implements OnInit, OnChanges {
   }
 
   fileHovered() {
-    this.componentState.hovered = true;
+    this.hovered = true;
 
     if (StaticFileWrapper.isJavascript(this.file) ||
         StaticFileWrapper.isHtml(this.file) ||
@@ -164,7 +162,7 @@ export class FileComponent implements OnInit, OnChanges {
   }
 
   fileUnHovered() {
-    this.componentState.hovered = false;
+    this.hovered = false;
 
     this.iconRef.nativeElement.setAttribute('style', 'color: #b5b5b5');
   }
