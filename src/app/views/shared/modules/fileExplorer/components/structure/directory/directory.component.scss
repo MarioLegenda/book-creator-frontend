@@ -61,6 +61,10 @@
   &:hover .dir-name .icon {
     color: white;
   }
+
+  .dragged-over {
+    background-color: $standOutColor;
+  }
 }
 
 .dir-selected {

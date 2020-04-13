@@ -1,10 +1,10 @@
 <div class="action-set"
      [ngStyle]="{'right.px': rightWidth}"
-     [ngClass]="{'one-item-expand': expandClassDeterminator === 1 && expanded, 'two-item-expand': expandClassDeterminator === 2 && expanded, 'three-item-expand': expandClassDeterminator === 3 && expanded, 'four-item-expand': expandClassDeterminator === 4 && expanded}">
+     [ngClass]="{'one-item-expand': expandClassDeterminator === 1 && expanded, 'two-item-expand': expandClassDeterminator === 2 && expanded, 'three-item-expand': expandClassDeterminator === 3 && expanded, 'four-item-expand': expandClassDeterminator === 4 && expanded, 'five-item-expand': expandClassDeterminator === 5 && expanded}">
 
   <div
     class="action-wrapper"
-    [ngClass]="{'one-item-expand': expandClassDeterminator === 1 && expanded, 'two-item-expand': expandClassDeterminator === 2 && expanded, 'three-item-expand': expandClassDeterminator === 3 && expanded, 'four-item-expand': expandClassDeterminator === 4 && expanded}">
+    [ngClass]="{'one-item-expand': expandClassDeterminator === 1 && expanded, 'two-item-expand': expandClassDeterminator === 2 && expanded, 'three-item-expand': expandClassDeterminator === 3 && expanded, 'four-item-expand': expandClassDeterminator === 4 && expanded, 'five-item-expand': expandClassDeterminator === 5 && expanded}">
 
     <div class="action">
       <i
@@ -40,6 +40,13 @@
       <i
         (click)="onActionDelete($event)"
         class="icon fas fa-trash">
+      </i>
+    </div>
+
+    <div class="action" *ngIf="showCopy">
+      <i
+        (click)="onActionCopy($event)"
+        class="icon fas fa-copy">
       </i>
     </div>
   </div>

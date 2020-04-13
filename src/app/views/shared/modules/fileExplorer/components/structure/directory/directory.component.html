@@ -1,11 +1,18 @@
 <div
   class="col-xs-12 col-md-3 col-lg-3 directory"
+  (drop)="onDrop()"
+  (dragover)="onDragOver($event)"
+  (dragenter)="onDragEnter()"
+  (dragexit)="onDragExit()"
+  (drag)="onDrag()"
+  [id]="directory.id"
   [ngClass]="{'dir-selected': selected && !directory.isRoot && selectedItem && selectedItem.type === 'directory' && selectedItem.id === directory.id}">
   <div
     class="dir-name"
     (click)="onExpandDirectory()"
     (mouseenter)="directoryHovered()"
     (mouseleave)="directoryUnHovered()"
+    [ngClass]="{'dragged-over': draggedOver}"
     [ngStyle]="dirStyles">
 
     <i
@@ -43,6 +50,7 @@
       [showEdit]="true"
       [showAddFile]="true"
       [showAddDirectory]="true"
+      [showCopy]="true"
     ></cms-action-set>
   </div>
 </div>

@@ -18,6 +18,7 @@ export class ProjectRouteResolver {
     updateCodeProject: `${this.bookApiUri}/api/v1/code-projects/update`,
     searchDirsAndFiles: `${this.bookApiUri}/api/v1/directory/search`,
     getNext: `${this.bookApiUri}/api/v1/code-projects/get-next`,
+    cutFile: `${this.bookApiUri}/api/v1/directory/cut-file`,
   };
 
   createCodeProject(): string {
@@ -58,5 +59,9 @@ export class ProjectRouteResolver {
 
   getNext(): string {
     return this.routes.getNext;
+  }
+
+  cutFile(): string {
+    return this.routes.cutFile;
   }
 }

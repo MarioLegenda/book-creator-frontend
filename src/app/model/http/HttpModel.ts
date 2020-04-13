@@ -643,4 +643,17 @@ export class HttpModel {
       }
     }
   }
+
+  static cutFile(
+    fileId: string,
+    directoryId: string,
+    codeProjectUuid: string) {
+    return {
+      data: {
+        fileId,
+        directoryId,
+        codeProjectUuid,
+      }
+    }
+  }
 }

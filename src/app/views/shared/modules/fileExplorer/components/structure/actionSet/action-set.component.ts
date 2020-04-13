@@ -17,11 +17,13 @@ export class ActionSetComponent {
   @Output('onActionDeleteEvent') onActionDeleteEvent = new EventEmitter();
   @Output('onActionAddFileEvent') onActionAddFileEvent = new EventEmitter();
   @Output('onActionAddDirectoryEvent') onActionAddDirectoryEvent = new EventEmitter();
+  @Output('onActionCopyEvent') onActionCopyEvent = new EventEmitter();
 
   @Input('showEdit') showEdit: boolean = false;
   @Input('showDelete') showDelete: boolean = false;
   @Input('showAddFile') showAddFile: boolean = false;
   @Input('showAddDirectory') showAddDirectory: boolean = false;
+  @Input('showCopy') showCopy: boolean = false;
 
   @Input('rightWidth') rightWidth: string;
 
@@ -36,33 +38,40 @@ export class ActionSetComponent {
     this.expanded = !this.expanded;
   }
 
-  onNotPropagate($event) {
+  onNotPropagate($event): void {
     $event.preventDefault();
     $event.stopPropagation();
   }
 
-  onActionEdit($event) {
+  onActionCopy($event): void {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    this.onActionCopyEvent.emit();
+  }
+
+  onActionEdit($event): void {
     $event.preventDefault();
     $event.stopPropagation();
 
     this.onActionEditEvent.emit();
   }
 
-  onActionDelete($event) {
+  onActionDelete($event): void {
     $event.preventDefault();
     $event.stopPropagation();
 
     this.onActionDeleteEvent.emit();
   }
 
-  onActionAddFile($event) {
+  onActionAddFile($event): void {
     $event.preventDefault();
     $event.stopPropagation();
 
     this.onActionAddFileEvent.emit();
   }
 
-  onActionAddDirectory($event) {
+  onActionAddDirectory($event): void {
     $event.preventDefault();
     $event.stopPropagation();
 
@@ -70,7 +79,7 @@ export class ActionSetComponent {
   }
 
   private determineExpandClass(): number {
-    const fields = ['showEdit', 'showDelete', 'showAddFile', 'showAddDirectory'];
+    const fields = ['showEdit', 'showDelete', 'showAddFile', 'showAddDirectory', 'showCopy'];
 
     let count: number = 0;
     for (const f of fields) {

@@ -42,7 +42,6 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.expandRootDirectory();
-
   }
 
   ngAfterViewInit() {
@@ -162,7 +161,9 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
       return val.type === 'file' && val.id === file.id;
     });
 
-    this.structure.splice(idx, 1);
+    const a = this.structure.splice(idx, 1);
+
+    console.log(a);
 
     this.sendDirectoryEmptied(file.directoryId);
 
@@ -198,14 +199,6 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onItemAttachEvent(item) {
     this.selectedItem = item;
-  }
-
-  onDropped($event) {
-    console.log($event);
-  }
-
-  drop($event) {
-    console.log('drop', $event);
   }
 
   private expandRootDirectory() {
@@ -341,5 +334,13 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.structureTracker.addItemToStructure(root.id, file);
     }
+  }
+
+  private isCutCopyAllowed(fileOrDirectory): boolean {
+    if (fileOrDirectory.type === 'file') {
+
+    }
+
+    return false;
   }
 }

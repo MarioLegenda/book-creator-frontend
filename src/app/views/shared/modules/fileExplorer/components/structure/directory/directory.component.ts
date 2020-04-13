@@ -8,6 +8,7 @@ import {actionTypes, viewEditorShowFile} from "../../../../../../../store/editor
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directory-dialog.component";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
+import {DragDropBuffer} from "../../../services/DragDropBuffer";
 
 @Component({
   selector: 'cms-directory',
@@ -29,12 +30,16 @@ export class DirectoryComponent implements OnInit, OnChanges {
   @Output('addFileEvent') addFileEvent = new EventEmitter();
   @Output('directoryAttachedEvent') directoryAttachedEvent = new EventEmitter();
 
+  // only used with drag/drop
+  @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
+
   private editorViewActions;
 
   expanded: boolean = false;
   hovered: boolean = false;
   selected: boolean = false;
   attachActionSet: boolean = false;
+  draggedOver: boolean = false;
   dirStyles = {};
   icons = {
     editDirectory: 'far fa-edit',
@@ -48,6 +53,7 @@ export class DirectoryComponent implements OnInit, OnChanges {
     private store: Store<any>,
     private dialog: MatDialog,
     private directoryRepository: DirectoryRepository,
+    private dragDropBuffer: DragDropBuffer,
   ) {}
 
   ngOnInit() {
@@ -68,6 +74,48 @@ export class DirectoryComponent implements OnInit, OnChanges {
         this.selected = false;
       }
     }
+  }
+
+  onDrop() {
+    const value = this.dragDropBuffer.get();
+
+    if (value.depth === this.directory.depth) return;
+
+    if (value.type === 'file') {
+      const fileId: string = value.id;
+      const directoryId: string = this.directory.id;
+      const codeProjectUuid: string = this.directory.codeProjectUuid;
+
+      const model = HttpModel.cutFile(fileId, directoryId, codeProjectUuid);
+
+      this.directoryRepository.cutFile(model).subscribe((cuttedFile) => {
+        console.log(cuttedFile);
+        this.fileRemovedEvent.emit(value);
+        this.addFileEvent.emit({
+          parent: this.directory,
+          file: cuttedFile,
+        });
+        this.expandDirectoryEvent.emit(this.directory);
+      });
+    }
+
+    this.draggedOver = false;
+  }
+
+  onDrag() {
+    this.dragDropBuffer.add(this.directory);
+  }
+
+  onDragOver($event) {
+    $event.preventDefault();
+  }
+
+  onDragEnter() {
+    this.draggedOver = true;
+  }
+
+  onDragExit() {
+    this.draggedOver = false;
   }
 
   directoryHovered() {
@@ -116,10 +164,6 @@ export class DirectoryComponent implements OnInit, OnChanges {
 
   editDirectoryDialog(): void {
     this.doEditDirectory();
-  }
-
-  onDropped($event) {
-    console.log($event);
   }
 
   onExpandDirectory(): void {

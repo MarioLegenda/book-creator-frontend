@@ -16,6 +16,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog.component";
 import {EditFileDialogComponent} from "../modals/editFile/edit-file-dialog.component";
 import {StaticFileWrapper} from "../../../../../../../library/StaticFileWrapper";
+import {DragDropBuffer} from "../../../services/DragDropBuffer";
 
 @Component({
   selector: 'cms-file',
@@ -41,22 +42,15 @@ export class FileComponent implements OnInit, OnChanges {
     private fileRepository: FileRepository,
     private store: Store<any>,
     private dialog: MatDialog,
+    private dragDropBuffer: DragDropBuffer,
   ) {}
 
-  showed: boolean = false;
   hovered: boolean = false;
   attachActionSet: boolean = false;
   selected: boolean = false;
   fileStyles = {};
 
-  iconFile: string = 'far fa-file-code';
   iconSpecificFile: string = '';
-
-/*  icons = {
-    removeFile: 'far fa-trash-alt remove',
-    file: 'far fa-file-code',
-    editFile: 'far fa-edit'
-  };*/
 
   ngOnInit() {
     if (StaticFileWrapper.isJavascript(this.file)) {
@@ -85,6 +79,10 @@ export class FileComponent implements OnInit, OnChanges {
     this.fileStyles['padding-left'] = `${pl}px`;
   }
 
+  onDrag() {
+    this.dragDropBuffer.add(this.file);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedItem && !changes.selectedItem.firstChange) {
       const data = changes.selectedItem.currentValue;
@@ -97,10 +95,6 @@ export class FileComponent implements OnInit, OnChanges {
         this.selected = false;
       }
     }
-  }
-
-  onDropped($event) {
-    console.log($event);
   }
 
   removeFileDialog() {

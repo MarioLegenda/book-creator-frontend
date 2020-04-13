@@ -105,4 +105,13 @@ export class DirectoryRepository {
         }, {}),
       )
   }
+
+  cutFile(model) {
+    return this.httpClient.post(this.projectRouteResolver.cutFile(), model)
+      .pipe(
+        reduce((acc, res: any) => {
+          return res.data;
+        }, {}),
+      )
+  }
 }

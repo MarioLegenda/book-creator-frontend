@@ -1,23 +1,19 @@
 <div
-  cdkDropList
-  (cdkDropListDropped)="drop($event)"
   class="col-xs-12 col-md-3 col-lg-3 structure"
   #structureWrapper>
 
     <div *ngFor="let item of structure">
       <cms-directory
-        cdkDrag
         (expandDirectoryEvent)="expandDirectoryEvent($event)"
         (unExpandDirectoryEvent)="unExpandDirectoryEvent($event)"
         (addDirectoryEvent)="addDirectoryEvent($event)"
         (addFileEvent)="addFileEvent($event)"
+        (fileRemovedEvent)="removeFileEvent($event)"
         (removeDirectoryEvent)="removeDirectoryEvent($event)"
         (directoryAttachedEvent)="onItemAttachEvent($event)"
         [selectedItem]="selectedItem"
         [extension]="project.environment.extension"
         *ngIf="isDirectory(item)"
-        (cdkDragDropped)="onDropped(item)"
-
         [directory]="item">
 
         <div class="drag-preview" *cdkDragPreview>
@@ -27,13 +23,11 @@
       </cms-directory>
 
       <cms-file
-        cdkDrag
         *ngIf="isFile(item)"
         (fileAttachedEvent)="onItemAttachEvent($event)"
         [selectedItem]="selectedItem"
         [file]="item"
         [extension]="project.environment.extension"
-        (cdkDragDropped)="onDropped(item)"
         (fileRemovedEvent)="removeFileEvent($event)">
 
         <div class="drag-preview" *cdkDragPreview>

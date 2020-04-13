@@ -14,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ActionSetComponent} from "./components/structure/actionSet/action-set.component";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {DragDropBuffer} from "./services/DragDropBuffer";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,6 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     FormsModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    DragDropModule,
   ],
   entryComponents: [
     AddDirectoryDialogComponent,
@@ -47,6 +47,9 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     DeleteFileDialogComponent,
     EditDirectoryDialogComponent,
     EditFileDialogComponent,
+  ],
+  providers: [
+    {provide: DragDropBuffer, useClass: DragDropBuffer}
   ]
 })
 export class FileExplorerModule { }
