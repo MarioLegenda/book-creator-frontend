@@ -1,5 +1,7 @@
+@import '../../../../styles/variables';
+
 .editor {
   display: block;
 
-  min-width: 1280px;
+  background-color: $appBlack;
 }

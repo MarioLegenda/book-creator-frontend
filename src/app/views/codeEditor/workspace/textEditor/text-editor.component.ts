@@ -27,10 +27,8 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   private contentLoadedSubscription: Subscription;
   private editorViewActionUns;
 
-  componentState = {
-    editorOptions: null,
-    code: '',
-  };
+  editorOptions = null;
+  code: string = '';
 
   constructor(
     private store: Store<any>,
@@ -48,11 +46,11 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       },
     };
 
-    this.componentState.editorOptions = editorOptions;
+    this.editorOptions = editorOptions;
 
     this.editorViewActionUns = this.store.pipe(select('editorViewActions')).subscribe((action: any) => {
       if (action) {
-        this.componentState.code = action.content;
+        this.code = action.content;
       }
     });
 
@@ -60,11 +58,11 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       debounceTime(500),
     )
       .subscribe(() => {
-        if (this.componentState.code) {
+        if (this.code) {
           const model = HttpModel.updateFileContentModel(
             this.project.uuid,
             this.tab.id,
-            this.componentState.code,
+            this.code,
           );
 
           this.fileRepository.updateFileContent(model).subscribe(() => {
@@ -73,23 +71,23 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       });
   }
 
+  ngOnDestroy(): void {
+    this.typeAheadObservable.unsubscribe();
+    this.contentLoadedSubscription.unsubscribe();
+    this.editorViewActionUns.unsubscribe();
+  }
+
   ngAfterViewInit() {
     const h = document.body.offsetHeight;
 
-    this.wrapperRef.nativeElement.setAttribute('style', `height: ${h - 45}px`);
+    //this.wrapperRef.nativeElement.setAttribute('style', `height: ${h - 45}px`);
 
     this.contentLoadedSubscription = this.contentLoadedEvent.subscribe((content: string) => {
-      this.componentState.code = content;
+      this.code = content;
     })
   }
 
   onChange() {
     this.typeAheadSource.next([]);
-  }
-
-  ngOnDestroy(): void {
-    this.typeAheadObservable.unsubscribe();
-    this.contentLoadedSubscription.unsubscribe();
-    this.editorViewActionUns.unsubscribe();
   }
 }

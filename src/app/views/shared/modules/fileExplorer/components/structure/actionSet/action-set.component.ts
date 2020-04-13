@@ -27,8 +27,6 @@ export class ActionSetComponent {
 
   ngOnInit() {
     this.expandClassDeterminator = this.determineExpandClass();
-
-    console.log(this.expandClassDeterminator);
   }
 
   onExpand($event): void {

@@ -42,7 +42,9 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    Util.setHeightFromWrapper(document.body, this.wrapperRef.nativeElement);
+    const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+    this.wrapperRef.nativeElement.setAttribute('style', `height: ${vh}px`);
   }
 
   ngOnDestroy(): void {

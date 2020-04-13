@@ -99,6 +99,10 @@ export class FileComponent implements OnInit, OnChanges {
     }
   }
 
+  onDropped($event) {
+    console.log($event);
+  }
+
   removeFileDialog() {
     const dialogRef = this.dialog.open(DeleteFileDialogComponent, {
       width: '400px',

@@ -13,6 +13,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ActionSetComponent} from "./components/structure/actionSet/action-set.component";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {ActionSetComponent} from "./components/structure/actionSet/action-set.co
     FormsModule,
     ReactiveFormsModule,
     MatTooltipModule,
+    DragDropModule,
   ],
   entryComponents: [
     AddDirectoryDialogComponent,

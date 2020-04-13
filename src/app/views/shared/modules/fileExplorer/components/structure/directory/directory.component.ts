@@ -118,6 +118,10 @@ export class DirectoryComponent implements OnInit, OnChanges {
     this.doEditDirectory();
   }
 
+  onDropped($event) {
+    console.log($event);
+  }
+
   onExpandDirectory(): void {
     this.selected = true;
     this.attachActionSet = true;

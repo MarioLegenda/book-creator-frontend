@@ -1,5 +1,9 @@
+@import '../../../../styles/variables';
+
 .editor-workspace {
   float: right;
 
   position: relative;
+
+  background-color: $appBlack;
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ReplaySubject, Subject, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {HttpModel} from "../../../../../../model/http/HttpModel";
@@ -30,7 +30,6 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
   @ViewChild('actionWrapperRef', {static: true}) actionWrapperRef: ElementRef;
 
   selectedAction: string = 'project';
-  selectedActionClass = {};
   searchTerm: string = '';
 
   private typeAheadSource = new Subject<string>();
@@ -47,7 +46,7 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     const height = window.innerHeight;
 
-    this.wrapperRef.nativeElement.setAttribute('style', `max-height: ${height}px`)
+    //this.wrapperRef.nativeElement.setAttribute('style', `max-height: ${height}px`)
   }
 
   onSearchFocus() {

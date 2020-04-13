@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 import {FileRepository} from "../../../../../../repository/FileRepository";
 import {ReplaySubject, Subject} from "rxjs";
@@ -17,7 +17,7 @@ import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions
     {useClass: StructureTracker, provide: StructureTracker}
   ]
 })
-export class StructureComponent implements OnInit, OnDestroy {
+export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
   structure = [];
   selectedItem = null;
 
@@ -42,6 +42,14 @@ export class StructureComponent implements OnInit, OnDestroy {
     });
 
     this.expandRootDirectory();
+
+  }
+
+  ngAfterViewInit() {
+    const fe = document.getElementById('_file-explorer').offsetHeight;
+    const e = document.getElementById('_editor').offsetHeight;
+
+    this.structureWrapper.nativeElement.setAttribute('style', `height: ${e - fe}px`);
   }
 
   ngOnDestroy(): void {
@@ -190,6 +198,14 @@ export class StructureComponent implements OnInit, OnDestroy {
 
   onItemAttachEvent(item) {
     this.selectedItem = item;
+  }
+
+  onDropped($event) {
+    console.log($event);
+  }
+
+  drop($event) {
+    console.log('drop', $event);
   }
 
   private expandRootDirectory() {

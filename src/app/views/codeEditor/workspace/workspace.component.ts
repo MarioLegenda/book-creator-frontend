@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {FileTab} from "../../../model/app/codeEditor/FileTab";
 import Util from "../../../library/Util";

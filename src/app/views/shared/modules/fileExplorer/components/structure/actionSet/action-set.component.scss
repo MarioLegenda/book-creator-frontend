@@ -15,6 +15,8 @@
   -moz-transition: right 0.5s;
   -o-transition: right 0.5s;
 
+  border-left: 4px solid $standOutColor;
+
   .action-wrapper {
     width: 100%;
     float: left;
