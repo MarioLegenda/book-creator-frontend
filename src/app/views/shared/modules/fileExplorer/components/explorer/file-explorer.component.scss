@@ -84,7 +84,7 @@
       float: left;
 
       &:hover {
-        color: $editorMainColor;
+        color: $mainAppColorDark;
         cursor: pointer;
       }
 
@@ -96,15 +96,15 @@
     }
 
     .selected-action {
-      border-left: 4px solid $mainAppColor;
+      border-left: 4px solid $mainAppColorDark;
     }
 
     .github-disabled {
-      color: $lightestGray;
+      color: white;
       border-left: 4px solid white;
 
       &:hover {
-        color: $lightestGray;
+        color: white;
         cursor: not-allowed;
       }
     }
