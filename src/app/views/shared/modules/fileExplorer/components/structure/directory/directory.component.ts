@@ -14,6 +14,8 @@ import {Subject, Subscription} from "rxjs";
 import {IDirectory} from "../../../models/IDirectory";
 import {IFile} from "../../../models/IFile";
 import {IAddFileEvent} from "../../../models/IAddFileEvent";
+import {ErrorCodes} from "../../../../../../../error/ErrorCodes";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'cms-directory',
@@ -66,6 +68,7 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     private directoryRepository: DirectoryRepository,
     private dragDropBuffer: DragDropBuffer,
     private copyBuffer: CopyBuffer,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -353,6 +356,7 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
       const model = HttpModel.cutFile(fileId, directoryId, codeProjectUuid);
 
+      let failed: boolean = false;
       this.directoryRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
         this.fileRemovedEvent.emit(value);
         if (this.directory.isRoot) {
@@ -373,6 +377,18 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
             file: cuttedFile,
           });
         }
+      },(e) => {
+        const response = e.error;
+
+        if (response.errorCode === ErrorCodes.ResourceExists) {
+          if (!failed) {
+            this.snackBar.open('Some files or directories already exist and could not be cut', null, {
+              duration: 5000,
+            });
+          }
+
+          failed = true;
+        }
       });
     }
 
@@ -383,7 +399,7 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     if (this.copyExpected) {
       const values = this.copyBuffer.get();
 
-      const notExpandedBuffer: IFile[] = [];
+      let failedCopies: boolean = false;
       let didExpand = false;
       for (const value of values) {
         if (value.type === 'file') {
@@ -417,6 +433,18 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
                 parent: this.directory,
                 file: copiedFile,
               });
+            }
+          }, (e) => {
+            const response = e.error;
+
+            if (response.errorCode === ErrorCodes.ResourceExists) {
+              if (!failedCopies) {
+                this.snackBar.open('Some files or directories already exist and could not be copied', null, {
+                  duration: 5000,
+                });
+              }
+
+              failedCopies = true;
             }
           });
         }

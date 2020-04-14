@@ -13,9 +13,9 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ActionSetComponent} from "./components/structure/actionSet/action-set.component";
-import {DragDropModule} from "@angular/cdk/drag-drop";
 import {DragDropBuffer} from "./services/DragDropBuffer";
 import {CopyBuffer} from "./services/CopyBuffer";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -40,6 +40,7 @@ import {CopyBuffer} from "./services/CopyBuffer";
     FormsModule,
     ReactiveFormsModule,
     MatTooltipModule,
+    MatSnackBarModule,
   ],
   entryComponents: [
     AddDirectoryDialogComponent,
