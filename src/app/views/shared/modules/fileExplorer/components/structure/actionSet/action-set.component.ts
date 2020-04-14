@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter, Input, Output,
+  Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
 } from '@angular/core';
 @Component({
   selector: 'cms-action-set',
@@ -9,7 +9,7 @@ import {
   ],
   templateUrl: './action-set.component.html',
 })
-export class ActionSetComponent {
+export class ActionSetComponent implements OnChanges, OnInit {
   expanded: boolean = false;
   expandClassDeterminator: number;
 
@@ -18,17 +18,25 @@ export class ActionSetComponent {
   @Output('onActionAddFileEvent') onActionAddFileEvent = new EventEmitter();
   @Output('onActionAddDirectoryEvent') onActionAddDirectoryEvent = new EventEmitter();
   @Output('onActionCopyEvent') onActionCopyEvent = new EventEmitter();
+  @Output('onActionPasteEvent') onActionPasteEvent = new EventEmitter();
 
   @Input('showEdit') showEdit: boolean = false;
   @Input('showDelete') showDelete: boolean = false;
   @Input('showAddFile') showAddFile: boolean = false;
   @Input('showAddDirectory') showAddDirectory: boolean = false;
   @Input('showCopy') showCopy: boolean = false;
+  @Input('showPaste') showPaste: boolean = false;
 
   @Input('rightWidth') rightWidth: string;
 
   ngOnInit() {
     this.expandClassDeterminator = this.determineExpandClass();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['showPaste'] && !changes.showPaste.firstChange) {
+      this.expandClassDeterminator = this.determineExpandClass();
+    }
   }
 
   onExpand($event): void {
@@ -78,8 +86,15 @@ export class ActionSetComponent {
     this.onActionAddDirectoryEvent.emit();
   }
 
+  onActionPaste($event): void {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    this.onActionPasteEvent.emit();
+  }
+
   private determineExpandClass(): number {
-    const fields = ['showEdit', 'showDelete', 'showAddFile', 'showAddDirectory', 'showCopy'];
+    const fields = ['showEdit', 'showDelete', 'showAddFile', 'showAddDirectory', 'showCopy', 'showPaste'];
 
     let count: number = 0;
     for (const f of fields) {
@@ -93,6 +108,5 @@ export class ActionSetComponent {
     }
 
     return count;
-
   }
 }

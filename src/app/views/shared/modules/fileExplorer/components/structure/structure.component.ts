@@ -6,6 +6,10 @@ import {StructureTracker} from "../../../../../../library/StructureTracker";
 import {Store} from "@ngrx/store";
 import {viewEditorDirectoryEmptied} from "../../../../../../store/editor/viewActions";
 import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions";
+import {IFile} from "../../models/IFile";
+import {IDirectory} from "../../models/IDirectory";
+import {IAddFileEvent} from "../../models/IAddFileEvent";
+import {IBufferValue} from "../../models/BufferValue";
 
 @Component({
   selector: 'cms-structure',
@@ -20,6 +24,9 @@ import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions
 export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
   structure = [];
   selectedItem = null;
+
+  copyBufferSubject = new Subject<IBufferValue>();
+  copyUnBufferSubject = new Subject<IBufferValue>();
 
   @Input('project') project: any;
   @Input('searchSubject') searchSubject: ReplaySubject<any>;
@@ -63,7 +70,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     return entry.type === 'file';
   }
 
-  expandDirectoryEvent(directory: any) {
+  expandDirectoryEvent(directory: IDirectory) {
     if (directory.isRoot) return;
 
     let tempSubject = new Subject();
@@ -97,7 +104,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  unExpandDirectoryEvent(directory) {
+  unExpandDirectoryEvent(directory: IDirectory) {
     if (directory.isRoot) return;
 
     const structures = this.structureTracker.getStructure(directory.id);
@@ -124,7 +131,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     this.structure.splice(idx + 1, 0, created);
   }
 
-  addFileEvent(data) {
+  addFileEvent(data: IAddFileEvent) {
     const parent = data.parent;
     const file = data.file;
 
@@ -154,16 +161,14 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     this.structure.splice(idx + 1, 0, file);
   }
 
-  removeFileEvent(file) {
+  removeFileEvent(file: IFile) {
     this.structureTracker.removeItemFromStructure(file.directoryId, file.id);
 
     const idx = this.structure.findIndex(val => {
       return val.type === 'file' && val.id === file.id;
     });
 
-    const a = this.structure.splice(idx, 1);
-
-    console.log(a);
+    this.structure.splice(idx, 1);
 
     this.sendDirectoryEmptied(file.directoryId);
 
@@ -172,7 +177,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  removeDirectoryEvent(directory) {
+  removeDirectoryEvent(directory: IDirectory) {
     if (!this.structureTracker.hasStructure(directory.id)) {
       for (const s of this.structure) {
         if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.id)) {
@@ -228,7 +233,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private getSubstructure(directory: any, subject: Subject<any>) {
+  private getSubstructure(directory: IDirectory, subject: Subject<any>) {
     this.directoryRepository.getSubdirectories(this.project.uuid, directory.id).subscribe((resolver) => {
       const structure = [];
 
@@ -334,13 +339,5 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.structureTracker.addItemToStructure(root.id, file);
     }
-  }
-
-  private isCutCopyAllowed(fileOrDirectory): boolean {
-    if (fileOrDirectory.type === 'file') {
-
-    }
-
-    return false;
   }
 }

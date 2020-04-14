@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
 import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
@@ -9,6 +9,11 @@ import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-d
 import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directory-dialog.component";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
 import {DragDropBuffer} from "../../../services/DragDropBuffer";
+import {CopyBuffer} from "../../../services/CopyBuffer";
+import {Subject, Subscription} from "rxjs";
+import {IDirectory} from "../../../models/IDirectory";
+import {IFile} from "../../../models/IFile";
+import {IAddFileEvent} from "../../../models/IAddFileEvent";
 
 @Component({
   selector: 'cms-directory',
@@ -18,28 +23,34 @@ import {DragDropBuffer} from "../../../services/DragDropBuffer";
   ],
   templateUrl: './directory.component.html',
 })
-export class DirectoryComponent implements OnInit, OnChanges {
-  @Input('directory') directory;
+export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
+  @Input('directory') directory: IDirectory;
   @Input('extension') extension: string;
   @Input('selectedItem') selectedItem: any;
 
-  @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter();
-  @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter();
-  @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter();
+  @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
+  @Input('copyUnbufferSubject') copyUnbufferSubject: Subject<any>;
+
+  @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter<IDirectory>();
+  @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter<IDirectory>();
+  @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter<IDirectory>();
   @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
-  @Output('addFileEvent') addFileEvent = new EventEmitter();
+  @Output('addFileEvent') addFileEvent = new EventEmitter<IAddFileEvent>();
   @Output('directoryAttachedEvent') directoryAttachedEvent = new EventEmitter();
 
   // only used with drag/drop
-  @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
+  @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter<IFile>();
 
   private editorViewActions;
+  private copyBufferSubscriber: Subscription;
+  private copyUnbuffeerSubscriber: Subscription;
 
   expanded: boolean = false;
   hovered: boolean = false;
   selected: boolean = false;
   attachActionSet: boolean = false;
   draggedOver: boolean = false;
+  copyExpected: boolean = false;
   dirStyles = {};
   icons = {
     editDirectory: 'far fa-edit',
@@ -54,52 +65,33 @@ export class DirectoryComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private directoryRepository: DirectoryRepository,
     private dragDropBuffer: DragDropBuffer,
+    private copyBuffer: CopyBuffer,
   ) {}
 
   ngOnInit() {
     this.setNestedPosition();
     this.runRootSpecificActions();
     this.subscribeToActions();
+
+    this.copyBufferSubscriber = this.copyBufferSubject.subscribe(() => {
+      this.copyExpected = true;
+    });
+
+    this.copyUnbuffeerSubscriber = this.copyUnbufferSubject.subscribe(() => {
+      this.copyExpected = false;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.doOnDestroy();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedItem && !changes.selectedItem.firstChange) {
-      const data = changes.selectedItem.currentValue;
-
-      if (data.type === 'file') {
-        this.attachActionSet = false;
-        this.selected = false;
-      } else if (data.id !== this.directory.id) {
-        this.attachActionSet = false;
-        this.selected = false;
-      }
-    }
+    this.doOnChanges(changes);
   }
 
   onDrop() {
-    const value = this.dragDropBuffer.get();
-
-    if (value.depth === this.directory.depth) return;
-
-    if (value.type === 'file') {
-      const fileId: string = value.id;
-      const directoryId: string = this.directory.id;
-      const codeProjectUuid: string = this.directory.codeProjectUuid;
-
-      const model = HttpModel.cutFile(fileId, directoryId, codeProjectUuid);
-
-      this.directoryRepository.cutFile(model).subscribe((cuttedFile) => {
-        console.log(cuttedFile);
-        this.fileRemovedEvent.emit(value);
-        this.addFileEvent.emit({
-          parent: this.directory,
-          file: cuttedFile,
-        });
-        this.expandDirectoryEvent.emit(this.directory);
-      });
-    }
-
-    this.draggedOver = false;
+    this.doDrop();
   }
 
   onDrag() {
@@ -116,6 +108,16 @@ export class DirectoryComponent implements OnInit, OnChanges {
 
   onDragExit() {
     this.draggedOver = false;
+  }
+
+  onPaste() {
+    this.doPaste();
+  }
+
+  onPasteToRoot() {
+    if (!this.directory.isRoot) return;
+
+    this.doPaste();
   }
 
   directoryHovered() {
@@ -337,5 +339,113 @@ export class DirectoryComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  private doDrop() {
+    const value = this.dragDropBuffer.get();
+
+    if (value.depth === this.directory.depth) return;
+
+    if (value.type === 'file') {
+      const fileId: string = value.id;
+      const directoryId: string = this.directory.id;
+      const codeProjectUuid: string = this.directory.codeProjectUuid;
+
+      const model = HttpModel.cutFile(fileId, directoryId, codeProjectUuid);
+
+      this.directoryRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
+        this.fileRemovedEvent.emit(value);
+        if (this.directory.isRoot) {
+          this.addFileEvent.emit({
+            parent: this.directory,
+            file: cuttedFile,
+          });
+
+          return;
+        }
+
+        if (!this.expanded) {
+          this.expandDirectory();
+          this.sendExpandDirectoryEvent();
+        } else {
+          this.addFileEvent.emit({
+            parent: this.directory,
+            file: cuttedFile,
+          });
+        }
+      });
+    }
+
+    this.draggedOver = false;
+  }
+
+  private doPaste() {
+    if (this.copyExpected) {
+      const values = this.copyBuffer.get();
+
+      const notExpandedBuffer: IFile[] = [];
+      let didExpand = false;
+      for (const value of values) {
+        if (value.type === 'file') {
+          const model = HttpModel.copyFile(
+            value.id,
+            this.directory.id,
+            this.directory.codeProjectUuid
+          );
+
+          this.directoryRepository.copyFile(model).subscribe((copiedFile: IFile) => {
+            if (this.directory.isRoot) {
+              this.addFileEvent.emit({
+                parent: this.directory,
+                file: copiedFile,
+              });
+
+              this.copyUnbufferSubject.next();
+
+              return;
+            }
+
+            if (!this.expanded) {
+              this.expandDirectory();
+              this.sendExpandDirectoryEvent();
+
+              didExpand = true;
+            }
+
+            if (!didExpand) {
+              this.addFileEvent.emit({
+                parent: this.directory,
+                file: copiedFile,
+              });
+            }
+          });
+        }
+      }
+
+      this.copyExpected = false;
+
+      this.copyUnbufferSubject.next();
+    }
+  }
+
+  private doOnDestroy() {
+    this.copyBufferSubscriber.unsubscribe();
+    this.copyUnbuffeerSubscriber.unsubscribe();
+    this.copyUnbuffeerSubscriber = null;
+    this.copyBufferSubscriber = null;
+  }
+
+  private doOnChanges(changes: SimpleChanges) {
+    if (changes.selectedItem && !changes.selectedItem.firstChange) {
+      const data = changes.selectedItem.currentValue;
+
+      if (data.type === 'file') {
+        this.attachActionSet = false;
+        this.selected = false;
+      } else if (data.id !== this.directory.id) {
+        this.attachActionSet = false;
+        this.selected = false;
+      }
+    }
   }
 }

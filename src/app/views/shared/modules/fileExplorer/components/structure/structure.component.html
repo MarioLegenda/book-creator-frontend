@@ -4,6 +4,7 @@
 
     <div *ngFor="let item of structure">
       <cms-directory
+        *ngIf="isDirectory(item)"
         (expandDirectoryEvent)="expandDirectoryEvent($event)"
         (unExpandDirectoryEvent)="unExpandDirectoryEvent($event)"
         (addDirectoryEvent)="addDirectoryEvent($event)"
@@ -13,7 +14,8 @@
         (directoryAttachedEvent)="onItemAttachEvent($event)"
         [selectedItem]="selectedItem"
         [extension]="project.environment.extension"
-        *ngIf="isDirectory(item)"
+        [copyBufferSubject]="copyBufferSubject"
+        [copyUnbufferSubject]="copyUnBufferSubject"
         [directory]="item">
 
         <div class="drag-preview" *cdkDragPreview>
@@ -27,6 +29,7 @@
         (fileAttachedEvent)="onItemAttachEvent($event)"
         [selectedItem]="selectedItem"
         [file]="item"
+        [copyBufferSubject]="copyBufferSubject"
         [extension]="project.environment.extension"
         (fileRemovedEvent)="removeFileEvent($event)">
 

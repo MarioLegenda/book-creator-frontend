@@ -17,6 +17,9 @@ import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog
 import {EditFileDialogComponent} from "../modals/editFile/edit-file-dialog.component";
 import {StaticFileWrapper} from "../../../../../../../library/StaticFileWrapper";
 import {DragDropBuffer} from "../../../services/DragDropBuffer";
+import {CopyBuffer} from "../../../services/CopyBuffer";
+import {Subject} from "rxjs";
+import {IFile} from "../../../models/IFile";
 
 @Component({
   selector: 'cms-file',
@@ -27,15 +30,15 @@ import {DragDropBuffer} from "../../../services/DragDropBuffer";
   templateUrl: './file.component.html',
 })
 export class FileComponent implements OnInit, OnChanges {
-  @Input('file') file;
+  @Input('file') file: IFile;
 
   @Input('extension') extension: string;
   @Input('selectedItem') selectedItem: any;
+  @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
   @Output('fileAttachedEvent') fileAttachedEvent = new EventEmitter();
 
-  // @ts-ignore
   @ViewChild('iconRef', {static: true}) iconRef: ElementRef;
 
   constructor(
@@ -43,6 +46,7 @@ export class FileComponent implements OnInit, OnChanges {
     private store: Store<any>,
     private dialog: MatDialog,
     private dragDropBuffer: DragDropBuffer,
+    private copyBuffer: CopyBuffer,
   ) {}
 
   hovered: boolean = false;
@@ -53,34 +57,8 @@ export class FileComponent implements OnInit, OnChanges {
   iconSpecificFile: string = '';
 
   ngOnInit() {
-    if (StaticFileWrapper.isJavascript(this.file)) {
-      this.iconSpecificFile = "fab fa-js-square";
-    } else if (StaticFileWrapper.isHtml(this.file)) {
-      this.iconSpecificFile = "fab fa-html5";
-    } else if (StaticFileWrapper.isJson(this.file)) {
-      this.iconSpecificFile = "fab fa-js-square";
-    }
-
-    let depth = this.file.depth;
-
-    if (this.file.searched) {
-      depth = 1;
-    }
-
-    if (depth > 1) {
-      depth = depth + 1;
-    }
-
-    let wBase = (depth === 1) ? 31 : 15;
-    const w = 269 + (depth * wBase);
-    const pl = depth * wBase;
-
-    this.fileStyles['width'] = `${w}px`;
-    this.fileStyles['padding-left'] = `${pl}px`;
-  }
-
-  onDrag() {
-    this.dragDropBuffer.add(this.file);
+    this.selectIcon();
+    this.calcDepth();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -95,6 +73,16 @@ export class FileComponent implements OnInit, OnChanges {
         this.selected = false;
       }
     }
+  }
+
+  onCopy() {
+    this.copyBuffer.add(this.file);
+
+    this.copyBufferSubject.next();
+  }
+
+  onDrag() {
+    this.dragDropBuffer.add(this.file);
   }
 
   removeFileDialog() {
@@ -163,5 +151,34 @@ export class FileComponent implements OnInit, OnChanges {
     this.hovered = false;
 
     this.iconRef.nativeElement.setAttribute('style', 'color: #b5b5b5');
+  }
+
+  private selectIcon(): void {
+    if (StaticFileWrapper.isJavascript(this.file)) {
+      this.iconSpecificFile = "fab fa-js-square";
+    } else if (StaticFileWrapper.isHtml(this.file)) {
+      this.iconSpecificFile = "fab fa-html5";
+    } else if (StaticFileWrapper.isJson(this.file)) {
+      this.iconSpecificFile = "fab fa-js-square";
+    }
+  }
+
+  private calcDepth(): void {
+    let depth = this.file.depth;
+
+    if (this.file.searched) {
+      depth = 1;
+    }
+
+    if (depth > 1) {
+      depth = depth + 1;
+    }
+
+    let wBase = (depth === 1) ? 31 : 15;
+    const w = 269 + (depth * wBase);
+    const pl = depth * wBase;
+
+    this.fileStyles['width'] = `${w}px`;
+    this.fileStyles['padding-left'] = `${pl}px`;
   }
 }

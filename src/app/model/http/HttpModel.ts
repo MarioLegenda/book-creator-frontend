@@ -656,4 +656,17 @@ export class HttpModel {
       }
     }
   }
+
+  static copyFile(
+    fileId: string,
+    directoryId: string,
+    codeProjectUuid: string) {
+    return {
+      data: {
+        fileId,
+        directoryId,
+        codeProjectUuid,
+      }
+    }
+  }
 }

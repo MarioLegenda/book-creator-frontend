@@ -15,6 +15,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {ActionSetComponent} from "./components/structure/actionSet/action-set.component";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {DragDropBuffer} from "./services/DragDropBuffer";
+import {CopyBuffer} from "./services/CopyBuffer";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {DragDropBuffer} from "./services/DragDropBuffer";
     EditFileDialogComponent,
   ],
   providers: [
-    {provide: DragDropBuffer, useClass: DragDropBuffer}
+    {provide: DragDropBuffer, useClass: DragDropBuffer},
+    {provide: CopyBuffer, useClass: CopyBuffer},
   ]
 })
 export class FileExplorerModule { }

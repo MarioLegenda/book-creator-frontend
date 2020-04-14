@@ -30,6 +30,10 @@
     <h1 class="text">{{directory.name}}</h1>
 
     <div class="root-action-set" *ngIf="directory.isRoot">
+      <div class="action" *ngIf="copyExpected">
+        <i (click)="onPasteToRoot()" class="fas fa-paste"></i>
+      </div>
+
       <div class="action">
         <i (click)="newDirectoryFromRootDialog()" [ngClass]="this.icons.newDir"></i>
       </div>
@@ -46,11 +50,13 @@
       (onActionAddFileEvent)="newFileDialog()"
       (onActionAddDirectoryEvent)="newDirectoryDialog()"
       (onActionEditEvent)="editDirectoryDialog()"
+      (onActionPasteEvent)="onPaste()"
       [showDelete]="true"
       [showEdit]="true"
       [showAddFile]="true"
       [showAddDirectory]="true"
       [showCopy]="true"
+      [showPaste]="copyExpected"
     ></cms-action-set>
   </div>
 </div>
