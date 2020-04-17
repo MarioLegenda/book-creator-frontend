@@ -16,6 +16,7 @@ import {IFile} from "../../../models/IFile";
 import {IAddFileEvent} from "../../../models/IAddFileEvent";
 import {ErrorCodes} from "../../../../../../../error/ErrorCodes";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {IRemoveDirectoryEvent} from "../../../models/IRemoveDirectoryEvent";
 
 @Component({
   selector: 'cms-directory',
@@ -33,10 +34,11 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('copyUnbufferSubject') copyUnbufferSubject: Subject<any>;
 
-  @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter<IDirectory>();
+  @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter<IRemoveDirectoryEvent>();
   @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter<IDirectory>();
   @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter<IDirectory>();
   @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
+  @Output('refreshEvent') refreshEvent = new EventEmitter();
   @Output('addFileEvent') addFileEvent = new EventEmitter<IAddFileEvent>();
   @Output('directoryAttachedEvent') directoryAttachedEvent = new EventEmitter();
 
@@ -93,19 +95,23 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     this.doOnChanges(changes);
   }
 
-  onDrop() {
+  onDrop(): void {
     this.doDrop();
   }
 
-  onDrag() {
+  onRefresh(): void {
+    this.refreshEvent.emit();
+  }
+
+  onDrag(): void {
     this.dragDropBuffer.add(this.directory);
   }
 
-  onDragOver($event) {
+  onDragOver($event): void {
     $event.preventDefault();
   }
 
-  onDragEnter() {
+  onDragEnter(): void {
     this.draggedOver = true;
   }
 
@@ -113,42 +119,26 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     this.draggedOver = false;
   }
 
-  onPaste() {
+  onPaste(): void {
     this.doPaste();
   }
 
-  onPasteToRoot() {
+  onPasteToRoot(): void {
     if (!this.directory.isRoot) return;
 
     this.doPaste();
   }
 
-  directoryHovered() {
+  directoryHovered(): void {
     this.hovered = true;
   }
 
-  directoryUnHovered() {
+  directoryUnHovered(): void {
     this.hovered = false;
   }
 
-  removeDirectoryDialog() {
-    const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
-      width: '400px',
-      data: {name: this.directory.name},
-    });
-
-    dialogRef.afterClosed().subscribe((decision) => {
-      if (decision !== true) return;
-
-      const model = HttpModel.removeDirectoryModel(
-        this.directory.codeProjectUuid,
-        this.directory.id,
-      );
-
-      this.directoryRepository.removeDirectory(model).subscribe(() => {
-        this.removeDirectoryEvent.emit(this.directory);
-      });
-    });
+  removeDirectoryDialog(): void {
+    this.doRemoveDirectory();
   }
 
   newFileDialog(): void {
@@ -254,7 +244,6 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
       codeProjectUuid: this.directory.codeProjectUuid,
       name: '',
       id: this.directory.id,
-      depth: this.directory.depth,
       type: 'directory',
       isRoot: false,
     };
@@ -314,7 +303,6 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
       directoryId: this.directory.id,
       content: '',
       type: '',
-      depth: this.directory.depth,
       codeProjectUuid: this.directory.codeProjectUuid,
       extension: this.extension,
     };
@@ -347,7 +335,52 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   private doDrop() {
     const value = this.dragDropBuffer.get();
 
-    if (value.depth === this.directory.depth) return;
+    if (value.type === 'file' && value.depth === this.directory.depth) {
+      this.draggedOver = false;
+
+      return;
+    }
+
+    if (value.type === 'directory') {
+      if (
+        value.name === this.directory.name &&
+        value.depth == this.directory.depth) {
+        this.draggedOver = false;
+
+        return;
+      }
+
+      const fromDirectoryId = value.id;
+      const toDirectoryId = this.directory.id;
+      const codeProjectUuid = this.directory.codeProjectUuid;
+
+      const model = HttpModel.cutDirectory(fromDirectoryId, toDirectoryId, codeProjectUuid);
+
+      this.directoryRepository.cutDirectory(model).subscribe((response) => {
+        const removeDirectoryEvent = {
+          directory: (value as IDirectory),
+          sendDirectoryEmptied: false,
+        };
+
+        this.removeDirectoryEvent.emit(removeDirectoryEvent);
+
+        const cuttedDirectory = response.fromDirectory;
+        cuttedDirectory.type = 'directory';
+
+        if (!this.directory.isRoot) {
+          if (!this.expanded) {
+            this.onExpandDirectory();
+          } else {
+            this.expandDirectory();
+
+            this.addDirectoryEvent.emit({
+              parent: this.directory,
+              created: cuttedDirectory,
+            });
+          }
+        }
+      });
+    }
 
     if (value.type === 'file') {
       const fileId: string = value.id;
@@ -475,5 +508,28 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
         this.selected = false;
       }
     }
+  }
+
+  private doRemoveDirectory(): void {
+    const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
+      width: '400px',
+      data: {name: this.directory.name},
+    });
+
+    dialogRef.afterClosed().subscribe((decision) => {
+      if (decision !== true) return;
+
+      const model = HttpModel.removeDirectoryModel(
+        this.directory.codeProjectUuid,
+        this.directory.id,
+      );
+
+      this.directoryRepository.removeDirectory(model).subscribe(() => {
+        this.removeDirectoryEvent.emit({
+          directory: this.directory,
+          sendDirectoryEmptied: true,
+        });
+      });
+    });
   }
 }

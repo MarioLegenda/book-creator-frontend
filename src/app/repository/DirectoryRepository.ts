@@ -114,4 +114,11 @@ export class DirectoryRepository {
         map((res: any) => res.data)
       )
   }
+
+  cutDirectory(model) {
+    return this.httpClient.post(this.projectRouteResolver.cutDirectory(), model)
+      .pipe(
+        map((res: any) => res.data)
+      )
+  }
 }

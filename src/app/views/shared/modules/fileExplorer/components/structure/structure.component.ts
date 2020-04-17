@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 import {FileRepository} from "../../../../../../repository/FileRepository";
-import {ReplaySubject, Subject} from "rxjs";
+import {ReplaySubject, Subject, Subscription} from "rxjs";
 import {StructureTracker} from "../../../../../../library/StructureTracker";
 import {Store} from "@ngrx/store";
 import {viewEditorDirectoryEmptied} from "../../../../../../store/editor/viewActions";
@@ -10,6 +10,7 @@ import {IFile} from "../../models/IFile";
 import {IDirectory} from "../../models/IDirectory";
 import {IAddFileEvent} from "../../models/IAddFileEvent";
 import {IBufferValue} from "../../models/BufferValue";
+import {IRemoveDirectoryEvent} from "../../models/IRemoveDirectoryEvent";
 
 @Component({
   selector: 'cms-structure',
@@ -58,6 +59,15 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     this.structureWrapper.nativeElement.setAttribute('style', `height: ${e - fe}px`);
   }
 
+  onRefresh() {
+    this.structureTracker.clearAll();
+    this.structure = [];
+
+    setTimeout(() => {
+      this.expandRootDirectory();
+    }, 500);
+  }
+
   ngOnDestroy(): void {
     this.searchSubscriber.unsubscribe();
   }
@@ -70,38 +80,26 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     return entry.type === 'file';
   }
 
-  expandDirectoryEvent(directory: IDirectory) {
+  expandDirectoryEvent(directory: IDirectory, structureOnly: boolean = false) {
     if (directory.isRoot) return;
 
-    let tempSubject = new Subject();
+    if (!structureOnly) {
+      let tempSubject = new Subject();
 
-    this.getSubstructure(directory, tempSubject);
+      this.getSubstructure(directory, tempSubject);
 
-    tempSubject.subscribe((structure: any[]) => {
-      if (!this.structureTracker.hasStructure(directory.id)) {
-        this.structureTracker.createStructure(directory.id);
-      }
+      const subscriber: Subscription = tempSubject.subscribe((structure: any[]) => {
+        this.expandStructure(directory, structure);
 
-      let inx = null;
-      for (let i = 0; i < this.structure.length; i++) {
-        if (this.structure[i].type === 'directory' && this.structure[i].id === directory.id) {
-          inx = i;
+        subscriber.unsubscribe();
+      });
 
-          break;
-        }
-      }
+      return;
+    }
 
-      const ids: string[] = [];
-      for (const s of structure) {
-        if (!ids.includes(s)) {
-          ids.push((s.type === 'file') ? s.id : s.id);
-        }
-      }
+    if (structureOnly) {
 
-      this.structureTracker.addToStructure(directory.id, ids);
-
-      this.structure.splice(inx + 1, 0, ...structure);
-    });
+    }
   }
 
   unExpandDirectoryEvent(directory: IDirectory) {
@@ -177,18 +175,27 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  removeDirectoryEvent(directory: IDirectory) {
+  removeDirectoryEvent(event: IRemoveDirectoryEvent) {
+    const directory: IDirectory = event.directory;
+    const sendDirectoryEmptied = event.sendDirectoryEmptied;
+
     if (!this.structureTracker.hasStructure(directory.id)) {
       for (const s of this.structure) {
         if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.id)) {
           this.structureTracker.clearStructure(s.id);
-          this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.id}));
+          if (sendDirectoryEmptied) {
+            this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.id}));
+          }
         }
       }
 
       this.removeDirectoryStructure(directory.id);
 
-      return this.sendDirectoryEmptied(directory.id);
+      if (sendDirectoryEmptied) {
+        this.sendDirectoryEmptied(directory.id);
+      }
+
+      return;
     }
 
     const structures = this.structureTracker.getStructure(directory.id);
@@ -199,14 +206,42 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.removeDirectoryStructure(directory.id);
 
-    this.sendDirectoryEmptied(directory.id);
+    if (sendDirectoryEmptied) {
+      this.sendDirectoryEmptied(directory.id);
+    }
   }
 
   onItemAttachEvent(item) {
     this.selectedItem = item;
   }
 
-  private expandRootDirectory() {
+  expandStructure(directory: IDirectory, structure: any[]) {
+    if (!this.structureTracker.hasStructure(directory.id)) {
+      this.structureTracker.createStructure(directory.id);
+    }
+
+    let inx = null;
+    for (let i = 0; i < this.structure.length; i++) {
+      if (this.structure[i].type === 'directory' && this.structure[i].id === directory.id) {
+        inx = i;
+
+        break;
+      }
+    }
+
+    const ids: string[] = [];
+    for (const s of structure) {
+      if (!ids.includes(s)) {
+        ids.push((s.type === 'file') ? s.id : s.id);
+      }
+    }
+
+    this.structureTracker.addToStructure(directory.id, ids);
+
+    this.structure.splice(inx + 1, 0, ...structure);
+  }
+
+  private expandRootDirectory(): void {
     this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((resolver) => {
       const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 

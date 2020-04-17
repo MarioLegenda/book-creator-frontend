@@ -41,7 +41,6 @@ export class AddDirectoryDialogComponent {
 
     const httpModel = HttpModel.createDirectoryModel(
       this.model.codeProjectUuid,
-      this.model.depth + 1,
       this.model.name,
       this.model.id,
       false,

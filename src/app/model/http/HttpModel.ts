@@ -410,7 +410,6 @@ export class HttpModel {
 
   static createDirectoryModel(
     codeProjectUuid: string,
-    depth: number,
     name: string,
     parent: string,
     isRoot: boolean,
@@ -418,7 +417,6 @@ export class HttpModel {
     return {
       data: {
         codeProjectUuid,
-        depth,
         name,
         parent,
         isRoot,
@@ -668,5 +666,19 @@ export class HttpModel {
         codeProjectUuid,
       }
     }
+  }
+
+  static cutDirectory(
+    fromDirectoryId: string,
+    toDirectoryId: string,
+    codeProjectUuid,
+  ) {
+    return {
+      data: {
+        fromDirectoryId,
+        toDirectoryId,
+        codeProjectUuid,
+      }
+    };
   }
 }

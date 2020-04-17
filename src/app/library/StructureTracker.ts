@@ -48,4 +48,8 @@ export class StructureTracker {
 
     st.splice(idx, 1);
   }
+
+  clearAll(): void {
+    this.structure = [];
+  }
 }

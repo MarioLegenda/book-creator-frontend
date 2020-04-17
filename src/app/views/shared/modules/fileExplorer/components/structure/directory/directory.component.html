@@ -5,6 +5,7 @@
   (dragenter)="onDragEnter()"
   (dragexit)="onDragExit()"
   (drag)="onDrag()"
+  draggable="true"
   [id]="directory.id"
   [ngClass]="{'dir-selected': selected && !directory.isRoot && selectedItem && selectedItem.type === 'directory' && selectedItem.id === directory.id}">
   <div
@@ -32,6 +33,10 @@
     <div class="root-action-set" *ngIf="directory.isRoot">
       <div class="action" *ngIf="copyExpected">
         <i (click)="onPasteToRoot()" class="fas fa-paste"></i>
+      </div>
+
+      <div class="action">
+        <i (click)="onRefresh()" class="fas fa-sync-alt"></i>
       </div>
 
       <div class="action">

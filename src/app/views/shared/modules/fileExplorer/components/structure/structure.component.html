@@ -12,6 +12,7 @@
         (fileRemovedEvent)="removeFileEvent($event)"
         (removeDirectoryEvent)="removeDirectoryEvent($event)"
         (directoryAttachedEvent)="onItemAttachEvent($event)"
+        (refreshEvent)="onRefresh()"
         [selectedItem]="selectedItem"
         [extension]="project.environment.extension"
         [copyBufferSubject]="copyBufferSubject"
