@@ -376,6 +376,13 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
         const cuttedDirectory = response.fromDirectory;
         cuttedDirectory.type = 'directory';
 
+        if (this.directory.isRoot) {
+          this.addDirectoryEvent.emit({
+            parent: this.directory,
+            created: cuttedDirectory,
+          });
+        }
+
         if (!this.directory.isRoot) {
           if (!this.expanded) {
             this.onExpandDirectory();
