@@ -17,6 +17,7 @@ import {IAddFileEvent} from "../../../models/IAddFileEvent";
 import {ErrorCodes} from "../../../../../../../error/ErrorCodes";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {IRemoveDirectoryEvent} from "../../../models/IRemoveDirectoryEvent";
+import {IBufferEvent} from "../../../models/IBufferEvent";
 
 @Component({
   selector: 'cms-directory',
@@ -78,8 +79,10 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     this.runRootSpecificActions();
     this.subscribeToActions();
 
-    this.copyBufferSubscriber = this.copyBufferSubject.subscribe(() => {
-      this.copyExpected = true;
+    this.copyBufferSubscriber = this.copyBufferSubject.subscribe((event: IBufferEvent) => {
+      if (event.id !== this.directory.id) {
+        this.copyExpected = true;
+      }
     });
 
     this.copyUnbuffeerSubscriber = this.copyUnbufferSubject.subscribe(() => {
@@ -93,6 +96,12 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.doOnChanges(changes);
+  }
+
+  onCopy(): void {
+    this.copyBuffer.add(this.directory);
+
+    this.copyBufferSubject.next(this.directory);
   }
 
   onDrop(): void {
@@ -434,7 +443,32 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
       let failedCopies: boolean = false;
       let didExpand = false;
+
       for (const value of values) {
+        if (value.type === 'directory') {
+          const model = HttpModel.copyDirectory(
+            value.id,
+            this.directory.id,
+            this.directory.codeProjectUuid,
+          );
+
+          this.directoryRepository.copyDirectory(model).subscribe((copiedDirectory: IDirectory) => {
+            console.log(copiedDirectory);
+          }, (e) => {
+            const response = e.error;
+
+            if (response.errorCode === ErrorCodes.ResourceExists) {
+              if (!failedCopies) {
+                this.snackBar.open('Some files or directories already exist and could not be copied', null, {
+                  duration: 5000,
+                });
+              }
+
+              failedCopies = true;
+            }
+          });
+        }
+
         if (value.type === 'file') {
           const model = HttpModel.copyFile(
             value.id,

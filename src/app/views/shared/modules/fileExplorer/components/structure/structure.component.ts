@@ -11,6 +11,7 @@ import {IDirectory} from "../../models/IDirectory";
 import {IAddFileEvent} from "../../models/IAddFileEvent";
 import {IBufferValue} from "../../models/BufferValue";
 import {IRemoveDirectoryEvent} from "../../models/IRemoveDirectoryEvent";
+import {IBufferEvent} from "../../models/IBufferEvent";
 
 @Component({
   selector: 'cms-structure',
@@ -26,8 +27,8 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
   structure = [];
   selectedItem = null;
 
-  copyBufferSubject = new Subject<IBufferValue>();
-  copyUnBufferSubject = new Subject<IBufferValue>();
+  copyBufferSubject = new Subject<IBufferEvent>();
+  copyUnBufferSubject = new Subject<IBufferEvent>();
 
   @Input('project') project: any;
   @Input('searchSubject') searchSubject: ReplaySubject<any>;

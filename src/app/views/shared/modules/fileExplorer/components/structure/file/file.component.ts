@@ -78,7 +78,7 @@ export class FileComponent implements OnInit, OnChanges {
   onCopy() {
     this.copyBuffer.add(this.file);
 
-    this.copyBufferSubject.next();
+    this.copyBufferSubject.next(this.file);
   }
 
   onDrag() {

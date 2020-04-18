@@ -121,4 +121,11 @@ export class DirectoryRepository {
         map((res: any) => res.data)
       )
   }
+
+  copyDirectory(model) {
+    return this.httpClient.post(this.projectRouteResolver.copyDirectory(), model)
+      .pipe(
+        map((res: any) => res.data)
+      )
+  }
 }

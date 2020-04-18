@@ -681,4 +681,18 @@ export class HttpModel {
       }
     };
   }
+
+  static copyDirectory(
+    fromDirectoryId: string,
+    toDirectoryId: string,
+    codeProjectUuid,
+  ) {
+    return {
+      data: {
+        fromDirectoryId,
+        toDirectoryId,
+        codeProjectUuid,
+      }
+    };
+  }
 }

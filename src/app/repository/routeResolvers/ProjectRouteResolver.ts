@@ -21,6 +21,7 @@ export class ProjectRouteResolver {
     cutFile: `${this.bookApiUri}/api/v1/directory/cut-file`,
     copyFile: `${this.bookApiUri}/api/v1/directory/copy-file`,
     cutDirectory: `${this.bookApiUri}/api/v1/directory/cut-directory`,
+    copyDirectory: `${this.bookApiUri}/api/v1/directory/copy-directory`,
   };
 
   createCodeProject(): string {
@@ -73,5 +74,9 @@ export class ProjectRouteResolver {
 
   cutDirectory(): string {
     return this.routes.cutDirectory;
+  }
+
+  copyDirectory(): string {
+    return this.routes.copyDirectory;
   }
 }
