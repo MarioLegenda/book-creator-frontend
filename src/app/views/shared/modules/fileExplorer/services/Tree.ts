@@ -47,14 +47,40 @@ export class Parent {
 }
 
 export class Node {
-  private readonly index: number;
+  private index: number;
 
   constructor(
     private readonly children: Children,
     private parent: Parent,
     private value: NodeValue,
-  ) {
-    this.index = this.parent.getIndex() + 1;
+  ) {}
+
+  addToNode(node: Node): Node {
+    const parent: Parent = node.getParent();
+
+    if (this.getParent().getId() === parent.getId()) {
+      if (this.children.length() === 0) {
+        this.setIndex(this.getParent().getIndex() + 1);
+
+        this.children.add(node);
+
+        return node;
+      }
+
+      const parentIdx: number = node.getParent().getIndex();
+      const len: number = this.children.length();
+      node.setIndex((parentIdx + len) + 1);
+
+      this.children.add(node);
+
+      return node;
+    }
+
+    return this.children.addToNode(node);
+  }
+
+  setIndex(idx: number): void {
+    this.index = idx;
   }
 
   getParent(): Parent {
@@ -62,11 +88,11 @@ export class Node {
   }
 
   searchParent(id: string): Parent | null {
-    if (this.getParent().getId() === this.value.getId()) {
+    if (this.getParent().getId() === this.parent.getId()) {
       return this.parent;
     }
 
-    return this.children.getParent(id);
+    return this.children.searchParent(id);
   }
 
   getIndex(): number {
@@ -85,7 +111,21 @@ export class Children {
     this.values[node.getNodeValue().getId()] = node;
   }
 
-  getParent(id: string): Parent | null {
+  addToNode(node: Node): Node {
+    const keys = Object.keys(this.values);
+
+    for (const k of keys) {
+      const existingNode: Node = this.values[k];
+
+      if (existingNode.addToNode(node)) {
+        return node;
+      }
+    }
+
+    return null;
+  }
+
+  searchParent(id: string): Parent | null {
     const keys = Object.keys(this.values);
 
     for (const k of keys) {
@@ -94,6 +134,12 @@ export class Children {
 
       if (parent) return parent;
     }
+
+    return null;
+  }
+
+  length(): number {
+    return Object.keys(this.values).length;
   }
 }
 
@@ -109,20 +155,28 @@ export class Tree {
     this.value = value;
   }
 
-  add(node: Node) {
-    this.children.add(node);
+  getId(): string {
+    return this.id;
+  }
+
+  add(node: Node): Node {
+    if (node.getParent().getId() === this.getId()) {
+      this.children.add(node);
+    }
+
+    return this.children.addToNode(node);
   }
 
   getIndex(): number {
     return this.index;
   }
 
-  getParent(id: string): Parent | null {
+  searchParent(id: string): Parent {
     if (id === this.id) {
       return this.asParent();
     }
 
-    return this.children.getParent(id);
+    return this.children.searchParent(id);
   }
 
   getNodeValue(): NodeValue {

@@ -118,15 +118,11 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     const parent = data.parent;
     const created = data.created;
 
-    if (!this.structureTracker.hasStructure(parent.id)) {
-      this.structureTracker.createStructure(parent.id);
-    }
+    const node: Node = createNode(created, this.tree.searchParent(parent.id));
 
-    this.structureTracker.addItemToStructure(parent.id, created.id);
+    this.tree.add(node);
 
-    const idx: number = this.structure.findIndex(val => val.id === parent.id);
-
-    this.structure.splice(idx + 1, 0, created);
+    this.structure[node.getIndex()] = created;
   }
 
   addFileEvent(data: IAddFileEvent) {
