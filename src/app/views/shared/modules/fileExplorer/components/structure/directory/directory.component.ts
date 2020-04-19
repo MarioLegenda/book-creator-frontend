@@ -271,9 +271,9 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
           created: resolver.factory(this.directory.codeProjectUuid, resolver.originalModel),
         });
 
-        if (!this.expanded) {
+/*        if (!this.expanded) {
           this.expandDirectory();
-        }
+        }*/
       }
     });
   }

@@ -118,11 +118,11 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     const parent = data.parent;
     const created = data.created;
 
-    const node: Node = createNode(created, this.tree.searchParent(parent.id));
+    const node: Node = createNode(created, this.tree.createParent(parent.id));
 
     this.tree.add(node);
 
-    this.structure[node.getIndex()] = created;
+    this.structure.splice(node.getIndex(), 0, created);
   }
 
   addFileEvent(data: IAddFileEvent) {
@@ -176,42 +176,15 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     const sendDirectoryEmptied = event.sendDirectoryEmptied;
 
     const node: Node = this.tree.get(directory.id);
-
-    const nodeValues: NodeValue[] = node.reduceArray((nodeValue: NodeValue) => {
-      return true;
+    const reduced: any[] = node.reduceArray((node: Node, reducer: any[]) => {
+      reducer.push(node.getIndex());
     }, []);
 
-    console.log(nodeValues);
-/*    if (!this.structureTracker.hasStructure(directory.id)) {
-      for (const s of this.structure) {
-        if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.id)) {
-          this.structureTracker.clearStructure(s.id);
-          if (sendDirectoryEmptied) {
-            this.store.dispatch(viewEditorDirectoryEmptied({directoryId: s.id}));
-          }
-        }
-      }
-
-      this.removeDirectoryStructure(directory.id);
-
-      if (sendDirectoryEmptied) {
-        this.sendDirectoryEmptied(directory.id);
-      }
-
-      return;
-    }
-
-    const structures = this.structureTracker.getStructure(directory.id);
-
-    this.removeStructures(structures, true);
-
-    this.structureTracker.clearStructure(directory.id);
-
-    this.removeDirectoryStructure(directory.id);
+    this.structure.splice(reduced[0], reduced.length);
 
     if (sendDirectoryEmptied) {
       this.sendDirectoryEmptied(directory.id);
-    }*/
+    }
   }
 
   onItemAttachEvent(item) {
@@ -262,7 +235,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.tree.add(node);
 
-          this.structure[node.getIndex()] = node.getNodeValue().getValue();
+          this.structure.splice(node.getIndex(), 0, s);
         }
       });
     });

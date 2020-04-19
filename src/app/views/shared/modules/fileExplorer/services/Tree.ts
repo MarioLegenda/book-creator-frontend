@@ -59,21 +59,6 @@ export class Node {
     const parent: Parent = node.getParent();
 
     if (this.getNodeValue().getId() === parent.getId()) {
-      if (this.children.length() === 0) {
-        const idx = parent.getIndex() + 1;
-        node.setIndex(idx);
-
-        this.children.add(node);
-
-        return node;
-      }
-
-      const parentIdx: number = parent.getIndex();
-      const len: number = this.children.length();
-      const idx = (parentIdx + len) + 1;
-
-      node.setIndex(idx);
-
       this.children.add(node);
 
       return node;
@@ -86,39 +71,36 @@ export class Node {
     return this.children.getNode(id);
   }
 
-  setIndex(idx: number): void {
-    this.index = idx;
-  }
-
   getParent(): Parent {
     return this.parent;
   }
 
-  searchParent(id: string): Parent | null {
+  createParent(id: string): Parent | null {
     if (this.getNodeValue().getId() === id) {
       return this.asParent();
     }
 
-    return this.children.searchParent(id);
+    return this.children.createParent(id);
   }
 
   getIndex(): number {
-    return this.index;
+    return this.getParent().getIndex() + this.children.length() + 1;
   }
 
   getNodeValue(): NodeValue {
     return this.value;
   }
 
-  reduceArray(fn: Function, reducer: NodeValue[]): NodeValue[] {
-    const confirm: boolean = fn.call(null, this.getNodeValue());
-    if (confirm) reducer.push(this.getNodeValue());
+  reduceArray(fn: Function, reducer: any[]): any[] {
+    fn.call(null, this, reducer);
 
-    return this.children.reduceArray(fn, reducer);
+    this.children.reduceArray(fn, reducer);
+
+    return deepcopy(reducer);
   }
 
   asParent(): Parent {
-    return new Parent(this.getNodeValue().getId(), this.getIndex(), this.value.copy());
+    return new Parent(this.getNodeValue().getId(), this.getParent().getIndex(), this.value.copy());
   }
 }
 
@@ -171,22 +153,12 @@ export class Children {
     return null;
   }
 
-  searchParent(id: string): Parent | null {
+  createParent(id: string): Parent | null {
     const keys = Object.keys(this.values);
 
-    // first, search immediate children only
-/*    for (const k of keys) {
-      const node = this.values[k];
-
-      if (node.getNodeValue().getId() === id) {
-        return node.asParent();
-      }
-    }*/
-
-    // then search node children
     for (const k of keys) {
       const node = this.values[k];
-      const parent: Parent = node.searchParent(id);
+      const parent: Parent = node.createParent(id);
 
       if (parent) return parent;
     }
@@ -194,19 +166,16 @@ export class Children {
     return null;
   }
 
-  reduceArray(fn: Function, reducer: NodeValue[]): NodeValue[] {
+  reduceArray(fn: Function, reducer: any[]): void {
     const keys = Object.keys(this.values);
 
-    console.log(this.values);
     for (const key of keys) {
       const node: Node = this.values[key];
 
-      console.log(node.reduceArray(fn, reducer));
-
-      reducer = [...reducer, ...node.reduceArray(fn, reducer)];
+      node.reduceArray(fn, reducer);
     }
 
-    return reducer;
+    return deepcopy(reducer);
   }
 
   length(): number {
@@ -232,19 +201,9 @@ export class Tree {
 
   add(node: Node): Node {
     if (node.getParent().getId() === this.getId()) {
-      if (this.children.length() === 0) {
-        node.setIndex(this.index + 1);
+      this.children.add(node);
 
-        this.children.add(node);
-
-        return node;
-      }
-
-      const parentIdx: number = this.index;
-      const len: number = this.children.length();
-      node.setIndex((parentIdx + len) + 1);
-
-      return this.children.add(node);
+      return node;
     }
 
     return this.children.addToNode(node);
@@ -258,23 +217,35 @@ export class Tree {
     return this.index;
   }
 
-  searchParent(id: string): Parent {
+  createParent(id: string): Parent {
     if (id === this.id) {
       return this.asParent();
     }
 
-    return this.children.searchParent(id);
+    return this.children.createParent(id);
   }
 
   getNodeValue(): NodeValue {
     return this.value;
   }
 
-  reduceArray(fn: Function, reducer: NodeValue[]): NodeValue[] {
-    return this.children.reduceArray(fn, reducer);
+  reduceArray(fn: Function, reducer: any[]) {
+    this.children.reduceArray(fn, reducer);
+
+    return deepcopy(reducer);
   }
 
   asParent(): Parent {
-    return new Parent(this.id, this.getIndex(), this.value.copy());
+    let idx: number;
+    if (this.children.length() === 0) {
+      idx = this.index + 1;
+    } else {
+      const len: number = this.children.length();
+      idx = (this.index + len) + 1;
+    }
+
+    console.log(idx);
+
+    return new Parent(this.id, idx, this.value.copy());
   }
 }
