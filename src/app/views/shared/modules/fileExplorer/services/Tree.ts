@@ -1,117 +1,135 @@
 import deepcopy from 'deepcopy';
 
-/**
- * @param {string} id
- * @param {number} index
- * @param value
- * @constructor
- */
-export function NodeValue(
-  id,
-  index,
-  value
-) {
-  function getId() {
-    return id;
+export class NodeValue {
+  private value: any;
+
+  constructor(
+    private id: string,
+    value: any
+  ) {
+    this.value = deepcopy(value);
   }
 
-  function getIndex() {
-    return index;
+  getId() {
+    return this.id;
   }
 
-  function getValue() {
-    return value;
+  getValue() {
+    return this.value;
   }
 
-  this.getId = getId;
-  this.getIndex = getIndex;
-  this.getNodeValue = getValue;
+  copy(): NodeValue {
+    return new NodeValue(this.id, deepcopy(this.value));
+  }
 }
 
-export function Parent(id, index, value) {
-  function getId() {
-    return id;
+export class Parent {
+  private readonly value: any;
+  constructor(
+    private readonly id: string,
+    private readonly index: number,
+    value: any)
+  {
+    this.value = deepcopy(value);
   }
 
-  function getIndex() {
-    return index;
+  getId(): string {
+    return this.id;
   }
 
-  function getValue() {
-    return value;
+  getIndex(): number {
+    return this.index;
   }
 
-  this.getId = getId;
-  this.getIndex = getIndex;
-  this.getNodeValue = getValue;
+  getValue(): any {
+    return this.value;
+  }
 }
 
-/**
- *
- * @param {Children} children
- * @param {string} parent
- * @param {NodeValue} value
- * @constructor
- */
-export function Node(
-  children,
-  parent,
-  value,
-) {
-  const c = deepcopy(children);
-  const v = deepcopy(value);
+export class Node {
+  private readonly index: number;
 
-  function getParent() {
-    return parent;
+  constructor(
+    private readonly children: Children,
+    private parent: Parent,
+    private value: NodeValue,
+  ) {
+    this.index = this.parent.getIndex() + 1;
   }
 
-  function getNodeValue() {
-    return v;
+  getParent(): Parent {
+    return this.parent;
   }
 
-  this.getParent = getParent;
-  this.getNodeValue = getNodeValue;
+  searchParent(id: string): Parent | null {
+    if (this.getParent().getId() === this.value.getId()) {
+      return this.parent;
+    }
+
+    return this.children.getParent(id);
+  }
+
+  getIndex(): number {
+    return this.index;
+  }
+
+  getNodeValue(): NodeValue {
+    return this.value;
+  }
 }
 
-function Children() {
-  const values = {};
+export class Children {
+  private values: {[key: string]: Node} = {};
 
-  function add(node) {
-    values[node.getNodeValue().getId()] = node;
+  add(node: Node) {
+    this.values[node.getNodeValue().getId()] = node;
   }
 
-  function _dump() {
-    return values;
-  }
+  getParent(id: string): Parent | null {
+    const keys = Object.keys(this.values);
 
-  this.add = add;
-  this._dump = _dump;
-}
+    for (const k of keys) {
+      const node = this.values[k];
+      const parent: Parent = node.searchParent(id);
 
-/**
- *
- * @param {string} id
- * @param {Children} children
- * @constructor
- */
-export function Root(
-  id,
-  children,
-) {
-  const c = deepcopy(children);
-
-  function add(node) {
-    if (node.getParent() === id) {
-      c.add(node);
+      if (parent) return parent;
     }
   }
+}
 
-  function get(id) {
-    if (id === id) {
-      return c;
-    }
+export class Tree {
+  private readonly id: string;
+  private readonly children: Children;
+  private readonly value: NodeValue;
+  private readonly index: number = 0;
+
+  constructor(id: string, children: Children, value: NodeValue) {
+    this.id = id;
+    this.children = children;
+    this.value = value;
   }
 
-  this.add = add;
-  this.get = get;
+  add(node: Node) {
+    this.children.add(node);
+  }
+
+  getIndex(): number {
+    return this.index;
+  }
+
+  getParent(id: string): Parent | null {
+    if (id === this.id) {
+      return this.asParent();
+    }
+
+    return this.children.getParent(id);
+  }
+
+  getNodeValue(): NodeValue {
+    return this.value;
+  }
+
+  asParent(): Parent {
+    return new Parent(this.id, this.getIndex(), this.value.copy());
+  }
 }

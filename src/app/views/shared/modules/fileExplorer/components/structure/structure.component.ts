@@ -11,6 +11,8 @@ import {IDirectory} from "../../models/IDirectory";
 import {IAddFileEvent} from "../../models/IAddFileEvent";
 import {IRemoveDirectoryEvent} from "../../models/IRemoveDirectoryEvent";
 import {IBufferEvent} from "../../models/IBufferEvent";
+import {Tree, Children, Parent, Node, NodeValue} from "../../services/Tree";
+import {createNode, createRootTree} from "../../services/commonTreeFunctions";
 
 @Component({
   selector: 'cms-structure',
@@ -36,6 +38,8 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('structureWrapper', {static: true}) structureWrapper: ElementRef;
 
   private searchSubscriber;
+
+  private tree;
 
   constructor(
     private directoryRepository: DirectoryRepository,
@@ -241,25 +245,22 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((resolver) => {
       const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 
-      if (!this.structureTracker.hasStructure(directory.id)) {
-        this.structureTracker.createStructure(directory.id);
-      }
-
-      this.structure.push(directory);
+      this.tree = createRootTree(directory);
 
       let tempSubject = new Subject();
 
       this.getSubstructure(directory, tempSubject);
 
       tempSubject.subscribe((structure: any) => {
-        this.structure = [...this.structure, ...structure];
+        this.structure[this.tree.getIndex()] = this.tree.getNodeValue().getValue();
 
-        const ids: string[] = [];
         for (const s of structure) {
-          ids.push(s.id);
-        }
+          const node: Node = createNode(s, this.tree.asParent());
 
-        this.structureTracker.addToStructure(directory.id, ids);
+          this.tree.add(node);
+
+          this.structure[node.getIndex()] = node.getNodeValue().getValue();
+        }
       });
     });
   }
