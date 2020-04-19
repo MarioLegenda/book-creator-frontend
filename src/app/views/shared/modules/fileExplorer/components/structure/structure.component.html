@@ -3,6 +3,21 @@
   #structureWrapper>
 
     <div *ngFor="let item of structure">
+      <cms-file
+        *ngIf="isFile(item)"
+        (fileAttachedEvent)="onItemAttachEvent($event)"
+        [selectedItem]="selectedItem"
+        [file]="item"
+        [copyBufferSubject]="copyBufferSubject"
+        [extension]="project.environment.extension"
+        (fileRemovedEvent)="removeFileEvent($event)">
+
+        <div class="drag-preview" *cdkDragPreview>
+          Drop when ready
+        </div>
+
+      </cms-file>
+
       <cms-directory
         *ngIf="isDirectory(item)"
         (expandDirectoryEvent)="expandDirectoryEvent($event)"
@@ -24,20 +39,5 @@
         </div>
 
       </cms-directory>
-
-      <cms-file
-        *ngIf="isFile(item)"
-        (fileAttachedEvent)="onItemAttachEvent($event)"
-        [selectedItem]="selectedItem"
-        [file]="item"
-        [copyBufferSubject]="copyBufferSubject"
-        [extension]="project.environment.extension"
-        (fileRemovedEvent)="removeFileEvent($event)">
-
-        <div class="drag-preview" *cdkDragPreview>
-          Drop when ready
-        </div>
-
-      </cms-file>
     </div>
 </div>

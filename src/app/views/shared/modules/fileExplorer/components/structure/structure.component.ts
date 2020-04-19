@@ -9,7 +9,6 @@ import {httpRemoveFileFinished} from "../../../../../../store/editor/httpActions
 import {IFile} from "../../models/IFile";
 import {IDirectory} from "../../models/IDirectory";
 import {IAddFileEvent} from "../../models/IAddFileEvent";
-import {IBufferValue} from "../../models/BufferValue";
 import {IRemoveDirectoryEvent} from "../../models/IRemoveDirectoryEvent";
 import {IBufferEvent} from "../../models/IBufferEvent";
 
@@ -96,10 +95,6 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
       return;
-    }
-
-    if (structureOnly) {
-
     }
   }
 

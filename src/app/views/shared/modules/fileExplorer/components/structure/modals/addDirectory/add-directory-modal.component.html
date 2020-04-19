@@ -26,6 +26,10 @@
     {{noWhitespace}}
   </p>
 
+  <p *ngIf="maxDirectoryDepth" class="error col-xs-12 col-md-12 col-lg-12">
+    {{maxDirectoryDepth}}
+  </p>
+
   <div class="dialog-actions">
     <button [disabled]="createDisabled" class="btn create" cdkFocusInitial (click)="createDirectory()">Create</button>
   </div>

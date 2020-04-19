@@ -174,7 +174,7 @@ export class FileComponent implements OnInit, OnChanges {
       depth = depth + 1;
     }
 
-    let wBase = (depth === 1) ? 31 : 15;
+    let wBase = (depth === 1) ? 33 : 17;
     const w = 269 + (depth * wBase);
     const pl = depth * wBase;
 

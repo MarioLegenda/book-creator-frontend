@@ -216,8 +216,8 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private setNestedPosition() {
-    const w = 269 + (this.directory.depth * 15);
-    const pl = this.directory.depth * 15;
+    const w = 269 + (this.directory.depth * 17);
+    const pl = this.directory.depth * 17;
 
     this.dirStyles['width'] = `${w}px`;
     this.dirStyles['padding-left'] = `${pl}px`;
@@ -365,6 +365,7 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
       const model = HttpModel.cutDirectory(fromDirectoryId, toDirectoryId, codeProjectUuid);
 
+      let failed: boolean = false;
       this.directoryRepository.cutDirectory(model).subscribe((response) => {
         const removeDirectoryEvent = {
           directory: (value as IDirectory),
@@ -394,6 +395,26 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
               created: cuttedDirectory,
             });
           }
+        }
+      }, (e) => {
+        const response = e.error;
+
+        if (response.errorCode === ErrorCodes.ResourceExists) {
+          if (!failed) {
+            this.snackBar.open('Some files or directories already exist and could not be cut', null, {
+              duration: 5000,
+            });
+          }
+
+          failed = true;
+        } else if (response.errorCode === ErrorCodes.InternalError) {
+          if (!failed) {
+            this.snackBar.open('An internal error happened and directory could not be cut', null, {
+              duration: 5000,
+            });
+          }
+
+          failed = true;
         }
       });
     }
@@ -437,6 +458,14 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
           }
 
           failed = true;
+        } else {
+          if (!failed) {
+            this.snackBar.open('An internal error happened and directory could not be cut', null, {
+              duration: 5000,
+            });
+          }
+
+          failed = true;
         }
       });
     }
@@ -467,6 +496,14 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
             if (response.errorCode === ErrorCodes.ResourceExists) {
               if (!failedCopies) {
                 this.snackBar.open('Some files or directories already exist and could not be copied', null, {
+                  duration: 5000,
+                });
+              }
+
+              failedCopies = true;
+            } else {
+              if (!failedCopies) {
+                this.snackBar.open('An internal error happened and directory could not be cut', null, {
                   duration: 5000,
                 });
               }
@@ -514,6 +551,22 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
             if (response.errorCode === ErrorCodes.ResourceExists) {
               if (!failedCopies) {
                 this.snackBar.open('Some files or directories already exist and could not be copied', null, {
+                  duration: 5000,
+                });
+              }
+
+              failedCopies = true;
+            } else if (response.errorCode === ErrorCodes.InternalError) {
+              if (!failedCopies) {
+                this.snackBar.open('An internal error happened and files or directories could not be copied', null, {
+                  duration: 5000,
+                });
+              }
+
+              failedCopies = true;
+            } else {
+              if (!failedCopies) {
+                this.snackBar.open('An internal error happened and directory could not be cut', null, {
                   duration: 5000,
                 });
               }

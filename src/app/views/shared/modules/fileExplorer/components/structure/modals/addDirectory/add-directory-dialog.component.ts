@@ -10,10 +10,11 @@ import {ErrorCodes} from "../../../../../../../../error/ErrorCodes";
   styleUrls: ['../../../../../../../../main/global-dialog.component.scss']
 })
 export class AddDirectoryDialogComponent {
-  directoryExists = null;
-  noWhitespace = null;
+  directoryExists: string = null;
+  noWhitespace: string = null;
+  maxDirectoryDepth: string = null;
 
-  createDisabled = false;
+  createDisabled: boolean = false;
 
   constructor(
     private directoryRepository: DirectoryRepository,
@@ -52,6 +53,8 @@ export class AddDirectoryDialogComponent {
 
         if (errResponse.errorCode === ErrorCodes.ResourceExists) {
           this.directoryExists = `Directory with name '${this.model.name}' already exists.`
+        } else if (errResponse.errorCode === ErrorCodes.MaxDirectoryDepth) {
+          this.maxDirectoryDepth = `Max directory depth reached. You can create up to 10 nested directories.`
         }
       } else {
         this.dialogRef.close(resolver);
