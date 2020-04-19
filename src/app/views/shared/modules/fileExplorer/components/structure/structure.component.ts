@@ -39,7 +39,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private searchSubscriber;
 
-  private tree;
+  private tree: Tree;
 
   constructor(
     private directoryRepository: DirectoryRepository,
@@ -175,7 +175,14 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     const directory: IDirectory = event.directory;
     const sendDirectoryEmptied = event.sendDirectoryEmptied;
 
-    if (!this.structureTracker.hasStructure(directory.id)) {
+    const node: Node = this.tree.get(directory.id);
+
+    const nodeValues: NodeValue[] = node.reduceArray((nodeValue: NodeValue) => {
+      return true;
+    }, []);
+
+    console.log(nodeValues);
+/*    if (!this.structureTracker.hasStructure(directory.id)) {
       for (const s of this.structure) {
         if (s.type === 'directory' && !s.isRoot && this.structureTracker.getStructureLen(s.id)) {
           this.structureTracker.clearStructure(s.id);
@@ -204,7 +211,7 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (sendDirectoryEmptied) {
       this.sendDirectoryEmptied(directory.id);
-    }
+    }*/
   }
 
   onItemAttachEvent(item) {

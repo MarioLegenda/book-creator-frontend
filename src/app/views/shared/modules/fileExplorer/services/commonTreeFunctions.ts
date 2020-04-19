@@ -16,7 +16,3 @@ export function createNode(fileSystemStructure: any, parent: Parent) {
     new NodeValue(fileSystemStructure.id, fileSystemStructure),
   );
 }
-
-export function createParent(directory: IDirectory) {
-
-}

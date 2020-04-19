@@ -58,18 +58,21 @@ export class Node {
   addToNode(node: Node): Node {
     const parent: Parent = node.getParent();
 
-    if (this.getParent().getId() === parent.getId()) {
+    if (this.getNodeValue().getId() === parent.getId()) {
       if (this.children.length() === 0) {
-        this.setIndex(this.getParent().getIndex() + 1);
+        const idx = parent.getIndex() + 1;
+        node.setIndex(idx);
 
         this.children.add(node);
 
         return node;
       }
 
-      const parentIdx: number = node.getParent().getIndex();
+      const parentIdx: number = parent.getIndex();
       const len: number = this.children.length();
-      node.setIndex((parentIdx + len) + 1);
+      const idx = (parentIdx + len) + 1;
+
+      node.setIndex(idx);
 
       this.children.add(node);
 
@@ -77,6 +80,10 @@ export class Node {
     }
 
     return this.children.addToNode(node);
+  }
+
+  getNode(id: string): Node {
+    return this.children.getNode(id);
   }
 
   setIndex(idx: number): void {
@@ -88,8 +95,8 @@ export class Node {
   }
 
   searchParent(id: string): Parent | null {
-    if (this.getParent().getId() === this.parent.getId()) {
-      return this.parent;
+    if (this.getNodeValue().getId() === id) {
+      return this.asParent();
     }
 
     return this.children.searchParent(id);
@@ -102,6 +109,17 @@ export class Node {
   getNodeValue(): NodeValue {
     return this.value;
   }
+
+  reduceArray(fn: Function, reducer: NodeValue[]): NodeValue[] {
+    const confirm: boolean = fn.call(null, this.getNodeValue());
+    if (confirm) reducer.push(this.getNodeValue());
+
+    return this.children.reduceArray(fn, reducer);
+  }
+
+  asParent(): Parent {
+    return new Parent(this.getNodeValue().getId(), this.getIndex(), this.value.copy());
+  }
 }
 
 export class Children {
@@ -109,6 +127,8 @@ export class Children {
 
   add(node: Node) {
     this.values[node.getNodeValue().getId()] = node;
+
+    return node;
   }
 
   addToNode(node: Node): Node {
@@ -125,9 +145,45 @@ export class Children {
     return null;
   }
 
+  getNode(id: string): Node {
+    const keys = Object.keys(this.values);
+
+    // first, search immediate children only
+    for (const k of keys) {
+      const node = this.values[k];
+
+      if (node.getNodeValue().getId() === id) {
+        return node;
+      }
+    }
+
+    // first, search immediate children only
+    for (const k of keys) {
+      const node: Node = this.values[k];
+
+      const found: Node = node.getNode(id);
+
+      if (found) {
+        return found;
+      }
+    }
+
+    return null;
+  }
+
   searchParent(id: string): Parent | null {
     const keys = Object.keys(this.values);
 
+    // first, search immediate children only
+/*    for (const k of keys) {
+      const node = this.values[k];
+
+      if (node.getNodeValue().getId() === id) {
+        return node.asParent();
+      }
+    }*/
+
+    // then search node children
     for (const k of keys) {
       const node = this.values[k];
       const parent: Parent = node.searchParent(id);
@@ -136,6 +192,21 @@ export class Children {
     }
 
     return null;
+  }
+
+  reduceArray(fn: Function, reducer: NodeValue[]): NodeValue[] {
+    const keys = Object.keys(this.values);
+
+    console.log(this.values);
+    for (const key of keys) {
+      const node: Node = this.values[key];
+
+      console.log(node.reduceArray(fn, reducer));
+
+      reducer = [...reducer, ...node.reduceArray(fn, reducer)];
+    }
+
+    return reducer;
   }
 
   length(): number {
@@ -161,10 +232,26 @@ export class Tree {
 
   add(node: Node): Node {
     if (node.getParent().getId() === this.getId()) {
-      this.children.add(node);
+      if (this.children.length() === 0) {
+        node.setIndex(this.index + 1);
+
+        this.children.add(node);
+
+        return node;
+      }
+
+      const parentIdx: number = this.index;
+      const len: number = this.children.length();
+      node.setIndex((parentIdx + len) + 1);
+
+      return this.children.add(node);
     }
 
     return this.children.addToNode(node);
+  }
+
+  get(id: string): Node {
+    return this.children.getNode(id);
   }
 
   getIndex(): number {
@@ -181,6 +268,10 @@ export class Tree {
 
   getNodeValue(): NodeValue {
     return this.value;
+  }
+
+  reduceArray(fn: Function, reducer: NodeValue[]): NodeValue[] {
+    return this.children.reduceArray(fn, reducer);
   }
 
   asParent(): Parent {
