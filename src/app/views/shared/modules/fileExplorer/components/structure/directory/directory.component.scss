@@ -67,15 +67,3 @@
     background-color: $standOutColor;
   }
 }
-
-.dir-selected {
-  background-color: $mainAppColorDark;
-
-  .dir-name .icon {
-    color: white;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-}

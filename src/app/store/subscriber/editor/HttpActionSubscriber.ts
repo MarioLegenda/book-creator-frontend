@@ -42,7 +42,7 @@ export class HttpActionSubscriber {
           break;
         }
 
-        case actionTypes.EDITOR_HTTP_REMOVE_FILE: {
+/*        case actionTypes.EDITOR_HTTP_REMOVE_FILE: {
           this.fileRepository.removeFileById({
             data: {
               codeProjectUuid: action.codeProjectUuid,
@@ -53,7 +53,7 @@ export class HttpActionSubscriber {
           });
 
           break;
-        }
+        }*/
       }
     });
   }

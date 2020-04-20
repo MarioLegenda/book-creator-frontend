@@ -1,11 +1,9 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
 import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
 import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
 import {Store} from "@ngrx/store";
-import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
-import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directory-dialog.component";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
 import {DragDropBuffer} from "../../../services/DragDropBuffer";
 import {CopyBuffer} from "../../../services/CopyBuffer";
@@ -17,6 +15,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {IBufferEvent} from "../../../models/IBufferEvent";
 import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {ICutFinishedEvent} from "../../../models/ICutFinishedEvent";
+import {doEditDirectory, getStructure, removeDirectory} from "../shared/_protectedDirectoryFns";
+import {IParentEvent} from "../../../models/IParentEvent";
 
 @Component({
   selector: 'cms-directory',
@@ -26,27 +26,27 @@ import {ICutFinishedEvent} from "../../../models/ICutFinishedEvent";
   ],
   templateUrl: './directory.component.html',
 })
-export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
+export class DirectoryComponent implements OnInit, OnDestroy {
   @Input('directory') directory: IDirectory;
   @Input('extension') extension: string;
-  @Input('selectedItem') selectedItem: any;
   @Input('project') project: any;
 
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('copyUnbufferSubject') copyUnbufferSubject: Subject<any>;
-  @Input('fileCutFinishedEvent') fileCutFinishedEvent: Subject<ICutFinishedEvent>
+  @Input('fileCutFinishedEvent') fileCutFinishedEvent: Subject<ICutFinishedEvent>;
+  @Input('parentEvent') parentEvent: Subject<IParentEvent>;
 
   private copyBufferSubscriber: Subscription;
   private copyUnbuffeerSubscriber: Subscription;
+  private parentEventSubscription: Subscription;
 
   structure = [];
 
   expandedPadding: number;
 
+  parentCommunicator: Subject<IParentEvent>;
+
   expanded: boolean = false;
-  hovered: boolean = false;
-  selected: boolean = false;
-  attachActionSet: boolean = false;
   draggedOver: boolean = false;
   copyExpected: boolean = false;
   dirStyles = {};
@@ -67,43 +67,24 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     private dragDropBuffer: DragDropBuffer,
     private copyBuffer: CopyBuffer,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.parentCommunicator = new Subject<IParentEvent>();
+  }
 
   ngOnInit() {
     this.setNestedPosition();
     this.runRootSpecificActions();
     this.listenToCopyBuffers();
     this.listenToFileCutEvents();
+    this.subscribeToChildEvents();
   }
 
   ngOnDestroy(): void {
     this.doOnDestroy();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.doOnChanges(changes);
-  }
-
   onExpand() {
-    if (this.expanded) {
-      this.unExpandDirectory();
-
-      this.structure = [];
-
-      return;
-    }
-
-    let tempSubject = new Subject();
-
-    this.getStructure(tempSubject);
-
-    const tempSubscriber: Subscription = tempSubject.subscribe((structure: any[]) => {
-      this.expandDirectory();
-
-      this.structure = structure;
-
-      tempSubscriber.unsubscribe();
-    });
+    this.doExpand();
   }
 
   onCopy(): void {
@@ -142,16 +123,8 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     this.doPaste();
   }
 
-  directoryHovered(): void {
-    this.hovered = true;
-  }
-
-  directoryUnHovered(): void {
-    this.hovered = false;
-  }
-
   removeDirectoryDialog(): void {
-    this.doRemoveDirectory();
+    removeDirectory.call(this);
   }
 
   newFileDialog(): void {
@@ -171,13 +144,10 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   editDirectoryDialog(): void {
-    this.doEditDirectory();
+    doEditDirectory.call(this);
   }
 
   onExpandDirectory(): void {
-    this.selected = true;
-    this.attachActionSet = true;
-
     if (!this.expanded) {
       this.expandDirectory();
     } else if (this.expanded) {
@@ -245,33 +215,6 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  private doEditDirectory(): void {
-    const data = {
-      codeProjectUuid: this.directory.codeProjectUuid,
-      name: this.directory.name,
-      id: this.directory.id,
-      depth: this.directory.depth,
-      type: 'directory',
-      isRoot: false,
-      extension: this.extension,
-    };
-
-    const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
-      width: '400px',
-      data: data,
-    });
-
-    dialogRef.afterClosed().subscribe((resolver) => {
-      if (!resolver) return;
-
-      if (resolver) {
-        const directory = resolver.factory(this.directory.codeProjectUuid, resolver.originalModel);
-
-        this.directory.name = directory.name;
-      }
-    });
-  }
-
   private doNewFile(): void {
     const data = {
       name: '',
@@ -291,14 +234,10 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     dialogRef.afterClosed().subscribe((model) => {
       if (!model) return;
 
-      if (model.type && model.type === 'error') {
+      this.structure.push(model);
 
-      } else {
-        this.structure.push(model);
-
-        if (!this.expanded) {
-          this.expandDirectory();
-        }
+      if (!this.expanded) {
+        this.expandDirectory();
       }
     });
   }
@@ -510,62 +449,10 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   private doOnDestroy() {
     this.copyBufferSubscriber.unsubscribe();
     this.copyUnbuffeerSubscriber.unsubscribe();
+    this.parentEventSubscription.unsubscribe();
+    this.parentEventSubscription = null;
     this.copyUnbuffeerSubscriber = null;
     this.copyBufferSubscriber = null;
-  }
-
-  private doOnChanges(changes: SimpleChanges) {
-    if (changes.selectedItem && !changes.selectedItem.firstChange) {
-      const data = changes.selectedItem.currentValue;
-
-      if (data.type === 'file') {
-        this.attachActionSet = false;
-        this.selected = false;
-      } else if (data.id !== this.directory.id) {
-        this.attachActionSet = false;
-        this.selected = false;
-      }
-    }
-  }
-
-  private doRemoveDirectory(): void {
-    const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
-      width: '400px',
-      data: {name: this.directory.name},
-    });
-
-    dialogRef.afterClosed().subscribe((decision) => {
-      if (decision !== true) return;
-
-      const model = HttpModel.removeDirectoryModel(
-        this.directory.codeProjectUuid,
-        this.directory.id,
-      );
-
-      this.directoryRepository.removeDirectory(model).subscribe(() => {
-      });
-    });
-  }
-
-  private getStructure(subject: Subject<any>) {
-    this.directoryRepository.getSubdirectories(this.project.uuid, this.directory.id).subscribe((resolver) => {
-      const structure = [];
-
-      const models = resolver.factory(this.project.uuid, resolver.originalModel);
-
-      for (const model of models) {
-        structure.push(model);
-      }
-
-      this.fileRepository.getFilesFromDirectory(this.project.uuid, this.directory.id).subscribe((resolver) => {
-        const models = resolver.factory(this.project.uuid, resolver.originalModel);
-        for (const model of models) {
-          structure.push(model);
-        }
-
-        subject.next(structure);
-      });
-    });
   }
 
   private listenToCopyBuffers(): void {
@@ -585,6 +472,38 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
       const idx: number = this.structure.findIndex(a => {
         return (a.id === event.id && a.type === 'file' && this.directory.id === event.directoryId);
       });
+
+      if (idx === -1) return;
+
+      this.structure.splice(idx, 1);
+    });
+  }
+
+  private doExpand() {
+    if (this.expanded) {
+      this.unExpandDirectory();
+
+      this.structure = [];
+
+      return;
+    }
+
+    let tempSubject = new Subject();
+
+    getStructure.call(this, tempSubject);
+
+    const tempSubscriber: Subscription = tempSubject.subscribe((structure: any[]) => {
+      this.expandDirectory();
+
+      this.structure = structure;
+
+      tempSubscriber.unsubscribe();
+    });
+  }
+
+  private subscribeToChildEvents(): void {
+    this.parentEventSubscription = this.parentCommunicator.subscribe((event: IParentEvent) => {
+      const idx: number = this.structure.findIndex(a => a.id === event.id && a.type ===  event.type);
 
       if (idx === -1) return;
 

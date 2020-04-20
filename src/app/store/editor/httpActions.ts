@@ -16,11 +16,6 @@ export const httpGetFileContentFinishedAction = createAction(
   actionTypes.EDITOR_HTTP_GET_FILE_CONTENT_FINISHED
 );
 
-export const httpRemoveFile = createAction(
-  actionTypes.EDITOR_HTTP_REMOVE_FILE,
-  props<{}>()
-);
-
 export const httpRemoveFileFinished = createAction(
   actionTypes.EDITOR_HTTP_REMOVE_FILE_FINISHED,
   props<{}>(),

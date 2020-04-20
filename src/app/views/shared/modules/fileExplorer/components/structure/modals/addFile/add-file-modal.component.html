@@ -36,6 +36,10 @@
     {{invalidExtension}}
   </p>
 
+  <p *ngIf="unrecoverableError" class="error col-xs-12 col-md-12 col-lg-12">
+    {{unrecoverableError}}
+  </p>
+
   <div class="dialog-actions">
     <button [disabled]="createDisabled" class="btn create" cdkFocusInitial (click)="createFile()">Create</button>
   </div>

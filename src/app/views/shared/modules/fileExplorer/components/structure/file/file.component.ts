@@ -1,17 +1,7 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
-import {httpGetFileContentAction, httpRemoveFile} from "../../../../../../../store/editor/httpActions";
+import {httpGetFileContentAction} from "../../../../../../../store/editor/httpActions";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteFileDialogComponent} from "../modals/deleteFile/delete-file-dialog.component";
 import {EditFileDialogComponent} from "../modals/editFile/edit-file-dialog.component";
@@ -20,6 +10,7 @@ import {DragDropBuffer} from "../../../services/DragDropBuffer";
 import {CopyBuffer} from "../../../services/CopyBuffer";
 import {Subject} from "rxjs";
 import {IFile} from "../../../models/IFile";
+import {IParentEvent} from "../../../models/IParentEvent";
 
 @Component({
   selector: 'cms-file',
@@ -33,9 +24,10 @@ export class FileComponent implements OnInit {
   @Input('file') file: IFile;
 
   @Input('extension') extension: string;
-  @Input('selectedItem') selectedItem: any;
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('basePadding') basePadding: number;
+  @Input('parentEvent') parentEvent: Subject<IParentEvent>;
+  @Input('project') project: any;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
 
@@ -73,15 +65,17 @@ export class FileComponent implements OnInit {
   removeFileDialog() {
     const dialogRef = this.dialog.open(DeleteFileDialogComponent, {
       width: '400px',
-      data: {name: this.file.name},
+      data: {
+        name: this.file.name,
+        id: this.file.id,
+        codeProjectUuid: this.project.uuid,
+      },
     });
 
     dialogRef.afterClosed().subscribe((decision) => {
-      if (decision !== true) return;
+      if (!decision) return;
 
-      this.store.dispatch(httpRemoveFile(this.file));
-
-      this.fileRemovedEvent.emit(this.file);
+      this.parentEvent.next(this.file);
     });
   }
 

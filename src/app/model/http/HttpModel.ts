@@ -695,4 +695,16 @@ export class HttpModel {
       }
     };
   }
+
+  static removeFile(
+    codeProjectUuid: string,
+    fileId: string,
+  ) {
+    return {
+      data: {
+        codeProjectUuid,
+        fileId,
+      }
+    }
+  }
 }

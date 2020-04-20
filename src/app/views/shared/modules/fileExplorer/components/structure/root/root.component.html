@@ -13,8 +13,7 @@
     [ngStyle]="dirStyles">
 
     <i
-      class="icon"
-      [ngClass]="icons.dirCaret">
+      class="icon fas fa-folder-open">
     </i>
 
     <h1
@@ -26,11 +25,11 @@
       </div>
 
       <div class="action">
-        <i (click)="newDirectory()" [ngClass]="this.icons.newDir"></i>
+        <i (click)="newDirectory()" class="fas fa-folder-plus"></i>
       </div>
 
       <div class="action">
-        <i (click)="newFile()" [ngClass]="this.icons.newFile"></i>
+        <i (click)="newFile()" class="fas fa-file-code"></i>
       </div>
     </div>
   </div>
@@ -38,8 +37,8 @@
   <div *ngFor="let item of structure">
     <cms-directory
       *ngIf="item.type === 'directory'"
+      [parentEvent]="parentCommunicator"
       [fileCutFinishedEvent]="fileCutFinishedEvent"
-      [selectedItem]="selectedItem"
       [project]="project"
       [extension]="extension"
       [copyBufferSubject]="copyBufferSubject"
@@ -53,8 +52,9 @@
 
     <cms-file
       *ngIf="item.type === 'file'"
+      [parentEvent]="parentCommunicator"
+      [project]="project"
       [basePadding]="expandedPadding"
-      [selectedItem]="selectedItem"
       [file]="item"
       [copyBufferSubject]="copyBufferSubject"
       [extension]="extension">

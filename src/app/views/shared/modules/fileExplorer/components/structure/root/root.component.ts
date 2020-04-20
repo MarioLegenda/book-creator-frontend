@@ -4,8 +4,6 @@ import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.componen
 import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
 import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
 import {Store} from "@ngrx/store";
-import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
-import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directory-dialog.component";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
 import {DragDropBuffer} from "../../../services/DragDropBuffer";
 import {CopyBuffer} from "../../../services/CopyBuffer";
@@ -17,6 +15,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {IBufferEvent} from "../../../models/IBufferEvent";
 import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {ICutFinishedEvent} from "../../../models/ICutFinishedEvent";
+import {IParentEvent} from "../../../models/IParentEvent";
+import {getStructure} from "../shared/_protectedDirectoryFns";
 
 @Component({
   selector: 'cms-root-directory',
@@ -29,7 +29,6 @@ import {ICutFinishedEvent} from "../../../models/ICutFinishedEvent";
 export class RootComponent implements OnInit, OnDestroy {
   @Input('directory') directory: IDirectory;
   @Input('extension') extension: string;
-  @Input('selectedItem') selectedItem: any;
   @Input('project') project: any;
 
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
@@ -38,23 +37,17 @@ export class RootComponent implements OnInit, OnDestroy {
 
   private copyBufferSubscriber: Subscription;
   private copyUnbuffeerSubscriber: Subscription;
+  private parentEventSubscription: Subscription;
 
   structure = [];
 
   expandedPadding: number;
 
-  selected: boolean = false;
+  parentCommunicator: Subject<IParentEvent>;
+
   draggedOver: boolean = false;
   copyExpected: boolean = false;
   dirStyles = {};
-  icons = {
-    angle: 'fas fa-angle-right',
-    editDirectory: 'far fa-edit',
-    dirCaret: 'fas fa-folder-open',
-    newFile: 'fas fa-file-code',
-    newDir: 'fas fa-folder-plus',
-    removeDirectory: 'far fa-trash-alt',
-  };
 
   constructor(
     private store: Store<any>,
@@ -64,20 +57,16 @@ export class RootComponent implements OnInit, OnDestroy {
     private dragDropBuffer: DragDropBuffer,
     private copyBuffer: CopyBuffer,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.parentCommunicator = new Subject<IParentEvent>();
+  }
 
   ngOnInit() {
     this.setNestedPosition();
     this.listenToCopyBuffers();
     this.listenToFileCutEvents();
-
-    const tempSubject = new Subject();
-
-    this.getStructure(tempSubject);
-
-    tempSubject.subscribe((structure: any[]) => {
-      this.structure = structure;
-    });
+    this.initRootStructure();
+    this.subscribeToChildEvents();
   }
 
   ngOnDestroy(): void {
@@ -106,10 +95,6 @@ export class RootComponent implements OnInit, OnDestroy {
 
   onPaste(): void {
     this.doPaste();
-  }
-
-  removeDirectoryDialog(): void {
-    this.doRemoveDirectory();
   }
 
   newDirectory(): void {
@@ -149,34 +134,7 @@ export class RootComponent implements OnInit, OnDestroy {
 
       const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 
-      this.structure.push(directory);
-    });
-  }
-
-  private doEditDirectory(): void {
-    const data = {
-      codeProjectUuid: this.directory.codeProjectUuid,
-      name: this.directory.name,
-      id: this.directory.id,
-      depth: this.directory.depth,
-      type: 'directory',
-      isRoot: false,
-      extension: this.extension,
-    };
-
-    const dialogRef = this.dialog.open(EditDirectoryDialogComponent, {
-      width: '400px',
-      data: data,
-    });
-
-    dialogRef.afterClosed().subscribe((resolver) => {
-      if (!resolver) return;
-
-      if (resolver) {
-        const directory = resolver.factory(this.directory.codeProjectUuid, resolver.originalModel);
-
-        this.directory.name = directory.name;
-      }
+      this.structure.unshift(directory);
     });
   }
 
@@ -199,11 +157,7 @@ export class RootComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((model) => {
       if (!model) return;
 
-      if (model.type && model.type === 'error') {
-
-      } else {
-        this.structure.push(model);
-      }
+      this.structure.push(model);
     });
   }
 
@@ -302,8 +256,6 @@ export class RootComponent implements OnInit, OnDestroy {
       const values = this.copyBuffer.get();
 
       let failedCopies: boolean = false;
-      let didExpand = false;
-
       for (const value of values) {
         if (value.type === 'directory') {
           const model = HttpModel.copyDirectory(
@@ -388,51 +340,13 @@ export class RootComponent implements OnInit, OnDestroy {
     }
   }
 
-  private doOnDestroy() {
+  private doOnDestroy(): void {
     this.copyBufferSubscriber.unsubscribe();
     this.copyUnbuffeerSubscriber.unsubscribe();
+    this.parentEventSubscription.unsubscribe();
+    this.parentEventSubscription = null;
     this.copyUnbuffeerSubscriber = null;
     this.copyBufferSubscriber = null;
-  }
-
-  private doRemoveDirectory(): void {
-    const dialogRef = this.dialog.open(DeleteDirectoryDialogComponent, {
-      width: '400px',
-      data: {name: this.directory.name},
-    });
-
-    dialogRef.afterClosed().subscribe((decision) => {
-      if (decision !== true) return;
-
-      const model = HttpModel.removeDirectoryModel(
-        this.directory.codeProjectUuid,
-        this.directory.id,
-      );
-
-      this.directoryRepository.removeDirectory(model).subscribe(() => {
-      });
-    });
-  }
-
-  private getStructure(subject: Subject<any>) {
-    this.directoryRepository.getSubdirectories(this.project.uuid, this.directory.id).subscribe((resolver) => {
-      const structure = [];
-
-      const models = resolver.factory(this.project.uuid, resolver.originalModel);
-
-      for (const model of models) {
-        structure.push(model);
-      }
-
-      this.fileRepository.getFilesFromDirectory(this.project.uuid, this.directory.id).subscribe((resolver) => {
-        const models = resolver.factory(this.project.uuid, resolver.originalModel);
-        for (const model of models) {
-          structure.push(model);
-        }
-
-        subject.next(structure);
-      });
-    });
   }
 
   private listenToCopyBuffers(): void {
@@ -452,6 +366,28 @@ export class RootComponent implements OnInit, OnDestroy {
       const idx: number = this.structure.findIndex(a => {
         return (a.id === event.id && a.type === 'file' && this.directory.id === event.directoryId);
       });
+
+      if (idx === -1) return;
+
+      this.structure.splice(idx, 1);
+    });
+  }
+
+  private initRootStructure(): void {
+    const tempSubject = new Subject();
+
+    getStructure.call(this, tempSubject);
+
+    const tempSubscriber: Subscription = tempSubject.subscribe((structure: any[]) => {
+      this.structure = structure;
+
+      tempSubscriber.unsubscribe();
+    });
+  }
+
+  private subscribeToChildEvents(): void {
+    this.parentEventSubscription = this.parentCommunicator.subscribe((event: IParentEvent) => {
+      const idx: number = this.structure.findIndex(a => a.id === event.id && a.type === event.type);
 
       if (idx === -1) return;
 

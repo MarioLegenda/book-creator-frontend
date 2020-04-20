@@ -14,6 +14,7 @@ export class AddFileDialogComponent implements OnInit {
   noWhitespace = null;
   noExtension = null;
   invalidExtension = null;
+  unrecoverableError = null;
 
   createDisabled = false;
 
@@ -67,6 +68,8 @@ export class AddFileDialogComponent implements OnInit {
           this.fileExists = `File with name ${this.model.name} already exists.`;
 
           this.createDisabled = false;
+        } else {
+          this.unrecoverableError = `The file could not be created. Please, refresh your browser and try again`;
         }
       }
     });
