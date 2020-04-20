@@ -7,7 +7,7 @@ import {Store} from "@ngrx/store";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
 import {DragDropBuffer} from "../../../services/DragDropBuffer";
 import {CopyBuffer} from "../../../services/CopyBuffer";
-import {Subject, Subscription} from "rxjs";
+import {ReplaySubject, Subject, Subscription} from "rxjs";
 import {IDirectory} from "../../../models/IDirectory";
 import {IFile} from "../../../models/IFile";
 import {ErrorCodes} from "../../../../../../../error/ErrorCodes";
@@ -46,6 +46,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
 
   parentCommunicator: Subject<IParentEvent>;
 
+  toggleActionSet: boolean = false;
   expanded: boolean = false;
   draggedOver: boolean = false;
   copyExpected: boolean = false;
@@ -73,7 +74,6 @@ export class DirectoryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setNestedPosition();
-    this.runRootSpecificActions();
     this.listenToCopyBuffers();
     this.listenToFileCutEvents();
     this.subscribeToChildEvents();
@@ -83,8 +83,8 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     this.doOnDestroy();
   }
 
-  onExpand() {
-    this.doExpand();
+  loadStructure() {
+    this.doLoadStructure();
   }
 
   onCopy(): void {
@@ -117,25 +117,11 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     this.doPaste();
   }
 
-  onPasteToRoot(): void {
-    if (!this.directory.isRoot) return;
-
-    this.doPaste();
-  }
-
   removeDirectoryDialog(): void {
     removeDirectory.call(this);
   }
 
   newFileDialog(): void {
-    this.doNewFile();
-  }
-
-  newDirectoryFromRootDialog(): void {
-    this.doNewDirectory();
-  }
-
-  newFileFromRootDialog(): void {
     this.doNewFile();
   }
 
@@ -169,12 +155,6 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     this.expanded = false;
   }
 
-  private changeIconIfRoot(): void {
-    if (this.directory.isRoot) {
-      this.icons.dirCaret = 'fas fa-folder-open';
-    }
-  }
-
   private setNestedPosition() {
     const w = 269 + (this.directory.depth * 17);
     const pl = this.directory.depth * 17;
@@ -183,13 +163,6 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     this.dirStyles['padding-left'] = `${pl}px`;
 
     this.expandedPadding = pl;
-  }
-
-  private runRootSpecificActions() {
-    if (this.directory.isRoot) {
-      this.expandDirectory();
-      this.changeIconIfRoot();
-    }
   }
 
   private doNewDirectory(): void {
@@ -209,9 +182,15 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((resolver) => {
       if (!resolver) return;
 
-      const directory = resolver.factory(this.project.uuid, resolver.originalModel);
+      if (!this.expanded) {
+        this.doLoadStructure().subscribe(() => {
+          this.toggleActionSet = !this.toggleActionSet;
+        });
+      } else {
+        const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 
-      this.structure.push(directory);
+        this.structure.unshift(directory);
+      }
     });
   }
 
@@ -231,13 +210,16 @@ export class DirectoryComponent implements OnInit, OnDestroy {
       data: data,
     });
 
-    dialogRef.afterClosed().subscribe((model) => {
+    dialogRef.afterClosed().subscribe((model: IFile) => {
       if (!model) return;
 
-      this.structure.push(model);
-
       if (!this.expanded) {
-        this.expandDirectory();
+        this.doLoadStructure().subscribe(() => {
+          this.toggleActionSet = !this.toggleActionSet;
+        });
+      } else {
+        this.structure.push(model);
+        this.toggleActionSet = !this.toggleActionSet;
       }
     });
   }
@@ -479,13 +461,15 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  private doExpand() {
+  private doLoadStructure(): ReplaySubject<void> {
+    const finishedSubject = new ReplaySubject<void>();
+
     if (this.expanded) {
       this.unExpandDirectory();
 
       this.structure = [];
 
-      return;
+      return finishedSubject;
     }
 
     let tempSubject = new Subject();
@@ -498,7 +482,11 @@ export class DirectoryComponent implements OnInit, OnDestroy {
       this.structure = structure;
 
       tempSubscriber.unsubscribe();
+
+      finishedSubject.next();
     });
+
+    return finishedSubject;
   }
 
   private subscribeToChildEvents(): void {

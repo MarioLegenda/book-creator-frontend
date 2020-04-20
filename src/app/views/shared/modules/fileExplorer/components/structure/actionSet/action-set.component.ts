@@ -20,6 +20,7 @@ export class ActionSetComponent implements OnChanges, OnInit {
   @Output('onActionCopyEvent') onActionCopyEvent = new EventEmitter();
   @Output('onActionPasteEvent') onActionPasteEvent = new EventEmitter();
 
+  @Input('externalExpand') externalExpand: boolean = false;
   @Input('showEdit') showEdit: boolean = false;
   @Input('showDelete') showDelete: boolean = false;
   @Input('showAddFile') showAddFile: boolean = false;
@@ -36,6 +37,8 @@ export class ActionSetComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['showPaste'] && !changes.showPaste.firstChange) {
       this.expandClassDeterminator = this.determineExpandClass();
+    } else if (changes['externalExpand'] && !changes.externalExpand.firstChange) {
+      this.expanded = !this.expanded;
     }
   }
 

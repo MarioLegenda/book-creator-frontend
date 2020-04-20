@@ -13,41 +13,20 @@
     [ngStyle]="dirStyles">
 
     <i
-      *ngIf="!directory.isRoot"
-      (click)="onExpand()"
+      (click)="loadStructure()"
       [ngClass]="icons.angle"
       class="icon expand-icon">
     </i>
 
     <i
-      *ngIf="!directory.isRoot"
-      class="icon"
-      [ngClass]="icons.dirCaret">
-    </i>
-
-    <i
-      *ngIf="directory.isRoot"
       class="icon"
       [ngClass]="icons.dirCaret">
     </i>
 
     <h1
-      (dblclick)="onExpand()"
-      class="text">{{directory.name}}</h1>
-
-    <div class="root-action-set" *ngIf="directory.isRoot">
-      <div class="action" *ngIf="copyExpected">
-        <i (click)="onPasteToRoot()" class="fas fa-paste"></i>
-      </div>
-
-      <div class="action">
-        <i (click)="newDirectoryFromRootDialog()" [ngClass]="this.icons.newDir"></i>
-      </div>
-
-      <div class="action">
-        <i (click)="newFileFromRootDialog()" [ngClass]="this.icons.newFile"></i>
-      </div>
-    </div>
+      (dblclick)="loadStructure()"
+      class="text">{{directory.name}}
+    </h1>
 
     <cms-action-set
       *ngIf="!directory.isRoot"
@@ -58,6 +37,7 @@
       (onActionEditEvent)="editDirectoryDialog()"
       (onActionPasteEvent)="onPaste()"
       (onActionCopyEvent)="onCopy()"
+      [externalExpand]="toggleActionSet"
       [showDelete]="true"
       [showEdit]="true"
       [showAddFile]="true"
