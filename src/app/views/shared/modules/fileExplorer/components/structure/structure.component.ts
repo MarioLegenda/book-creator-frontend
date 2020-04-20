@@ -57,37 +57,6 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
       const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 
       this.structure.push(directory);
-
-      let tempSubject = new Subject();
-
-      this.getSubstructure(directory, tempSubject);
-
-      tempSubject.subscribe((structure: any) => {
-        for (const s of structure) {
-          this.structure.push(s);
-        }
-      });
-    });
-  }
-
-  private getSubstructure(directory: IDirectory, subject: Subject<any>) {
-    this.directoryRepository.getSubdirectories(this.project.uuid, directory.id).subscribe((resolver) => {
-      const structure = [];
-
-      const models = resolver.factory(this.project.uuid, resolver.originalModel);
-
-      for (const model of models) {
-        structure.push(model);
-      }
-
-      this.fileRepository.getFilesFromDirectory(this.project.uuid, directory.id).subscribe((resolver) => {
-        const models = resolver.factory(this.project.uuid, resolver.originalModel);
-        for (const model of models) {
-          structure.push(model);
-        }
-
-        subject.next(structure);
-      });
     });
   }
 }

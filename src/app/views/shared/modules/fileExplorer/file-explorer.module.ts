@@ -16,6 +16,7 @@ import {ActionSetComponent} from "./components/structure/actionSet/action-set.co
 import {DragDropBuffer} from "./services/DragDropBuffer";
 import {CopyBuffer} from "./services/CopyBuffer";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {RootComponent} from "./components/structure/root/root.component";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     EditDirectoryDialogComponent,
     EditFileDialogComponent,
     ActionSetComponent,
+    RootComponent,
   ],
   exports: [
     FileExplorerComponent,

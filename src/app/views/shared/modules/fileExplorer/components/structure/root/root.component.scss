@@ -1,0 +1,81 @@
+@import '../../../../../../../../styles/variables';
+
+.directory {
+  width: 269px;
+  float: left;
+  position: relative;
+
+  .dir-name {
+    width: 100%;
+    float: left;
+
+    padding: 5px;
+
+    .text {
+      font-size: 13px;
+      color: white;
+      width: 150px;
+      float: left;
+
+      margin: 0;
+      padding: 5px 0 5px 8px;
+    }
+
+    .icon {
+      width: 25px;
+      display: inline-block;
+      float: left;
+      color: $lightGray;
+
+      padding: 5px 8px 5px 8px;
+    }
+
+    .expand-icon {
+      color: white;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover .icon {
+      color: white;
+    }
+  }
+
+  .root-action-set {
+    width: 120px;
+    top: 5px;
+    left: 147px;
+    position: absolute;
+    font-size: 1.2em;
+
+    .action {
+      color: white;
+      float: right;
+      margin-right: 5px;
+
+      padding: 0 7px 0 7px;
+    }
+
+    .action:hover {
+      color: white;
+    }
+  }
+
+  .dragged-over {
+    background-color: $standOutColor;
+  }
+}
+
+.dir-selected {
+  background-color: $mainAppColorDark;
+
+  .dir-name .icon {
+    color: white;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

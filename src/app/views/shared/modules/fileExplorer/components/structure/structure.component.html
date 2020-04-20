@@ -3,8 +3,18 @@
   #structureWrapper>
 
     <div *ngFor="let item of structure">
+      <cms-root-directory
+          *ngIf="isDirectory(item) && item.isRoot"
+          [fileCutFinishedEvent]="fileCutFinishedSubject"
+          [project]="project"
+          [extension]="project.environment.extension"
+          [copyBufferSubject]="copyBufferSubject"
+          [copyUnbufferSubject]="copyUnBufferSubject"
+          [directory]="item">
+      </cms-root-directory>
+
       <cms-directory
-        *ngIf="isDirectory(item)"
+        *ngIf="isDirectory(item) && !item.isRoot"
         [fileCutFinishedEvent]="fileCutFinishedSubject"
         [project]="project"
         [extension]="project.environment.extension"
@@ -18,10 +28,10 @@
       </cms-directory>
 
       <cms-file
-              *ngIf="isFile(item)"
-              [file]="item"
-              [copyBufferSubject]="copyBufferSubject"
-              [extension]="project.environment.extension">
+          *ngIf="isFile(item)"
+          [file]="item"
+          [copyBufferSubject]="copyBufferSubject"
+          [extension]="project.environment.extension">
 
         <div class="drag-preview" *cdkDragPreview>
           Drop when ready
