@@ -29,7 +29,7 @@ import {IFile} from "../../../models/IFile";
   ],
   templateUrl: './file.component.html',
 })
-export class FileComponent implements OnInit, OnChanges {
+export class FileComponent implements OnInit {
   @Input('file') file: IFile;
 
   @Input('extension') extension: string;
@@ -38,7 +38,6 @@ export class FileComponent implements OnInit, OnChanges {
   @Input('basePadding') basePadding: number;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
-  @Output('fileAttachedEvent') fileAttachedEvent = new EventEmitter();
 
   @ViewChild('iconRef', {static: true}) iconRef: ElementRef;
 
@@ -51,7 +50,6 @@ export class FileComponent implements OnInit, OnChanges {
   ) {}
 
   hovered: boolean = false;
-  attachActionSet: boolean = false;
   selected: boolean = false;
   fileStyles = {};
 
@@ -60,20 +58,6 @@ export class FileComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.selectIcon();
     this.calcDepth();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedItem && !changes.selectedItem.firstChange) {
-      const data = changes.selectedItem.currentValue;
-
-      if (data.type === 'directory') {
-        this.attachActionSet = false;
-        this.selected = false;
-      } else if (data.id !== this.file.id) {
-        this.attachActionSet = false;
-        this.selected = false;
-      }
-    }
   }
 
   onCopy() {
@@ -127,15 +111,6 @@ export class FileComponent implements OnInit, OnChanges {
 
   showFile() {
     this.store.dispatch(httpGetFileContentAction(this.file));
-  }
-
-  onAttachActionSet() {
-    this.attachActionSet = true;
-    this.selected = true;
-    this.fileAttachedEvent.emit({
-      type: 'file',
-      id: this.file.id,
-    });
   }
 
   fileHovered() {

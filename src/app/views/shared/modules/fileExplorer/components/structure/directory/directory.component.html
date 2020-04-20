@@ -71,23 +71,9 @@
   </div>
 
   <div *ngFor="let item of structure">
-    <cms-file
-      *ngIf="item.type === 'file'"
-      [basePadding]="expandedPadding"
-      (fileAttachedEvent)="onItemAttachEvent($event)"
-      [selectedItem]="selectedItem"
-      [file]="item"
-      [copyBufferSubject]="copyBufferSubject"
-      [extension]="extension">
-
-      <div class="drag-preview" *cdkDragPreview>
-        Drop when ready
-      </div>
-
-    </cms-file>
-
     <cms-directory
       *ngIf="item.type === 'directory'"
+      [fileCutFinishedEvent]="fileCutFinishedEvent"
       [selectedItem]="selectedItem"
       [project]="project"
       [extension]="extension"
@@ -98,7 +84,20 @@
       <div class="drag-preview" *cdkDragPreview>
         Drop when ready
       </div>
-
     </cms-directory>
+
+    <cms-file
+      *ngIf="item.type === 'file'"
+      [basePadding]="expandedPadding"
+      [selectedItem]="selectedItem"
+      [file]="item"
+      [copyBufferSubject]="copyBufferSubject"
+      [extension]="extension">
+
+      <div class="drag-preview" *cdkDragPreview>
+        Drop when ready
+      </div>
+
+    </cms-file>
   </div>
 </div>

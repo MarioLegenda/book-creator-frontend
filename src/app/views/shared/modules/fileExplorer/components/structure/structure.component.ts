@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
 import {FileRepository} from "../../../../../../repository/FileRepository";
-import {ReplaySubject, Subject} from "rxjs";
+import {Subject} from "rxjs";
 import {IDirectory} from "../../models/IDirectory";
 import {IBufferEvent} from "../../models/IBufferEvent";
+import {ICutFinishedEvent} from "../../models/ICutFinishedEvent";
 
 @Component({
   selector: 'cms-structure',
@@ -14,10 +15,10 @@ import {IBufferEvent} from "../../models/IBufferEvent";
 })
 export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
   structure = [];
-  selectedItem = null;
 
   copyBufferSubject = new Subject<IBufferEvent>();
   copyUnBufferSubject = new Subject<IBufferEvent>();
+  fileCutFinishedSubject = new Subject<ICutFinishedEvent>();
 
   @Input('project') project: any;
 
@@ -49,10 +50,6 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isFile(entry): boolean {
     return entry.type === 'file';
-  }
-
-  onItemAttachEvent(item) {
-    this.selectedItem = item;
   }
 
   private expandRootDirectory(): void {

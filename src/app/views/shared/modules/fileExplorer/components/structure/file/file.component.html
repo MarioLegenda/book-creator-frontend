@@ -5,7 +5,6 @@
   [ngClass]="{'file-selected': selected && selectedItem.id === file.id}">
   <div
     (dblclick)="showFile()"
-    (click)="onAttachActionSet()"
     class="file-name"
     (mouseenter)="fileHovered()"
     (mouseleave)="fileUnHovered()"
