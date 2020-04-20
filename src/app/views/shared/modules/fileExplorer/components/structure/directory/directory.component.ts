@@ -51,14 +51,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   draggedOver: boolean = false;
   copyExpected: boolean = false;
   dirStyles = {};
-  icons = {
-    angle: 'fas fa-angle-right',
-    editDirectory: 'far fa-edit',
-    dirCaret: 'fas fa-folder',
-    newFile: 'fas fa-file-code',
-    newDir: 'fas fa-folder-plus',
-    removeDirectory: 'far fa-trash-alt',
-  };
+  expandedIcon = 'fas fa-angle-right';
 
   constructor(
     private store: Store<any>,
@@ -142,7 +135,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   }
 
   private expandDirectory(): void {
-    this.icons.angle = 'fas fa-angle-down';
+    this.expandedIcon = 'fas fa-angle-down';
 
     this.expanded = true;
   }
@@ -150,7 +143,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   private unExpandDirectory(): void {
     if (this.directory.isRoot) return;
 
-    this.icons.angle = 'fas fa-angle-right';
+    this.expandedIcon = 'fas fa-angle-right';
 
     this.expanded = false;
   }

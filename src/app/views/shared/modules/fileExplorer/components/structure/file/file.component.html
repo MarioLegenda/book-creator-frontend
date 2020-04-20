@@ -22,6 +22,7 @@
       (onActionEditEvent)="editFileDialog()"
       (onActionDeleteEvent)="removeFileDialog()"
       (onActionCopyEvent)="onCopy()"
+      [externalExpand]="toggleActionSet"
       [showDelete]="true"
       [showCopy]="true"
       [showEdit]="true"></cms-action-set>

@@ -47,6 +47,8 @@ export function doEditDirectory(): void {
       const directory = resolver.factory(this.directory.codeProjectUuid, resolver.originalModel);
 
       this.directory.name = directory.name;
+
+      this.toggleActionSet = !this.toggleActionSet;
     }
   });
 }

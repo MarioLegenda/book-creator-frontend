@@ -41,6 +41,7 @@ export class FileComponent implements OnInit {
     private copyBuffer: CopyBuffer,
   ) {}
 
+  toggleActionSet: boolean = false;
   hovered: boolean = false;
   selected: boolean = false;
   fileStyles = {};
@@ -100,6 +101,8 @@ export class FileComponent implements OnInit {
       if (!newFile) return;
 
       this.file.name = newFile.name;
+      
+      this.toggleActionSet = !this.toggleActionSet;
     });
   }
 
