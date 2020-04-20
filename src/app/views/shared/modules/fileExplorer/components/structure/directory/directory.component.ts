@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
 import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
 import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
-import {select, Store} from "@ngrx/store";
-import {actionTypes, viewEditorShowFile} from "../../../../../../../store/editor/viewActions";
+import {Store} from "@ngrx/store";
 import {DeleteDirectoryDialogComponent} from "../modals/deleteDirectory/delete-directory-dialog.component";
 import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directory-dialog.component";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
@@ -13,11 +12,10 @@ import {CopyBuffer} from "../../../services/CopyBuffer";
 import {Subject, Subscription} from "rxjs";
 import {IDirectory} from "../../../models/IDirectory";
 import {IFile} from "../../../models/IFile";
-import {IAddFileEvent} from "../../../models/IAddFileEvent";
 import {ErrorCodes} from "../../../../../../../error/ErrorCodes";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {IRemoveDirectoryEvent} from "../../../models/IRemoveDirectoryEvent";
 import {IBufferEvent} from "../../../models/IBufferEvent";
+import {FileRepository} from "../../../../../../../repository/FileRepository";
 
 @Component({
   selector: 'cms-directory',
@@ -31,24 +29,17 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   @Input('directory') directory: IDirectory;
   @Input('extension') extension: string;
   @Input('selectedItem') selectedItem: any;
+  @Input('project') project: any;
 
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('copyUnbufferSubject') copyUnbufferSubject: Subject<any>;
 
-  @Output('removeDirectoryEvent') removeDirectoryEvent = new EventEmitter<IRemoveDirectoryEvent>();
-  @Output('expandDirectoryEvent') expandDirectoryEvent = new EventEmitter<IDirectory>();
-  @Output('unExpandDirectoryEvent') unExpandDirectoryEvent = new EventEmitter<IDirectory>();
-  @Output('addDirectoryEvent') addDirectoryEvent = new EventEmitter();
-  @Output('refreshEvent') refreshEvent = new EventEmitter();
-  @Output('addFileEvent') addFileEvent = new EventEmitter<IAddFileEvent>();
-  @Output('directoryAttachedEvent') directoryAttachedEvent = new EventEmitter();
-
-  // only used with drag/drop
-  @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter<IFile>();
-
-  private editorViewActions;
   private copyBufferSubscriber: Subscription;
   private copyUnbuffeerSubscriber: Subscription;
+
+  structure = [];
+
+  expandedPadding: number;
 
   expanded: boolean = false;
   hovered: boolean = false;
@@ -58,6 +49,7 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   copyExpected: boolean = false;
   dirStyles = {};
   icons = {
+    angle: 'fas fa-angle-right',
     editDirectory: 'far fa-edit',
     dirCaret: 'fas fa-folder',
     newFile: 'fas fa-file-code',
@@ -69,6 +61,7 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     private store: Store<any>,
     private dialog: MatDialog,
     private directoryRepository: DirectoryRepository,
+    private fileRepository: FileRepository,
     private dragDropBuffer: DragDropBuffer,
     private copyBuffer: CopyBuffer,
     private snackBar: MatSnackBar
@@ -77,7 +70,6 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.setNestedPosition();
     this.runRootSpecificActions();
-    this.subscribeToActions();
 
     this.copyBufferSubscriber = this.copyBufferSubject.subscribe((event: IBufferEvent) => {
       if (event.id !== this.directory.id) {
@@ -98,6 +90,32 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     this.doOnChanges(changes);
   }
 
+  onExpand() {
+    if (this.expanded) {
+      this.unExpandDirectory();
+
+      this.structure = [];
+
+      return;
+    }
+
+    let tempSubject = new Subject();
+
+    this.getStructure(tempSubject);
+
+    const tempSubscriber: Subscription = tempSubject.subscribe((structure: any[]) => {
+      this.expandDirectory();
+
+      this.structure = structure;
+
+      tempSubscriber.unsubscribe();
+    });
+  }
+
+  onItemAttachEvent(item) {
+    this.selectedItem = item;
+  }
+
   onCopy(): void {
     this.copyBuffer.add(this.directory);
 
@@ -106,10 +124,6 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
   onDrop(): void {
     this.doDrop();
-  }
-
-  onRefresh(): void {
-    this.refreshEvent.emit();
   }
 
   onDrag(): void {
@@ -173,22 +187,16 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   onExpandDirectory(): void {
     this.selected = true;
     this.attachActionSet = true;
-    this.directoryAttachedEvent.emit({
-      type: 'directory',
-      id: this.directory.id,
-    });
 
     if (!this.expanded) {
       this.expandDirectory();
-      this.sendExpandDirectoryEvent();
     } else if (this.expanded) {
       this.unExpandDirectory();
-      this.sendUnExpandDirectoryEvent();
     }
   }
 
   private expandDirectory(): void {
-    this.icons.dirCaret = 'fas fa-folder-open';
+    this.icons.angle = 'fas fa-angle-down';
 
     this.expanded = true;
   }
@@ -196,17 +204,9 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
   private unExpandDirectory(): void {
     if (this.directory.isRoot) return;
 
-    this.icons.dirCaret = 'fas fa-folder';
+    this.icons.angle = 'fas fa-angle-right';
 
     this.expanded = false;
-  }
-
-  private sendUnExpandDirectoryEvent(): void {
-    this.unExpandDirectoryEvent.emit(this.directory);
-  }
-
-  private sendExpandDirectoryEvent(): void {
-    this.expandDirectoryEvent.emit(this.directory);
   }
 
   private changeIconIfRoot(): void {
@@ -221,31 +221,15 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
     this.dirStyles['width'] = `${w}px`;
     this.dirStyles['padding-left'] = `${pl}px`;
+
+    this.expandedPadding = pl;
   }
 
   private runRootSpecificActions() {
     if (this.directory.isRoot) {
       this.expandDirectory();
-      this.sendExpandDirectoryEvent();
       this.changeIconIfRoot();
     }
-  }
-
-  private subscribeToActions() {
-    this.editorViewActions = this.store.pipe(select('editorViewActions')).subscribe((action) => {
-      if (!action) {
-        return;
-      }
-
-      switch (action.type) {
-        case actionTypes.VIEW_EDITOR_DIRECTORY_EMPTIED: {
-          if (action.directoryId === this.directory.id) {
-            this.unExpandDirectory();
-            this.sendUnExpandDirectoryEvent();
-          }
-        }
-      }
-    });
   }
 
   private doNewDirectory(): void {
@@ -265,16 +249,9 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
     dialogRef.afterClosed().subscribe((resolver) => {
       if (!resolver) return;
 
-      if (resolver) {
-        this.addDirectoryEvent.emit({
-          parent: this.directory,
-          created: resolver.factory(this.directory.codeProjectUuid, resolver.originalModel),
-        });
+      const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 
-/*        if (!this.expanded) {
-          this.expandDirectory();
-        }*/
-      }
+      this.structure.push(directory);
     });
   }
 
@@ -327,12 +304,7 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
       if (model.type && model.type === 'error') {
 
       } else {
-        this.store.dispatch(viewEditorShowFile(model));
-
-        this.addFileEvent.emit({
-          parent: this.directory,
-          file: model,
-        });
+        this.structure.push(model);
 
         if (!this.expanded) {
           this.expandDirectory();
@@ -372,16 +344,10 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
           sendDirectoryEmptied: false,
         };
 
-        this.removeDirectoryEvent.emit(removeDirectoryEvent);
-
         const cuttedDirectory = response.fromDirectory;
         cuttedDirectory.type = 'directory';
 
         if (this.directory.isRoot) {
-          this.addDirectoryEvent.emit({
-            parent: this.directory,
-            created: cuttedDirectory,
-          });
         }
 
         if (!this.directory.isRoot) {
@@ -389,11 +355,6 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
             this.onExpandDirectory();
           } else {
             this.expandDirectory();
-
-            this.addDirectoryEvent.emit({
-              parent: this.directory,
-              created: cuttedDirectory,
-            });
           }
         }
       }, (e) => {
@@ -428,24 +389,13 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
       let failed: boolean = false;
       this.directoryRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
-        this.fileRemovedEvent.emit(value);
         if (this.directory.isRoot) {
-          this.addFileEvent.emit({
-            parent: this.directory,
-            file: cuttedFile,
-          });
-
           return;
         }
 
         if (!this.expanded) {
           this.expandDirectory();
-          this.sendExpandDirectoryEvent();
         } else {
-          this.addFileEvent.emit({
-            parent: this.directory,
-            file: cuttedFile,
-          });
         }
       },(e) => {
         const response = e.error;
@@ -522,11 +472,6 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
           this.directoryRepository.copyFile(model).subscribe((copiedFile: IFile) => {
             if (this.directory.isRoot) {
-              this.addFileEvent.emit({
-                parent: this.directory,
-                file: copiedFile,
-              });
-
               this.copyUnbufferSubject.next();
 
               return;
@@ -534,16 +479,10 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
 
             if (!this.expanded) {
               this.expandDirectory();
-              this.sendExpandDirectoryEvent();
-
               didExpand = true;
             }
 
             if (!didExpand) {
-              this.addFileEvent.emit({
-                parent: this.directory,
-                file: copiedFile,
-              });
             }
           }, (e) => {
             const response = e.error;
@@ -619,10 +558,27 @@ export class DirectoryComponent implements OnInit, OnChanges, OnDestroy {
       );
 
       this.directoryRepository.removeDirectory(model).subscribe(() => {
-        this.removeDirectoryEvent.emit({
-          directory: this.directory,
-          sendDirectoryEmptied: true,
-        });
+      });
+    });
+  }
+
+  private getStructure(subject: Subject<any>) {
+    this.directoryRepository.getSubdirectories(this.project.uuid, this.directory.id).subscribe((resolver) => {
+      const structure = [];
+
+      const models = resolver.factory(this.project.uuid, resolver.originalModel);
+
+      for (const model of models) {
+        structure.push(model);
+      }
+
+      this.fileRepository.getFilesFromDirectory(this.project.uuid, this.directory.id).subscribe((resolver) => {
+        const models = resolver.factory(this.project.uuid, resolver.originalModel);
+        for (const model of models) {
+          structure.push(model);
+        }
+
+        subject.next(structure);
       });
     });
   }

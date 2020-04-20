@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {CodeEditorRouteResolver} from "./routeResolvers/CodeEditorRouteResolver";
-import {map, reduce} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {ProjectRouteResolver} from "./routeResolvers/ProjectRouteResolver";
 
 function singleDirectoryFactory(codeProjectUuid, originalModel) {

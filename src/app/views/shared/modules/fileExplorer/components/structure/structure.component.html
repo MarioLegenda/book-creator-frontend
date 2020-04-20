@@ -9,8 +9,7 @@
         [selectedItem]="selectedItem"
         [file]="item"
         [copyBufferSubject]="copyBufferSubject"
-        [extension]="project.environment.extension"
-        (fileRemovedEvent)="removeFileEvent($event)">
+        [extension]="project.environment.extension">
 
         <div class="drag-preview" *cdkDragPreview>
           Drop when ready
@@ -20,14 +19,7 @@
 
       <cms-directory
         *ngIf="isDirectory(item)"
-        (expandDirectoryEvent)="expandDirectoryEvent($event)"
-        (unExpandDirectoryEvent)="unExpandDirectoryEvent($event)"
-        (addDirectoryEvent)="addDirectoryEvent($event)"
-        (addFileEvent)="addFileEvent($event)"
-        (fileRemovedEvent)="removeFileEvent($event)"
-        (removeDirectoryEvent)="removeDirectoryEvent($event)"
-        (directoryAttachedEvent)="onItemAttachEvent($event)"
-        (refreshEvent)="onRefresh()"
+        [project]="project"
         [selectedItem]="selectedItem"
         [extension]="project.environment.extension"
         [copyBufferSubject]="copyBufferSubject"

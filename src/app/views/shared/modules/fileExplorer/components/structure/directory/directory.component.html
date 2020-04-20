@@ -1,20 +1,26 @@
 <div
   class="col-xs-12 col-md-3 col-lg-3 directory"
-  (drop)="onDrop()"
-  (dragover)="onDragOver($event)"
-  (dragenter)="onDragEnter()"
-  (dragexit)="onDragExit()"
-  (drag)="onDrag()"
   draggable="true"
   [id]="directory.id"
   [ngClass]="{'dir-selected': selected && !directory.isRoot && selectedItem && selectedItem.type === 'directory' && selectedItem.id === directory.id}">
   <div
     class="dir-name"
-    (click)="onExpandDirectory()"
+    (drop)="onDrop()"
+    (dragover)="onDragOver($event)"
+    (dragenter)="onDragEnter()"
+    (dragexit)="onDragExit()"
+    (drag)="onDrag()"
     (mouseenter)="directoryHovered()"
     (mouseleave)="directoryUnHovered()"
     [ngClass]="{'dragged-over': draggedOver}"
     [ngStyle]="dirStyles">
+
+    <i
+      *ngIf="!directory.isRoot"
+      (click)="onExpand()"
+      [ngClass]="icons.angle"
+      class="icon expand-icon">
+    </i>
 
     <i
       *ngIf="!directory.isRoot"
@@ -28,15 +34,13 @@
       [ngClass]="icons.dirCaret">
     </i>
 
-    <h1 class="text">{{directory.name}}</h1>
+    <h1
+      (dblclick)="onExpand()"
+      class="text">{{directory.name}}</h1>
 
     <div class="root-action-set" *ngIf="directory.isRoot">
       <div class="action" *ngIf="copyExpected">
         <i (click)="onPasteToRoot()" class="fas fa-paste"></i>
-      </div>
-
-      <div class="action">
-        <i (click)="onRefresh()" class="fas fa-sync-alt"></i>
       </div>
 
       <div class="action">
@@ -64,5 +68,37 @@
       [showCopy]="true"
       [showPaste]="copyExpected"
     ></cms-action-set>
+  </div>
+
+  <div *ngFor="let item of structure">
+    <cms-file
+      *ngIf="item.type === 'file'"
+      [basePadding]="expandedPadding"
+      (fileAttachedEvent)="onItemAttachEvent($event)"
+      [selectedItem]="selectedItem"
+      [file]="item"
+      [copyBufferSubject]="copyBufferSubject"
+      [extension]="extension">
+
+      <div class="drag-preview" *cdkDragPreview>
+        Drop when ready
+      </div>
+
+    </cms-file>
+
+    <cms-directory
+      *ngIf="item.type === 'directory'"
+      [selectedItem]="selectedItem"
+      [project]="project"
+      [extension]="extension"
+      [copyBufferSubject]="copyBufferSubject"
+      [copyUnbufferSubject]="copyUnbufferSubject"
+      [directory]="item">
+
+      <div class="drag-preview" *cdkDragPreview>
+        Drop when ready
+      </div>
+
+    </cms-directory>
   </div>
 </div>

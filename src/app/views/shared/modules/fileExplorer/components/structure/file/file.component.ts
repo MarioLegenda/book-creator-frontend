@@ -35,6 +35,7 @@ export class FileComponent implements OnInit, OnChanges {
   @Input('extension') extension: string;
   @Input('selectedItem') selectedItem: any;
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
+  @Input('basePadding') basePadding: number;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
   @Output('fileAttachedEvent') fileAttachedEvent = new EventEmitter();
@@ -164,6 +165,14 @@ export class FileComponent implements OnInit, OnChanges {
   }
 
   private calcDepth(): void {
+    if (this.basePadding) {
+      const pl: number = this.basePadding + 45;
+
+      this.fileStyles['padding-left'] = `${pl}px`;
+
+      return;
+    }
+
     let depth = this.file.depth;
 
     if (this.file.searched) {
@@ -174,7 +183,7 @@ export class FileComponent implements OnInit, OnChanges {
       depth = depth + 1;
     }
 
-    let wBase = (depth === 1) ? 33 : 17;
+    let wBase = (depth === 1) ? 62 : 24;
     const w = 269 + (depth * wBase);
     const pl = depth * wBase;
 

@@ -2,16 +2,14 @@
 
 .file {
   position: relative;
-  width: 269px;
+  width: 100%;
   float: left;
-
-  border-left: 4px solid $appBlack;
 
   .file-name {
     width: 100%;
     float: left;
 
-    padding: 10px;
+    padding: 5px;
 
     .text {
       font-size: 13px;
@@ -19,33 +17,32 @@
       width: 150px;
       float: left;
 
-      padding: 0;
       margin: 0;
 
-      padding-left: 5px;
+      padding: 5px 0 5px 8px;
     }
 
     .icon {
-      width: 20px;
+      width: 25px;
       display: inline-block;
       float: left;
       color: white;
+
+      padding: 5px 8px 5px 8px;
     }
   }
 
   &:hover {
-    background-color: $mainAppColor;
     cursor: pointer;
   }
 
   &:hover .file-name .icon {
-    color: $appBlack;
+    color: white;
   }
 }
 
 .file-selected {
   background-color: $mainAppColorDark;
-  border-left: 4px solid $mainAppColor;
 
   .file-name .icon {
     color: $appBlack;

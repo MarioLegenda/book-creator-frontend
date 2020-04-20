@@ -5,13 +5,11 @@
   float: left;
   position: relative;
 
-  border-left: 4px solid $appBlack;
-
   .dir-name {
     width: 100%;
     float: left;
 
-    padding: 10px;
+    padding: 5px;
 
     .text {
       font-size: 13px;
@@ -19,16 +17,28 @@
       width: 150px;
       float: left;
 
-      padding: 0;
       margin: 0;
-
-      padding-left: 5px;
+      padding: 5px 0 5px 8px;
     }
 
     .icon {
-      width: 20px;
+      width: 25px;
       display: inline-block;
       float: left;
+      color: $lightGray;
+
+      padding: 5px 8px 5px 8px;
+    }
+
+    .expand-icon {
+      color: white;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover .icon {
       color: white;
     }
   }
@@ -36,7 +46,7 @@
   .root-action-set {
     width: 120px;
     top: 5px;
-    left: 140px;
+    left: 147px;
     position: absolute;
     font-size: 1.2em;
 
@@ -53,15 +63,6 @@
     }
   }
 
-  &:hover {
-    background-color: $mainAppColor;
-    cursor: pointer;
-  }
-
-  &:hover .dir-name .icon {
-    color: white;
-  }
-
   .dragged-over {
     background-color: $standOutColor;
   }
@@ -69,7 +70,6 @@
 
 .dir-selected {
   background-color: $mainAppColorDark;
-  border-left: 4px solid $mainAppColor;
 
   .dir-name .icon {
     color: white;
