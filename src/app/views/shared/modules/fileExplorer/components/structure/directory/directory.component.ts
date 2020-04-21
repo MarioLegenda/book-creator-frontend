@@ -17,7 +17,6 @@ import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {ICutFinishedEvent} from "../../../models/ICutFinishedEvent";
 import {doEditDirectory, getStructure, removeDirectory} from "../shared/_protectedDirectoryFns";
 import {IParentEvent} from "../../../models/IParentEvent";
-import {first} from "rxjs/operators";
 import {ICodeProject} from "../../../../../../codeEditor/models/ICodeProject";
 
 @Component({
@@ -325,8 +324,6 @@ export class DirectoryComponent implements OnInit, OnDestroy {
       const values = this.copyBuffer.get();
 
       let failedCopies: boolean = false;
-      let didExpand = false;
-
       for (const value of values) {
         if (value.type === 'directory') {
           const model = HttpModel.copyDirectory(
@@ -336,10 +333,20 @@ export class DirectoryComponent implements OnInit, OnDestroy {
           );
 
           this.fileSystemRepository.copyDirectory(model).subscribe((copiedDirectory: IDirectory) => {
-            console.log(copiedDirectory);
+            if (!this.expanded) {
+              this.doLoadStructure().subscribe(() => {
+                this.toggleActionSet = !this.toggleActionSet;
+              });
+            } else {
+              copiedDirectory.type = 'directory';
+              this.structure.unshift(copiedDirectory);
+
+              this.expandDirectory();
+
+              this.toggleActionSet = !this.toggleActionSet;
+            }
           }, (e) => {
             const response = e.error;
-
             if (response.errorCode === ErrorCodes.ResourceExists) {
               if (!failedCopies) {
                 this.snackBar.open('Some files or directories already exist and could not be copied', null, {
@@ -368,7 +375,18 @@ export class DirectoryComponent implements OnInit, OnDestroy {
           );
 
           this.fileSystemRepository.copyFile(model).subscribe((copiedFile: IFile) => {
+            if (!this.expanded) {
+              this.doLoadStructure().subscribe(() => {
+                this.toggleActionSet = !this.toggleActionSet;
+              });
+            } else {
+              copiedFile.type = 'file';
+              this.structure.unshift(copiedFile);
 
+              this.expandDirectory();
+
+              this.toggleActionSet = !this.toggleActionSet;
+            }
           }, (e) => {
             const response = e.error;
 
@@ -408,16 +426,33 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   }
 
   private doOnDestroy() {
-    this.copyBufferSubscriber.unsubscribe();
-    this.copyUnbuffeerSubscriber.unsubscribe();
-    this.parentEventSubscription.unsubscribe();
-    this.fileCutEventSubscription.unsubscribe();
-    this.directoryCutEventSubscription.unsubscribe();
-    this.directoryCutEventSubscription = null;
-    this.fileCutEventSubscription = null;
-    this.parentEventSubscription = null;
-    this.copyUnbuffeerSubscriber = null;
-    this.copyBufferSubscriber = null;
+    if (this.copyBufferSubscriber) {
+      this.copyBufferSubscriber.unsubscribe();
+      this.copyBufferSubscriber = null;
+    }
+
+    if (this.copyUnbuffeerSubscriber) {
+      this.copyUnbuffeerSubscriber.unsubscribe();
+      this.copyUnbuffeerSubscriber = null;
+    }
+
+    if (this.parentEventSubscription) {
+      this.parentEventSubscription.unsubscribe();
+      this.parentEventSubscription = null;
+    }
+
+    if (this.fileCutEventSubscription) {
+      this.fileCutEventSubscription.unsubscribe();
+      this.fileCutEventSubscription = null;
+    }
+
+    if (this.directoryCutEventSubscription) {
+      this.directoryCutEventSubscription.unsubscribe();
+      this.directoryCutEventSubscription = null;
+    }
+
+    this.dragDropBuffer.clear();
+    this.copyBuffer.clear();
   }
 
   private listenToCopyBuffers(): void {

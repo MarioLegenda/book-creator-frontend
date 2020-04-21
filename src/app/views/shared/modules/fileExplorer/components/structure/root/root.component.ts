@@ -270,7 +270,8 @@ export class RootComponent implements OnInit, OnDestroy {
           );
 
           this.fileSystemRepository.copyDirectory(model).subscribe((copiedDirectory: IDirectory) => {
-            console.log(copiedDirectory);
+            copiedDirectory.type = 'directory';
+            this.structure.unshift(copiedDirectory);
           }, (e) => {
             const response = e.error;
 
@@ -302,11 +303,7 @@ export class RootComponent implements OnInit, OnDestroy {
           );
 
           this.fileSystemRepository.copyFile(model).subscribe((copiedFile: IFile) => {
-            if (this.directory.isRoot) {
-              this.copyUnbufferSubject.next();
-
-              return;
-            }
+            this.structure.push(copiedFile);
           }, (e) => {
             const response = e.error;
 
@@ -346,16 +343,33 @@ export class RootComponent implements OnInit, OnDestroy {
   }
 
   private doOnDestroy(): void {
-    this.copyBufferSubscriber.unsubscribe();
-    this.copyUnbuffeerSubscriber.unsubscribe();
-    this.parentEventSubscription.unsubscribe();
-    this.fileCutEventSubscription.unsubscribe();
-    this.directoryCutEventSubscription.unsubscribe();
-    this.fileCutEventSubscription = null;
-    this.directoryCutEventSubscription = null;
-    this.parentEventSubscription = null;
-    this.copyUnbuffeerSubscriber = null;
-    this.copyBufferSubscriber = null;
+    if (this.copyBufferSubscriber) {
+      this.copyBufferSubscriber.unsubscribe();
+      this.copyBufferSubscriber = null;
+    }
+
+    if (this.copyUnbuffeerSubscriber) {
+      this.copyUnbuffeerSubscriber.unsubscribe();
+      this.copyUnbuffeerSubscriber = null;
+    }
+
+    if (this.parentEventSubscription) {
+      this.parentEventSubscription.unsubscribe();
+      this.parentEventSubscription = null;
+    }
+
+    if (this.fileCutEventSubscription) {
+      this.fileCutEventSubscription.unsubscribe();
+      this.fileCutEventSubscription = null;
+    }
+
+    if (this.directoryCutEventSubscription) {
+      this.directoryCutEventSubscription.unsubscribe();
+      this.directoryCutEventSubscription = null;
+    }
+
+    this.dragDropBuffer.clear();
+    this.copyBuffer.clear();
   }
 
   private listenToCopyBuffers(): void {

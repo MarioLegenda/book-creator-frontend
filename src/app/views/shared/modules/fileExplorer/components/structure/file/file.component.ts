@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {Store} from "@ngrx/store";
 import {httpGetFileContentAction} from "../../../../../../../store/editor/httpActions";
@@ -21,7 +21,7 @@ import {ICodeProject} from "../../../../../../codeEditor/models/ICodeProject";
   ],
   templateUrl: './file.component.html',
 })
-export class FileComponent implements OnInit {
+export class FileComponent implements OnInit, OnDestroy {
   @Input('file') file: IFile;
 
   @Input('extension') extension: string;
@@ -52,6 +52,11 @@ export class FileComponent implements OnInit {
   ngOnInit() {
     this.selectIcon();
     this.calcDepth();
+  }
+
+  ngOnDestroy(): void {
+    this.dragDropBuffer.clear();
+    this.copyBuffer.clear();
   }
 
   onCopy() {

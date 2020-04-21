@@ -2,7 +2,7 @@ export interface IDirectory {
   readonly children: string[];
   readonly id: string;
   name: string;
-  readonly type: string;
+  type: string;
   readonly isRoot: boolean;
   readonly parent: any;
   readonly depth: number;
