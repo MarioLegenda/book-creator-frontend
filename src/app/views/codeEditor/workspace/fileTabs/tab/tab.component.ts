@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {FileTab} from "../../../../../model/app/codeEditor/FileTab";
 
 @Component({
@@ -11,6 +11,7 @@ import {FileTab} from "../../../../../model/app/codeEditor/FileTab";
 export class TabComponent {
   @Input('fileTab') fileTab: FileTab;
   @Input('selectedTab') selectedTab: FileTab;
+  @ViewChild('tooltip', {static: true}) tooltip;
 
   @Output('tabCloseEvent') tabCloseEvent = new EventEmitter();
   @Output('tabSelectEvent') tabSelectEvent = new EventEmitter();

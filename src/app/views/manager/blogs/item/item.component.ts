@@ -9,7 +9,6 @@ import {environment} from "../../../../../environments/environment";
 import {Router} from "@angular/router";
 import {BlogState} from "../../../../logic/BlogState";
 import {NotifyIfPublishedModal} from "../../modals/notifyIfPublished/notify-if-published-modal.component";
-import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 
 @Component({
   selector: 'cms-ks-item',
@@ -65,7 +64,7 @@ export class ItemComponent {
         if (confirm) {
           const shortId: string = this.item.shortId;
           const pageShortId: string = this.item.pageShortId;
-          
+
           this.router.navigate([`/page/blog/${shortId}/${pageShortId}`]);
         }
       });

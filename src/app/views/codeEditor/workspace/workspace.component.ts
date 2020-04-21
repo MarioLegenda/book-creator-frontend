@@ -42,7 +42,16 @@ export class WorkspaceComponent implements OnDestroy, OnInit {
         switch (action.type) {
           case viewActionTypes.VIEW_EDITOR_SHOW_FILE: {
             if (!Util.hasKey(this.indexMap, action.id)) {
-              const tab: FileTab = new FileTab(action.id, action.name);
+              const path = action.path;
+              const fileName = path[path.length - 1];
+              const realPath = path.slice(0, -1).join('/');
+              let short: string = `${realPath}/${fileName}`;
+
+              if (short.length > 20) {
+                short = `${realPath.substring(0, 15)}... ${fileName}`;
+              }
+
+              const tab: FileTab = new FileTab(action.id, short, path.join('/'));
               this.tabs.unshift(tab);
               this.indexMap[action.id] = this.findTabIndex(action.id);
 

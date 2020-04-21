@@ -12,6 +12,7 @@ import {Subject} from "rxjs";
 import {IFile} from "../../../models/IFile";
 import {IParentEvent} from "../../../models/IParentEvent";
 import {ICodeProject} from "../../../../../../codeEditor/models/ICodeProject";
+import deepcopy from 'deepcopy';
 
 @Component({
   selector: 'cms-file',
@@ -54,7 +55,6 @@ export class FileComponent implements OnInit, OnDestroy {
     this.fileBreadcrumbs = [...this.breadcrumbs];
     this.fileBreadcrumbs.push(this.file.name);
 
-    console.log(this.file.name, this.fileBreadcrumbs);
     this.selectIcon();
     this.calcDepth();
   }
@@ -117,8 +117,10 @@ export class FileComponent implements OnInit, OnDestroy {
     });
   }
 
-  showFile() {
-    this.store.dispatch(httpGetFileContentAction(this.file));
+  showFile(): void {
+    const file = deepcopy(this.file);
+    file.path = this.fileBreadcrumbs;
+    this.store.dispatch(httpGetFileContentAction(file));
   }
 
   fileHovered() {

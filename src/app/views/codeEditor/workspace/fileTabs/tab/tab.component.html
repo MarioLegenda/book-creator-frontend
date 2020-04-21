@@ -1,5 +1,11 @@
 <div
   class="tab"
+  #tooltip="matTooltip"
+  matTooltipClass="file-tab-tooltip"
+  matTooltipPosition="above"
+  matTooltipShowDelay="100"
+  matTooltipHideDelay="100"
+  [matTooltip]="fileTab.fullPath"
   [ngClass]="{'selected-tab': selectedTab && fileTab.id === selectedTab.id}"
   (click)="onSelected($event)">
   <p>{{fileTab.name}}</p>

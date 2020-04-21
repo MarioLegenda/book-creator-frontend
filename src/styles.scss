@@ -85,6 +85,16 @@ textarea {
   border: 1px solid $almostWhiteGray;
 }
 
+.file-tab-tooltip {
+  font-size: 0.8em;
+  font-family: $mainFont;
+  color: $appBlack !important;
+  background: $almostWhiteGray;
+
+  padding: 5px;
+  border: 1px solid $lightestGray;
+}
+
 .button {
   display: block;
   background-color: white;
