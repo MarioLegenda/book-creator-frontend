@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
-import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
+import {FileSystemRepository} from "../../../../../../../repository/FileSystemRepository";
 import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
 import {Store} from "@ngrx/store";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
@@ -56,7 +56,7 @@ export class RootComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<any>,
     private dialog: MatDialog,
-    private directoryRepository: DirectoryRepository,
+    private fileSystemRepository: FileSystemRepository,
     private fileRepository: FileRepository,
     private dragDropBuffer: DragDropBuffer,
     private copyBuffer: CopyBuffer,
@@ -80,10 +80,6 @@ export class RootComponent implements OnInit, OnDestroy {
 
   onDrop(): void {
     this.doDrop();
-  }
-
-  onDrag(): void {
-    this.dragDropBuffer.add(this.directory);
   }
 
   onDragOver($event): void {
@@ -191,16 +187,20 @@ export class RootComponent implements OnInit, OnDestroy {
       const model = HttpModel.cutDirectory(fromDirectoryId, toDirectoryId, codeProjectUuid);
 
       let failed: boolean = false;
-      this.directoryRepository.cutDirectory(model).subscribe((response) => {
+      this.fileSystemRepository.cutDirectory(model).subscribe((response) => {
 
         const cuttedDirectory = response.fromDirectory;
         cuttedDirectory.type = 'directory';
+
+        this.structure.unshift(cuttedDirectory);
+
+        this.directoryCutFinishedEvent.next(value);
       }, (e) => {
         const response = e.error;
 
         if (response.errorCode === ErrorCodes.ResourceExists) {
           if (!failed) {
-            this.snackBar.open('Some files or directories already exist and could not be cut', null, {
+            this.snackBar.open(`Directory '${value.name}' already exists in directory '${this.directory.name}'`, null, {
               duration: 5000,
             });
           }
@@ -226,7 +226,7 @@ export class RootComponent implements OnInit, OnDestroy {
       const model = HttpModel.cutFile(fileId, directoryId, codeProjectUuid);
 
       let failed: boolean = false;
-      this.directoryRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
+      this.fileSystemRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
         this.structure.push(cuttedFile);
 
         this.fileCutFinishedEvent.next(value);
@@ -269,7 +269,7 @@ export class RootComponent implements OnInit, OnDestroy {
             this.directory.codeProjectUuid,
           );
 
-          this.directoryRepository.copyDirectory(model).subscribe((copiedDirectory: IDirectory) => {
+          this.fileSystemRepository.copyDirectory(model).subscribe((copiedDirectory: IDirectory) => {
             console.log(copiedDirectory);
           }, (e) => {
             const response = e.error;
@@ -301,7 +301,7 @@ export class RootComponent implements OnInit, OnDestroy {
             this.directory.codeProjectUuid
           );
 
-          this.directoryRepository.copyFile(model).subscribe((copiedFile: IFile) => {
+          this.fileSystemRepository.copyFile(model).subscribe((copiedFile: IFile) => {
             if (this.directory.isRoot) {
               this.copyUnbufferSubject.next();
 
@@ -385,7 +385,7 @@ export class RootComponent implements OnInit, OnDestroy {
   private listenToDirectoryCutEvents(): void {
     this.directoryCutFinishedEvent.subscribe((event: ICutFinishedEvent) => {
       const idx: number = this.structure.findIndex(a => {
-        return (a.id === event.id && a.type === 'directory');
+        return (a.id === event.id && a.type === 'directory' && this.directory.id === event.parent);
       });
 
       if (idx === -1) return;

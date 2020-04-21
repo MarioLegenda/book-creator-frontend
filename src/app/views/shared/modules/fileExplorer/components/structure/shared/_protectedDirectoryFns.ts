@@ -4,7 +4,7 @@ import {HttpModel} from "../../../../../../../model/http/HttpModel";
 import {EditDirectoryDialogComponent} from "../modals/editDirectory/edit-directory-dialog.component";
 
 export function getStructure(subject: Subject<any>) {
-  this.directoryRepository.getSubdirectories(this.project.uuid, this.directory.id).subscribe((resolver) => {
+  this.fileSystemRepository.getSubdirectories(this.project.uuid, this.directory.id).subscribe((resolver) => {
     const structure = [];
 
     const models = resolver.factory(this.project.uuid, resolver.originalModel);
@@ -69,7 +69,7 @@ export function removeDirectory(): void {
       this.directory.id,
     );
 
-    this.directoryRepository.removeDirectory(model).subscribe(() => {
+    this.fileSystemRepository.removeDirectory(model).subscribe(() => {
       this.parentEvent.next(this.directory);
     });
   });

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
+import {FileSystemRepository} from "../../../../../../repository/FileSystemRepository";
 import {Subject} from "rxjs";
 import {IBufferEvent} from "../../models/IBufferEvent";
 import {ICutFinishedEvent} from "../../models/ICutFinishedEvent";
@@ -26,7 +26,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
   @ViewChild('structureWrapper', {static: true}) structureWrapper: ElementRef;
 
   constructor(
-    private directoryRepository: DirectoryRepository,
+    private fileSystemRepository: FileSystemRepository,
   ) {}
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class StructureComponent implements OnInit, AfterViewInit {
   }
 
   private expandRootDirectory(): void {
-    this.directoryRepository.getRootDirectory(this.project.uuid).subscribe((resolver) => {
+    this.fileSystemRepository.getRootDirectory(this.project.uuid).subscribe((resolver) => {
       const directory = resolver.factory(this.project.uuid, resolver.originalModel);
 
       this.structure.push(directory);

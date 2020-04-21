@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {CodeEditorRouteResolver} from "./routeResolvers/CodeEditorRouteResolver";
 import {map} from "rxjs/operators";
 import {ProjectRouteResolver} from "./routeResolvers/ProjectRouteResolver";
+import {IResponse} from "../model/http/response/IResponse";
 
 function singleDirectoryFactory(codeProjectUuid, originalModel) {
   return Object.assign({}, {
@@ -26,7 +27,7 @@ function directoryCollectionFactory(codeProjectUuid, originalModel) {
 @Injectable({
   providedIn: 'root',
 })
-export class DirectoryRepository {
+export class FileSystemRepository {
   constructor(
     private httpClient: HttpClient,
     private routeResolver: CodeEditorRouteResolver,
@@ -34,9 +35,9 @@ export class DirectoryRepository {
   ) {}
 
   getRootDirectory(codeProjectUuid: string): any {
-    return this.httpClient.get(this.routeResolver.getRootDirectory(codeProjectUuid))
+    return this.httpClient.get<IResponse>(this.routeResolver.getRootDirectory(codeProjectUuid))
       .pipe(
-        map((res: any) => {
+        map((res: IResponse) => {
           return {
             factory: singleDirectoryFactory,
             originalModel: res.data,
@@ -46,9 +47,9 @@ export class DirectoryRepository {
   }
 
   getSubdirectories(codeProjectUuid: string, directoryId: string): any {
-    return this.httpClient.get(this.routeResolver.getSubdirectories(codeProjectUuid, directoryId))
+    return this.httpClient.get<IResponse>(this.routeResolver.getSubdirectories(codeProjectUuid, directoryId))
       .pipe(
-        map((res: any) => {
+        map((res: IResponse) => {
           return {
             factory: directoryCollectionFactory,
             originalModel: res.data,
@@ -59,7 +60,7 @@ export class DirectoryRepository {
 
   async createDirectory(model) {
     try {
-      const response: any = await this.httpClient.put(this.routeResolver.createDirectory(), model).toPromise();
+      const response: IResponse = await this.httpClient.put<IResponse>(this.routeResolver.createDirectory(), model).toPromise();
       return {
         factory: singleDirectoryFactory,
         originalModel: response.data,
@@ -72,12 +73,12 @@ export class DirectoryRepository {
   }
 
   removeDirectory(model) {
-    return this.httpClient.post(this.routeResolver.removeDirectory(), model);
+    return this.httpClient.post<IResponse>(this.routeResolver.removeDirectory(), model);
   }
 
   async renameDirectory(model) {
     try {
-      const response: any = await this.httpClient.post(this.routeResolver.renameDirectory(), model).toPromise();
+      const response: IResponse = await this.httpClient.post<IResponse>(this.routeResolver.renameDirectory(), model).toPromise();
       return {
         factory: singleDirectoryFactory,
         originalModel: response.data,
@@ -90,9 +91,9 @@ export class DirectoryRepository {
   }
 
   searchDirsAndFiles(model) {
-    return this.httpClient.post(this.projectRouteResolver.searchDirsAndFiles(), model)
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.searchDirsAndFiles(), model)
       .pipe(
-        map((res: any) => {
+        map((res: IResponse) => {
           const data = res.data;
           data.isEmpty = data.directories.length === 0 && data.files.length === 0;
 
@@ -102,30 +103,30 @@ export class DirectoryRepository {
   }
 
   cutFile(model) {
-    return this.httpClient.post(this.projectRouteResolver.cutFile(), model)
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.cutFile(), model)
       .pipe(
-        map((res: any) => res.data)
+        map((res: IResponse) => res.data)
       )
   }
 
   copyFile(model) {
-    return this.httpClient.post(this.projectRouteResolver.copyFile(), model)
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.copyFile(), model)
       .pipe(
         map((res: any) => res.data)
       )
   }
 
   cutDirectory(model) {
-    return this.httpClient.post(this.projectRouteResolver.cutDirectory(), model)
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.cutDirectory(), model)
       .pipe(
-        map((res: any) => res.data)
+        map((res: IResponse) => res.data)
       )
   }
 
   copyDirectory(model) {
-    return this.httpClient.post(this.projectRouteResolver.copyDirectory(), model)
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.copyDirectory(), model)
       .pipe(
-        map((res: any) => res.data)
+        map((res: IResponse) => res.data)
       )
   }
 }

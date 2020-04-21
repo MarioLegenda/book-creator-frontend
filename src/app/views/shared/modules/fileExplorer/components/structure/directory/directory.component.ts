@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddFileDialogComponent} from "../modals/addFile/add-file-dialog.component";
-import {DirectoryRepository} from "../../../../../../../repository/DirectoryRepository";
+import {FileSystemRepository} from "../../../../../../../repository/FileSystemRepository";
 import {AddDirectoryDialogComponent} from "../modals/addDirectory/add-directory-dialog.component";
 import {Store} from "@ngrx/store";
 import {HttpModel} from "../../../../../../../model/http/HttpModel";
@@ -61,7 +61,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<any>,
     private dialog: MatDialog,
-    private directoryRepository: DirectoryRepository,
+    private fileSystemRepository: FileSystemRepository,
     private fileRepository: FileRepository,
     private dragDropBuffer: DragDropBuffer,
     private copyBuffer: CopyBuffer,
@@ -240,7 +240,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
       const model = HttpModel.cutDirectory(fromDirectoryId, toDirectoryId, codeProjectUuid);
 
       let failed: boolean = false;
-      this.directoryRepository.cutDirectory(model).subscribe((response) => {
+      this.fileSystemRepository.cutDirectory(model).subscribe((response) => {
         const cuttedDirectory = response.fromDirectory;
         cuttedDirectory.type = 'directory';
 
@@ -284,7 +284,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
       const model = HttpModel.cutFile(fileId, directoryId, codeProjectUuid);
 
       let failed: boolean = false;
-      this.directoryRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
+      this.fileSystemRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
         if (!this.expanded) {
           this.doLoadStructure().subscribe(() => {
             this.fileCutFinishedEvent.next(value);
@@ -335,7 +335,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
             this.directory.codeProjectUuid,
           );
 
-          this.directoryRepository.copyDirectory(model).subscribe((copiedDirectory: IDirectory) => {
+          this.fileSystemRepository.copyDirectory(model).subscribe((copiedDirectory: IDirectory) => {
             console.log(copiedDirectory);
           }, (e) => {
             const response = e.error;
@@ -367,20 +367,8 @@ export class DirectoryComponent implements OnInit, OnDestroy {
             this.directory.codeProjectUuid
           );
 
-          this.directoryRepository.copyFile(model).subscribe((copiedFile: IFile) => {
-            if (this.directory.isRoot) {
-              this.copyUnbufferSubject.next();
+          this.fileSystemRepository.copyFile(model).subscribe((copiedFile: IFile) => {
 
-              return;
-            }
-
-            if (!this.expanded) {
-              this.expandDirectory();
-              didExpand = true;
-            }
-
-            if (!didExpand) {
-            }
           }, (e) => {
             const response = e.error;
 

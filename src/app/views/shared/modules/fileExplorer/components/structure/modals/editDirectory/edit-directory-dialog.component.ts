@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DirectoryRepository} from "../../../../../../../../repository/DirectoryRepository";
+import {FileSystemRepository} from "../../../../../../../../repository/FileSystemRepository";
 import {HttpModel} from "../../../../../../../../model/http/HttpModel";
 import {ErrorCodes} from "../../../../../../../../error/ErrorCodes";
 
@@ -20,7 +20,7 @@ export class EditDirectoryDialogComponent {
   createDisabled = false;
 
   constructor(
-    private directoryRepository: DirectoryRepository,
+    private fileSystemRepository: FileSystemRepository,
     public dialogRef: MatDialogRef<EditDirectoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public model: any)
   {}
@@ -60,7 +60,7 @@ export class EditDirectoryDialogComponent {
       this.newName,
     );
 
-    this.directoryRepository.renameDirectory(model).then((resolver: any) => {
+    this.fileSystemRepository.renameDirectory(model).then((resolver: any) => {
       if (resolver.error) {
         const errResponse = resolver.error;
 

@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ReplaySubject, Subject, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {HttpModel} from "../../../../../../model/http/HttpModel";
-import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
+import {FileSystemRepository} from "../../../../../../repository/FileSystemRepository";
 import {ICodeProject} from "../../../../../codeEditor/models/ICodeProject";
 
 @Component({
@@ -37,7 +37,7 @@ export class FileExplorerComponent implements OnInit {
   private typeAheadObservable: Subscription = null;
 
   constructor(
-    private directoryRepository: DirectoryRepository
+    private fileSystemRepository: FileSystemRepository
   ) {}
 
   ngOnInit() {
@@ -81,7 +81,7 @@ export class FileExplorerComponent implements OnInit {
           this.searchTerm,
         );
 
-        this.directoryRepository.searchDirsAndFiles(model).subscribe((data) => {
+        this.fileSystemRepository.searchDirsAndFiles(model).subscribe((data) => {
           const searchResult = {
             directories: data.directories.map(d => {d.type = 'directory'; return d}),
             files: data.files.map(f => {f.type = 'file'; return f}),

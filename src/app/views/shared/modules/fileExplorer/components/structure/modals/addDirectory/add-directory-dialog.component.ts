@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DirectoryRepository} from "../../../../../../../../repository/DirectoryRepository";
+import {FileSystemRepository} from "../../../../../../../../repository/FileSystemRepository";
 import {HttpModel} from "../../../../../../../../model/http/HttpModel";
 import {ErrorCodes} from "../../../../../../../../error/ErrorCodes";
 
@@ -17,7 +17,7 @@ export class AddDirectoryDialogComponent {
   createDisabled: boolean = false;
 
   constructor(
-    private directoryRepository: DirectoryRepository,
+    private fileSystemRepository: FileSystemRepository,
     public dialogRef: MatDialogRef<AddDirectoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public model: any) {}
 
@@ -47,7 +47,7 @@ export class AddDirectoryDialogComponent {
       false,
     );
 
-    this.directoryRepository.createDirectory(httpModel).then((resolver: any) => {
+    this.fileSystemRepository.createDirectory(httpModel).then((resolver: any) => {
       if (resolver.error) {
         const errResponse = resolver.error;
 
