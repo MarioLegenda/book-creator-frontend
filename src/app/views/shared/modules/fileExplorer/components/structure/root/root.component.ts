@@ -17,6 +17,7 @@ import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {ICutFinishedEvent} from "../../../models/ICutFinishedEvent";
 import {IParentEvent} from "../../../models/IParentEvent";
 import {getStructure} from "../shared/_protectedDirectoryFns";
+import {ICodeProject} from "../../../../../../codeEditor/models/ICodeProject";
 
 @Component({
   selector: 'cms-root-directory',
@@ -29,15 +30,18 @@ import {getStructure} from "../shared/_protectedDirectoryFns";
 export class RootComponent implements OnInit, OnDestroy {
   @Input('directory') directory: IDirectory;
   @Input('extension') extension: string;
-  @Input('project') project: any;
+  @Input('project') project: ICodeProject;
 
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('copyUnbufferSubject') copyUnbufferSubject: Subject<any>;
   @Input('fileCutFinishedEvent') fileCutFinishedEvent: Subject<ICutFinishedEvent>
+  @Input('directoryCutFinishedEvent') directoryCutFinishedEvent: Subject<ICutFinishedEvent>
 
   private copyBufferSubscriber: Subscription;
   private copyUnbuffeerSubscriber: Subscription;
   private parentEventSubscription: Subscription;
+  private fileCutEventSubscription: Subscription;
+  private directoryCutEventSubscription: Subscription;
 
   structure = [];
 
@@ -65,6 +69,7 @@ export class RootComponent implements OnInit, OnDestroy {
     this.setNestedPosition();
     this.listenToCopyBuffers();
     this.listenToFileCutEvents();
+    this.listenToDirectoryCutEvents();
     this.initRootStructure();
     this.subscribeToChildEvents();
   }
@@ -344,6 +349,10 @@ export class RootComponent implements OnInit, OnDestroy {
     this.copyBufferSubscriber.unsubscribe();
     this.copyUnbuffeerSubscriber.unsubscribe();
     this.parentEventSubscription.unsubscribe();
+    this.fileCutEventSubscription.unsubscribe();
+    this.directoryCutEventSubscription.unsubscribe();
+    this.fileCutEventSubscription = null;
+    this.directoryCutEventSubscription = null;
     this.parentEventSubscription = null;
     this.copyUnbuffeerSubscriber = null;
     this.copyBufferSubscriber = null;
@@ -365,6 +374,18 @@ export class RootComponent implements OnInit, OnDestroy {
     this.fileCutFinishedEvent.subscribe((event: ICutFinishedEvent) => {
       const idx: number = this.structure.findIndex(a => {
         return (a.id === event.id && a.type === 'file' && this.directory.id === event.directoryId);
+      });
+
+      if (idx === -1) return;
+
+      this.structure.splice(idx, 1);
+    });
+  }
+
+  private listenToDirectoryCutEvents(): void {
+    this.directoryCutFinishedEvent.subscribe((event: ICutFinishedEvent) => {
+      const idx: number = this.structure.findIndex(a => {
+        return (a.id === event.id && a.type === 'directory');
       });
 
       if (idx === -1) return;

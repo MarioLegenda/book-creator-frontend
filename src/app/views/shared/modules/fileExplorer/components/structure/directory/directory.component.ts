@@ -17,6 +17,8 @@ import {FileRepository} from "../../../../../../../repository/FileRepository";
 import {ICutFinishedEvent} from "../../../models/ICutFinishedEvent";
 import {doEditDirectory, getStructure, removeDirectory} from "../shared/_protectedDirectoryFns";
 import {IParentEvent} from "../../../models/IParentEvent";
+import {first} from "rxjs/operators";
+import {ICodeProject} from "../../../../../../codeEditor/models/ICodeProject";
 
 @Component({
   selector: 'cms-directory',
@@ -29,11 +31,12 @@ import {IParentEvent} from "../../../models/IParentEvent";
 export class DirectoryComponent implements OnInit, OnDestroy {
   @Input('directory') directory: IDirectory;
   @Input('extension') extension: string;
-  @Input('project') project: any;
+  @Input('project') project: ICodeProject;
 
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('copyUnbufferSubject') copyUnbufferSubject: Subject<any>;
   @Input('fileCutFinishedEvent') fileCutFinishedEvent: Subject<ICutFinishedEvent>;
+  @Input('directoryCutFinishedEvent') directoryCutFinishedEvent: Subject<ICutFinishedEvent>;
   @Input('parentEvent') parentEvent: Subject<IParentEvent>;
 
   private copyBufferSubscriber: Subscription;
@@ -45,6 +48,8 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   expandedPadding: number;
 
   parentCommunicator: Subject<IParentEvent>;
+  fileCutEventSubscription: Subscription;
+  directoryCutEventSubscription: Subscription;
 
   toggleActionSet: boolean = false;
   expanded: boolean = false;
@@ -69,6 +74,7 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     this.setNestedPosition();
     this.listenToCopyBuffers();
     this.listenToFileCutEvents();
+    this.listenToDirectoryCutEvents();
     this.subscribeToChildEvents();
   }
 
@@ -124,14 +130,6 @@ export class DirectoryComponent implements OnInit, OnDestroy {
 
   editDirectoryDialog(): void {
     doEditDirectory.call(this);
-  }
-
-  onExpandDirectory(): void {
-    if (!this.expanded) {
-      this.expandDirectory();
-    } else if (this.expanded) {
-      this.unExpandDirectory();
-    }
   }
 
   private expandDirectory(): void {
@@ -243,19 +241,17 @@ export class DirectoryComponent implements OnInit, OnDestroy {
 
       let failed: boolean = false;
       this.directoryRepository.cutDirectory(model).subscribe((response) => {
-
         const cuttedDirectory = response.fromDirectory;
         cuttedDirectory.type = 'directory';
 
-        if (this.directory.isRoot) {
-        }
+        if (!this.expanded) {
+          this.doLoadStructure().subscribe(() => {
+            this.directoryCutFinishedEvent.next(value);
+          });
+        } else {
+          this.structure.unshift(cuttedDirectory);
 
-        if (!this.directory.isRoot) {
-          if (!this.expanded) {
-            this.onExpandDirectory();
-          } else {
-            this.expandDirectory();
-          }
+          this.directoryCutFinishedEvent.next(value);
         }
       }, (e) => {
         const response = e.error;
@@ -289,12 +285,14 @@ export class DirectoryComponent implements OnInit, OnDestroy {
 
       let failed: boolean = false;
       this.directoryRepository.cutFile(model).subscribe((cuttedFile: IFile) => {
-        this.structure.push(cuttedFile);
-
-        this.fileCutFinishedEvent.next(value);
-
         if (!this.expanded) {
-          this.expandDirectory();
+          this.doLoadStructure().subscribe(() => {
+            this.fileCutFinishedEvent.next(value);
+          });
+        } else {
+          this.structure.push(cuttedFile);
+
+          this.fileCutFinishedEvent.next(value);
         }
       },(e) => {
         const response = e.error;
@@ -425,6 +423,10 @@ export class DirectoryComponent implements OnInit, OnDestroy {
     this.copyBufferSubscriber.unsubscribe();
     this.copyUnbuffeerSubscriber.unsubscribe();
     this.parentEventSubscription.unsubscribe();
+    this.fileCutEventSubscription.unsubscribe();
+    this.directoryCutEventSubscription.unsubscribe();
+    this.directoryCutEventSubscription = null;
+    this.fileCutEventSubscription = null;
     this.parentEventSubscription = null;
     this.copyUnbuffeerSubscriber = null;
     this.copyBufferSubscriber = null;
@@ -443,9 +445,21 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   }
 
   private listenToFileCutEvents(): void {
-    this.fileCutFinishedEvent.subscribe((event: ICutFinishedEvent) => {
+    this.fileCutEventSubscription = this.fileCutFinishedEvent.subscribe((event: ICutFinishedEvent) => {
       const idx: number = this.structure.findIndex(a => {
         return (a.id === event.id && a.type === 'file' && this.directory.id === event.directoryId);
+      });
+
+      if (idx === -1) return;
+
+      this.structure.splice(idx, 1);
+    });
+  }
+
+  private listenToDirectoryCutEvents(): void {
+    this.directoryCutEventSubscription = this.directoryCutFinishedEvent.subscribe((event: ICutFinishedEvent) => {
+      const idx: number = this.structure.findIndex(a => {
+        return (a.id === event.id && a.type === 'directory' && this.directory.id === event.parent);
       });
 
       if (idx === -1) return;
@@ -469,12 +483,10 @@ export class DirectoryComponent implements OnInit, OnDestroy {
 
     getStructure.call(this, tempSubject);
 
-    const tempSubscriber: Subscription = tempSubject.subscribe((structure: any[]) => {
-      this.expandDirectory();
-
+    tempSubject.subscribe((structure: any[]) => {
       this.structure = structure;
 
-      tempSubscriber.unsubscribe();
+      this.expandDirectory();
 
       finishedSubject.next();
     });

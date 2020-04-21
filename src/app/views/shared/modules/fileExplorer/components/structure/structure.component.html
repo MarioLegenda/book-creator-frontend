@@ -6,6 +6,7 @@
       <cms-root-directory
           *ngIf="isDirectory(item) && item.isRoot"
           [fileCutFinishedEvent]="fileCutFinishedSubject"
+          [directoryCutFinishedEvent]="directoryCutFinishedSubject"
           [project]="project"
           [extension]="project.environment.extension"
           [copyBufferSubject]="copyBufferSubject"

@@ -11,6 +11,7 @@ import {CopyBuffer} from "../../../services/CopyBuffer";
 import {Subject} from "rxjs";
 import {IFile} from "../../../models/IFile";
 import {IParentEvent} from "../../../models/IParentEvent";
+import {ICodeProject} from "../../../../../../codeEditor/models/ICodeProject";
 
 @Component({
   selector: 'cms-file',
@@ -27,7 +28,7 @@ export class FileComponent implements OnInit {
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('basePadding') basePadding: number;
   @Input('parentEvent') parentEvent: Subject<IParentEvent>;
-  @Input('project') project: any;
+  @Input('project') project: ICodeProject;
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
 
@@ -101,7 +102,7 @@ export class FileComponent implements OnInit {
       if (!newFile) return;
 
       this.file.name = newFile.name;
-      
+
       this.toggleActionSet = !this.toggleActionSet;
     });
   }

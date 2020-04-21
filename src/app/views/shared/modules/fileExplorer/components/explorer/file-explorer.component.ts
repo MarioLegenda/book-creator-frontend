@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ReplaySubject, Subject, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {HttpModel} from "../../../../../../model/http/HttpModel";
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
+import {ICodeProject} from "../../../../../codeEditor/models/ICodeProject";
 
 @Component({
   selector: 'cms-file-explorer',
@@ -11,10 +12,10 @@ import {DirectoryRepository} from "../../../../../../repository/DirectoryReposit
   ],
   templateUrl: './file-explorer.component.html',
 })
-export class FileExplorerComponent implements AfterViewInit, OnInit {
+export class FileExplorerComponent implements OnInit {
   searchFocused = false;
 
-  @Input('project') project: any;
+  @Input('project') project: ICodeProject;
   @Input('showEditorActions') showEditorActions: boolean = true;
 
   @Input('enableAddDirectory') enableAddDirectory: boolean = true;
@@ -41,12 +42,6 @@ export class FileExplorerComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.subscribeTypeahead();
-  }
-
-  ngAfterViewInit(): void {
-    const height = window.innerHeight;
-
-    //this.wrapperRef.nativeElement.setAttribute('style', `max-height: ${height}px`)
   }
 
   onSearchFocus() {

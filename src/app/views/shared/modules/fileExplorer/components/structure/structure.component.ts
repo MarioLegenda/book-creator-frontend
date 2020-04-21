@@ -1,10 +1,9 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DirectoryRepository} from "../../../../../../repository/DirectoryRepository";
-import {FileRepository} from "../../../../../../repository/FileRepository";
 import {Subject} from "rxjs";
-import {IDirectory} from "../../models/IDirectory";
 import {IBufferEvent} from "../../models/IBufferEvent";
 import {ICutFinishedEvent} from "../../models/ICutFinishedEvent";
+import {ICodeProject} from "../../../../../codeEditor/models/ICodeProject";
 
 @Component({
   selector: 'cms-structure',
@@ -13,21 +12,21 @@ import {ICutFinishedEvent} from "../../models/ICutFinishedEvent";
   ],
   templateUrl: './structure.component.html',
 })
-export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
+export class StructureComponent implements OnInit, AfterViewInit {
   structure = [];
 
   copyBufferSubject = new Subject<IBufferEvent>();
   copyUnBufferSubject = new Subject<IBufferEvent>();
   fileCutFinishedSubject = new Subject<ICutFinishedEvent>();
+  directoryCutFinishedSubject = new Subject<ICutFinishedEvent>();
 
-  @Input('project') project: any;
+  @Input('project') project: ICodeProject;
 
   // @ts-ignore
   @ViewChild('structureWrapper', {static: true}) structureWrapper: ElementRef;
 
   constructor(
     private directoryRepository: DirectoryRepository,
-    private fileRepository: FileRepository,
   ) {}
 
   ngOnInit() {
@@ -39,9 +38,6 @@ export class StructureComponent implements OnInit, OnDestroy, AfterViewInit {
     const e = document.getElementById('_editor').offsetHeight;
 
     this.structureWrapper.nativeElement.setAttribute('style', `height: ${e - fe}px`);
-  }
-
-  ngOnDestroy(): void {
   }
 
   isDirectory(entry): boolean {

@@ -9,6 +9,7 @@ import Util from "../../../library/Util";
 import {TabSession} from "../../../store/sessions/TabSession";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {Environments} from "../../../library/Environments";
+import {ICodeProject} from "../models/ICodeProject";
 
 @Component({
   selector: 'cms-code-editor',
@@ -18,7 +19,7 @@ import {Environments} from "../../../library/Environments";
   templateUrl: './bootstrap.component.html',
 })
 export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
-  project: any;
+  project: ICodeProject;
   environments: Environments;
 
   // @ts-ignore
@@ -57,8 +58,8 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tabSession.clear();
   }
 
-  private async bootstrap() {
-    const project = await this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).toPromise();
+  private async bootstrap(): Promise<{project: ICodeProject, environments: any[]}> {
+    const project: ICodeProject = await this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).toPromise();
     const environments = await this.environmentEmulatorRepository.getEnvironments().toPromise();
 
     return {project, environments};

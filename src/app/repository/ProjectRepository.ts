@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {concatMap, reduce} from "rxjs/operators";
+import {concatMap, map} from "rxjs/operators";
 import {ProjectRouteResolver} from "./routeResolvers/ProjectRouteResolver";
+import {IResponse} from "../model/http/response/IResponse";
 
 @Injectable({
   providedIn: 'root',
@@ -15,18 +16,12 @@ export class ProjectRepository {
   getProjectByShortId(shortId: string) {
     return this.httpClient.get(this.projectRouteResolver.getProjectUuidByShortId(shortId))
       .pipe(
-        concatMap((val: any) => {
-          return this.httpClient.get(this.projectRouteResolver.getSingleProject(val.data));
+        concatMap((response: IResponse) => {
+          return this.httpClient.get(this.projectRouteResolver.getSingleProject(response.data));
         })
       ).pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
-  }
-
-  getProjectByUuid(uuid: string) {
-    return this.httpClient.get(this.projectRouteResolver.getSingleProject(uuid));
   }
 
   getProjects(size: number = 10, page: number = 1) {

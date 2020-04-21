@@ -10,12 +10,14 @@ export function getStructure(subject: Subject<any>) {
     const models = resolver.factory(this.project.uuid, resolver.originalModel);
 
     for (const model of models) {
+      model.type = 'directory';
       structure.push(model);
     }
 
     this.fileRepository.getFilesFromDirectory(this.project.uuid, this.directory.id).subscribe((resolver) => {
       const models = resolver.factory(this.project.uuid, resolver.originalModel);
       for (const model of models) {
+        model.type = 'file';
         structure.push(model);
       }
 

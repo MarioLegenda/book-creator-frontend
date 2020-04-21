@@ -2,7 +2,8 @@ import {HttpClient} from "@angular/common/http";
 import {CodeEditorRouteResolver} from "./routeResolvers/CodeEditorRouteResolver";
 import {Injectable} from "@angular/core";
 import {EnvEmulatorRouteResolver} from "./routeResolvers/EnvEmulatorRouteResolver";
-import {reduce} from "rxjs/operators";
+import {map, reduce} from "rxjs/operators";
+import {IResponse} from "../model/http/response/IResponse";
 
 @Injectable({
   providedIn: 'root',
@@ -44,9 +45,7 @@ export class EnvironmentEmulatorRepository {
   public getEnvironments() {
     return this.httpClient.get(this.envRouteResolver.getEnvironment())
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {})
+        map((response: IResponse) => response.data)
       );
   }
 }
