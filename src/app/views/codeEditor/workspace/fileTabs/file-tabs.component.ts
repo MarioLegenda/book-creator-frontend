@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FileTab} from "../../../../model/app/codeEditor/FileTab";
-import {moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'cms-file-tabs',
