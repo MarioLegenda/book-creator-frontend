@@ -35,6 +35,7 @@
   <div *ngFor="let item of structure">
     <cms-directory
       *ngIf="item.type === 'directory'"
+      [breadcrumbs]="rootBreadcrumbs"
       [parentEvent]="parentCommunicator"
       [fileCutFinishedEvent]="fileCutFinishedEvent"
       [directoryCutFinishedEvent]="directoryCutFinishedEvent"
@@ -52,6 +53,7 @@
     <cms-file
       *ngIf="item.type === 'file'"
       [parentEvent]="parentCommunicator"
+      [breadcrumbs]="rootBreadcrumbs"
       [project]="project"
       [basePadding]="expandedPadding"
       [file]="item"

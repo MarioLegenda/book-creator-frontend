@@ -31,6 +31,7 @@ export class RootComponent implements OnInit, OnDestroy {
   @Input('directory') directory: IDirectory;
   @Input('extension') extension: string;
   @Input('project') project: ICodeProject;
+  @Input('breadcrumbs') breadcrumbs: string[];
 
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('copyUnbufferSubject') copyUnbufferSubject: Subject<any>;
@@ -44,6 +45,7 @@ export class RootComponent implements OnInit, OnDestroy {
   private directoryCutEventSubscription: Subscription;
 
   structure = [];
+  rootBreadcrumbs: string[];
 
   expandedPadding: number;
 
@@ -66,6 +68,8 @@ export class RootComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.rootBreadcrumbs = [...this.breadcrumbs];
+
     this.setNestedPosition();
     this.listenToCopyBuffers();
     this.listenToFileCutEvents();

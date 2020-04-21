@@ -4,6 +4,7 @@ import {Subject} from "rxjs";
 import {IBufferEvent} from "../../models/IBufferEvent";
 import {ICutFinishedEvent} from "../../models/ICutFinishedEvent";
 import {ICodeProject} from "../../../../../codeEditor/models/ICodeProject";
+import {IDirectory} from "../../models/IDirectory";
 
 @Component({
   selector: 'cms-structure',
@@ -14,6 +15,7 @@ import {ICodeProject} from "../../../../../codeEditor/models/ICodeProject";
 })
 export class StructureComponent implements OnInit, AfterViewInit {
   structure = [];
+  breadcrumbs: string[] = [];
 
   copyBufferSubject = new Subject<IBufferEvent>();
   copyUnBufferSubject = new Subject<IBufferEvent>();
@@ -22,7 +24,6 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
   @Input('project') project: ICodeProject;
 
-  // @ts-ignore
   @ViewChild('structureWrapper', {static: true}) structureWrapper: ElementRef;
 
   constructor(
@@ -50,7 +51,9 @@ export class StructureComponent implements OnInit, AfterViewInit {
 
   private expandRootDirectory(): void {
     this.fileSystemRepository.getRootDirectory(this.project.uuid).subscribe((resolver) => {
-      const directory = resolver.factory(this.project.uuid, resolver.originalModel);
+      const directory: IDirectory = resolver.factory(this.project.uuid, resolver.originalModel);
+
+      this.breadcrumbs.push(directory.name);
 
       this.structure.push(directory);
     });

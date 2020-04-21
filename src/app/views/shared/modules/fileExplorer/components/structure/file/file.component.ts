@@ -23,12 +23,12 @@ import {ICodeProject} from "../../../../../../codeEditor/models/ICodeProject";
 })
 export class FileComponent implements OnInit, OnDestroy {
   @Input('file') file: IFile;
-
   @Input('extension') extension: string;
   @Input('copyBufferSubject') copyBufferSubject: Subject<any>;
   @Input('basePadding') basePadding: number;
   @Input('parentEvent') parentEvent: Subject<IParentEvent>;
   @Input('project') project: ICodeProject;
+  @Input('breadcrumbs') breadcrumbs: string[];
 
   @Output('fileRemovedEvent') fileRemovedEvent = new EventEmitter();
 
@@ -46,10 +46,15 @@ export class FileComponent implements OnInit, OnDestroy {
   hovered: boolean = false;
   selected: boolean = false;
   fileStyles = {};
+  fileBreadcrumbs: string[] = [];
 
   iconSpecificFile: string = '';
 
   ngOnInit() {
+    this.fileBreadcrumbs = [...this.breadcrumbs];
+    this.fileBreadcrumbs.push(this.file.name);
+
+    console.log(this.file.name, this.fileBreadcrumbs);
     this.selectIcon();
     this.calcDepth();
   }
