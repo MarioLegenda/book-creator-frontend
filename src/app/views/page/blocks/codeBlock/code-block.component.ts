@@ -18,7 +18,6 @@ import {NewCodeProjectDialogComponent} from "../../../shared/modules/newCodeProj
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
-import {OpenDirectoryStructureDialogComponent} from "../../modals/openDirectoryStructure/open-directory-structure.component";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {changeState} from "../../../../logic/utilFns";
 
@@ -52,7 +51,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   codeProjectImported: boolean = false;
   codeProject = null;
   isCode: boolean = true;
-  saved: boolean = false;
   isCodeRunning: boolean = false;
 
   code: string = '';
@@ -147,6 +145,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.readonly = !this.readonly;
 
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+
+    changeState(this.appContext, this.store);
   }
 
   onRefresh() {
@@ -190,6 +190,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       }
+
+      changeState(this.appContext, this.store);
     });
   }
 
@@ -198,6 +200,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
     this.emlRepository.getEnvironments().subscribe(emulators => {
       this.handleEmulatorDialog(emulators);
+
+      changeState(this.appContext, this.store);
     });
   }
 
@@ -208,6 +212,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.readonly = false;
 
     this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+
+    changeState(this.appContext, this.store);
   }
 
   onImportCodeProject() {
@@ -257,17 +263,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.testRunResult = null;
   }
 
-  onOpenDirectoryStructure() {
-    const dialogRef = this.dialog.open(OpenDirectoryStructureDialogComponent, {
-      width: '480px',
-      height: '500px',
-      data: {codeProjectUuid: this.codeProject.uuid},
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
   private createUpdateModel() {
     return {
       blockUuid: this.component.blockUuid,
@@ -303,6 +298,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.blockErrors = null;
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+
+        changeState(this.appContext, this.store);
       });
   }
 

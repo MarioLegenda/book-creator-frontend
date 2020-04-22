@@ -109,18 +109,6 @@
 
     <div
       *ngIf="codeProjectImported"
-      (click)="onOpenDirectoryStructure()"
-      [style.visibility]="(hovered) ? 'visible' : 'hidden'"
-      class="right-block-action">
-
-      <i
-        class="icon directory-structure-icon fas fa-folder-open"
-        matTooltip="Open directory structure">
-      </i>
-    </div>
-
-    <div
-      *ngIf="codeProjectImported"
       [style.visibility]="(hovered) ? 'visible' : 'hidden'"
       class="right-block-action">
 

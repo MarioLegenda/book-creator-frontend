@@ -20,7 +20,6 @@ import {NotifyIfPublishedModal} from "../../modals/notifyIfPublished/notify-if-p
 })
 export class ItemComponent {
   @Input('item') item;
-  // @ts-ignore
   @ViewChild('tooltip', {static: true}) tooltip;
 
   @Output('itemDeleted') itemDeleted = new EventEmitter();

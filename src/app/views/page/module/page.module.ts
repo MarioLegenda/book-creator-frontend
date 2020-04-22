@@ -32,9 +32,7 @@ import {BlogTitleComponent} from "../blog/title/blog-title.component";
 import {BlogIntroComponent} from "../blog/intro/blog-intro.component";
 import {TextCounterComponent} from "../../shared/textCounter/text-counter.component";
 import {ImportCodeProjectDialogComponent} from "../modals/importCodeProject/import-code-project.component";
-import {NewCodeProjectDialogComponent} from "../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 import {MatSelectModule} from "@angular/material/select";
-import {OpenDirectoryStructureDialogComponent} from "../modals/openDirectoryStructure/open-directory-structure.component";
 import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
 import {MultimediaBlockComponent} from "../blocks/multimediaBlock/multimedia-block.component";
 import {AddYoutubeLinkDialogComponent} from "../modals/embedYoutubeLink/embed-youtube-link.component";
@@ -66,7 +64,6 @@ import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
     BlogIntroComponent,
     TextCounterComponent,
     ImportCodeProjectDialogComponent,
-    OpenDirectoryStructureDialogComponent,
     MultimediaBlockComponent,
     AddYoutubeLinkDialogComponent,
     EmbedUnsplashDialogComponent,
@@ -108,7 +105,6 @@ import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
     RemoveConfirmDialogComponent,
     SelectEnvironmentDialog,
     ImportCodeProjectDialogComponent,
-    OpenDirectoryStructureDialogComponent,
     AddYoutubeLinkDialogComponent,
     EmbedUnsplashDialogComponent,
     AddInternalNameModalComponent,

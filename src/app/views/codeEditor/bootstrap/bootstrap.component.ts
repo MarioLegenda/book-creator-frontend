@@ -5,7 +5,6 @@ import {HttpActionSubscriber} from "../../../store/subscriber/editor/HttpActionS
 import {ViewActionSubscriber} from "../../../store/subscriber/editor/ViewActionSubscriber";
 import {Store} from "@ngrx/store";
 import {clearStateAction} from "../../../store/globalReducers";
-import Util from "../../../library/Util";
 import {TabSession} from "../../../store/sessions/TabSession";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {Environments} from "../../../library/Environments";
@@ -22,7 +21,6 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
   project: ICodeProject;
   environments: Environments;
 
-  // @ts-ignore
   @ViewChild('wrapperRef', {static: true}) wrapperRef: ElementRef;
 
   constructor(

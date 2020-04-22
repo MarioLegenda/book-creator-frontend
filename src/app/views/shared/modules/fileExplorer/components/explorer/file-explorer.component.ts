@@ -17,7 +17,6 @@ export class FileExplorerComponent implements OnInit {
 
   @Input('project') project: ICodeProject;
   @Input('showEditorActions') showEditorActions: boolean = true;
-
   @Input('enableAddDirectory') enableAddDirectory: boolean = true;
   @Input('enableAddFile') enableAddFile: boolean = true;
   @Input('enableRemoveDirectory') enableRemoveDirectory: boolean = true;
