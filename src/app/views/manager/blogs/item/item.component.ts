@@ -48,7 +48,7 @@ export class ItemComponent {
       this.realTitle = titleResolver(this.item.title, 34);
     }
 
-    if (this.item.state === BlogState.PUBLISHED || this.item.state === BlogState.CHANGED) {
+    if (this.item.state === BlogState.PUBLISHED) {
       this.isPublished = true;
     }
   }
