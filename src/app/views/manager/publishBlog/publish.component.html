@@ -73,7 +73,8 @@
 
           <div
             *ngFor="let h of selectedTags; index as i"
-            class="hashtag" [ngStyle]="{width: h.width}"
+            class="hashtag selected-hashtag"
+            [ngStyle]="{width: h.width}"
             (click)="onRemoveHashtag(i)">
             <i class="icon fas fa-hashtag"></i>
             <span class="text">{{h.hashtag.substring(1)}}</span>

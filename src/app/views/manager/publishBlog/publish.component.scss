@@ -130,15 +130,17 @@
       position: relative;
       display: block;
       float: left;
-      background-color: $mainAppColor;
-      color: white;
+      background-color: white;
+      color: $appBlack;
       padding: 5px;
       border-radius: 2px;
+      border: 1px solid $almostWhiteGray;
 
       margin: 0 5px 5px 0;
 
       &:hover {
         cursor: pointer;
+        border: 1px solid $appBlack;
 
         .animated-icon {
           font-size: 1.5em;
@@ -149,6 +151,7 @@
       .icon {
         position: absolute;
         left: 2px; top: 9px;
+        color: $appBlack;
       }
 
       .animated-icon {
@@ -162,6 +165,10 @@
         display: inline-block;
         margin-left: 20px;
       }
+    }
+
+    .selected-hashtag {
+      border: 1px solid black;
     }
 
     .search {
