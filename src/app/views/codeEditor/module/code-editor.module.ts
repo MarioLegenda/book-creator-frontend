@@ -17,6 +17,7 @@ import {ResultAreaComponent} from "../workspace/playground/resultArea/result-are
 import {FileExplorerModule} from "../../shared/modules/fileExplorer/file-explorer.module";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {SessionNoticeComponent} from "../workspace/sessionNotice/session-notice.component";
 
 @NgModule({
   declarations: [
@@ -28,20 +29,21 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     PlaygroundComponent,
     WorkingAreaComponent,
     ResultAreaComponent,
+    SessionNoticeComponent,
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        CodeEditorRoutingModule,
-        MatDialogModule,
-        MatInputModule,
-        MatFormFieldModule,
-        FileExplorerModule,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CodeEditorRoutingModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FileExplorerModule,
 
-        MonacoEditorModule,
-        MatTooltipModule,
-    ],
+    MonacoEditorModule,
+    MatTooltipModule,
+  ],
   providers: [],
 })
 export class CodeEditorModule { }

@@ -1,4 +1,5 @@
 import {IEnvironment} from "./IEnvironment";
+import {ISession} from "./ISession";
 
 export interface ICodeProject {
   uuid: string;
@@ -8,6 +9,7 @@ export interface ICodeProject {
   createdAt: string;
   description: string;
   extension: string;
+  session?: ISession;
   environment: IEnvironment;
   updatedAt?: string;
 }

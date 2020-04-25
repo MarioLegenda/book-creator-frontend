@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('../views/codeEditor/module/code-editor.module').then(m => m.CodeEditorModule)
   },
   {
+    path: 'cms/session/code-editor',
+    loadChildren: () => import('../views/codeEditor/module/code-editor.module').then(m => m.CodeEditorModule)
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'cms/management',
