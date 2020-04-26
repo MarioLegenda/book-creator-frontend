@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FileSystemRepository} from "../../../../../../repository/FileSystemRepository";
 import {Subject} from "rxjs";
 import {IBufferEvent} from "../../models/IBufferEvent";

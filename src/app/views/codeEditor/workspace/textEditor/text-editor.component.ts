@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {select, Store} from "@ngrx/store";
-import {BehaviorSubject, of, Subscription} from "rxjs";
+import {BehaviorSubject, ReplaySubject, Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {FileRepository} from "../../../../repository/FileRepository";
 import {FileTab} from "../../../../model/app/codeEditor/FileTab";
@@ -22,7 +22,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   // @ts-ignore
   @ViewChild('wrapperRef', {static: true}) wrapperRef: ElementRef;
 
-  private typeAheadSource = new BehaviorSubject([]);
+  private typeAheadSource = new ReplaySubject<string>();
   private typeAheadObservable = null;
   private contentLoadedSubscription: Subscription;
   private editorViewActionUns;
@@ -41,6 +41,12 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       language: this.project.environment.language,
       codeLens: false,
       formatOnPaste: true,
+      acceptSuggestionOnEnter: 'off',
+      links: false,
+      showUnused: true,
+      snippetSuggestions: false,
+      contextmenu: false,
+      copyWithSyntaxHighlighting: false,
       minimap: {
         enabled: false,
       },
@@ -58,16 +64,14 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       debounceTime(500),
     )
       .subscribe(() => {
-        if (this.code) {
-          const model = HttpModel.updateFileContentModel(
-            this.project.uuid,
-            this.tab.id,
-            this.code,
-          );
+        const model = HttpModel.updateFileContentModel(
+          this.project.uuid,
+          this.tab.id,
+          this.code,
+        );
 
-          this.fileRepository.updateFileContent(model).subscribe(() => {
-          });
-        }
+        this.fileRepository.updateFileContent(model).subscribe(() => {
+        });
       });
   }
 
@@ -78,16 +82,12 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const h = document.body.offsetHeight;
-
-    //this.wrapperRef.nativeElement.setAttribute('style', `height: ${h - 45}px`);
-
     this.contentLoadedSubscription = this.contentLoadedEvent.subscribe((content: string) => {
       this.code = content;
     })
   }
 
   onChange() {
-    this.typeAheadSource.next([]);
+    this.typeAheadSource.next();
   }
 }
