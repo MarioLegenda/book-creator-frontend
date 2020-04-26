@@ -54,8 +54,7 @@
           <mat-label>Choose your environment</mat-label>
           <mat-select
             name="environment"
-            [(ngModel)]="model.environment"
-            [(value)]="model.environment"
+            [(value)]="model.environment.name"
             required>
             <mat-option
               *ngFor="let item of environments"

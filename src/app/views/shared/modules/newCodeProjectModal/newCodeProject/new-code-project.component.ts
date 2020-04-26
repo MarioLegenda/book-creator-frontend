@@ -32,7 +32,7 @@ export class NewCodeProjectDialogComponent implements OnInit {
   onCreate() {
     let chosen = null;
     for (const env of this.environments) {
-      if (env.name === this.model.environment) {
+      if (env.name === this.model.environment.name) {
         chosen = env;
 
         break;
