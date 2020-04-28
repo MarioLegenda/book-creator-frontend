@@ -54,6 +54,7 @@
           <mat-label>Choose your environment</mat-label>
           <mat-select
             name="environment"
+            [(ngModel)]="selected"
             [(value)]="selected"
             required>
             <mat-option
@@ -66,9 +67,13 @@
         </mat-form-field>
       </div>
 
+      <p *ngIf="httpFail" class="error col-xs-12 col-md-12 col-lg-12">
+        {{httpFail}}
+      </p>
+
       <div class="dialog-actions">
         <button
-          [disabled]="!form.form.valid"
+          [disabled]="!form.form.valid || inFlight"
           class="btn create"
           cdkFocusInitial
           (click)="onCreate()">

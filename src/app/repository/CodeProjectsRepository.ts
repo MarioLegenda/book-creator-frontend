@@ -23,10 +23,6 @@ export class CodeProjectsRepository {
       );
   }
 
-  getBySource(sourceId: string, size: number = 10, page: number = 1) {
-    return this.httpClient.get(this.routeResolver.getProjectsBySource(sourceId, size, page));
-  }
-
   getProjects(size: number = 10, page: number = 1) {
     return this.httpClient.get(this.routeResolver.getProjects(size, page))
       .pipe(

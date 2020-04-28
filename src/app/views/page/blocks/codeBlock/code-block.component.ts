@@ -324,32 +324,28 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         data: {
           name: '',
           description: '',
+          title: 'New code project',
           info: 'This code project will automatically be imported into this knowledge source',
+          buttonText: 'Create',
         },
       });
 
-      dialogRef.afterClosed().subscribe((data) => {
-        if (!data) return;
+      dialogRef.afterClosed().subscribe((codeProject) => {
+        if (!codeProject) return;
 
-        this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
-          data.name,
-          data.description,
-          data.environment,
-        )).subscribe((codeProject: any) => {
-          const codeProjectUuid: string = codeProject.uuid;
-          const blockUuid: string = this.component.blockUuid;
-          const pageUuid: string = this.pageContext.getContext().page.uuid;
-          const sourceId: string = this.appContext.knowledgeSource.uuid;
+        const codeProjectUuid: string = codeProject.uuid;
+        const blockUuid: string = this.component.blockUuid;
+        const pageUuid: string = this.pageContext.getContext().page.uuid;
+        const sourceId: string = this.appContext.knowledgeSource.uuid;
 
-          this.blogRepository.linkCodeProject(HttpModel.createLinkCodeProject(
-            codeProjectUuid,
-            pageUuid,
-            sourceId,
-            blockUuid,
-          )).subscribe(() => {
-            this.importCodeProject(codeProjectUuid);
-          });
-        })
+        this.blogRepository.linkCodeProject(HttpModel.createLinkCodeProject(
+          codeProjectUuid,
+          pageUuid,
+          sourceId,
+          blockUuid,
+        )).subscribe(() => {
+          this.importCodeProject(codeProjectUuid);
+        });
       });
     }, 500);
   }

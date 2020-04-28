@@ -54,23 +54,17 @@ export class OverviewMenuComponent {
           name: '',
           description: '',
           buttonText: 'Create',
-          title: 'New code project'
+          title: 'New code project',
         },
       });
 
-      dialogRef.afterClosed().subscribe((data) => {
-        if (!data) return;
+      dialogRef.afterClosed().subscribe((codeProject) => {
+        if (!codeProject) return;
 
-        this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
-          data.name,
-          data.description,
-          data.environment,
-        )).subscribe((codeProject: any) => {
-          this.router.navigate([
-            '/cms/code-editor',
-            codeProject.shortId,
-          ]);
-        })
+        this.router.navigate([
+          '/cms/code-editor',
+          codeProject.shortId,
+        ]);
       });
     }
   }
