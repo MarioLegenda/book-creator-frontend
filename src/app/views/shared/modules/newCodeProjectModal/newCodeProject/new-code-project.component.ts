@@ -11,7 +11,8 @@ import {EnvironmentEmulatorRepository} from "../../../../../repository/Environme
   ]
 })
 export class NewCodeProjectDialogComponent implements OnInit {
-  environments = [];
+  environments = null;
+  selected = '';
 
   constructor(
     public dialogRef: MatDialogRef<NewCodeProjectDialogComponent>,
@@ -21,6 +22,10 @@ export class NewCodeProjectDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.environmentEmulatorRepository.getEnvironments().subscribe((data) => {
+      if (this.model.environment) {
+        this.selected = this.model.environment.name;
+      }
+
       this.environments = data as any;
     });
   }
@@ -32,7 +37,7 @@ export class NewCodeProjectDialogComponent implements OnInit {
   onCreate() {
     let chosen = null;
     for (const env of this.environments) {
-      if (env.name === this.model.environment.name) {
+      if (env.name === this.selected) {
         chosen = env;
 
         break;

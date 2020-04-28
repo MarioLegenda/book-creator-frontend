@@ -46,7 +46,6 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
         };
 
         this.store.dispatch(httpUpdateQuoteBlock(model));
-        changeState(this.appContext, this.store);
       });
   }
 

@@ -1,0 +1,17 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <p>Are you sure you wish to remove this code project? <span class="dark-highlight">This action will remove this code project from all your blogs and other sources that use it and cannot be undone.</span></p>
+  </div>
+
+  <p *ngIf="removeFailed" class="error col-xs-12 col-md-12 col-lg-12">
+    We are sorry but removing code project failed. Please, try again later.
+  </p>
+
+  <div class="dialog-actions">
+    <button class="btn danger" [disabled]="inFlight" cdkFocusInitial (click)="confirmDelete()">Remove</button>
+  </div>
+</div>

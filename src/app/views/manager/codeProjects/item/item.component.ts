@@ -4,9 +4,9 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {Router} from "@angular/router";
 import {Month} from "../../../../library/Month";
-import {RemoveItemService} from "../../sharedServices/RemoveItemService";
 import {titleResolver} from "../../sharedServices/titleResolver";
 import {NewCodeProjectDialogComponent} from "../../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
+import {RemoveCodeProjectModalComponent} from "../../modals/removeCodeProject/remove-code-project-modal.component";
 
 @Component({
   selector: 'cms-cp-item',
@@ -31,7 +31,6 @@ export class ItemComponent implements OnInit {
     private router: Router,
     private codeProjectsRepository: CodeProjectsRepository,
     private dialog: MatDialog,
-    private removeItemService: RemoveItemService,
   ) {}
 
   ngOnInit() {
@@ -86,14 +85,18 @@ export class ItemComponent implements OnInit {
   onRemove($event) {
     $event.stopPropagation();
 
-    this.removeItemService.remove(
-      this.codeProjectsRepository,
-      'removeCodeProject',
-      () => HttpModel.removeCodeProject(this.item.uuid),
-      this.item,
-      this.itemDeleted,
-      'Are you sure you wish to remove this code project? This action cannot be undone.'
-    );
+    const dialogRef = this.dialog.open(RemoveCodeProjectModalComponent, {
+      width: '480px',
+      data: {
+        uuid: this.item.uuid,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirm) => {
+      if (confirm) {
+        this.itemDeleted.emit(this.item);
+      }
+    });
   }
 
   formattedDate(): string {

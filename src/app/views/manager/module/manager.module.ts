@@ -28,6 +28,7 @@ import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.
 import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-modal.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-published-modal.component";
+import {RemoveCodeProjectModalComponent} from "../modals/removeCodeProject/remove-code-project-modal.component";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-publ
     SubscriptionItem,
     PublishBlogModalComponent,
     NotifyIfPublishedModal,
+    RemoveCodeProjectModalComponent,
   ],
   imports: [
     CommonModule,
@@ -72,6 +74,7 @@ import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-publ
     UnsubscribeDialog,
     PublishBlogModalComponent,
     NotifyIfPublishedModal,
+    RemoveCodeProjectModalComponent,
   ]
 })
 export class ManagerModule { }

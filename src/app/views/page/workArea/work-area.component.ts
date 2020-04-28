@@ -133,6 +133,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
       position: current.position,
     }));
 
+    changeState(this.sourceContext, this.store);
+
     moveItemInArray(this.components, event.previousIndex, event.currentIndex);
   }
 

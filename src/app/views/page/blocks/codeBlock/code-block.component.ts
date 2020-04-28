@@ -298,8 +298,6 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.blockErrors = null;
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
-
-        changeState(this.appContext, this.store);
       });
   }
 

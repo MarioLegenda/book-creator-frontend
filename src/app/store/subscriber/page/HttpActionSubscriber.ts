@@ -16,6 +16,7 @@ import deepcopy from 'deepcopy';
 import {ComponentType} from "../../../logic/PageComponent/ComponentType";
 import {BlogRepository} from "../../../repository/BlogRepository";
 import {BlogState} from "../../../logic/BlogState";
+import {changeState} from "../../../logic/utilFns";
 
 @Injectable({
   providedIn: 'root',
@@ -181,6 +182,7 @@ export class HttpActionSubscriber {
     const model = HttpModel.updateSubheader(pageUuid, blockUuid, text);
 
     this.pageRepository.updateSubheader(model).subscribe((data) => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
       this.store.dispatch(viewUpdateSubheaderBlock(data));
     });
   }
@@ -193,6 +195,8 @@ export class HttpActionSubscriber {
     const model = HttpModel.createSubheader(pageUuid, position, text);
 
     this.pageRepository.addSubheader(model).subscribe((data) => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
+
       this.store.dispatch(viewAddSubheader(data));
     });
   }
@@ -205,6 +209,8 @@ export class HttpActionSubscriber {
     const model = HttpModel.createQuoteBlock(pageUuid, position, text);
 
     this.pageRepository.addQuoteBlock(model).subscribe((data) => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
+
       this.store.dispatch(viewAddQuoteBlock(data));
     });
   }
@@ -220,7 +226,9 @@ export class HttpActionSubscriber {
       text,
     );
 
-    this.pageRepository.updateMainHeader(model).subscribe(() => {});
+    this.pageRepository.updateMainHeader(model).subscribe(() => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
+    });
   }
 
   private addMainHeader(action) {
@@ -232,6 +240,7 @@ export class HttpActionSubscriber {
 
     this.pageRepository.addMainHeader(model).subscribe((data) => {
       this.store.dispatch(viewAddMainHeaderBlock(data));
+      changeState(this.pageContextInitializer.getContext(), this.store);
     });
   }
 
@@ -243,7 +252,7 @@ export class HttpActionSubscriber {
     const model = HttpModel.updatePosition(pageUuid, blockUuid, position);
 
     this.pageRepository.updatePosition(model).subscribe(() => {
-
+      changeState(this.pageContextInitializer.getContext(), this.store);
     });
   }
 
@@ -254,6 +263,7 @@ export class HttpActionSubscriber {
     const model = HttpModel.addCodeBlock(pageUuid, position);
 
     this.pageRepository.addCodeBlock(model).subscribe((data) => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
       this.store.dispatch(viewCreateCodeBlock(data));
     });
   }
@@ -267,6 +277,7 @@ export class HttpActionSubscriber {
     this.pageRepository.addTextBlock(model).subscribe((model) => {
       this.store.dispatch(httpCreateTextBlockFinished());
       this.store.dispatch(viewAddTextBlock(model));
+      changeState(this.pageContextInitializer.getContext(), this.store);
     });
   }
 
@@ -278,6 +289,7 @@ export class HttpActionSubscriber {
 
     this.pageRepository.addMultimediaBlock(model).subscribe((data) => {
       this.store.dispatch(viewAddMultimediaBlock(data));
+      changeState(this.pageContextInitializer.getContext(), this.store);
     });
   }
 
@@ -290,10 +302,12 @@ export class HttpActionSubscriber {
     if (action.blockType === ComponentType.MULTIMEDIA_BLOCK_TYPE) {
       this.pageRepository.removeMultimediaBlock(model).subscribe(() => {
         this.store.dispatch(viewTextBlockRemoved(action));
+        changeState(this.pageContextInitializer.getContext(), this.store);
       });
     } else {
       this.pageRepository.removeBlock(model).subscribe(() => {
         this.store.dispatch(viewTextBlockRemoved(action));
+        changeState(this.pageContextInitializer.getContext(), this.store);
       });
     }
   }
@@ -313,7 +327,9 @@ export class HttpActionSubscriber {
       comment,
     );
 
-    this.pageRepository.updateTextBlock(model).subscribe(() => {});
+    this.pageRepository.updateTextBlock(model).subscribe(() => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
+    });
   }
 
   private updateCodeBlock(action) {
@@ -337,7 +353,9 @@ export class HttpActionSubscriber {
       readonly,
     );
 
-    this.pageRepository.updateCodeBlock(model).subscribe(() => {});
+    this.pageRepository.updateCodeBlock(model).subscribe(() => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
+    });
   }
 
   private updateQuoteBlock(action) {
@@ -351,6 +369,8 @@ export class HttpActionSubscriber {
       text,
     );
 
-    this.pageRepository.updateQuoteBlock(model).subscribe(() => {});
+    this.pageRepository.updateQuoteBlock(model).subscribe(() => {
+      changeState(this.pageContextInitializer.getContext(), this.store);
+    });
   }
 }

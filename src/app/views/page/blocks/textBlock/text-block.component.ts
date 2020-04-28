@@ -144,7 +144,6 @@ export class TextBlockComponent implements OnDestroy, OnInit {
         };
 
         this.store.dispatch(httpUpdateTextBlock(model));
-        changeState(this.appContext, this.store);
       });
   }
 
