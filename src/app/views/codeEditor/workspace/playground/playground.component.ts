@@ -23,14 +23,20 @@ export class PlaygroundComponent {
   expanded: boolean = false;
   expandedOnce: boolean = false;
   resultAvailable: boolean = false;
-  resultData = null;
   expandedIcon: string = 'fas fa-angle-up';
   code: string = '';
   isRunning: boolean = false;
+  isSession: boolean = false;
 
   constructor(
     private envEmulatorRepository: EnvironmentEmulatorRepository
   ) {}
+
+  ngOnInit() {
+    if (this.project.session) {
+      this.isSession = true;
+    }
+  }
 
   onExpandPlayground() {
     let height = (this.expanded) ? 40 : 400;
@@ -48,14 +54,10 @@ export class PlaygroundComponent {
     }
   }
 
-  onCloseResultWindow() {
-    this.resultAvailable = false;
-    this.resultData = null;
-  }
-
   onRunProject(code) {
     this.isRunning = true;
-    const model = HttpModel.buildAndRunProject(code.code, 'dev');
+    const state: string = (this.isSession) ? 'session': 'dev';
+    const model = HttpModel.buildAndRunProject(code.code, state);
 
     this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, model).subscribe((data: any) => {
       this.resultAvailable = true;
