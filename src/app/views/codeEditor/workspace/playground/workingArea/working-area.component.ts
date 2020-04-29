@@ -26,9 +26,15 @@ export class WorkingAreaComponent implements OnInit {
       language: this.project.environment.language,
       codeLens: false,
       formatOnPaste: true,
+      acceptSuggestionOnEnter: 'off',
+      links: false,
+      showUnused: true,
+      snippetSuggestions: false,
+      contextmenu: false,
+      copyWithSyntaxHighlighting: false,
       minimap: {
         enabled: false,
-      }
+      },
     };
 
     if (this.project.environment.name === "go_v1_13_5") {
@@ -50,10 +56,6 @@ export class WorkingAreaComponent implements OnInit {
     }
 
     return false;
-  }
-
-  isCompiledLanguage(): boolean {
-    return this.project.environment.name === "go_v1_13_5" || this.project.environment.name === "rust"
   }
 
   onRunProject() {
