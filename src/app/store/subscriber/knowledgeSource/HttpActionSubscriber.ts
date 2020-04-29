@@ -11,7 +11,6 @@ export class HttpActionSubscriber {
 
   constructor(
     private store: Store<any>,
-    private pageRepository: PageRepository,
   ) {
     this.subscribeToHttpActions(store.pipe(select('knowledgeSourceHttpActions')));
   }

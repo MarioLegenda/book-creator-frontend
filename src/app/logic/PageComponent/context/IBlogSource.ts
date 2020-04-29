@@ -7,4 +7,5 @@ export interface IBlogSource {
   codeProject: string[];
   state: string;
   type: string;
+  slug: string;
 }

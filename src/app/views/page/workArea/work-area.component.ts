@@ -34,6 +34,9 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
   sourceContext: AppContext;
 
+  // only used for the publish indicator
+  title: string = '';
+
   @ViewChild('workAreaRef', {static: true}) workAreaRef: ElementRef;
 
   constructor(
@@ -58,13 +61,19 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
     this.appContextInitializer.whenInit((sourceContext: AppContext) => {
       this.sourceContext = sourceContext;
-    })
+      this.title = this.sourceContext.knowledgeSource.title;
+    });
   }
 
   ngOnDestroy() {
     this.componentTracker.destroy();
     this.components = [];
     this.store.dispatch(clearStateAction());
+  }
+
+  // only used for the publish indicator
+  onTitleChanged(title: string): void {
+    this.title = title;
   }
 
   onBlockAdded(type: string) {

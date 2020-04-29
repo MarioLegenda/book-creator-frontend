@@ -126,6 +126,7 @@ export class AppContextInitializer {
           codeProject: blog.data.codeProjects,
           state: blog.data.state,
           type: type,
+          slug: blog.slug,
         };
       }
     }

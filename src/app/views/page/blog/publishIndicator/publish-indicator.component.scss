@@ -1,0 +1,64 @@
+@import '../../../../../styles/variables';
+
+.publish-indicator {
+  margin-bottom: 100px;
+  float: none;
+
+  .publish-button {
+    width: 100px;
+    display: inline-block;
+    float: right;
+    font-family: $mainFont;
+    background-color: $mainAppColor;
+    color: white;
+    padding: 10px;
+    border: none;
+
+    margin-right: 10px;
+
+    border-radius: 2px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .disabled {
+    border: 1px solid $lightestGray;
+    color: $lightestGray;
+    background-color: white;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+  .state-indicator {
+    padding: 10px;
+    display: inline-block;
+    float: right;
+
+    margin-right: 10px;
+
+    font-size: 0.9em;
+  }
+
+  .draft, .changed {
+    color: $lighterRed;
+  }
+
+  .published {
+    color: $genericSuccess;
+  }
+
+  .message {
+    overflow: hidden;
+    width: 99%;
+    display: block;
+    text-align: right;
+    font-size: 0.8em;
+    font-style: italic;
+    color: $mainAppColor;
+    padding: 2px 0 2px 2px;
+  }
+}

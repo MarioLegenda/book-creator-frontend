@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {Subject, Subscription} from "rxjs";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {debounceTime} from "rxjs/operators";
@@ -16,6 +16,7 @@ import {Store} from "@ngrx/store";
   templateUrl: './blog-title.component.html',
 })
 export class BlogTitleComponent {
+  @Output('titleChangedEvent') titleChangedEvent: EventEmitter<string> = new EventEmitter<string>();
   model = {
     title: '',
   };
@@ -54,13 +55,13 @@ export class BlogTitleComponent {
     )
       .subscribe(() => {
         const sourceUuid = this.appContext.knowledgeSource.uuid;
-
         this.blogRepository.updateBlog(HttpModel.updateBlog(
           sourceUuid,
           this.model.title,
           null,
           null,
         )).subscribe(() => {
+          this.titleChangedEvent.emit(this.model.title);
           changeState(this.appContext, this.store);
         });
       });

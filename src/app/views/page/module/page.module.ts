@@ -44,6 +44,7 @@ import {MainHeaderBlockComponent} from "../blocks/mainHeaderBlock/main-header-bl
 import {SubheaderBlockComponent} from "../blocks/subheaderBlock/subheader-block.component";
 import {CoverComponent} from "../blog/cover/cover.component";
 import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
+import {PublishIndicatorComponent} from "../blog/publishIndicator/publish-indicator.component";
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
     SubheaderBlockComponent,
     CoverComponent,
     QuoteBlockComponent,
+    PublishIndicatorComponent,
   ],
   imports: [
     MatCardModule,

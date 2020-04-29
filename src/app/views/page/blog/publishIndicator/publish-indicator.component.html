@@ -1,0 +1,22 @@
+<div class="publish-indicator col-xs-12 col-md-12 col-lg-12">
+  <button
+    (click)="onPublish($event)"
+    [disabled]="disabled"
+    [ngClass]="{'disabled': disabled}"
+    class="publish-button">Publish <i class="fas fa-wifi"></i>
+  </button>
+
+  <button
+    [disabled]="disabled"
+    [ngClass]="{'disabled': disabled}"
+    (click)="onViewPublished($event)"
+    class="publish-button">Preview <i class="fas fa-bullseye"></i>
+  </button>
+
+  <p
+    class="state-indicator"
+    [ngClass]="statusClass">
+    {{statusText}}</p>
+
+  <p class="message" *ngIf="disabled">* Title is required to publish or preview</p>
+</div>

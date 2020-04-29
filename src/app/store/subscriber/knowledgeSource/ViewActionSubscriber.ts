@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
-import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -11,7 +10,6 @@ export class ViewActionSubscriber {
 
   constructor(
     private store: Store<any>,
-    private router: Router,
   ) {
     this.subscribeToViewActions(store.pipe(select('knowledgeSourceViewActions')));
   }

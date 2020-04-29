@@ -2,11 +2,17 @@
   <cms-menu (blockAddedEvent)="onBlockAdded($event)"></cms-menu>
 
   <div class="container row dynamic-area col-xs-10 col-lg-9 col-md-9">
+    <cms-publish-indicator
+      *ngIf="sourceContext"
+      [title]="title"
+      [appContext]="sourceContext">
+    </cms-publish-indicator>
 
     <div
       *ngIf="sourceContext && sourceContext.knowledgeSource.type === 'blog'"
       class="source-block col-xs-12 col-md-12 col-lg-12">
       <cms-blog-title
+        (titleChangedEvent)="onTitleChanged($event)"
         [appContext]="sourceContext"></cms-blog-title>
     </div>
 
