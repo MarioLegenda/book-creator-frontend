@@ -176,13 +176,7 @@ export class PublishComponent implements OnInit {
   private async publicAction() {
     const hashtags = this.selectedTags.map(h => h.hashtag);
 
-    const state = this.blog.state;
     const publishModel = HttpModel.publish(this.blog.uuid, hashtags);
-    const buildStateModel = HttpModel.buildState('prod', this.blog.uuid, 'blog');
-
-    if (this.blog.codeProjects.length > 0 && state !== BlogState.PUBLISHED) {
-      await this.environmentEmulatorRepository.buildState(buildStateModel).toPromise();
-    }
 
     return await this.blogRepository.changeState(publishModel).toPromise();
   }
