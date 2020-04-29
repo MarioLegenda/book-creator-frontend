@@ -54,6 +54,7 @@ export class ItemComponent implements OnInit {
         environment: this.item.environment,
         buttonText: 'Edit',
         title: 'Edit code project',
+        doHttpAction: false,
       },
     });
 

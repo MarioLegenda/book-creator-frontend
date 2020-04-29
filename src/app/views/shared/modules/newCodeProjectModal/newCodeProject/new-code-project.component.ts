@@ -56,6 +56,10 @@ export class NewCodeProjectDialogComponent implements OnInit {
 
     this.model.environment = chosen;
 
+    if (!this.model.doHttpAction) {
+      return this.dialogRef.close(this.model);
+    }
+
     this.codeProjectsRepository.createCodeProject(HttpModel.createCodeProject(
       this.model.name,
       this.model.description,
