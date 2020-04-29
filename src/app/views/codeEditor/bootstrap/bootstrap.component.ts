@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ProjectRepository} from "../../../repository/ProjectRepository";
 import {ActivatedRoute} from "@angular/router";
 import {HttpActionSubscriber} from "../../../store/subscriber/editor/HttpActionSubscriber";
 import {ViewActionSubscriber} from "../../../store/subscriber/editor/ViewActionSubscriber";
@@ -9,6 +8,7 @@ import {TabSession} from "../../../store/sessions/TabSession";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
 import {Environments} from "../../../library/Environments";
 import {ICodeProject} from "../models/ICodeProject";
+import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
 
 @Component({
   selector: 'cms-code-editor',
@@ -27,7 +27,7 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
     private store: Store<any>,
     private httpActionSubscriber: HttpActionSubscriber,
     private viewActionSubscriber: ViewActionSubscriber,
-    private projectRepository: ProjectRepository,
+    private codeProjectsRepository: CodeProjectsRepository,
     private environmentEmulatorRepository: EnvironmentEmulatorRepository,
     private route: ActivatedRoute,
     private tabSession: TabSession,
@@ -57,7 +57,7 @@ export class BootstrapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private async bootstrap(): Promise<{project: ICodeProject, environments: any[]}> {
-    const project: ICodeProject = await this.projectRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).toPromise();
+    const project: ICodeProject = await this.codeProjectsRepository.getProjectByShortId(this.route.snapshot.paramMap.get('shortId')).toPromise();
     const environments = await this.environmentEmulatorRepository.getEnvironments().toPromise();
 
     return {project, environments};

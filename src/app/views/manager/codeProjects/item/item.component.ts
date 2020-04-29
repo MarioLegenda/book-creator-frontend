@@ -40,7 +40,7 @@ export class ItemComponent implements OnInit {
   onManage($event) {
     $event.stopPropagation();
 
-    this.router.navigate([`/cms/management/code-projects-manager/manage/${this.item.shortId}`])
+    this.router.navigate([`/cms/management/code-projects-manager/manage/${this.item.shortId}/info`])
   }
 
   onEdit($event) {

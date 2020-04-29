@@ -1,1 +1,25 @@
+@import '../../../../../styles/variables';
 
+.info-wrapper {
+  float: none;
+  overflow: hidden;
+  margin: 40px auto;
+
+  .line {
+    border-bottom: 1px solid $almostWhiteGray;
+    padding: 5px 0 5px 0;
+    margin-bottom: 20px;
+
+    .line-name {
+      display: inline-block;
+      color: $lightGray;
+      font-weight: normal;
+
+      margin-right: 20px;
+    }
+
+    .line-value {
+      color: $appBlack;
+    }
+  }
+}

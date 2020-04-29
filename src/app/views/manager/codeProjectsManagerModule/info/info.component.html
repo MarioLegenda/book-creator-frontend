@@ -1,3 +1,22 @@
-<div class="col-xs-12 col-md-12 col-lg-12">
-  Info
+<div *ngIf="project" class="col-xs-12 col-md-12 col-lg-12">
+  <div class="info-wrapper col-xs-10 col-md-8 col-lg-8">
+    <div class="line col-xs-12 col-md-12 col-lg-12">
+      <label class="line-name">Name:</label>
+      <label class="line-value">{{project.name}}</label>
+    </div>
+
+    <div class="line col-xs-12 col-md-12 col-lg-12">
+      <label class="line-name">Description:</label>
+      <label class="line-value">{{project.description}}</label>
+    </div>
+
+    <div class="line col-xs-12 col-md-12 col-lg-12">
+      <label class="line-name">Environment:</label>
+      <label class="line-value">{{project.environment.text}}</label>
+    </div>
+
+    <div class="line col-xs-12 col-md-12 col-lg-12">
+      <label class="line-name">Dependencies:</label>
+    </div>
+  </div>
 </div>

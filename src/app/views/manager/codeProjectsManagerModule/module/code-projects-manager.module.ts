@@ -3,7 +3,6 @@ import {BootstrapComponent} from "../bootstrap/bootstrap.component";
 import {CommonModule} from "@angular/common";
 import {CodeProjectsManagerRoutingModule} from "./code-projects-manager-routing.module";
 import {InfoComponent} from "../info/info.component";
-import {SettingsComponent} from "../settings/settings.component";
 import {PackagesComponent} from "../packages/packages.component";
 import {MenuComponent} from "../menu/menu.component";
 
@@ -12,7 +11,6 @@ import {MenuComponent} from "../menu/menu.component";
     BootstrapComponent,
     MenuComponent,
     InfoComponent,
-    SettingsComponent,
     PackagesComponent,
   ],
   imports: [
