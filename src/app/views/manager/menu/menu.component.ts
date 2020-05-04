@@ -3,7 +3,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKnowledgeSourceDialogComponent } from '../modals/addKnowledgeSource/add-knowledge-source.component';
 import {NewCodeProjectDialogComponent} from "../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
-import {HttpModel} from "../../../model/http/HttpModel";
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
 import {DOCUMENT} from "@angular/common";
 
@@ -55,6 +54,7 @@ export class OverviewMenuComponent {
           description: '',
           buttonText: 'Create',
           title: 'New code project',
+          doHttpAction: true,
         },
       });
 

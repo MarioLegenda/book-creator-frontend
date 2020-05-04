@@ -26,6 +26,4 @@ export class Environments {
 
     return (env.name === name);
   }
-
-
 }

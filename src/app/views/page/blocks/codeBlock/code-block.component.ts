@@ -85,7 +85,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.comment = this.component.comment;
 
     if (this.component.codeProjectUuid) {
-      this.importCodeProject(this.component.codeProjectUuid);
+      this.importCodeProject(this.component.codeProjectUuid, false);
     }
 
     this.subscribeTypeahead();
@@ -410,14 +410,16 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     }
   }
 
-  private importCodeProject(uuid: string) {
+  private importCodeProject(uuid: string, withBlockUpdate: boolean = true) {
     this.codeProjectsRepository.getSingleProject(uuid).subscribe((res) => {
       this.codeProjectImported = true;
 
       this.emulator = res.environment;
       this.codeProject = res;
 
-      this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+      if (withBlockUpdate) {
+        this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+      }
 
       this.isCode = false;
 

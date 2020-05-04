@@ -1,5 +1,6 @@
 import {Component, Input, ElementRef, ViewChild, OnDestroy, OnInit} from '@angular/core';
-import { Subject } from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
+import {IRunCodeResultEvent} from "../../services/IRunCodeResultEvent";
 
 @Component({
   selector: 'cms-result-area',
@@ -14,9 +15,9 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
 
   // @ts-ignore
   @ViewChild('resultAreaRef', {static: true}) resultAreaRef: ElementRef;
-  @Input('resultCommunicator') resultCommunicator: Subject<any>;
+  @Input('resultCommunicator') resultCommunicator: Subject<IRunCodeResultEvent>;
 
-  private resultCommSubscription;
+  private resultCommSubscription: Subscription;
 
   componentState = {
     minimized: false,
@@ -37,7 +38,10 @@ export class ResultAreaComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy() {
-    this.resultCommSubscription.unsubscribe();
+    if (this.resultCommSubscription) {
+      this.resultCommSubscription.unsubscribe();
+      this.resultCommSubscription = null;
+    }
   }
 
   onMinimize() {

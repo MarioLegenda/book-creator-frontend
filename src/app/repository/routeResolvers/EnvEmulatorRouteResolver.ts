@@ -11,6 +11,7 @@ export class EnvEmulatorRouteResolver {
     getEnvironment: `${this.envEmulatorUri}/api/environment-emulator/get-environments`,
     singleFileBuildAndRun: `${this.envEmulatorUri}/api/environment-emulator/build-and-run/single-file`,
     buildState: `${this.envEmulatorUri}/api/environment-emulator/build-state`,
+    installPackage: `${this.envEmulatorUri}/api/environment-emulator/install-package`,
   };
 
   getEnvironment(): string {
@@ -23,5 +24,9 @@ export class EnvEmulatorRouteResolver {
 
   buildState(): string {
     return this.routes.buildState;
+  }
+
+  installPackage(): string {
+    return this.routes.installPackage;
   }
 }

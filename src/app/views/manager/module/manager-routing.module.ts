@@ -43,10 +43,6 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'code-projects-manager/manage/:shortId',
-    loadChildren: () => import('./../codeProjectsManagerModule/module/code-projects-manager.module').then(m => m.CodeProjectsManagerModule)
-  },
 ];
 
 @NgModule({

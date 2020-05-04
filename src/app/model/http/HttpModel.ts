@@ -1,4 +1,3 @@
-import {last} from "rxjs/operators";
 import {BlogState} from "../../logic/BlogState";
 
 export class HttpModel {
@@ -704,6 +703,24 @@ export class HttpModel {
       data: {
         codeProjectUuid,
         fileId,
+      }
+    }
+  }
+
+  static installPackage(
+    packageName: string,
+    version: string,
+    codeProjectUuid: string,
+    state: string,
+    environment: string
+  ) {
+    return {
+      data: {
+        packageName,
+        version,
+        codeProjectUuid,
+        state,
+        environment,
       }
     }
   }

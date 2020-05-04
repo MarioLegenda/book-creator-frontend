@@ -3,6 +3,8 @@ import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentE
 import { Subject, ReplaySubject } from 'rxjs';
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {Environments} from "../../../../library/Environments";
+import {ICodeProject} from "../../models/ICodeProject";
+import {IRunCodeResultEvent} from "../services/IRunCodeResultEvent";
 
 @Component({
   selector: 'cms-playground',
@@ -12,13 +14,12 @@ import {Environments} from "../../../../library/Environments";
   templateUrl: './playground.component.html',
 })
 export class PlaygroundComponent {
-  // @ts-ignore
   @ViewChild('playgroundWrapperRef', {static: true}) playgroundWrapperRef: ElementRef;
 
-  @Input('project') project: any;
+  @Input('project') project: ICodeProject;
   @Input('environments') environments: Environments;
 
-  resultCommunicator: Subject<any> = new ReplaySubject();
+  resultCommunicator: Subject<IRunCodeResultEvent> = new ReplaySubject<IRunCodeResultEvent>();
 
   expanded: boolean = false;
   expandedOnce: boolean = false;
@@ -59,11 +60,20 @@ export class PlaygroundComponent {
     const state: string = (this.isSession) ? 'session': 'dev';
     const model = HttpModel.buildAndRunProject(code.code, state);
 
-    this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, model).subscribe((data: any) => {
+    this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, model).subscribe((data: IRunCodeResultEvent) => {
       this.resultAvailable = true;
       this.isRunning = false;
 
       this.resultCommunicator.next(data);
+    }, () => {
+      this.resultAvailable = true;
+      this.isRunning = false;
+
+      this.resultCommunicator.next({
+        success: false,
+        result: null,
+        timeout: 0,
+      });
     });
   }
 }
