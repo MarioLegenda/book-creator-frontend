@@ -55,15 +55,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
   code: string = '';
 
-  editorOptions = {
-    theme: 'vs-light',
-    language: 'javascript',
-    codeLens: false,
-    formatOnPaste: true,
-    minimap: {
-      enabled: false,
-    },
-  };
+  editorOptions = null;
 
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
@@ -90,6 +82,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
     this.subscribeTypeahead();
     this.subscribeDroppedForGist();
+    this.loadEditorOptions();
   }
 
   ngOnDestroy(): void {
@@ -314,6 +307,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
       this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       changeState(this.appContext, this.store);
+      this.loadEditorOptions();
     });
   }
 
@@ -428,5 +422,27 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.isCode = true;
       }, 1000);
     });
+  }
+
+  private loadEditorOptions(): void {
+    this.editorOptions = null;
+
+    setTimeout(() => {
+      const options = {
+        theme: 'vs-light',
+        language: 'javascript',
+        codeLens: false,
+        formatOnPaste: true,
+        minimap: {
+          enabled: false,
+        },
+      };
+
+      if (this.emulator) {
+        options.language = this.emulator.language;
+      }
+
+      this.editorOptions = options;
+    }, 1000);
   }
 }

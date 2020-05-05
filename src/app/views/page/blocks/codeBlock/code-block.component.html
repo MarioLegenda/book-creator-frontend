@@ -127,7 +127,7 @@
     <ngx-gist *ngIf="isGist" [gistId]="gistData.username + '/' + gistData.gistId"></ngx-gist>
 
     <ngx-monaco-editor
-      *ngIf="isCode"
+      *ngIf="isCode && editorOptions"
       [options]="editorOptions"
       [(ngModel)]="code"
       (keyup)="onCodeChange()">
