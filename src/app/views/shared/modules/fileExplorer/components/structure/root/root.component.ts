@@ -111,8 +111,8 @@ export class RootComponent implements OnInit, OnDestroy {
   }
 
   private setNestedPosition() {
-    const w = 269 + (this.directory.depth * 17);
-    const pl = this.directory.depth * 17;
+    const w = 269 + (this.directory.depth * 5);
+    const pl = this.directory.depth * 5;
 
     this.dirStyles['width'] = `${w}px`;
     this.dirStyles['padding-left'] = `${pl}px`;

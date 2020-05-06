@@ -150,15 +150,23 @@ export class FileComponent implements OnInit, OnDestroy {
   }
 
   private calcDepth(): void {
+    const depth = this.file.depth;
+
+    if (depth === 1) {
+      this.fileStyles['padding-left'] = `${37}px`;
+
+      return;
+    }
+
     if (this.basePadding) {
-      const pl: number = this.basePadding + 45;
+      const pl: number = this.basePadding + 35;
 
       this.fileStyles['padding-left'] = `${pl}px`;
 
       return;
     }
 
-    let depth = this.file.depth;
+/*    let depth = this.file.depth;
 
     if (this.file.searched) {
       depth = 1;
@@ -168,11 +176,11 @@ export class FileComponent implements OnInit, OnDestroy {
       depth = depth + 1;
     }
 
-    let wBase = (depth === 1) ? 62 : 24;
+    let wBase = (depth === 1) ? 35 : 10;
     const w = 269 + (depth * wBase);
     const pl = depth * wBase;
 
     this.fileStyles['width'] = `${w}px`;
-    this.fileStyles['padding-left'] = `${pl}px`;
+    this.fileStyles['padding-left'] = `${pl}px`;*/
   }
 }

@@ -151,8 +151,19 @@ export class DirectoryComponent implements OnInit, OnDestroy {
   }
 
   private setNestedPosition() {
-    const w = 269 + (this.directory.depth * 17);
-    const pl = this.directory.depth * 17;
+    const depth = this.directory.depth;
+
+    let w;
+    let pl;
+
+    if (depth === 2) {
+      w = 269 + (depth * 5);
+      pl = depth * 5;
+    } else {
+      w = 269 + (depth * 7);
+      pl = depth * 7;
+    }
+
 
     this.dirStyles['width'] = `${w}px`;
     this.dirStyles['padding-left'] = `${pl}px`;
