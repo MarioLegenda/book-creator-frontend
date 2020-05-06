@@ -17,7 +17,6 @@ import deepcopy from 'deepcopy';
 @Component({
   selector: 'cms-file',
   styleUrls: [
-    '../global-actions.component.scss',
     './file.component.scss',
   ],
   templateUrl: './file.component.html',
@@ -146,6 +145,8 @@ export class FileComponent implements OnInit, OnDestroy {
       this.iconSpecificFile = "fab fa-html5";
     } else if (StaticFileWrapper.isJson(this.file)) {
       this.iconSpecificFile = "fab fa-js-square";
+    } else {
+      this.iconSpecificFile = "far fa-file-code";
     }
   }
 
@@ -165,22 +166,5 @@ export class FileComponent implements OnInit, OnDestroy {
 
       return;
     }
-
-/*    let depth = this.file.depth;
-
-    if (this.file.searched) {
-      depth = 1;
-    }
-
-    if (depth > 1) {
-      depth = depth + 1;
-    }
-
-    let wBase = (depth === 1) ? 35 : 10;
-    const w = 269 + (depth * wBase);
-    const pl = depth * wBase;
-
-    this.fileStyles['width'] = `${w}px`;
-    this.fileStyles['padding-left'] = `${pl}px`;*/
   }
 }
