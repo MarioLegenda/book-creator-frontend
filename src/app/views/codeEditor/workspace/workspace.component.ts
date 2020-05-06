@@ -47,11 +47,7 @@ export class WorkspaceComponent implements OnDestroy, OnInit {
               const realPath = path.slice(0, -1).join('/');
               let short: string = `${realPath}/${fileName}`;
 
-              if (short.length > 20) {
-                short = `${realPath.substring(0, 15)}... ${fileName}`;
-              }
-
-              const tab: FileTab = new FileTab(action.id, short, path.join('/'));
+              const tab: FileTab = new FileTab(action.id, fileName, short, path.join('/'));
               this.tabs.unshift(tab);
               this.indexMap[action.id] = this.findTabIndex(action.id);
 

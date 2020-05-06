@@ -8,6 +8,6 @@
   [matTooltip]="fileTab.fullPath"
   [ngClass]="{'selected-tab': selectedTab && fileTab.id === selectedTab.id}"
   (click)="onSelected($event)">
-  <p>{{fileTab.name}}</p>
+  <p>{{fileTab.fileName}}</p>
   <i (click)="onClose()" class="fas fa-times"></i>
 </div>
