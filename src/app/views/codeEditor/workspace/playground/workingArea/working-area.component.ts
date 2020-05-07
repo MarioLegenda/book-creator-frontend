@@ -37,7 +37,7 @@ export class WorkingAreaComponent implements OnInit {
       },
     };
 
-    if (this.project.environment.name === "go_v1_13_5") {
+    if (this.project.environment.name === "go_v1_14_2") {
       this.componentState.code = "package main";
     }
 
@@ -59,7 +59,7 @@ export class WorkingAreaComponent implements OnInit {
   }
 
   onRunProject() {
-    if (this.project.environment.name !== "go_v1_13_5" && this.project.environment.name !== "rust") {
+    if (this.project.environment.name !== "go_v1_14_2" && this.project.environment.name !== "rust") {
       if (!this.componentState.code) return;
     }
 

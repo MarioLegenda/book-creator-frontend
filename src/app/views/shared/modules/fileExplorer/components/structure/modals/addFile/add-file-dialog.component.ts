@@ -26,7 +26,7 @@ export class AddFileDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public model: any) {}
 
   ngOnInit() {
-    this.validExtensions = [this.model.extension, ...['html', 'htm', 'json']];
+    this.validExtensions = [this.model.extension];
   }
 
   close(): void {
@@ -111,7 +111,7 @@ export class AddFileDialogComponent implements OnInit {
     }
 
     if (!this.validExtensions.includes(split[split.length - 1])) {
-      this.invalidExtension = `Invalid file extension. For this project, a file name must have either ${this.validExtensions.join(', ')} extension.`;
+      this.invalidExtension = `Invalid file extension. For this project, a file name must have a ${this.validExtensions.join(', ')} extension.`;
 
       this.createDisabled = false;
 

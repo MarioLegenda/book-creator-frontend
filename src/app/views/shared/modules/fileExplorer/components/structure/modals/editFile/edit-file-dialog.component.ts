@@ -28,7 +28,7 @@ export class EditFileDialogComponent {
   {}
 
   ngOnInit() {
-    this.validExtensions = [this.model.extension, ...['html', 'htm', 'json']];
+    this.validExtensions = [this.model.extension];
 
     this.newName = this.model.name;
   }
@@ -106,7 +106,7 @@ export class EditFileDialogComponent {
     }
 
     if (!this.validExtensions.includes(split[split.length - 1])) {
-      this.invalidExtension = `Invalid file extension. For this project, a file name must have either ${this.validExtensions.join(', ')} extension.`;
+      this.invalidExtension = `Invalid file extension. For this project, a file name must have a ${this.validExtensions.join(', ')} extension.`;
 
       this.createDisabled = false;
 

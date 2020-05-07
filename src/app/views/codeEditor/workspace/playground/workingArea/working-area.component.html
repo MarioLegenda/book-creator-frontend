@@ -4,6 +4,7 @@
       [disabled]="isRunDisabled()"
       (click)="onRunProject()"
       class="btn btn-success run-button">
+      <i *ngIf="isRunning" class="icon fas fa-cog fa-spin"></i>
       Run
     </button>
   </div>

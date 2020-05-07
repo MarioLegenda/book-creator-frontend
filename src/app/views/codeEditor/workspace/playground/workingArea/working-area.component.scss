@@ -12,8 +12,15 @@
     padding: 5px;
 
     .run-button {
-      display:inline-block;
+      width: 80px;
+      display: inline-block;
       float: right;
+      position: relative;
+
+      .icon {
+        position: absolute;
+        top: 9px; left: 5px;
+      }
     }
   }
 
