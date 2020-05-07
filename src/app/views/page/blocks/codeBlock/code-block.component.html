@@ -141,7 +141,7 @@
       <i *ngIf="isCodeRunning" class="fas fa-atom fa-spin"></i>
 
       <button
-        [disabled]="isCodeRunning || !emulator"
+        [disabled]="isCodeRunning || !emulator || !code"
         (click)="onRunCode()"
         class="btn btn-success test-run-button">
         Test run

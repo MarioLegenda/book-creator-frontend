@@ -60,6 +60,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
   private onDroppedObservable = null;
+  private previousCode: string = null;
 
   @Input('index') index: number;
   @Input('component') component: CodeBlockModel;
@@ -362,12 +363,20 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   private runCodeProjectFlow() {
     this.blockErrors = null;
 
+    // this line is never executed but will remain here as a reminder
+    // that one can push errors and those errors will be shown to the user
     if (this.code === '') {
       this.blockErrors = [];
       this.blockErrors.push('There is no code to run');
 
       return;
     }
+
+    if (this.code === this.previousCode) {
+      return;
+    }
+
+    this.previousCode = this.code;
 
     this.isCodeRunning = true;
     this.hasTestRunWindow = false;

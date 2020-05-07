@@ -29,6 +29,8 @@ export class PlaygroundComponent {
   isRunning: boolean = false;
   isSession: boolean = false;
 
+  private previousCode = null;
+
   constructor(
     private envEmulatorRepository: EnvironmentEmulatorRepository
   ) {}
@@ -56,7 +58,11 @@ export class PlaygroundComponent {
   }
 
   onRunProject(code) {
+    if (this.previousCode === code.code) return;
+
     this.isRunning = true;
+    this.previousCode = code.code;
+
     const state: string = (this.isSession) ? 'session': 'dev';
     const model = HttpModel.buildAndRunProject(code.code, state);
 
