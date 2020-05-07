@@ -29,15 +29,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
   imageTooBig = false;
   avatarSrc = null;
   hasFile = false;
+  httpSaveError: boolean = false;
 
-  componentState = {
-    name: '',
-    lastName: '',
-    githubProfile: '',
-    personalWebsite: '',
-    company: '',
-    openSourceProject: '',
-  };
+  name: string = '';
+  lastName: string = '';
+  githubProfile: string = '';
+  personalWebsite: string = '';
+  company: string = '';
+  openSourceProject: string = '';
+
+  inFlight: boolean = false;
+  firstSave: boolean = false;
 
   private uploadedFile: File = null;
 
@@ -118,6 +120,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   onSaveProfile() {
     if (!this.isChanged()) return;
 
+    this.inFlight = true;
+    if (!this.firstSave) {
+      this.firstSave = true;
+    }
+
     const account = this.accountProvider.getAccount();
 
     const uuid: string = account.uuid;
@@ -131,18 +138,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
       openSourceProject: account.profile.openSourceProject,
     };
 
-    if (this.componentState.name) {
-      name = this.componentState.name;
+    if (this.name) {
+      name = this.name;
     }
 
-    if (this.componentState.lastName) {
-      lastName = this.componentState.lastName;
+    if (this.lastName) {
+      lastName = this.lastName;
     }
 
-    profile.githubProfile = this.componentState.githubProfile;
-    profile.personalWebsite = this.componentState.personalWebsite;
-    profile.company = this.componentState.company;
-    profile.openSourceProject = this.componentState.openSourceProject;
+    profile.githubProfile = this.githubProfile;
+    profile.personalWebsite = this.personalWebsite;
+    profile.company = this.company;
+    profile.openSourceProject = this.openSourceProject;
 
     const model = HttpModel.updateAccount(
       uuid,
@@ -152,6 +159,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
 
     this.accountRepository.updateAccount(model).subscribe(() => {
+      this.inFlight = false;
       if (this.updateAccountSubscription) this.updateAccountSubscription.unsubscribe();
       this.updateAccountSubscription = null;
 
@@ -163,6 +171,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       });
 
       this.accountProvider.loadAccount();
+    }, () => {
+      this.httpSaveError = true;
     });
   }
 
@@ -177,15 +187,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private loadInitialState() {
     const account = this.accountProvider.getAccount();
 
-    this.componentState.name = account.name;
-    this.componentState.lastName = account.lastName;
+    this.name = account.name;
+    this.lastName = account.lastName;
 
     const profile = account.profile;
 
-    this.componentState.githubProfile = profile.githubProfile;
-    this.componentState.personalWebsite = profile.personalWebsite;
-    this.componentState.company = profile.company;
-    this.componentState.openSourceProject = profile.openSourceProject;
+    this.githubProfile = profile.githubProfile;
+    this.personalWebsite = profile.personalWebsite;
+    this.company = profile.company;
+    this.openSourceProject = profile.openSourceProject;
   }
 
   private loadDefaultAvatar() {
@@ -197,12 +207,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private isChanged(): boolean {
     const account = this.accountProvider.getAccount();
 
-    const name = this.componentState.name;
-    const lastName = this.componentState.lastName;
-    const githubProfile = this.componentState.githubProfile;
-    const personalWebsite = this.componentState.personalWebsite;
-    const company = this.componentState.company;
-    const openSourceProject = this.componentState.openSourceProject;
+    const name = this.name;
+    const lastName = this.lastName;
+    const githubProfile = this.githubProfile;
+    const personalWebsite = this.personalWebsite;
+    const company = this.company;
+    const openSourceProject = this.openSourceProject;
 
     if (name !== account.name) return true;
     if (lastName !== account.lastName) return true;
