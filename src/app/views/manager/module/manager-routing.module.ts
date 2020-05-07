@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { KnowledgeSourceListingComponent } from '../blogs/listing/knowledge-source-listing.component';
 import { CodeProjectsComponent } from '../codeProjects/listing/code-projects.component';
-import { OverviewComponent } from '../overview/overview.component';
 import {ProfileComponent} from "../profile/profile.component";
 import {SettingsComponent} from "../settings/settings.component";
 import {PublishComponent} from "../publishBlog/publish.component";
@@ -13,10 +12,6 @@ const routes: Routes = [
     path: '',
     component: BootstrapComponent,
     children: [
-      {
-        path: '',
-        component: OverviewComponent,
-      },
       {
         path: 'blogs/list',
         component: KnowledgeSourceListingComponent,

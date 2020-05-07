@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { OverviewComponent } from '../overview/overview.component';
 import { OverviewMenuComponent } from '../menu/menu.component';
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -38,7 +37,6 @@ import {RemoveCodeProjectModalComponent} from "../modals/removeCodeProject/remov
     CPItem,
     AddKnowledgeSourceDialogComponent,
     KnowledgeSourceListingComponent,
-    OverviewComponent,
     KSItem,
     RemoveConfirmDialogComponent,
     UnsubscribeDialog,

@@ -92,7 +92,7 @@ export class AppComponent {
   onOverview() {
     this.mainMenuRef.nativeElement.style = 'display: none';
 
-    this.router.navigate(['/cms/management']);
+    this.router.navigate(['/cms/management/blogs/list']);
   }
 
   onHome() {
