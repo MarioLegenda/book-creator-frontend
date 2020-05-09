@@ -8,35 +8,38 @@
           class="item first-item col-xs-12 col-md-12 col-lg-12">
           <img class="avatar" [src]="avatarSrc">
 
-          <div
-            class="upload-btn">
-            <p class="upload-text">Change your avatar</p>
-            <input
-              (change)="onFileUpload($event.target.files)"
-              type="file"
-              name="file"
-              class="upload-file-input"/>
+          <div class="upload-widget">
+            <div
+              class="upload-btn col-xs-12 col-md-12 col-lg-12">
+              <p class="upload-text">Change your avatar</p>
+              <input
+                (change)="onFileUpload($event.target.files)"
+                type="file"
+                name="file"
+                class="upload-file-input"/>
+            </div>
+
+            <div *ngIf="hasFile" class="button-wrapper col-xs-12 col-md-12 col-lg-12">
+              <button
+                class="btn action-button save-file col-xs-4 col-md-2 col-lg-2"
+                (click)="saveFile()">
+                Change
+              </button>
+
+              <button
+                class="btn action-button clear-file col-xs-4 col-md-2 col-lg-2"
+                (click)="clearFile()">
+                Clear
+              </button>
+            </div>
           </div>
 
           <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 15">No file selected for upload.</p>
           <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 16">Mime type could not be determined.</p>
           <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 17">Invalid mime type. Supported mime types are jpg, jpeg, png and svg.</p>
-          <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 11">Internal error. Image could not be uploaded. We are very sorry about this and we are looking into it.</p>
-          <p class="error col-xs12 col-md-12 col-lg-12" *ngIf="imageTooBig">The uploaded image is too large. Permitted file size is 10MB.</p>
+          <p class="error col-xs-12 col-md-12 col-lg-12" *ngIf="error && error === 11">Internal error. Image could not be uploaded. Please, try again later.</p>
+          <p class="error col-xs12 col-md-12 col-lg-12" *ngIf="imageTooBig">The uploaded image is too large. Permitted file size is 5MB.</p>
 
-          <div *ngIf="hasFile" class="button-wrapper col-xs-12 col-md-12 col-lg-12">
-            <button
-              class="btn action-button save-file col-xs-4 col-md-2 col-lg-2"
-              (click)="saveFile()">
-              Change
-            </button>
-
-            <button
-              class="btn action-button clear-file col-xs-4 col-md-2 col-lg-2"
-              (click)="clearFile()">
-              Clear
-            </button>
-          </div>
         </div>
 
         <div class="form-block col-xs-11 col-md-12 col-lg-11">

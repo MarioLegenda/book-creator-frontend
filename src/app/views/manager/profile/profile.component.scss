@@ -28,18 +28,24 @@
     height: 50px;
   }
 
-  .upload-btn {
+  .error {
+    margin: 40px 0 0 0;
+  }
+
+  .upload-widget {
     width: 200px;
-    float: right;
+    float: left;
     position: relative;
-    border: 1px solid $lightestGray;
-    color: $appBlack;
+    margin-left: 30px;
+    margin-top: 9px;
 
-    border-radius: 2px;
-    font-size: 1.1em;
+    .upload-btn {
+      border: 1px solid $lightestGray;
+      color: $appBlack;
 
-    margin-right: 40%;
-    margin-top: 6px;
+      border-radius: 2px;
+      font-size: 1.1em;
+    }
   }
 
   .upload-text {
@@ -69,6 +75,32 @@
 
   .button-wrapper {
     margin-top: 20px;
+
+    .save-file {
+      border: 1px solid $mainAppColor;
+      color: $appBlack;
+      border-radius: 2px;
+      font-size: 1em;
+
+      transition: background-color 0.5s, color 0.5s;
+      -webkit-transition: background-color 0.5s, color 0.5s;
+      -moz-transition: background-color 0.5s, color 0.5s;
+      -o-transition: background-color 0.5s, color 0.5s;
+
+      &:hover {
+        background-color: $mainAppColor;
+        color: white;
+      }
+    }
+
+    .clear-file {
+      border: none;
+      font-size: 1em;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
   }
 
   .action-button {
@@ -80,33 +112,6 @@
     float: right;
     color: $mainAppColor;
     border-radius: 0;
-  }
-
-  .save-file {
-    border: 1px solid $mainAppColor;
-    color: $appBlack;
-    margin: 0 40% 0 0;
-    border-radius: 2px;
-    font-size: 1em;
-
-    transition: background-color 0.5s, color 0.5s;
-    -webkit-transition: background-color 0.5s, color 0.5s;
-    -moz-transition: background-color 0.5s, color 0.5s;
-    -o-transition: background-color 0.5s, color 0.5s;
-
-    &:hover {
-      background-color: $mainAppColor;
-      color: white;
-    }
-  }
-
-  .clear-file {
-    border: none;
-    font-size: 1em;
-
-    &:hover {
-      box-shadow: none;
-    }
   }
 
   .input-wrapper {
@@ -153,11 +158,5 @@
     float: right;
 
     padding: 10px;
-  }
-}
-
-.avatar  {
-  & > .error {
-    margin-top: 40px;
   }
 }
