@@ -1,20 +1,21 @@
 <div
   (mouseenter)="componentHovered()"
   (mouseleave)="componentUnHovered()"
+  (click)="componentTouched()"
   class="multimedia-block-wrapper col-lg-12 col-md-12 col-xs-12">
 
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
-      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="componentState.uploadError && componentState.uploadError === 15">No file selected for upload.</div>
-      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="componentState.uploadError && componentState.uploadError === 16">Mime type could not be determined.</div>
-      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="componentState.uploadError && componentState.uploadError === 17">Invalid mime type. Supported mime types are jpg, jpeg, png and svg.</div>
-      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="componentState.uploadError && componentState.uploadError === 11">Internal error. Image could not be uploaded. We are very sorry about this and we are looking into it.</div>
-      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="componentState.uploadError && componentState.uploadError === 11">For some reason, the image could not be deleted. Please, refresh your browser and try again</div>
-      <div class="error col-xs12 col-md-12 col-lg-12" *ngIf="componentState.imageTooBig">The uploaded image is too large. Permitted file size is 10MB.</div>
-      <div class="error col-xs12 col-md-12 col-lg-12" *ngIf="componentState.imageReadFailed">Image read failed on the browser. Please, refresh the page and try again.</div>
+      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 15">No file selected for upload.</div>
+      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 16">Mime type could not be determined.</div>
+      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 17">Invalid mime type. Supported mime types are jpg, jpeg, png and svg.</div>
+      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 11">Internal error. Image could not be uploaded. We are very sorry about this and we are looking into it.</div>
+      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 11">For some reason, the image could not be deleted. Please, refresh your browser and try again</div>
+      <div class="error col-xs12 col-md-12 col-lg-12" *ngIf="imageTooBig">The uploaded image is too large. Permitted file size is 10MB.</div>
+      <div class="error col-xs12 col-md-12 col-lg-12" *ngIf="imageReadFailed">Image read failed on the browser. Please, refresh the page and try again.</div>
 
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <div class="icon-group">
@@ -23,7 +24,7 @@
       </div>
 
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
           <div
@@ -36,7 +37,7 @@
       </div>
 
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
@@ -47,7 +48,7 @@
       </div>
 
       <div
-        [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
         class="block-action col-lg-1 col-md-1 col-xs-1">
 
         <i
@@ -61,9 +62,9 @@
 
   <div class="right-blog-metadata">
     <div
-      *ngIf="componentState.contentUploaded"
+      *ngIf="contentUploaded"
       (click)="onRemoveMultimedia()"
-      [style.visibility]="(componentState.hovered) ? 'visible' : 'hidden'"
+      [style.visibility]="(hovered) ? 'visible' : 'hidden'"
       class="right-block-action">
 
       <i
@@ -76,29 +77,29 @@
 
   <div class="multimedia-block col-lg-12 col-md-12 col-xs-12 editor-wrapper">
     <div
-      *ngIf="!componentState.fileInfo && !componentState.video && !componentState.unsplash"
+      *ngIf="!fileInfo && !video && !unsplash"
       class="no-multimedia">
       No images or youtube videos uploaded
     </div>
 
     <div
-      *ngIf="componentState.fileInfo"
+      *ngIf="fileInfo"
       class="image-wrapper">
       <img
         class="col-xs-12 col-md-12 col-lg-12"
-        [src]="componentState.fileInfo.staticImagePath" />
+        [src]="fileInfo.staticImagePath" />
     </div>
 
     <div
-      *ngIf="componentState.unsplash"
+      *ngIf="unsplash"
       class="image-wrapper">
       <img
         class="col-xs-12 col-md-12 col-lg-12"
-        [src]="componentState.unsplash.real" />
+        [src]="unsplash.real" />
     </div>
 
     <div
-      *ngIf="componentState.video"
+      *ngIf="video"
       class="image-wrapper">
       <iframe width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>

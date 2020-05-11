@@ -7,7 +7,7 @@ import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateQuoteBlock} from "../../../../store/page/httpActions";
 import {QuoteBlock} from "../../../../model/app/QuoteBlock";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
-import {changeState} from "../../../../logic/utilFns";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'cms-quote-block',
@@ -23,6 +23,7 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
 
   hovered: boolean = false;
   text: string = '';
+  touched: boolean = false;
 
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
@@ -30,6 +31,7 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private store: Store<any>,
+    private deviceDetector: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
@@ -53,11 +55,22 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
     this.typeAheadObservable.unsubscribe();
   }
 
+  componentTouched() {
+    if (this.deviceDetector.isDesktop()) return;
+
+    this.touched = true;
+    this.hovered = true;
+  }
+
   componentHovered() {
+    if (this.touched) return;
+
     this.hovered = true;
   }
 
   componentUnHovered() {
+    if (this.touched) return;
+
     this.hovered = false;
   }
 

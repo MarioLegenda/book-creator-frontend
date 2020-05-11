@@ -45,6 +45,7 @@ import {SubheaderBlockComponent} from "../blocks/subheaderBlock/subheader-block.
 import {CoverComponent} from "../blog/cover/cover.component";
 import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
 import {PublishIndicatorComponent} from "../blog/publishIndicator/publish-indicator.component";
+import {DeviceDetectorModule} from "ngx-device-detector";
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import {PublishIndicatorComponent} from "../blog/publishIndicator/publish-indica
 
     PageRoutingModule,
     NewCodeProjectModule,
+    DeviceDetectorModule.forRoot(),
   ],
   providers: [],
   entryComponents: [

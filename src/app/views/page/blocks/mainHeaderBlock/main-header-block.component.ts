@@ -7,6 +7,7 @@ import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateMainHeader} from "../../../../store/page/httpActions";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'cms-main-header-block',
@@ -20,11 +21,7 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
   @Input('appContext') appContext: AppContext;
   @Input('component') component: MainHeaderBlock;
 
-  componentState = {
-    hovered: false,
-    text: '',
-  };
-
+  touched: boolean = false;
   hovered: boolean = false;
   text: string = '';
 
@@ -34,6 +31,7 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private store: Store<any>,
+    private deviceDetector: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
@@ -57,11 +55,22 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
     this.typeAheadObservable.unsubscribe();
   }
 
+  componentTouched() {
+    if (this.deviceDetector.isDesktop()) return;
+
+    this.touched = true;
+    this.hovered = true;
+  }
+
   componentHovered() {
+    if (this.touched) return;
+
     this.hovered = true;
   }
 
   componentUnHovered() {
+    if (this.touched) return;
+
     this.hovered = false;
   }
 

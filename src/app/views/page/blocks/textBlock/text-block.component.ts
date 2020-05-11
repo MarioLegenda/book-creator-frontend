@@ -10,8 +10,8 @@ import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-co
 import {AddInternalNameModalComponent} from "../../modals/addInternalName/add-internal-name-modal.component";
 import {AddCommentModalComponent} from "../../modals/addComment/add-comment-modal.component";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
-import {changeState} from "../../../../logic/utilFns";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -20,6 +20,7 @@ import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 })
 export class TextBlockComponent implements OnDestroy, OnInit {
   hovered: boolean = false;
+  touched: boolean = false;
   expanded: boolean = true;
   internalName: string = '';
   comment: string = '';
@@ -60,11 +61,19 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   constructor(
     private store: Store<any>,
     public dialog: MatDialog,
+    private deviceDetector: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
     this.internalName = (this.component.internalName === '') ? 'click to view text' : this.component.internalName;
     this.comment = this.component.comment;
+  }
+
+  componentTouched() {
+    if (this.deviceDetector.isDesktop()) return;
+
+    this.touched = true;
+    this.hovered = true;
   }
 
   onExpandBlock() {
@@ -159,10 +168,13 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   }
 
   componentHovered() {
+    if (this.touched) return;
+
     this.hovered = true;
   }
 
   componentUnHovered() {
+    if (this.touched) return;
     this.hovered = false;
   }
 

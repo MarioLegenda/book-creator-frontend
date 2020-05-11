@@ -20,6 +20,7 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {changeState} from "../../../../logic/utilFns";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'cms-code-block',
@@ -36,9 +37,11 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     private pageContext: AppContextInitializer,
     private codeProjectsRepository: CodeProjectsRepository,
     private blogRepository: BlogRepository,
+    private deviceDetector: DeviceDetectorService,
   ) {}
 
   hovered: boolean = false;
+  touched: boolean = false;
   readonly: boolean = false;
   gistData = null;
   isGist: boolean = false;
@@ -96,11 +99,22 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     }
   }
 
+  componentTouched() {
+    if (this.deviceDetector.isDesktop()) return;
+
+    this.touched = true;
+    this.hovered = true;
+  }
+
   componentHovered() {
+    if (this.touched) return;
+
     this.hovered = true;
   }
 
   componentUnHovered() {
+    if (this.touched) return;
+
     this.hovered = false;
   }
 

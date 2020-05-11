@@ -11,6 +11,7 @@ import {Store} from "@ngrx/store";
 import {EmbedUnsplashDialogComponent} from "../../modals/embedUnsplashImage/embed-unsplash-modal.component";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {catchError, reduce} from "rxjs/operators";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -24,16 +25,15 @@ export class MultimediaBlockComponent implements OnInit {
   @Input('appContext') appContext: AppContext;
   @Input('component') component: MultimediaBlockModel;
 
-  componentState = {
-    hovered: false,
-    fileInfo: null,
-    video: null,
-    unsplash: null,
-    uploadError: null,
-    imageTooBig: false,
-    imageReadFailed: false,
-    contentUploaded: false,
-  };
+  hovered: boolean = false;
+  fileInfo: any = null;
+  video: any = null;
+  touched: boolean = false;
+  unsplash: any = null;
+  uploadError: any = null;
+  imageTooBig: boolean = false;
+  imageReadFailed: boolean = false;
+  contentUploaded: boolean = false;
 
   constructor(
     private rebelCdnRepository: FileUploadRepository,
@@ -41,6 +41,7 @@ export class MultimediaBlockComponent implements OnInit {
     private dialog: MatDialog,
     private store: Store<any>,
     private fileUploadRepository: FileUploadRepository,
+    private deviceDetector: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
@@ -60,7 +61,7 @@ export class MultimediaBlockComponent implements OnInit {
     dialogRef.afterClosed().subscribe((data: {original: string, id: string}) => {
       if (!data) return;
 
-      if (this.componentState.fileInfo) {
+      if (this.fileInfo) {
         const model = this.createDeleteBlockImageModel();
 
         this.fileUploadRepository.deleteMultimediaBlockImage(model)
@@ -71,9 +72,9 @@ export class MultimediaBlockComponent implements OnInit {
             // @ts-ignore
             catchError((e: any) => {
               if (Object.keys(e.error).length === 0) {
-                this.componentState.uploadError = 11;
+                this.uploadError = 11;
               } else {
-                this.componentState.uploadError = e.error.errorCode;
+                this.uploadError = e.error.errorCode;
               }
             })
           ).subscribe(() => {
@@ -85,12 +86,23 @@ export class MultimediaBlockComponent implements OnInit {
     });
   }
 
+  componentTouched() {
+    if (this.deviceDetector.isDesktop()) return;
+
+    this.touched = true;
+    this.hovered = true;
+  }
+
   componentHovered() {
-    this.componentState.hovered = true;
+    if (this.touched) return;
+
+    this.hovered = true;
   }
 
   componentUnHovered() {
-    this.componentState.hovered = false;
+    if (this.touched) return;
+
+    this.hovered = false;
   }
 
   addYoutubeLink() {
@@ -113,12 +125,12 @@ export class MultimediaBlockComponent implements OnInit {
 
   private loadInitialData() {
     if (this.component.fileInfo) {
-      this.componentState.fileInfo = this.component.fileInfo;
-      this.componentState.contentUploaded = true;
+      this.fileInfo = this.component.fileInfo;
+      this.contentUploaded = true;
     } else if (this.component.unsplash) {
-      this.componentState.unsplash = this.component.unsplash;
+      this.unsplash = this.component.unsplash;
 
-      this.componentState.contentUploaded = true;
+      this.contentUploaded = true;
     }
   }
 
@@ -126,7 +138,7 @@ export class MultimediaBlockComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     formData.append('pageData', JSON.stringify({
-      fileInfo: this.componentState.fileInfo,
+      fileInfo: this.fileInfo,
       pageUuid: this.appContext.page.uuid,
       blockUuid: this.component.blockUuid,
     }));
@@ -164,28 +176,28 @@ export class MultimediaBlockComponent implements OnInit {
         // @ts-ignore
         catchError((e: any) => {
           if (Object.keys(e.error).length === 0) {
-            this.componentState.uploadError = 11;
+            this.uploadError = 11;
           } else {
-            this.componentState.uploadError = e.error.errorCode;
+            this.uploadError = e.error.errorCode;
           }
 
           if (e.status === 413) {
-            this.componentState.imageTooBig = true;
+            this.imageTooBig = true;
           }
         })
       ).subscribe((res) => {
-        this.componentState.fileInfo = res;
+        this.fileInfo = res;
 
         const model = HttpModel.updateMultimediaBlock(
           this.appContext.page.uuid,
           this.component.blockUuid,
-          this.componentState.fileInfo,
+          this.fileInfo,
           null,
           null,
         );
 
         this.pageRepository.updateMultimediaBlock(model).subscribe(() => {
-          this.componentState.contentUploaded = true;
+          this.contentUploaded = true;
         });
       });
     }
@@ -203,7 +215,7 @@ export class MultimediaBlockComponent implements OnInit {
       null,
     );
 
-    if (this.componentState.fileInfo) {
+    if (this.fileInfo) {
       const model = this.createDeleteBlockImageModel();
 
       this.fileUploadRepository.deleteMultimediaBlockImage(model)
@@ -211,41 +223,19 @@ export class MultimediaBlockComponent implements OnInit {
           reduce((acc, res: any) => {
             return res.data;
           }, {}),
-          // @ts-ignore
-          catchError((e: any) => {
-            if (Object.keys(e.error).length === 0) {
-              this.componentState.uploadError = 11;
-            } else {
-              this.componentState.uploadError = e.error.errorCode;
-            }
-          })
         ).subscribe(() => {
-        this.pageRepository.updateMultimediaBlock(updateModel).subscribe(() => {
-          this.componentState.contentUploaded = false;
-
-          this.componentState.unsplash = null;
-          this.componentState.fileInfo = null;
-          this.componentState.video = null;
-
-          if (isBlockRemoved) this.store.dispatch(httpRemoveBlock(this.component));
-        });
+          this.removeBlock(updateModel, isBlockRemoved);
+        }, () => {
+        this.removeBlock(updateModel, isBlockRemoved);
       });
     } else {
-      this.pageRepository.updateMultimediaBlock(updateModel).subscribe(() => {
-        this.componentState.contentUploaded = false;
-
-        this.componentState.unsplash = null;
-        this.componentState.fileInfo = null;
-        this.componentState.video = null;
-
-        if (isBlockRemoved) this.store.dispatch(httpRemoveBlock(this.component));
-      });
+      this.removeBlock(updateModel, isBlockRemoved);
     }
   }
 
   private createDeleteBlockImageModel() {
     const formData = new FormData();
-    formData.append('fileInfo', JSON.stringify(this.componentState.fileInfo));
+    formData.append('fileInfo', JSON.stringify(this.fileInfo));
 
     return {
       formData: formData,
@@ -253,9 +243,9 @@ export class MultimediaBlockComponent implements OnInit {
   }
 
   private resetErrors() {
-    this.componentState.imageReadFailed = false;
-    this.componentState.uploadError = false;
-    this.componentState.imageTooBig = false;
+    this.imageReadFailed = false;
+    this.uploadError = false;
+    this.imageTooBig = false;
   }
 
   private embedUnsplashFlow(data: {original: string, id: string}) {
@@ -274,9 +264,21 @@ export class MultimediaBlockComponent implements OnInit {
     );
 
     this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
-      this.componentState.unsplash = res.unsplash;
-      this.componentState.contentUploaded = true;
-      this.componentState.fileInfo = null;
+      this.unsplash = res.unsplash;
+      this.contentUploaded = true;
+      this.fileInfo = null;
+    });
+  }
+
+  private removeBlock(model, isBlockRemoved: boolean): void {
+    this.pageRepository.updateMultimediaBlock(model).subscribe(() => {
+      this.contentUploaded = false;
+
+      this.unsplash = null;
+      this.fileInfo = null;
+      this.video = null;
+
+      if (isBlockRemoved) this.store.dispatch(httpRemoveBlock(this.component));
     });
   }
 }
