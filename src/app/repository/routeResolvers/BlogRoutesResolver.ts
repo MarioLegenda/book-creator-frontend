@@ -20,6 +20,7 @@ export class BlogRoutesResolver {
     searchBlog: `${this.bookApiUri}/api/v1/knowledge-source/search/blogs`,
     getNext: `${this.bookApiUri}/api/v1/knowledge-source/blog/get-next`,
     changeState: `${this.bookApiUri}/api/v1/knowledge-source/blog/change-state`,
+    sortByState: `${this.bookApiUri}/api/v1/knowledge-source/sort`,
   };
 
   createBlankBlog(): string {
@@ -68,5 +69,9 @@ export class BlogRoutesResolver {
 
   changeState(): string {
     return this.routes.changeState;
+  }
+
+  sortBy(model): string {
+    return `${this.routes.sortByState}?state=${model.states.join(',')}`;
   }
 }

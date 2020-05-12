@@ -12,6 +12,7 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 export class KnowledgeSourceListingComponent implements OnInit {
   items = [];
   paginationPossible = false;
+  selectedStates: string[] = [];
 
   readonly size: number = 10;
   private currentPage: number = 1;
@@ -25,7 +26,21 @@ export class KnowledgeSourceListingComponent implements OnInit {
     this.getInitialItems();
   }
 
-  onItemDeleted(item) {
+  onStateChange(states: string[]): void {
+    this.selectedStates = states;
+
+    if (this.selectedStates.length === 0) {
+      return this.getInitialItems();
+    }
+
+    const model = HttpModel.sortBy(this.selectedStates);
+
+    this.blogRepository.sortByState(model).subscribe((blogs) => {
+      this.items = blogs;
+    });
+  }
+
+  onItemDeleted(item): void {
     const idx: number = this.items.findIndex((val) => {
       return val.uuid === item.uuid;
     });

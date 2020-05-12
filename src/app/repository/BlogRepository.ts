@@ -89,4 +89,13 @@ export class BlogRepository {
         }, {})
       );
   }
+
+  sortByState(model) {
+    return this.httpClient.get(this.routeResolver.sortBy(model))
+      .pipe(
+        reduce((acc, res: any) => {
+          return (res as any).data;
+        }, {})
+      );
+  }
 }

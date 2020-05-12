@@ -6,6 +6,9 @@
     <cms-search
       (onSearchTermEvent)="onSearchTerm($event)"></cms-search>
     <span class="hint col-xs-10 col-md-10 col-lg-10">* Type <i>@no-title</i> to search for sources with no title</span>
+
+    <cms-state-filters
+    (stateChangedEvent)="onStateChange($event)"></cms-state-filters>
   </div>
 
   <div class="col-xs-12 col-md-12 col-lg-12 ks-list">

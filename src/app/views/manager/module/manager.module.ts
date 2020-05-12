@@ -28,6 +28,7 @@ import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-mo
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-published-modal.component";
 import {RemoveCodeProjectModalComponent} from "../modals/removeCodeProject/remove-code-project-modal.component";
+import {StateFiltersComponent} from "../blogs/stateFilters/stateFilters.component";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {RemoveCodeProjectModalComponent} from "../modals/removeCodeProject/remov
     PublishBlogModalComponent,
     NotifyIfPublishedModal,
     RemoveCodeProjectModalComponent,
+    StateFiltersComponent,
   ],
   imports: [
     CommonModule,

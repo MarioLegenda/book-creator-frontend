@@ -1,0 +1,33 @@
+@import '../../../../../styles/variables';
+
+.state-filters {
+  float: none;
+  margin: 0 auto;
+  margin-top: 20px;
+
+  .item {
+    display: inline-block;
+    float: left;
+
+    .button {
+      border: 1px solid $lightestGray;
+      border-top: 4px solid $lightestGray;
+      padding: 10px;
+      font-family: $mainFont;
+      color: $appBlack;
+      text-align: center;
+      margin-right: 10px;
+      border-radius: 5px;
+
+      &:hover {
+        border-top: 4px solid $mainAppColor;
+        background-color: white;
+        color: $appBlack;
+      }
+    }
+
+    .selected-item {
+      border-top: 4px solid $mainAppColor;
+    }
+  }
+}

@@ -707,21 +707,9 @@ export class HttpModel {
     }
   }
 
-  static installPackage(
-    packageName: string,
-    version: string,
-    codeProjectUuid: string,
-    state: string,
-    environment: string
-  ) {
+  static sortBy(states: string[]) {
     return {
-      data: {
-        packageName,
-        version,
-        codeProjectUuid,
-        state,
-        environment,
-      }
+      states,
     }
   }
 }

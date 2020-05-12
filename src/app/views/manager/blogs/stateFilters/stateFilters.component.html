@@ -1,0 +1,27 @@
+<div
+   class="col-xs-10 col-md-10 col-lg-10 state-filters">
+
+  <div
+    (click)="onToggle('published')"
+    class="item">
+    <button
+      class="button"
+      [ngClass]="{'selected-item': selected.includes('published')}">Published</button>
+  </div>
+
+  <div
+    (click)="onToggle('draft')"
+    class="item">
+    <button
+      class="button"
+      [ngClass]="{'selected-item': selected.includes('draft')}">Draft</button>
+  </div>
+
+  <div
+    (click)="onToggle('changed')"
+    class="item">
+    <button
+      class="button"
+      [ngClass]="{'selected-item': selected.includes('changed')}">Changed</button>
+  </div>
+</div>
