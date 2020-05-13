@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
+import {Pagination} from "../../../manager/shared/Pagination";
 
 @Component({
   selector: 'cms-import-code-project-modal',
@@ -20,7 +21,7 @@ export class ImportCodeProjectDialogComponent implements OnInit {
   {}
 
   ngOnInit() {
-    this.codeProjectsRepository.getProjects(10, 1).subscribe((res: any) => {
+    this.codeProjectsRepository.getProjects(new Pagination(10, 1), []).subscribe((res: any) => {
       this.projects = res;
     })
   }

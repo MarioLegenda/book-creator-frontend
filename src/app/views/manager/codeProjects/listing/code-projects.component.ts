@@ -3,6 +3,7 @@ import {CodeProjectsRepository} from "../../../../repository/CodeProjectsReposit
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {Item} from "../../shared/listingFilter/Item";
 import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
+import {Pagination} from "../../shared/Pagination";
 
 @Component({
   selector: 'cms-code-project-overview',
@@ -17,8 +18,7 @@ export class CodeProjectsComponent implements OnInit {
   paginationPossible = false;
   selectedFilters: string[] = [];
 
-  readonly size: number = 10;
-  private currentPage: number = 1;
+  private readonly pagination: Pagination = new Pagination(10, 1);
   private searchTerm: string = null;
 
   constructor(
@@ -33,14 +33,13 @@ export class CodeProjectsComponent implements OnInit {
 
   onFilterChange(states: string[]): void {
     this.selectedFilters = states;
+    this.pagination.page = 1;
 
     if (this.selectedFilters.length === 0) {
       return this.getInitialItems();
     }
 
-    const model = HttpModel.queryFiltersModel(this.selectedFilters);
-
-    this.codeProjectsRepository.sortByEnvironment(model).subscribe((projects) => {
+    this.codeProjectsRepository.getProjects(this.pagination, this.selectedFilters).subscribe((projects) => {
       this.items = projects;
     });
   }
@@ -56,7 +55,7 @@ export class CodeProjectsComponent implements OnInit {
 
     const model = HttpModel.getNextCodeProject(uuids, this.searchTerm);
 
-    this.codeProjectsRepository.getNext(model).subscribe((item) => {
+    this.codeProjectsRepository.getNext(model, this.selectedFilters).subscribe((item) => {
       if (item) this.items.push(item);
     });
   }
@@ -72,28 +71,28 @@ export class CodeProjectsComponent implements OnInit {
   }
 
   onMoreItems() {
-    ++this.currentPage;
+    ++this.pagination.page;
 
     if (this.searchTerm) {
-      return this.search(this.searchTerm, this.currentPage, true);
+      return this.search(this.searchTerm, this.pagination.page, true);
     }
 
-    this.codeProjectsRepository.getProjects(this.size, this.currentPage).subscribe((res) => {
+    this.codeProjectsRepository.getProjects(this.pagination, this.selectedFilters).subscribe((res) => {
       for (const entry of res) {
         this.items.push(entry);
       }
 
-      if (res.length < this.size) {
+      if (res.length < this.pagination.size) {
         this.paginationPossible = false;
       }
     });
   }
 
   private getInitialItems() {
-    this.codeProjectsRepository.getProjects(this.size, this.currentPage).subscribe((res) => {
+    this.codeProjectsRepository.getProjects(this.pagination, this.selectedFilters).subscribe((res) => {
       this.items = res;
 
-      if (this.items.length >= this.size) {
+      if (this.items.length >= this.pagination.size) {
         this.paginationPossible = true;
       }
 
@@ -105,11 +104,11 @@ export class CodeProjectsComponent implements OnInit {
 
   private search(searchTerm: string, page: number, append = false) {
     const model = HttpModel.searchBlogs({
-      size: this.size,
+      size: this.pagination.size,
       page: page,
     }, searchTerm);
 
-    this.codeProjectsRepository.searchCodeProjects(model).subscribe((res) => {
+    this.codeProjectsRepository.searchCodeProjects(model, this.selectedFilters).subscribe((res) => {
       if (append) {
         for (const entry of res) {
           this.items.push(entry);
@@ -118,9 +117,9 @@ export class CodeProjectsComponent implements OnInit {
         this.items = res;
       }
 
-      if (res.length < this.size) {
+      if (res.length < this.pagination.size) {
         this.paginationPossible = false;
-      } else if (res.length >= this.size) {
+      } else if (res.length >= this.pagination.size) {
         this.paginationPossible = true;
       }
     });

@@ -49,8 +49,8 @@ export class ProjectRouteResolver {
     return this.routes.removeCodeProject;
   }
 
-  searchCodeProjects(): string {
-    return this.routes.searchCodeProjects;
+  searchCodeProjects(filters: string[]): string {
+    return `${this.routes.searchCodeProjects}?filters=${filters.join(',')}`;
   }
 
   updateCodeProject(): string {
@@ -61,8 +61,8 @@ export class ProjectRouteResolver {
     return this.routes.searchDirsAndFiles;
   }
 
-  getNext(): string {
-    return this.routes.getNext;
+  getNext(filters: string[]): string {
+    return `${this.routes.getNext}?filters=${filters.join(',')}`;
   }
 
   cutFile(): string {

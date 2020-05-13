@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {RouteResolver} from "./routeResolvers/RouteResolver";
-import {concatMap, map, reduce} from "rxjs/operators";
+import {concatMap, map} from "rxjs/operators";
 import {ProjectRouteResolver} from "./routeResolvers/ProjectRouteResolver";
 import {IResponse} from "../model/http/response/IResponse";
+import {Pagination} from "../views/manager/shared/Pagination";
 
 @Injectable({
   providedIn: 'root',
@@ -16,65 +17,51 @@ export class CodeProjectsRepository {
   ) {}
 
   createCodeProject(model) {
-    return this.httpClient.put(this.routeResolver.createCodeProject(), model)
+    return this.httpClient.put<IResponse>(this.routeResolver.createCodeProject(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
   }
 
-  getProjects(size: number = 10, page: number = 1) {
-    return this.httpClient.get(this.routeResolver.getProjects(size, page))
+  getProjects(pagination: Pagination, filters: string[]) {
+    return this.httpClient.get<IResponse>(this.routeResolver.getProjects(pagination, filters))
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
   }
 
   getSingleProject(uuid: string) {
-    return this.httpClient.get(this.projectRouteResolver.getSingleProject(uuid))
+    return this.httpClient.get<IResponse>(this.projectRouteResolver.getSingleProject(uuid))
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
   }
 
   removeCodeProject(model) {
-    return this.httpClient.post(this.projectRouteResolver.removeCodeProject(), model)
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.removeCodeProject(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
   }
 
-  searchCodeProjects(model) {
-    return this.httpClient.post(this.projectRouteResolver.searchCodeProjects(), model)
+  searchCodeProjects(model, filters: string[]) {
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.searchCodeProjects(filters), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
   }
 
   updateCodeProject(model) {
-    return this.httpClient.post(this.projectRouteResolver.updateCodeProject(), model)
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.updateCodeProject(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
   }
 
-  getNext(model) {
-    return this.httpClient.post(this.projectRouteResolver.getNext(), model)
+  getNext(model, filters: string[]) {
+    return this.httpClient.post<IResponse>(this.projectRouteResolver.getNext(filters), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: IResponse) => res.data)
       );
   }
 

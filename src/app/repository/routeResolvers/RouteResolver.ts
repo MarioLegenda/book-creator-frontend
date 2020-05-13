@@ -1,5 +1,6 @@
 import {environment} from "../../../environments/environment";
 import {Injectable} from "@angular/core";
+import {Pagination} from "../../views/manager/shared/Pagination";
 
 @Injectable({
   providedIn: 'root',
@@ -38,8 +39,8 @@ export class RouteResolver {
     return `${this.routes.getProjectsBySource}/${sourceId}?pagination.size=${size}&pagination.page=${page}`;
   }
 
-  getProjects(size: number, page: number): string {
-    return `${this.routes.getProjects}?pagination.size=${size}&pagination.page=${page}`;
+  getProjects(pagination: Pagination, filters: string[]): string {
+    return `${this.routes.getProjects}?filters=${filters.join(',')}&pagination.size=${pagination.size}&pagination.page=${pagination.page}`;
   }
 
   getProjectUuidByShortId(shortId: string): string {
