@@ -20,7 +20,6 @@ export class BlogRoutesResolver {
     searchBlog: `${this.bookApiUri}/api/v1/knowledge-source/search/blogs`,
     getNext: `${this.bookApiUri}/api/v1/knowledge-source/blog/get-next`,
     changeState: `${this.bookApiUri}/api/v1/knowledge-source/blog/change-state`,
-    sortByState: `${this.bookApiUri}/api/v1/knowledge-source/sort`,
   };
 
   createBlankBlog(): string {
@@ -51,8 +50,8 @@ export class BlogRoutesResolver {
     return `${this.routes.unLinkCodeProject}`;
   }
 
-  getBlogs(size: number, page: number): string {
-    return `${this.routes.getBlogs}?pagination.size=${size}&pagination.page=${page}`;
+  getBlogs(size: number, page: number, filters: string[]): string {
+    return `${this.routes.getBlogs}?filters=${filters.join(',')}&pagination.size=${size}&pagination.page=${page}`;
   }
 
   removeBlog(): string {
@@ -63,15 +62,11 @@ export class BlogRoutesResolver {
     return this.routes.searchBlog;
   }
 
-  getNextBlog(): string {
-    return this.routes.getNext;
+  getNextBlog(filters: string[]): string {
+    return `${this.routes.getNext}?filters=${filters.join(',')}`;
   }
 
   changeState(): string {
     return this.routes.changeState;
-  }
-
-  sortBy(model): string {
-    return `${this.routes.sortByState}?filters=${model.filters.join(',')}`;
   }
 }

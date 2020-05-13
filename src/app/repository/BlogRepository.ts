@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BlogRoutesResolver} from './routeResolvers/BlogRoutesResolver';
 import {map, reduce} from "rxjs/operators";
 import {IResponse} from "../model/http/response/IResponse";
+import {Pagination} from "../views/manager/shared/Pagination";
 
 @Injectable({
   providedIn: 'root',
@@ -38,63 +39,44 @@ export class BlogRepository {
   }
 
   unLinkCodeProject(model: any) {
-    return this.httpClient.post(this.routeResolver.unLinkCodeProject(), model)
+    return this.httpClient.post<IResponse>(this.routeResolver.unLinkCodeProject(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: any) => res.data)
       );
   }
 
-  getBlogs(size: number = 10, page: number = 1) {
-    return this.httpClient.get(this.routeResolver.getBlogs(size, page))
+  getBlogs(pagination: Pagination, filters: string[]) {
+    return this.httpClient.get<IResponse>(this.routeResolver.getBlogs(pagination.size, pagination.page, filters))
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: any) => res.data)
       );
   }
 
   removeBlog(model) {
-    return this.httpClient.post(this.routeResolver.removeBlog(), model)
+    return this.httpClient.post<IResponse>(this.routeResolver.removeBlog(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: any) => res.data)
       );
   }
 
   search(model) {
-    return this.httpClient.post(this.routeResolver.searchBlog(), model)
+    return this.httpClient.post<IResponse>(this.routeResolver.searchBlog(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: any) => res.data)
       );
   }
 
-  getNext(model) {
-    return this.httpClient.post(this.routeResolver.getNextBlog(), model)
+  getNext(model, filters: string[]) {
+    return this.httpClient.post<IResponse>(this.routeResolver.getNextBlog(filters), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
+        map((res: any) => res.data)
       );
   }
 
   changeState(model) {
-    return this.httpClient.post(this.routeResolver.changeState(), model)
-      .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
-      );
-  }
-
-  sortByState(model) {
-    return this.httpClient.get<IResponse>(this.routeResolver.sortBy(model))
+    return this.httpClient.post<IResponse>(this.routeResolver.changeState(), model)
       .pipe(
         map((res: any) => res.data)
-      )
+      );
   }
 }

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {Item} from "../../shared/listingFilter/Item";
+import {Pagination} from "../../shared/Pagination";
+import {BlogState} from "../../../../logic/BlogState";
 
 @Component({
   selector: 'cms-knowledge-sources-listing',
@@ -20,8 +22,7 @@ export class KnowledgeSourceListingComponent implements OnInit {
   paginationPossible = false;
   selectedStates: string[] = [];
 
-  readonly size: number = 10;
-  private currentPage: number = 1;
+  private readonly pagination: Pagination = new Pagination(10, 1);
   private searchTerm: string = null;
 
   constructor(
@@ -29,19 +30,19 @@ export class KnowledgeSourceListingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.setDefaultStates();
     this.getInitialItems();
   }
 
   onStateChange(states: string[]): void {
+    this.pagination.page = 1;
     this.selectedStates = states;
 
     if (this.selectedStates.length === 0) {
       return this.getInitialItems();
     }
 
-    const model = HttpModel.queryFiltersModel(this.selectedStates);
-
-    this.blogRepository.sortByState(model).subscribe((blogs) => {
+    this.blogRepository.getBlogs(this.pagination, this.selectedStates).subscribe((blogs) => {
       this.items = blogs;
     });
   }
@@ -59,9 +60,9 @@ export class KnowledgeSourceListingComponent implements OnInit {
 
     const model = HttpModel.getNextBlog(uuids, this.searchTerm);
 
-    this.blogRepository.getNext(model).subscribe((item) => {
+    this.blogRepository.getNext(model, this.selectedStates).subscribe((item) => {
       if (item) this.items.push(item);
-    })
+    });
   }
 
   onSearchTerm($event: string) {
@@ -75,18 +76,18 @@ export class KnowledgeSourceListingComponent implements OnInit {
   }
 
   onMoreItems() {
-    ++this.currentPage;
+    ++this.pagination.page;
 
     if (this.searchTerm) {
-      return this.search(this.searchTerm, this.currentPage, true);
+      return this.search(this.searchTerm, this.pagination.page, true);
     }
 
-    this.blogRepository.getBlogs(this.size, this.currentPage).subscribe((res) => {
+    this.blogRepository.getBlogs(this.pagination, this.selectedStates).subscribe((res) => {
       for (const entry of res) {
         this.items.push(entry);
       }
 
-      if (res.length < this.size) {
+      if (res.length < this.pagination.size) {
         this.paginationPossible = false;
       }
     });
@@ -94,7 +95,7 @@ export class KnowledgeSourceListingComponent implements OnInit {
 
   private search(searchTerm: string, page: number, append = false) {
     const model = HttpModel.searchBlogs({
-      size: this.size,
+      size: this.pagination.size,
       page: page,
     }, searchTerm);
 
@@ -107,19 +108,19 @@ export class KnowledgeSourceListingComponent implements OnInit {
         this.items = res;
       }
 
-      if (res.length < this.size) {
+      if (res.length < this.pagination.size) {
         this.paginationPossible = false;
-      } else if (res.length >= this.size) {
+      } else if (res.length >= this.pagination.size) {
         this.paginationPossible = true;
       }
     });
   }
 
   private getInitialItems() {
-    this.blogRepository.getBlogs(this.size, this.currentPage).subscribe((res) => {
+    this.blogRepository.getBlogs(this.pagination, this.selectedStates).subscribe((res) => {
       this.items = res;
 
-      if (this.items.length >= this.size) {
+      if (this.items.length >= this.pagination.size) {
         this.paginationPossible = true;
       }
 
@@ -127,5 +128,11 @@ export class KnowledgeSourceListingComponent implements OnInit {
         this.paginationPossible = false;
       }
     });
+  }
+
+  private setDefaultStates(): void {
+    if (this.selectedStates.length === 0) {
+      this.selectedStates = BlogState.toArray();
+    }
   }
 }
