@@ -1,14 +1,16 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Item} from "../../shared/listingFilter/Item";
 
 @Component({
-  selector: 'cms-state-filters',
+  selector: 'cms-listing-filter',
   styleUrls: [
-    './stateFilters.component.scss',
+    './listing-filter.component.scss',
   ],
-  templateUrl: './stateFilters.component.html',
+  templateUrl: './listing-filter.component.html',
 })
-export class StateFiltersComponent {
+export class ListingFilterComponent {
   selected: string[] = [];
+  @Input('filters') filters: Item[];
   @Output('stateChangedEvent') stateChangedEvent: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   onToggle(type: string) {

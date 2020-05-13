@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {BlogRoutesResolver} from './routeResolvers/BlogRoutesResolver';
-import {reduce} from "rxjs/operators";
+import {map, reduce} from "rxjs/operators";
+import {IResponse} from "../model/http/response/IResponse";
 
 @Injectable({
   providedIn: 'root',
@@ -91,11 +92,9 @@ export class BlogRepository {
   }
 
   sortByState(model) {
-    return this.httpClient.get(this.routeResolver.sortBy(model))
+    return this.httpClient.get<IResponse>(this.routeResolver.sortBy(model))
       .pipe(
-        reduce((acc, res: any) => {
-          return (res as any).data;
-        }, {})
-      );
+        map((res: any) => res.data)
+      )
   }
 }

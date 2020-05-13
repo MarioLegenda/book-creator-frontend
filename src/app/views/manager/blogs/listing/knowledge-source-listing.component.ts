@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {Item} from "../../shared/listingFilter/Item";
 
 @Component({
   selector: 'cms-knowledge-sources-listing',
@@ -11,6 +12,11 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 })
 export class KnowledgeSourceListingComponent implements OnInit {
   items = [];
+  filters: Item[] = [
+    new Item('published', 'Published'),
+    new Item('draft', 'Draft'),
+    new Item('changed', 'Changed'),
+  ];
   paginationPossible = false;
   selectedStates: string[] = [];
 
@@ -33,7 +39,7 @@ export class KnowledgeSourceListingComponent implements OnInit {
       return this.getInitialItems();
     }
 
-    const model = HttpModel.sortBy(this.selectedStates);
+    const model = HttpModel.queryFiltersModel(this.selectedStates);
 
     this.blogRepository.sortByState(model).subscribe((blogs) => {
       this.items = blogs;

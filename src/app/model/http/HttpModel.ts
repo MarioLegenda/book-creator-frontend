@@ -707,9 +707,9 @@ export class HttpModel {
     }
   }
 
-  static sortBy(states: string[]) {
+  static queryFiltersModel(filters: string[]) {
     return {
-      states,
+      filters,
     }
   }
 }

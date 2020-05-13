@@ -4,7 +4,7 @@ import {HttpModel} from "../../../../model/http/HttpModel";
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {Router} from "@angular/router";
 import {Month} from "../../../../library/Month";
-import {titleResolver} from "../../sharedServices/titleResolver";
+import {titleResolver} from "../../shared/titleResolver";
 import {NewCodeProjectDialogComponent} from "../../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 import {RemoveCodeProjectModalComponent} from "../../modals/removeCodeProject/remove-code-project-modal.component";
 

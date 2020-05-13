@@ -72,6 +72,6 @@ export class BlogRoutesResolver {
   }
 
   sortBy(model): string {
-    return `${this.routes.sortByState}?state=${model.states.join(',')}`;
+    return `${this.routes.sortByState}?filters=${model.filters.join(',')}`;
   }
 }

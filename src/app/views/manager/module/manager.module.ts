@@ -18,7 +18,7 @@ import {MatInputModule} from "@angular/material/input";
 import {SearchComponent} from "../../shared/search/search.component";
 import {MatSelectModule} from "@angular/material/select";
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
-import {RemoveItemService} from "../sharedServices/RemoveItemService";
+import {RemoveItemService} from "../shared/RemoveItemService";
 import {ProfileComponent} from "../profile/profile.component";
 import {SettingsComponent} from "../settings/settings.component";
 import {PublishComponent} from "../publishBlog/publish.component";
@@ -28,7 +28,7 @@ import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-mo
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-published-modal.component";
 import {RemoveCodeProjectModalComponent} from "../modals/removeCodeProject/remove-code-project-modal.component";
-import {StateFiltersComponent} from "../blogs/stateFilters/stateFilters.component";
+import {ListingFilterComponent} from "../shared/listingFilter/listing-filter.component";
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import {StateFiltersComponent} from "../blogs/stateFilters/stateFilters.componen
     PublishBlogModalComponent,
     NotifyIfPublishedModal,
     RemoveCodeProjectModalComponent,
-    StateFiltersComponent,
+    ListingFilterComponent
   ],
   imports: [
     CommonModule,

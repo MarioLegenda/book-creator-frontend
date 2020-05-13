@@ -88,4 +88,11 @@ export class CodeProjectsRepository {
         map((res: IResponse) => res.data)
       );
   }
+
+  sortByEnvironment(model) {
+    return this.httpClient.get(this.projectRouteResolver.sortByEnvironment(model))
+      .pipe(
+        map((response: IResponse) => response.data)
+      );
+  }
 }

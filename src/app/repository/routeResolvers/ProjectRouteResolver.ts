@@ -22,6 +22,7 @@ export class ProjectRouteResolver {
     copyFile: `${this.bookApiUri}/api/v1/directory/copy-file`,
     cutDirectory: `${this.bookApiUri}/api/v1/directory/cut-directory`,
     copyDirectory: `${this.bookApiUri}/api/v1/directory/copy-directory`,
+    sortByEnvironment: `${this.bookApiUri}/api/v1/code-projects/sort`,
   };
 
   createCodeProject(): string {
@@ -78,5 +79,9 @@ export class ProjectRouteResolver {
 
   copyDirectory(): string {
     return this.routes.copyDirectory;
+  }
+
+  sortByEnvironment(model): string {
+    return `${this.routes.sortByEnvironment}?filters=${model.filters.join(',')}`;
   }
 }

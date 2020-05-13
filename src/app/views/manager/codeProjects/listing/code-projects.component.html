@@ -4,6 +4,11 @@
     class="col-xs-12 col-md-12 col-lg-12 cp-search-wrapper">
     <cms-search
       (onSearchTermEvent)="onSearchTerm($event)"></cms-search>
+
+    <cms-listing-filter
+      [filters]="filters"
+      (stateChangedEvent)="onFilterChange($event)">
+    </cms-listing-filter>
   </div>
 
   <div class="col-xs-12 col-md-12 col-lg-12 cp-list">

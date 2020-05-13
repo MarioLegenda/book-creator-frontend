@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CodeProjectsRepository} from "../../../../repository/CodeProjectsRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
+import {Item} from "../../shared/listingFilter/Item";
+import {EnvironmentEmulatorRepository} from "../../../../repository/EnvironmentEmulatorRepository";
 
 @Component({
   selector: 'cms-code-project-overview',
@@ -10,19 +12,37 @@ import {HttpModel} from "../../../../model/http/HttpModel";
   templateUrl: './code-projects.component.html',
 })
 export class CodeProjectsComponent implements OnInit {
+  filters: Item[] = [];
   items = [];
   paginationPossible = false;
+  selectedFilters: string[] = [];
 
   readonly size: number = 10;
   private currentPage: number = 1;
   private searchTerm: string = null;
 
   constructor(
-    private codeProjectsRepository: CodeProjectsRepository
+    private codeProjectsRepository: CodeProjectsRepository,
+    private environmentEmulatorRepository: EnvironmentEmulatorRepository,
   ) {}
 
   ngOnInit(): void {
+    this.getEnvironments();
     this.getInitialItems();
+  }
+
+  onFilterChange(states: string[]): void {
+    this.selectedFilters = states;
+
+    if (this.selectedFilters.length === 0) {
+      return this.getInitialItems();
+    }
+
+    const model = HttpModel.queryFiltersModel(this.selectedFilters);
+
+    this.codeProjectsRepository.sortByEnvironment(model).subscribe((projects) => {
+      this.items = projects;
+    });
   }
 
   onItemDeleted(item) {
@@ -103,6 +123,18 @@ export class CodeProjectsComponent implements OnInit {
       } else if (res.length >= this.size) {
         this.paginationPossible = true;
       }
+    });
+  }
+
+  private getEnvironments(): void {
+    this.environmentEmulatorRepository.getEnvironments().subscribe((data) => {
+      const items: Item[] = [];
+
+      for (const environment of data) {
+        items.push(new Item(environment.name, environment.text));
+      }
+
+      this.filters = items;
     });
   }
 }
