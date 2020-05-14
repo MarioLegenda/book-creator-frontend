@@ -12,6 +12,7 @@ export class ErrorCodes {
   static readonly MaxFileLimit = 14;
   static readonly UnAuthorized = 15;
   static readonly ResourceIncomplete = 16;
+  static readonly MaxCodeProjects = 21;
 
   static readonly InvalidAccountType = 7;
   static readonly InvalidAccountProvider = 8;

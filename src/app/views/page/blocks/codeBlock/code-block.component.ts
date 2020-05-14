@@ -21,6 +21,7 @@ import {BlogRepository} from "../../../../repository/BlogRepository";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {changeState} from "../../../../logic/utilFns";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {ErrorCodes} from "../../../../error/ErrorCodes";
 
 @Component({
   selector: 'cms-code-block',
@@ -238,6 +239,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         return this.newCodeProjectFlow();
       }
 
+      this.blockErrors = [];
+
       const codeProjectUuid: string = action.uuid;
       const blockUuid: string = this.component.blockUuid;
       const pageUuid: string = this.pageContext.getContext().page.uuid;
@@ -252,6 +255,16 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         this.importCodeProject(codeProjectUuid);
 
         changeState(this.appContext, this.store);
+      }, (e) => {
+        if (!e.error) {
+          return this.blockErrors.push('Something went wrong while importing your code project. Please, try again later.');
+        }
+
+        const response = e.error;
+
+        if (response.errorCode === ErrorCodes.MaxCodeProjects) {
+          return this.blockErrors.push('Maximum number of code projects imported. You can import only 3 different code projects in a blog but you can import the same code project as many times you want.');
+        }
       });
     });
   }

@@ -18,7 +18,7 @@ export class CodeProjectsComponent implements OnInit {
   paginationPossible = false;
   selectedFilters: string[] = [];
 
-  private readonly pagination: Pagination = new Pagination(10, 1);
+  pagination: Pagination = new Pagination(10, 1);
   private searchTerm: string = null;
 
   constructor(
