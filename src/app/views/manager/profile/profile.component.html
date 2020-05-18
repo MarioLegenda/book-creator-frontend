@@ -96,6 +96,28 @@
               <input
                 class="text-input col-xs-12 col-md-12 col-lg-12"
                 type="text"
+                [(ngModel)]="twitterProfile"
+                placeholder="Twitter profile"
+                name="github"/>
+
+              <p class="info col-xs-12 col-md-12 col-lg-12">* will be visible on your profile page</p>
+            </div>
+
+            <div class="input-wrapper profile-input-wrapper col-xs-12 col-md-12 col-lg-12">
+              <input
+                class="text-input col-xs-12 col-md-12 col-lg-12"
+                type="text"
+                [(ngModel)]="facebookProfile"
+                placeholder="Facebook profile"
+                name="github"/>
+
+              <p class="info col-xs-12 col-md-12 col-lg-12">* will be visible on your profile page</p>
+            </div>
+
+            <div class="input-wrapper profile-input-wrapper col-xs-12 col-md-12 col-lg-12">
+              <input
+                class="text-input col-xs-12 col-md-12 col-lg-12"
+                type="text"
                 [(ngModel)]="personalWebsite"
                 placeholder="Personal website"
                 name="personalWebsite"/>

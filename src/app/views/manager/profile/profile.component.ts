@@ -35,6 +35,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   name: string = '';
   lastName: string = '';
   githubProfile: string = '';
+  twitterProfile: string = '';
+  facebookProfile: string = '';
   personalWebsite: string = '';
   company: string = '';
   openSourceProject: string = '';
@@ -143,6 +145,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       company: account.profile.company,
       openSourceProject: account.profile.openSourceProject,
       personalDescription: account.profile.personalDescription,
+      twitterProfile: account.profile.twitterProfile,
+      facebookProfile: account.profile.facebookProfile,
     };
 
     if (this.name) {
@@ -158,6 +162,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     profile.company = this.company;
     profile.openSourceProject = this.openSourceProject;
     profile.personalDescription = this.personalDescription;
+    profile.twitterProfile = this.twitterProfile;
+    profile.facebookProfile = this.facebookProfile;
 
     const model = HttpModel.updateAccount(
       uuid,
@@ -205,6 +211,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.company = profile.company;
     this.openSourceProject = profile.openSourceProject;
     this.personalDescription = profile.personalDescription;
+    this.twitterProfile = profile.twitterProfile;
+    this.facebookProfile = profile.facebookProfile;
   }
 
   private loadDefaultAvatar() {
@@ -223,6 +231,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const company: string = this.company;
     const openSourceProject: string = this.openSourceProject;
     const personalDescription: string = this.personalDescription;
+    const twitterProfile: string = this.twitterProfile;
+    const facebookProfile: string = this.facebookProfile;
 
     if (name !== account.name) return true;
     if (lastName !== account.lastName) return true;
@@ -234,6 +244,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (company !== profile.company) return true;
     if (openSourceProject !== profile.openSourceProject) return true;
     if (personalDescription !== profile.personalDescription) return true;
+    if (twitterProfile !== profile.twitterProfile) return true;
+    if (facebookProfile !== profile.facebookProfile) return true;
 
     return false;
   }
