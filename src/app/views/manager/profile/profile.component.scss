@@ -124,6 +124,10 @@
     }
   }
 
+  .profile-input-wrapper {
+    margin: 0 0 40px 30px;
+  }
+
   .text-input {
     margin: 10px auto;
   }
@@ -158,5 +162,15 @@
     float: right;
 
     padding: 10px;
+  }
+}
+
+.disabled {
+  border: 1px solid $lightestGray !important;
+  color: $lightestGray !important;
+
+  &:hover {
+    background-color: white !important;
+    color: $lightestGray !important;
   }
 }

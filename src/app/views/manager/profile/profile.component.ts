@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   hasFile = false;
   httpSaveError: boolean = false;
 
+  personalDescription: string = '';
   name: string = '';
   lastName: string = '';
   githubProfile: string = '';
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   inFlight: boolean = false;
   firstSave: boolean = false;
+  disabled: boolean = false;
 
   private uploadedFile: File = null;
 
@@ -71,6 +73,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   saveFile() {
+    this.disabled = true;
     const formData: FormData = new FormData();
     formData.append('file', this.uploadedFile, this.uploadedFile.name);
 
@@ -96,8 +99,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         this.hasFile = false;
         this.uploadedFile = null;
+
+        this.disabled = false;
       })
-    ).subscribe((res: any) => {
+    ).subscribe(() => {
       this.uploadedFile = null;
       this.hasFile = false;
 
@@ -110,10 +115,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.avatarSrc = account.profile.avatar.path;
 
         this.store.dispatch(avatarChanged());
+
+        this.disabled = false;
       });
 
       this.accountProvider.loadAccount();
-
     });
   }
 
@@ -136,6 +142,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       personalWebsite: account.profile.personalWebsite,
       company: account.profile.company,
       openSourceProject: account.profile.openSourceProject,
+      personalDescription: account.profile.personalDescription,
     };
 
     if (this.name) {
@@ -150,6 +157,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     profile.personalWebsite = this.personalWebsite;
     profile.company = this.company;
     profile.openSourceProject = this.openSourceProject;
+    profile.personalDescription = this.personalDescription;
 
     const model = HttpModel.updateAccount(
       uuid,
@@ -196,6 +204,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.personalWebsite = profile.personalWebsite;
     this.company = profile.company;
     this.openSourceProject = profile.openSourceProject;
+    this.personalDescription = profile.personalDescription;
   }
 
   private loadDefaultAvatar() {
@@ -207,12 +216,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private isChanged(): boolean {
     const account = this.accountProvider.getAccount();
 
-    const name = this.name;
-    const lastName = this.lastName;
-    const githubProfile = this.githubProfile;
-    const personalWebsite = this.personalWebsite;
-    const company = this.company;
-    const openSourceProject = this.openSourceProject;
+    const name: string = this.name;
+    const lastName: string = this.lastName;
+    const githubProfile: string = this.githubProfile;
+    const personalWebsite: string = this.personalWebsite;
+    const company: string = this.company;
+    const openSourceProject: string = this.openSourceProject;
+    const personalDescription: string = this.personalDescription;
 
     if (name !== account.name) return true;
     if (lastName !== account.lastName) return true;
@@ -223,6 +233,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (personalWebsite !== profile.personalWebsite) return true;
     if (company !== profile.company) return true;
     if (openSourceProject !== profile.openSourceProject) return true;
+    if (personalDescription !== profile.personalDescription) return true;
 
     return false;
   }
