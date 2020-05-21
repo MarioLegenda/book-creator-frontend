@@ -28,10 +28,11 @@
             name="name"
             #name="ngModel"
             [(ngModel)]="model.name"
+            (ngModelChange)="onNameChanged()"
             required
             maxlength="100"
             placeholder="Code project name"/>
-          <mat-hint align="end">Max 100 characters</mat-hint>
+          <mat-hint align="end">{{nameLen}}/100 | Max 100 characters</mat-hint>
           <mat-error *ngIf="name.errors?.required">Name is required</mat-error>
         </mat-form-field>
       </div>
@@ -43,9 +44,10 @@
             class="input-textarea form-control col-xs-12 col-md-12 col-lg-12"
             name="description"
             [(ngModel)]="model.description"
+            (ngModelChange)="onDescriptionChanged()"
             maxlength="200"
             placeholder="Code project description"></textarea>
-          <mat-hint align="end">Max 200 characters</mat-hint>
+          <mat-hint align="end">{{descriptionLen}}/200 | Max 200 characters</mat-hint>
         </mat-form-field>
       </div>
 

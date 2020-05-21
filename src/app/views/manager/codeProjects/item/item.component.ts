@@ -20,12 +20,11 @@ export class ItemComponent implements OnInit {
   @Input('item') item;
   @Input('wrapperClasses') wrapperClasses: string;
   @Input('includeEdit') includeEdit: boolean = true;
+  @Input('includeDelete') includeDelete: boolean = true;
 
   @Output('itemDeleted') itemDeleted = new EventEmitter();
 
-  componentState = {
-    realTitle: '',
-  };
+  realTitle: string = '';
 
   constructor(
     private router: Router,
@@ -109,6 +108,6 @@ export class ItemComponent implements OnInit {
   }
 
   private resolveName(): void {
-    this.componentState.realTitle = titleResolver(this.item.name, 37);
+    this.realTitle = titleResolver(this.item.name, 37);
   }
 }

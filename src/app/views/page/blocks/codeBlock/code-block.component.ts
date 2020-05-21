@@ -349,6 +349,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
           title: 'New code project',
           info: 'This code project will automatically be imported into this knowledge source',
           buttonText: 'Create',
+          doHttpAction: true,
         },
       });
 
@@ -367,6 +368,8 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
           blockUuid,
         )).subscribe(() => {
           this.importCodeProject(codeProjectUuid);
+
+          changeState(this.appContext, this.store);
         });
       });
     }, 500);

@@ -52,10 +52,10 @@ export class PublishIndicatorComponent implements OnInit, OnChanges {
     this.router.navigate(['/cms/management', 'blog', 'publish', this.appContext.knowledgeSource.shortId]);
   }
 
-  onViewPublished($event) {
+  onPreview($event) {
     $event.stopPropagation();
 
-    window.location.href = `${environment.composeStaticWebUrl()}/blog/${this.appContext.knowledgeSource.slug}/${this.appContext.knowledgeSource.shortId}`;
+    window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.appContext.knowledgeSource.slug}/${this.appContext.knowledgeSource.shortId}`;
   }
 
   private subscribeToHttpActions(observable: Observable<any>) {

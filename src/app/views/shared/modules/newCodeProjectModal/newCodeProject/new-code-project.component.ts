@@ -16,6 +16,8 @@ import {ErrorCodes} from "../../../../../error/ErrorCodes";
 export class NewCodeProjectDialogComponent implements OnInit {
   environments = null;
   selected = '';
+  descriptionLen: number;
+  nameLen: number;
 
   httpFail: string = null;
   inFlight: boolean = false;
@@ -28,6 +30,9 @@ export class NewCodeProjectDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.descriptionLen = this.model.description.length;
+    this.nameLen = this.model.name.length;
+
     this.environmentEmulatorRepository.getEnvironments().subscribe((data) => {
       if (this.model.environment) {
         this.selected = this.model.environment.name;
@@ -35,6 +40,14 @@ export class NewCodeProjectDialogComponent implements OnInit {
 
       this.environments = data as any;
     });
+  }
+
+  onDescriptionChanged(): void {
+    this.descriptionLen = this.model.description.length;
+  }
+
+  onNameChanged(): void {
+    this.nameLen = this.model.name.length;
   }
 
   close(): void {

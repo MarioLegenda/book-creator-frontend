@@ -2,17 +2,20 @@
   class="col-xs-12 col-md-12 col-lg-12 shared-item item">
 
   <i
+    *ngIf="includeDelete"
     (click)="onRemove($event)"
     class="remove-icon fas fa-trash-alt"></i>
 
   <p
-    class="title">{{componentState.realTitle}}
+    class="title">{{realTitle}}
   </p>
 
   <p
     class="environment">
     {{formatEnvironment()}}
   </p>
+
+  <p class="cp-description">{{item.description}}</p>
 
   <div class="createdAt">
     {{formattedDate()}}

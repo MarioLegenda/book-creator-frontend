@@ -29,8 +29,8 @@ export class RemoveCodeProjectModalComponent {
     const model = HttpModel.removeCodeProject(this.model.uuid);
 
     this.codeProjectRepository.removeCodeProject(model).subscribe(() => {
-      this.dialogRef.close(true);
       this.inFlight = false;
+      this.dialogRef.close(true);
     }, () => {
       this.inFlight = false;
       this.removeFailed = true;
