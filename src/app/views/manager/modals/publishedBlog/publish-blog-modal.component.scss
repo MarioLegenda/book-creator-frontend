@@ -1,19 +1,26 @@
 @import '../../../../../styles/variables';
 
 .content {
+  text-align: center;
   margin-bottom: 40px;
 }
 
 .dialog-actions {
-  button {
-    float: left;
+  .button {
+    float: right;
     border-radius: 2px;
 
     background-color: white;
-    border: 1px solid $lightGray;
+    border: 1px solid $mainAppColor;
+
+    &:hover {
+      color: white;
+      background-color: $mainAppColor;
+      border: 1px solid $mainAppColor;
+    }
   }
 
-  button:first-child {
-    margin-right: 10px;
+  .button:first-child {
+    margin-left: 10px;
   }
 }

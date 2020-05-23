@@ -5,23 +5,19 @@
   float: none;
 
   .item {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
 
-    h1 {
+    & > h1 {
       margin: 0;
       font-size: 1em;
+
+      border-bottom: 1px solid $lightGray;
+
+      padding-bottom: 5px;
     }
 
-    .content-wrapper {
-      margin-top: 20px;
-    }
-
-    .border {
-      height: 4px;
-      background-color: $mainAppColor;
-      border-radius: 5px;
-
-      margin: 5px 0 0 0;
+    .item-content {
+      font-weight: bolder;
     }
   }
 
@@ -114,7 +110,7 @@
     }
 
     .info {
-      font-size: 1em;
+      font-size: 0.8em;
       color: $lightGray;
       font-style: italic;
       display: block;
