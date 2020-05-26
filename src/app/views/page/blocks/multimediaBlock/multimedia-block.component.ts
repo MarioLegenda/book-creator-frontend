@@ -256,11 +256,7 @@ export class MultimediaBlockComponent implements OnInit {
       this.component.blockUuid,
       null,
       null,
-      {
-        original: data.original,
-        id: data.id,
-        real: `https://source.unsplash.com/${data.id}/1600x900`
-      }
+      data.original,
     );
 
     this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {

@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IBlogSource} from "../../../../logic/PageComponent/context/IBlogSource";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {BlogRepository} from "../../../../repository/BlogRepository";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
@@ -21,11 +20,9 @@ export class CoverComponent implements OnInit {
     private store: Store<any>,
   ) {}
 
-  componentState = {
-    cover: '',
-    realUrl: '',
-    hasCover: false,
-  };
+  cover: any = '';
+  realUrl: string = '';
+  hasCover: boolean = false;
 
   ngOnInit() {
     this.initCover();
@@ -33,40 +30,43 @@ export class CoverComponent implements OnInit {
 
   onChange($event) {
     if (!$event) {
-      this.componentState.hasCover = false;
+      this.hasCover = false;
+      this.cover = '';
+      this.realUrl = '';
     }
 
     if ($event) {
-      this.componentState.realUrl = `https://source.unsplash.com/${this.getId($event)}/1600x900`;
-      this.componentState.hasCover = true;
+      this.hasCover = true;
     }
 
     const sourceUuid = this.appContext.knowledgeSource.uuid;
+
+    console.log(this.cover);
 
     this.blogRepository.updateBlog(HttpModel.updateBlog(
       sourceUuid,
       null,
       null,
-      this.componentState.cover,
-    )).subscribe(() => {
+      this.cover,
+    )).subscribe((blog) => {
+      const cover = blog.cover;
+
+      if (!cover) return;
+
+      this.realUrl = cover.default;
+
       changeState(this.appContext, this.store);
     });
-  }
-
-  private getId(unsplashUrl: string): string {
-    const splitted = unsplashUrl.split('/');
-
-    return splitted[4];
   }
 
   private initCover() {
     if (!this.appContext.knowledgeSource.cover) return;
 
     const original = this.appContext.knowledgeSource.cover.original;
-    const real = this.appContext.knowledgeSource.cover.real;
+    const real = this.appContext.knowledgeSource.cover.default;
 
-    this.componentState.cover = original;
-    this.componentState.realUrl = real;
-    this.componentState.hasCover = true;
+    this.cover = original;
+    this.realUrl = real;
+    this.hasCover = true;
   }
 }

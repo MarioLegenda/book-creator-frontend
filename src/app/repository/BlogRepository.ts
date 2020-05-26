@@ -27,7 +27,10 @@ export class BlogRepository {
   }
 
   updateBlog(model: any) {
-    return this.httpClient.post(this.routeResolver.updateBlog(), model);
+    return this.httpClient.post<IResponse>(this.routeResolver.updateBlog(), model)
+      .pipe(
+        map((res: any) => res.data)
+      );
   }
 
   linkPageToBlog(model: any) {

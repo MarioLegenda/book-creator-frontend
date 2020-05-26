@@ -11,7 +11,7 @@
       margin: 0;
       font-size: 1em;
 
-      border-bottom: 1px solid $lightGray;
+      border-bottom: 1px solid $almostWhiteGray;
 
       padding-bottom: 5px;
     }
@@ -129,14 +129,14 @@
       background-color: white;
       color: $appBlack;
       padding: 5px;
-      border-radius: 2px;
-      border: 1px solid $almostWhiteGray;
+      border: 4px solid $almostWhiteGray;
+      border-radius: 5px;
 
       margin: 0 5px 5px 0;
 
       &:hover {
         cursor: pointer;
-        border: 1px solid $appBlack;
+        border: 4px solid $mainAppColor;
 
         .animated-icon {
           font-size: 1.5em;
@@ -164,7 +164,7 @@
     }
 
     .selected-hashtag {
-      border: 1px solid black;
+      border: 4px solid $mainAppColor;
     }
 
     .search {
