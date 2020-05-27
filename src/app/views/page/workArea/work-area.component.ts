@@ -185,6 +185,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
         component.fileInfo,
         component.unsplash,
         component.position,
+        component.video,
       ));
     } else if (ComponentType.isMainHeaderBlock(component)) {
       this.components.push(new MainHeaderBlock(

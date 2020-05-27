@@ -7,6 +7,7 @@ export class MultimediaBlockModel {
     public fileInfo: any,
     public unsplash: string,
     public position: number,
+    public video: string,
     public blockType: string = ComponentType.MULTIMEDIA_BLOCK_TYPE,
   ) {}
 }

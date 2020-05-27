@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {Store} from "@ngrx/store";
-import {Router} from "@angular/router";
-import {AppContextInitializer} from "../../../logic/PageComponent/context/AppContextInitializer";
+import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
+import {httpRemoveBlock} from "../../../store/page/httpActions";
+import {MatDialog} from "@angular/material/dialog";
+import {MainHelpModalComponent} from "../modals/mainHelp/main-help-modal.component";
 
 @Component({
   selector: 'cms-menu',
@@ -9,6 +10,8 @@ import {AppContextInitializer} from "../../../logic/PageComponent/context/AppCon
   templateUrl: './menu.component.html',
 })
 export class MenuComponent {
+  constructor(private dialog: MatDialog) {}
+
   @Output('blockAddedEvent') blockAddedEvent: EventEmitter<any> = new EventEmitter();
 
   icons = {
@@ -21,6 +24,7 @@ export class MenuComponent {
     'dynamicForms': 'fab fa-wpforms',
     'header1': 'fas fa-heading',
     'quote': 'fas fa-quote-right',
+    'help': 'fas fa-question-circle',
   };
 
   menuExpanded = false;
@@ -47,6 +51,15 @@ export class MenuComponent {
 
   appendQuoteBlock() {
     this.blockAddedEvent.emit('quote-block');
+  }
+
+  viewHelp() {
+    this.dialog.open(MainHelpModalComponent, {
+      width: '70%',
+      data: {
+        path: location.pathname,
+      },
+    });
   }
 
   expandMenu() {

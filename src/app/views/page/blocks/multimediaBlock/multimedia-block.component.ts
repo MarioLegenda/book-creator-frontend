@@ -12,6 +12,7 @@ import {EmbedUnsplashDialogComponent} from "../../modals/embedUnsplashImage/embe
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {catchError, reduce} from "rxjs/operators";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -42,6 +43,7 @@ export class MultimediaBlockComponent implements OnInit {
     private store: Store<any>,
     private fileUploadRepository: FileUploadRepository,
     private deviceDetector: DeviceDetectorService,
+    private domSanitizer: DomSanitizer,
   ) {}
 
   ngOnInit() {
@@ -112,6 +114,20 @@ export class MultimediaBlockComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((youtubeId: string) => {
+      const model = HttpModel.updateMultimediaBlock(
+        this.appContext.page.uuid,
+        this.component.blockUuid,
+        null,
+        youtubeId,
+        null,
+      );
+
+      this.pageRepository.updateMultimediaBlock(model).subscribe((res) => {
+        this.unsplash = null;
+        this.contentUploaded = false;
+        this.video = this.domSanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${res.video}`);
+        this.contentUploaded = true;
+      });
     });
   }
 
@@ -130,6 +146,9 @@ export class MultimediaBlockComponent implements OnInit {
     } else if (this.component.unsplash) {
       this.unsplash = this.component.unsplash;
 
+      this.contentUploaded = true;
+    } else if (this.component.video) {
+      this.video = this.domSanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.component.video}`);
       this.contentUploaded = true;
     }
   }
@@ -263,6 +282,7 @@ export class MultimediaBlockComponent implements OnInit {
       this.unsplash = res.unsplash;
       this.contentUploaded = true;
       this.fileInfo = null;
+      this.video = null;
     });
   }
 

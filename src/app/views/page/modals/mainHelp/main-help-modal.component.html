@@ -1,0 +1,245 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <p>Help</p>
+  </div>
+
+  <div matDialogContent class="content">
+    <p class="notice">Please, be advised that every block has its own help section to
+      help you work with it. If you don't understand something or have some trouble
+      using it, use that feature.</p>
+
+    <nav class="nav col-xs-12 col-md-12 col-lg-12">
+      <div class="step-one col-xs-12 col-md-12 col-lg-12">
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('overview')">OVERVIEW</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('tdc')">TITLE, DESCRIPTION AND COVER IMAGE</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('mainHeader')">MAIN HEADER BLOCK</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('subheader')">SUBHEADER BLOCK</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('paragraph')">TEXT BLOCK</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('multimediaBlock')">MULTIMEDIA BLOCK</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('uploadLocalImage')">Upload a local image</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('embedUnsplash')">Embed an unsplash image</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('embedYoutube')">Embed a youtube video</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('codeBlock')">CODE BLOCK</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('selectEnvironment')">Select an environment</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('embedGithubGist')">Embed a github gist</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('readonly')">Readonly</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('runCode')">Run your code</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('runCodeProject')">Importing and running a code project</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('quoteBlock')">QUOTE BLOCK</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('rearrangingBlocks')">REARRANGING BLOCKS</a>
+        </div>
+
+      </div>
+    </nav>
+
+    <div class="help-content col-xs-12 col-md-12 col-lg-12">
+      <h1 #overview class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>OVERVIEW</h1>
+
+      <p class="paragraph">
+        This CMS is imagined as a series of blocks that make a blog. Every blog post has
+        a header, subheader and some paragraphs. So does this CMS. There are 6 types of blocks:
+        <strong>header, subheader, paragraph, multimedia block, code block and a quote block.</strong>
+      </p>
+
+      <p class="paragraph">
+        Every block appears in the final blog post differently. You can see that right away by previewing
+        the blog in the upper right corner of this CMS. You can also see how they will look in the help
+        section of each block. You can also rearrange the blocks however you like.
+      </p>
+
+      <p class="paragraph">
+        Be advised that every blog must have a <em>title</em>. Otherwise, it cannot be published. Although,
+        short description and a cover image are optional, it is a good idea to include them since they make the blog post
+        more descriptive for the users. Also, blog posts without a cover image will not be shown on the landing page so
+        keep that in mind when writing your blog.
+      </p>
+
+      <p class="paragraph">
+        Have fun with it and I hope you like it.
+      </p>
+
+      <h1 #tdc class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>TITLE, DESCRIPTION AND COVER IMAGE</h1>
+
+      <p class="paragraph">A title is, as the name suggests, the title of the blog. It is required in order
+        to publish a blog. A short description gives users a glimps into what the blog post is about and
+        a cover image makes it stand out of all the other blogs.
+      </p>
+
+      <p class="paragraph">For now, only unsplash images are allowed as cover images. Just copy/paste the shareable
+        link into the cover text field and the image will appear automatically.
+      </p>
+
+      <img class="animation" src="/static/how_to_cover.gif" />
+
+      <p class="paragraph"><strong>Be advised that only blogs with cover images will be displayed on the landing page.</strong>
+        You can view how the blog looks and does your cover image fit into your blog in the preview.
+      </p>
+
+      <h1 #mainHeader class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>MAIN HEADER BLOCK</h1>
+
+      <p class="paragraph">Main header blocks are pretty straightforward. They signify a start to a section of your blog. To add a main header
+      block, simply click on the menu on the left and a new main header block will be created. To delete it, hover over the header and
+      click on the <em>garbage</em> icon. All the text is autosaved.</p>
+
+      <img class="animation" src="/static/how_to_main_header.gif" />
+
+      <h1 #subheader class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>SUBHEADER BLOCK</h1>
+
+      <p class="paragraph">Subheaders are the same as main header blocks. They are useful when you want to
+      create a subsection of the section that your main header point to. All the text is autosaved.</p>
+
+      <img class="animation" src="/static/how_to_subheader.gif" />
+
+      <h1 #paragraph class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>TEXT BLOCK</h1>
+
+      <p class="paragraph">You will likely use the text block most often. As the name suggests, you use it to
+      put the actual text of your blog. </p>
+
+      <p class="paragraph">If you wish to change the appearance of your text, highlight the text and a floating menu will appear.
+      With it, you can make some parts of the text bold, italic, make a list and other things.</p>
+
+      <img class="animation" src="/static/how_to_text_manipulation.gif" />
+
+      <p class="paragraph">If a paragraph block becomes too big, you can make the text invisible so you can work more easily on
+      the other parts of the blog.</p>
+
+      <img class="animation" src="/static/how_to_deexpand_text.gif" />
+
+      <p class="paragraph">If your blog has a lot of text, images or code blocks and you haven't worked on it for a while, you can assign
+      an internal name and a comment to a paragraph block. That way, when you return to work on it, you can easily see what was your intention.</p>
+
+      <img class="animation" src="/static/how_to_add_comment.gif" />
+
+      <h1 #multimediaBlock class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>MULTIMEDIA BLOCK</h1>
+
+      <p class="paragraph">Multimedia block is used to upload images from your own computer and from <a href="https://unsplash.com/" target="_blank">Unsplash</a>
+        You can also embed Youtube videos.
+      </p>
+
+      <h2 #uploadLocalImage class="subheader col-xs-12 col-md-12 col-lg-12">Upload a local image</h2>
+
+      <img class="animation" src="/static/how_to_upload_an_image.gif" />
+
+      <h2 #embedUnsplash class="subheader col-xs-12 col-md-12 col-lg-12">Embed an unsplash image</h2>
+
+      <img class="animation" src="/static/how_to_embed_unsplash.gif" />
+
+      <h2 #embedYoutube class="subheader col-xs-12 col-md-12 col-lg-12">Embed a youtube video</h2>
+
+      <img class="animation" src="/static/how_to_embed_youtube.gif" />
+
+      <h1 #codeBlock class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>CODE BLOCK</h1>
+
+      <p class="paragraph">A code block allows you to create the code that your readers can execute. Every code block must have either an environment (Javascript, Go or some other) or
+      an imported code project. An environment allows readers to execute a single piece of runnable code while a code project is a project that consist of many files that the user
+        can then import. If you which to import a code project, you have to create it first in the code projects <a routerLink="/cms/management/code-projects/list">dashboard</a>.
+      Lets know explore more how can we create a new environment.</p>
+
+      <h2 #selectEnvironment class="subheader col-xs-12 col-md-12 col-lg-12">Select an environment</h2>
+
+      <img class="animation" src="/static/how_to_select_environment.gif" />
+
+      <h2 #embedGithubGist class="subheader col-xs-12 col-md-12 col-lg-12">Embed a github gist</h2>
+
+      <img class="animation" src="/static/how_to_embed_github_gist.gif" />
+
+      <h2 #readonly class="subheader col-xs-12 col-md-12 col-lg-12">Readonly</h2>
+
+      <p class="paragraph">If you mark a code block as <strong>readonly</strong>, the reader would not be able to change
+      the code, just run it. </p>
+
+      <img class="animation" src="/static/how_to_readonly.gif" />
+
+      <h2 #runCode class="subheader col-xs-12 col-md-12 col-lg-12">Run your code</h2>
+
+      <img class="animation" src="/static/how_to_run_your_code.gif" />
+
+      <h2 #runCodeProject class="subheader col-xs-12 col-md-12 col-lg-12">Import and run a code project</h2>
+
+      <img class="animation" src="/static/how_to_run_code_project.gif" />
+
+      <h2 #quoteBlock class="subheader col-xs-12 col-md-12 col-lg-12">QUOTE BLOCKS</h2>
+
+      <p class="paragraph">Quote blocks make your text be highlighted. With them, you can let your readers know
+      that something you want something important to note</p>
+
+      <img class="animation" src="/static/how_to_quote_block.gif" />
+
+      <h2 #rearrangingBlocks class="subheader col-xs-12 col-md-12 col-lg-12">REARRANGING BLOCKS</h2>
+
+      <p class="paragraph">If you want, any block can be rearranged.</p>
+
+      <img class="animation" src="/static/how_to_rearrange_blocks.gif" />
+    </div>
+  </div>
+</div>

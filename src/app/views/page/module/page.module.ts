@@ -46,6 +46,7 @@ import {CoverComponent} from "../blog/cover/cover.component";
 import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
 import {PublishIndicatorComponent} from "../blog/publishIndicator/publish-indicator.component";
 import {DeviceDetectorModule} from "ngx-device-detector";
+import {MainHelpModalComponent} from "../modals/mainHelp/main-help-modal.component";
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import {DeviceDetectorModule} from "ngx-device-detector";
     CoverComponent,
     QuoteBlockComponent,
     PublishIndicatorComponent,
+    MainHelpModalComponent,
   ],
   imports: [
     MatCardModule,
@@ -113,6 +115,7 @@ import {DeviceDetectorModule} from "ngx-device-detector";
     EmbedUnsplashDialogComponent,
     AddInternalNameModalComponent,
     AddCommentModalComponent,
+    MainHelpModalComponent,
   ]
 })
 export class PageModule { }
