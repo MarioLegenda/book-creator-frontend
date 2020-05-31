@@ -72,6 +72,14 @@
     }
   }
 
+  .left {
+    float: left;
+
+    .icon {
+      float: left;
+    }
+  }
+
   .block-name {
     color: $lightGray;
     margin-top: 5px;

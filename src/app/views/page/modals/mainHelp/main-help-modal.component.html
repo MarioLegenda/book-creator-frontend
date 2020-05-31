@@ -202,7 +202,7 @@
 
       <p class="paragraph">A code block allows you to create the code that your readers can execute. Every code block must have either an environment (Javascript, Go or some other) or
       an imported code project. An environment allows readers to execute a single piece of runnable code while a code project is a project that consist of many files that the user
-        can then import. If you which to import a code project, you have to create it first in the code projects <a routerLink="/cms/management/code-projects/list">dashboard</a>.
+        can then import. If you which to import a code project, you have to create it first in the code projects <a (click)="onDashboard()">dashboard</a>.
       Lets know explore more how can we create a new environment.</p>
 
       <h2 #selectEnvironment class="subheader col-xs-12 col-md-12 col-lg-12">Select an environment</h2>

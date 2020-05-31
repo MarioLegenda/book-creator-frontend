@@ -8,6 +8,7 @@ import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateMainHeader} from "../../../../store/page/httpActions";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {MainHeaderHelpModalComponent} from "../../modals/mainHeaderHelp/main-header-help-modal.component";
 
 @Component({
   selector: 'cms-main-header-block',
@@ -53,6 +54,13 @@ export class MainHeaderBlockComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.typeAheadObservable.unsubscribe();
+  }
+
+  onHelp() {
+    this.dialog.open(MainHeaderHelpModalComponent, {
+      width: '70%',
+      data: {},
+    });
   }
 
   componentTouched() {

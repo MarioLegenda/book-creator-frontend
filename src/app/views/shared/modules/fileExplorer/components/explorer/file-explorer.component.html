@@ -4,17 +4,16 @@
     class="editor-actions-wrapper">
     <div class="editor-actions">
       <div
-        (click)="selectAction('project')"
-        class="action"
-        [ngClass]="{'selected-action': selectedAction === 'project'}">
-
-        <i class="select-project fas fa-clone"></i>
-      </div>
-
-      <div
         class="action github-disabled"
         matTooltip="Github integration - coming soon">
         <i class="fab fa-github"></i>
+      </div>
+
+      <div
+        (click)="onHelp()"
+        class="action">
+
+        <i class="fas fa-question-circle"></i>
       </div>
     </div>
   </div>
@@ -24,7 +23,7 @@
       <h1>Rebel Explorer</h1>
     </div>
 
-    <div class="search">
+<!--    <div class="search">
       <i *ngIf="!searchFocused" class="fas fa-search"></i>
       <input
         [(ngModel)]="searchTerm"
@@ -32,13 +31,14 @@
         (focus)="onSearchFocus()"
         (blur)="onSearchBlur()"
         type="text"/>
-    </div>
+    </div>-->
 
     <div class="project-name">
       <h1>{{project.name}}</h1>
     </div>
 
     <cms-structure
+      [searchEmitter]="searchSubject"
       [project]="project">
     </cms-structure>
   </div>

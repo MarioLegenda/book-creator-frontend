@@ -28,14 +28,6 @@ const routes: Routes = [
         path: 'user-section/profile',
         component: ProfileComponent,
       },
-      {
-        path: 'blog/publish/:shortId',
-        component: PublishComponent,
-      },
-      {
-        path: 'user-section/settings',
-        component: SettingsComponent,
-      },
     ],
   },
 ];

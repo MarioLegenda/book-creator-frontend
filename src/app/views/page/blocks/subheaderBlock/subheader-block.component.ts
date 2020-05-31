@@ -8,6 +8,7 @@ import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateSubheader} from "../../../../store/page/httpActions";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {SubheaderHelpModalComponent} from "../../modals/subheaderHelp/subheader-help-modal.component";
 
 @Component({
   selector: 'cms-subheader-block',
@@ -53,6 +54,13 @@ export class SubheaderBlockComponent {
 
   ngOnDestroy() {
     this.typeAheadObservable.unsubscribe();
+  }
+
+  onHelp() {
+    this.dialog.open(SubheaderHelpModalComponent, {
+      width: '70%',
+      data: {},
+    });
   }
 
   componentTouched() {

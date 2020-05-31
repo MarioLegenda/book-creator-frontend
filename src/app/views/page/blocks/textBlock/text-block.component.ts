@@ -12,6 +12,7 @@ import {AddCommentModalComponent} from "../../modals/addComment/add-comment-moda
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {TextBlockHelpModalComponent} from "../../modals/textBlockHelp/text-block-help-modal.component";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -67,6 +68,13 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.internalName = (this.component.internalName === '') ? 'click to view text' : this.component.internalName;
     this.comment = this.component.comment;
+  }
+
+  onHelp() {
+    this.dialog.open(TextBlockHelpModalComponent, {
+      width: '70%',
+      data: {},
+    });
   }
 
   componentTouched() {

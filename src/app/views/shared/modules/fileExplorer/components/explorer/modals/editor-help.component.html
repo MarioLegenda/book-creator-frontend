@@ -1,0 +1,59 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <p>Code editor help</p>
+  </div>
+
+  <div matDialogContent class="content">
+    <nav class="nav col-xs-12 col-md-12 col-lg-12">
+      <div class="step-one col-xs-12 col-md-12 col-lg-12">
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('overview')">OVERVIEW</a>
+        </div>
+
+        <div class="line col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('directoriesAndFiles')">DIRECTORIES AND FILES</a>
+        </div>
+
+      </div>
+    </nav>
+
+    <div class="help-content col-xs-12 col-md-12 col-lg-12">
+      <h1 #overview class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>OVERVIEW</h1>
+
+      <p class="paragraph">
+        Welcome to the Rebel Source code editor. In any regard, this code editor is the same as any desktop code
+        editor (IDE) that you are using although, it does not have all the advanced features that they have. But the
+        basics are there and I hope you find it useful.
+      </p>
+
+      <h1 #directoriesAndFiles class="main-header col-xs-12 col-md-12 col-lg-12"><i class="fas fa-circle"></i>DIRECTORIES AND FILES</h1>
+
+      <p class="paragraph">
+        Creating, removing, copying and deleting directories and files are the basic operations of a code editor and this editor
+        is not different than any other. How this code editor works, you can see it this video.
+      </p>
+
+      <p class="paragraph">The help video will also explain how to run the code. Mind you that the default timeout
+      when running code is 10 seconds for interpreted languages like Javascript or Ruby and 15 seconds for compiled languages
+      like Go or Rust.</p>
+
+      <p class="paragraph">
+        Hope you find it useful.
+      </p>
+
+      <video controls width="100%">
+
+        <source src="/static/how_to_use_code_editor.mp4"
+                type="video/mp4">
+
+        Sorry, your browser doesn't support embedded videos.
+      </video>
+    </div>
+  </div>
+</div>

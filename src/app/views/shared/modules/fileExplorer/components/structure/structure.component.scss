@@ -5,7 +5,8 @@
   float: right;
   position: relative;
 
-  overflow: hidden;
+  white-space: nowrap;
+  overflow-x: hidden;
 
   padding-bottom: 50px;
 }

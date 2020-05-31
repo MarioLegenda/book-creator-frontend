@@ -22,6 +22,7 @@ import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {changeState} from "../../../../logic/utilFns";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ErrorCodes} from "../../../../error/ErrorCodes";
+import {CodeBlockHelpModalComponent} from "../../modals/codeBlockHelp/code-block-help-modal.component";
 
 @Component({
   selector: 'cms-code-block',
@@ -98,6 +99,13 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     if (this.onDroppedObservable) {
       this.onDroppedObservable.unsubscribe();
     }
+  }
+
+  onHelp() {
+    this.dialog.open(CodeBlockHelpModalComponent, {
+      width: '70%',
+      data: {},
+    });
   }
 
   componentTouched() {

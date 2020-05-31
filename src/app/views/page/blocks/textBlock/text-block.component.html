@@ -71,6 +71,15 @@
           <i (click)="onCompressBlock()" class="icon fas fa-compress"></i>
         </div>
       </div>
+
+      <div
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
+        class="block-action left col-lg-1 col-md-1 col-xs-1">
+
+        <div class="icon-group">
+          <i (click)="onHelp()" class="icon fas fa-question-circle"></i>
+        </div>
+      </div>
     </div>
   </div>
 

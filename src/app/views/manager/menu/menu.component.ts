@@ -77,7 +77,6 @@ export class OverviewMenuComponent {
       'blogs': new RegExp("blogs/list"),
       'code-projects': new RegExp("code-projects/list"),
       'profile': new RegExp("user-section/profile"),
-      'settings': new RegExp("user-section/settings"),
     };
 
     const keys = Object.keys(re);

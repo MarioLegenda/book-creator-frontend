@@ -27,15 +27,6 @@
       </a>
     </div>
 
-    <div class="menu-entry">
-      <a
-        class="entry"
-        routerLink="./user-section/settings"
-        [ngClass]="{'selected': type === 'settings'}">
-        Settings
-      </a>
-    </div>
-
     <div
       *ngIf="type === 'blogs' || type === 'code-projects'"
       (click)="addKsDialog()"

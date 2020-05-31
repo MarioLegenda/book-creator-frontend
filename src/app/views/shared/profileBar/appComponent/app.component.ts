@@ -111,12 +111,6 @@ export class AppComponent {
     this.router.navigate(['/cms/management/user-section/profile']);
   }
 
-  onSettings() {
-    this.mainMenuRef.nativeElement.style = 'display: none';
-
-    this.router.navigate(['/cms/management/user-section/settings']);
-  }
-
   onNewBlog() {
     if (this.isBlogPage) {
       this.mainMenuRef.nativeElement.style = 'display: none';

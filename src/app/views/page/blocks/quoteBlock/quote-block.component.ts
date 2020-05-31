@@ -8,6 +8,7 @@ import {httpRemoveBlock, httpUpdateQuoteBlock} from "../../../../store/page/http
 import {QuoteBlock} from "../../../../model/app/QuoteBlock";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {QuoteHelpModalComponent} from "../../modals/quoteHelp/quote-help-modal.component";
 
 @Component({
   selector: 'cms-quote-block',
@@ -53,6 +54,13 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.typeAheadObservable.unsubscribe();
+  }
+
+  onHelp() {
+    this.dialog.open(QuoteHelpModalComponent, {
+      width: '70%',
+      data: {},
+    });
   }
 
   componentTouched() {

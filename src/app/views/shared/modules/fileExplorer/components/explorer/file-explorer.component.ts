@@ -4,6 +4,9 @@ import {debounceTime} from "rxjs/operators";
 import {HttpModel} from "../../../../../../model/http/HttpModel";
 import {FileSystemRepository} from "../../../../../../repository/FileSystemRepository";
 import {ICodeProject} from "../../../../../codeEditor/models/ICodeProject";
+import {MatDialog} from "@angular/material/dialog";
+import {EditorHelpModalComponent} from "./modals/editor-help.component";
+import {ISearchEvent} from "../../models/ISearchEvent";
 
 @Component({
   selector: 'cms-file-explorer',
@@ -24,23 +27,30 @@ export class FileExplorerComponent implements OnInit {
   @Input('enableEditFile') enableEditFile: boolean = true;
   @Input('enableEditDirectory') enableEditDirectory: boolean = true;
 
-  searchSubject = new ReplaySubject();
+  searchSubject = new ReplaySubject<ISearchEvent>();
 
   @ViewChild('wrapperRef', {static: true}) wrapperRef: ElementRef;
   @ViewChild('actionWrapperRef', {static: true}) actionWrapperRef: ElementRef;
 
-  selectedAction: string = 'project';
   searchTerm: string = '';
 
   private typeAheadSource = new Subject<string>();
   private typeAheadObservable: Subscription = null;
 
   constructor(
-    private fileSystemRepository: FileSystemRepository
+    private fileSystemRepository: FileSystemRepository,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
     this.subscribeTypeahead();
+  }
+
+  onHelp(): void {
+    this.dialog.open(EditorHelpModalComponent, {
+      width: '70%',
+      data: {},
+    });
   }
 
   onSearchFocus() {
@@ -55,10 +65,6 @@ export class FileExplorerComponent implements OnInit {
 
   onSearchTerm() {
     this.typeAheadSource.next(this.searchTerm);
-  }
-
-  selectAction(action) {
-    this.selectedAction = action;
   }
 
   private subscribeTypeahead() {

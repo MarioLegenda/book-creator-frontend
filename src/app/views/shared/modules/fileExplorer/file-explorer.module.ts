@@ -17,6 +17,8 @@ import {DragDropBuffer} from "./services/DragDropBuffer";
 import {CopyBuffer} from "./services/CopyBuffer";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {RootComponent} from "./components/structure/root/root.component";
+import {EditorHelpModalComponent} from "./components/explorer/modals/editor-help.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import {RootComponent} from "./components/structure/root/root.component";
     EditFileDialogComponent,
     ActionSetComponent,
     RootComponent,
+    EditorHelpModalComponent,
   ],
   exports: [
     FileExplorerComponent,
@@ -43,6 +46,7 @@ import {RootComponent} from "./components/structure/root/root.component";
     ReactiveFormsModule,
     MatTooltipModule,
     MatSnackBarModule,
+    MatDialogModule,
   ],
   entryComponents: [
     AddDirectoryDialogComponent,
@@ -51,6 +55,7 @@ import {RootComponent} from "./components/structure/root/root.component";
     DeleteFileDialogComponent,
     EditDirectoryDialogComponent,
     EditFileDialogComponent,
+    EditorHelpModalComponent,
   ],
   providers: [
     {provide: DragDropBuffer, useClass: DragDropBuffer},

@@ -47,6 +47,12 @@ import {QuoteBlockComponent} from "../blocks/quoteBlock/quote-block.component";
 import {PublishIndicatorComponent} from "../blog/publishIndicator/publish-indicator.component";
 import {DeviceDetectorModule} from "ngx-device-detector";
 import {MainHelpModalComponent} from "../modals/mainHelp/main-help-modal.component";
+import {MainHeaderHelpModalComponent} from "../modals/mainHeaderHelp/main-header-help-modal.component";
+import {SubheaderHelpModalComponent} from "../modals/subheaderHelp/subheader-help-modal.component";
+import {TextBlockHelpModalComponent} from "../modals/textBlockHelp/text-block-help-modal.component";
+import {MultimediaHelpModalComponent} from "../modals/multimediaBlock/multimedia-help-modal.component";
+import {CodeBlockHelpModalComponent} from "../modals/codeBlockHelp/code-block-help-modal.component";
+import {QuoteHelpModalComponent} from "../modals/quoteHelp/quote-help-modal.component";
 
 @NgModule({
   declarations: [
@@ -78,6 +84,12 @@ import {MainHelpModalComponent} from "../modals/mainHelp/main-help-modal.compone
     QuoteBlockComponent,
     PublishIndicatorComponent,
     MainHelpModalComponent,
+    MainHeaderHelpModalComponent,
+    SubheaderHelpModalComponent,
+    TextBlockHelpModalComponent,
+    MultimediaHelpModalComponent,
+    CodeBlockHelpModalComponent,
+    QuoteHelpModalComponent,
   ],
   imports: [
     MatCardModule,
@@ -116,6 +128,12 @@ import {MainHelpModalComponent} from "../modals/mainHelp/main-help-modal.compone
     AddInternalNameModalComponent,
     AddCommentModalComponent,
     MainHelpModalComponent,
+    MainHeaderHelpModalComponent,
+    SubheaderHelpModalComponent,
+    TextBlockHelpModalComponent,
+    MultimediaHelpModalComponent,
+    CodeBlockHelpModalComponent,
+    QuoteHelpModalComponent,
   ]
 })
 export class PageModule { }

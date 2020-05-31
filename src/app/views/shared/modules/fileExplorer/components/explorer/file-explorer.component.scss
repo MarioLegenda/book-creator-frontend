@@ -91,7 +91,7 @@
         margin-left: 6px;
       }
 
-      border-left: 4px solid $appBlack;
+      border-left: 4px solid white;
     }
 
     .selected-action {
@@ -99,11 +99,13 @@
     }
 
     .github-disabled {
-      color: white;
-      border-left: 4px solid white;
+      border-left: 4px solid gray;
+
+      i {
+        color: gray;
+      }
 
       &:hover {
-        color: white;
         cursor: not-allowed;
       }
     }

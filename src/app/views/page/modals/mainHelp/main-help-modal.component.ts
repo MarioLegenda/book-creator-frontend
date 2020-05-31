@@ -1,17 +1,19 @@
 import {Component, Inject, TemplateRef, ViewChild} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'cms-remove-confirm-modal',
+  selector: 'cms-main-help-modal',
   templateUrl: './main-help-modal.component.html',
   styleUrls: [
     '../../../../main/global-dialog.component.scss',
-    './main-help-modal.component.scss'
+    '../../../shared/styles/helpContent.scss',
   ]
 })
 export class MainHelpModalComponent {
   constructor(
     public dialogRef: MatDialogRef<MainHelpModalComponent>,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public model: any) {}
 
   @ViewChild('overview') overview: TemplateRef<any>;
@@ -38,5 +40,11 @@ export class MainHelpModalComponent {
 
   onNavigation(type: string) {
     this[type].nativeElement.scrollIntoView();
+  }
+
+  onDashboard(): void {
+    this.router.navigate(["cms", "management", "code-projects", "list"]);
+
+    this.dialogRef.close();
   }
 }

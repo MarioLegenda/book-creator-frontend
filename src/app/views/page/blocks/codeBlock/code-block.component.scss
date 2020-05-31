@@ -85,6 +85,14 @@
     }
   }
 
+  .left {
+    float: left;
+
+    .icon {
+      float: left;
+    }
+  }
+
   .editor-wrapper {
     border-radius: 5px;
     border: 1px dashed $lightestGray;

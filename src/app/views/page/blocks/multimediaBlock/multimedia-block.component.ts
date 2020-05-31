@@ -13,6 +13,7 @@ import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {catchError, reduce} from "rxjs/operators";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {DomSanitizer} from "@angular/platform-browser";
+import {MultimediaHelpModalComponent} from "../../modals/multimediaBlock/multimedia-help-modal.component";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -52,6 +53,13 @@ export class MultimediaBlockComponent implements OnInit {
 
   remove() {
     this.initRemoveFlow();
+  }
+
+  onHelp() {
+    this.dialog.open(MultimediaHelpModalComponent, {
+      width: '70%',
+      data: {},
+    });
   }
 
   embedUnsplashLink() {
