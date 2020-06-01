@@ -3,8 +3,9 @@
 .code-projects {
   margin: 40px 40px 40px 0;
 
-  .ks-list {
+  .cp-list {
     margin-bottom: 40px;
+    margin-top: 40px;
   }
 
   .cp-item {
@@ -61,5 +62,13 @@
     width: 200px;
     color: $lightGray;
     font-style: italic;
+  }
+}
+
+@media all and (max-width: 1040px) {
+  .cp-item {
+    float: none;
+    margin: 0 auto !important;
+    margin-bottom: 40px !important;
   }
 }

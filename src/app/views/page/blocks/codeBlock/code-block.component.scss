@@ -166,3 +166,9 @@
     opacity: 1;
   }
 }
+
+@media all and (max-width: 700px) {
+  .block-action {
+    margin-left: 10px !important;
+  }
+}

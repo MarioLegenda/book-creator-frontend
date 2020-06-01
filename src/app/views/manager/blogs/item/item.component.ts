@@ -28,12 +28,6 @@ export class ItemComponent {
   realTitle: string = '';
   isPublished: boolean = false;
 
-  componentState = {
-    noTitle: false,
-    realTitle: '',
-    isPublished: false,
-  };
-
   constructor(
     private blogRepository: BlogRepository,
     private dialog: MatDialog,

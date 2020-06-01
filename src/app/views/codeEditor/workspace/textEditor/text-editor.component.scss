@@ -2,6 +2,7 @@
 
 .text-editor-wrapper {
   background-color: $appBlack;
+  width: 900px;
 
   .no-tabs-message {
     font-size: 2em;
@@ -11,8 +12,6 @@
     width: 100%;
     padding: 20px;
     text-align: center;
-
-    margin-top: 100px;
 
     background-color: $appBlack;
   }

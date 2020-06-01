@@ -4,7 +4,6 @@ import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { KnowledgeSourceListingComponent } from '../blogs/listing/knowledge-source-listing.component';
 import { CodeProjectsComponent } from '../codeProjects/listing/code-projects.component';
 import {ProfileComponent} from "../profile/profile.component";
-import {SettingsComponent} from "../settings/settings.component";
 import {PublishComponent} from "../publishBlog/publish.component";
 
 const routes: Routes = [
@@ -28,6 +27,10 @@ const routes: Routes = [
         path: 'user-section/profile',
         component: ProfileComponent,
       },
+      {
+        path: 'blog/publish/:sourceShortId',
+        component: PublishComponent,
+      }
     ],
   },
 ];

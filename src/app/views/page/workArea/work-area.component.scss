@@ -99,3 +99,8 @@
 .page.cdk-drop-list-dragging .component-wrapper:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+@media all and (max-width: 600px) {
+  .dynamic-area {
+  }
+}

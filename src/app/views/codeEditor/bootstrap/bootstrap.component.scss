@@ -2,6 +2,10 @@
 
 .editor {
   display: block;
-
+  width: 1280px;
+  min-width: 1280px;
   background-color: $appBlack;
+}
+
+.file-explorer-wrapper {
 }
