@@ -20,7 +20,7 @@ export class CodeEditorRouteResolver {
     updateFileContent: `${this.bookApiUri}/api/v1/directory/update-file-content`,
     renameFile: `${this.bookApiUri}/api/v1/directory/rename-file`,
     renameDirectory: `${this.bookApiUri}/api/v1/directory/rename-directory`,
-    runProject: `${this.bookApiUri}/api/environment-emulator/build-and-run`,
+    runProject: `${this.envEmulatorUri}/api/environment-emulator/build-and-run`,
   };
 
   getRootDirectory(codeProjectUuid: string): string {

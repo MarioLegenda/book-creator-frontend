@@ -55,7 +55,7 @@ export class PublishIndicatorComponent implements OnInit, OnChanges {
   onPreview($event) {
     $event.stopPropagation();
 
-    window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.appContext.knowledgeSource.shortId}`;
+    window.location.href = `${environment.staticProtocol}://${environment.staticWeb}/cms/blog/preview/${this.appContext.knowledgeSource.shortId}`;
   }
 
   private subscribeToHttpActions(observable: Observable<any>) {

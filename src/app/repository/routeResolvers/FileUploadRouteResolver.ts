@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
   providedIn: 'root',
 })
 export class FileUploadRouteResolver {
-  private cndUri = environment.composeBookApiBaseUrl();
+  private cndUri = environment.composeStaticWebUrl();
 
   private readonly routes = {
     uploadProfileAvatar: `${this.cndUri}/cms/upload-file`,

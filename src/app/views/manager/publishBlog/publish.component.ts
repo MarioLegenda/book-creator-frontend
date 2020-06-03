@@ -5,7 +5,6 @@ import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository
 import {environment} from "../../../../environments/environment";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {EnvironmentEmulatorRepository} from "../../../repository/EnvironmentEmulatorRepository";
-import {BlogState} from "../../../logic/BlogState";
 import {MatDialog} from "@angular/material/dialog";
 import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-modal.component";
 
@@ -102,7 +101,7 @@ export class PublishComponent implements OnInit {
   onPreview($event) {
     $event.stopPropagation();
 
-    window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.blog.slug}/${this.blog.shortId}`;
+    window.location.href = `${environment.staticProtocol}://${environment.staticWeb}/cms/blog/preview/${this.blog.slug}/${this.blog.shortId}`;
   }
 
   private isHashtagSelected(hashtag): boolean {
@@ -146,10 +145,6 @@ export class PublishComponent implements OnInit {
 
   private redirectTo500(): void {
     window.location.href = '/500';
-  }
-
-  private redirectToProdSource(): void {
-    window.location.href = `${environment.protocol}://${environment.bookApiUri}/blog/${this.blog.slug}/${this.blog.shortId}`;
   }
 
   private loadHashtags(hashtags: string[]) {

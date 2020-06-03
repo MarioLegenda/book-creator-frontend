@@ -4,35 +4,27 @@
 
 export const environment = {
   production: false,
-  protocol: 'https',
-  bookApiUri: '11.11.11.12',
-  bookApiPort:80,
+  apiProtocol: 'https',
+  apiUri: '11.11.11.12',
 
-  rebelCdnApiUri: '11.11.11.12',
-  rebelCdnApiPort: 80,
+  environmentProtocol: 'https',
+  environmentUri: '11.11.11.12',
 
-  envEmulatorUri: '11.11.11.12',
-  envEmulatorPort: 80,
-
+  staticProtocol: 'https',
   staticWeb: '11.11.11.12',
-  staticWebPort: 80,
 
   publicDir: 'images',
 
   composeBookApiBaseUrl(): string {
-    return `${environment.protocol}://${environment.bookApiUri}`;
+    return `${environment.apiProtocol}://${environment.apiUri}`;
   },
 
   composeEnvEmulatorUrl(): string {
-    return `${environment.protocol}://${environment.envEmulatorUri}`;
-  },
-
-  composeRebelCdnUrl(): string {
-    return `${environment.protocol}://${environment.rebelCdnApiUri}`;
+    return `${environment.environmentProtocol}://${environment.environmentUri}`;
   },
 
   composeStaticWebUrl(): string {
-    return `${environment.protocol}://${environment.staticWeb}`;
+    return `${environment.staticProtocol}://${environment.staticWeb}`;
   },
 };
 

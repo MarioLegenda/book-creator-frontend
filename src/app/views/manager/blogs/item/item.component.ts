@@ -112,7 +112,7 @@ export class ItemComponent {
 
     if (this.noTitle) return;
 
-    window.location.href = `${environment.protocol}://${environment.bookApiUri}/cms/blog/preview/${this.item.slug}/${this.item.shortId}`;
+    window.location.href = `${environment.staticProtocol}://${environment.staticWeb}/cms/blog/preview/${this.item.slug}/${this.item.shortId}`;
   }
 
   formattedDate() {
