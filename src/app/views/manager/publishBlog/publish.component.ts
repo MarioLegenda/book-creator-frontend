@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BlogRepository} from "../../../repository/BlogRepository";
 import {MiscRepository} from "../../../repository/MiscRepository";
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
@@ -101,7 +101,7 @@ export class PublishComponent implements OnInit {
   onPreview($event) {
     $event.stopPropagation();
 
-    window.location.href = `${environment.staticProtocol}://${environment.staticWeb}/cms/blog/preview/${this.blog.slug}/${this.blog.shortId}`;
+    window.location.href = `${environment.staticProtocol}://${environment.staticWeb}/cms/blog/preview/${this.blog.shortId}`;
   }
 
   private isHashtagSelected(hashtag): boolean {
