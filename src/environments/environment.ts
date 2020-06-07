@@ -15,6 +15,10 @@ export const environment = {
 
   publicDir: 'images',
 
+  UNSPLASH_ACCESS_KEY: 'UomOGm44FhKUUUc2muDLFieCTHWBKu8zjzXg8i25bjw',
+  UNSPLASH_API_ENDPOINT: 'https://api.unsplash.com',
+  UNSPLASH_API_VERSION: 'v1',
+
   composeBookApiBaseUrl(): string {
     return `${environment.apiProtocol}://${environment.apiUri}`;
   },

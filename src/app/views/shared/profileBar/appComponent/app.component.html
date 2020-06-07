@@ -21,8 +21,7 @@
       </div>
 
       <div class="click-anchor options items col-xs-12 col-md-12 col-lg-12">
-        <a class="click-anchor item" (click)="onNewBlog()">New Blog</a>
-        <a class="click-anchor item in-dev">New Book (in development)</a>
+        <a class="click-anchor item new-blog" (click)="onNewBlog()">New Blog<i class="fas fa-rss"></i></a>
       </div>
 
       <div class="click-anchor overview items col-xs-12 col-md-12 col-lg-12">
@@ -30,7 +29,15 @@
       </div>
 
       <div class="click-anchor settings items col-xs-12 col-md-12 col-lg-12">
+
+        <a class="click-anchor item blog-item" (click)="onBlogs()">Blogs</a>
+        <a class="click-anchor item" (click)="onCodeProjects()">Code projects</a>
         <a class="click-anchor item" (click)="onProfile()">Profile</a>
+      </div>
+
+      <div class="click-anchor settings items col-xs-12 col-md-12 col-lg-12">
+        <a class="click-anchor item" href="/about">About</a>
+        <a class="click-anchor item" href="https://therebelsource.com/blog/help-blog/8mYgnax8Nj">Help blog</a>
         <a class="click-anchor item" (click)="onSignOut()">Sign out</a>
       </div>
     </div>

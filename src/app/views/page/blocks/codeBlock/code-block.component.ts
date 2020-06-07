@@ -47,7 +47,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   readonly: boolean = false;
   gistData = null;
   isGist: boolean = false;
-  blockErrors = null;
+  blockErrors = [];
   emulator = null;
   internalName: string;
   comment: string;
@@ -324,7 +324,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       debounceTime(500),
     )
       .subscribe(() => {
-        this.blockErrors = null;
+        this.blockErrors = [];
 
         this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       });
@@ -399,7 +399,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   }
 
   private runCodeProjectFlow() {
-    this.blockErrors = null;
+    this.blockErrors = [];
 
     // this line is never executed but will remain here as a reminder
     // that one can push errors and those errors will be shown to the user
@@ -425,12 +425,29 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         'dev',
       );
 
-      this.emlRepository.BuildAndRunProject(this.codeProject.uuid, model).subscribe((res) => {
+      const defaultTimeout: string = this.codeProject.environment.defaultTimeout + '';
+      const timeout = parseInt(`${defaultTimeout[0]}${defaultTimeout[1]}`) * 1000 + 2000;
+
+      this.emlRepository.BuildAndRunProject(this.codeProject.uuid, model, timeout).subscribe((res) => {
         this.isCodeRunning = false;
 
         this.testRunResult = res;
 
         this.hasTestRunWindow = true;
+      }, (e) => {
+        this.blockErrors = [];
+        this.isCodeRunning = false;
+        this.testRunResult = null;
+        this.hasTestRunWindow = false;
+
+        const defaultTimeout: string = this.codeProject.environment.defaultTimeout + '';
+        const timeout = parseInt(`${defaultTimeout[0]}${defaultTimeout[1]}`);
+
+        if (e.name && e.name === 'TimeoutError') {
+          this.blockErrors.push(`Executing code timed out. Current timeout is ${timeout} seconds.`)
+        } else {
+          this.blockErrors.push('An unexpected error occurred while executing your code. Please, try again later.');
+        }
       });
     } else {
       const model = HttpModel.buildAndRunSingleFile(
@@ -441,12 +458,29 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
         'single_file',
       );
 
-      this.emlRepository.buildAndRunSingleFile(model).subscribe((res) => {
+      const defaultTimeout: string = this.emulator.defaultTimeout + '';
+      const timeout = parseInt(`${defaultTimeout[0]}${defaultTimeout[1]}`) * 1000 + 2000;
+
+      this.emlRepository.buildAndRunSingleFile(model, timeout).subscribe((res) => {
         this.isCodeRunning = false;
 
         this.testRunResult = res;
 
         this.hasTestRunWindow = true;
+      }, (e) => {
+        this.blockErrors = [];
+        this.isCodeRunning = false;
+        this.testRunResult = null;
+        this.hasTestRunWindow = false;
+
+        const defaultTimeout: string = this.emulator.defaultTimeout + '';
+        const timeout = parseInt(`${defaultTimeout[0]}${defaultTimeout[1]}`);
+
+        if (e.name && e.name === 'TimeoutError') {
+          this.blockErrors.push(`Executing code timed out. Current timeout is ${timeout} seconds.`)
+        } else {
+          this.blockErrors.push('An unexpected error occurred while executing your code. Please, try again later.');
+        }
       });
     }
   }

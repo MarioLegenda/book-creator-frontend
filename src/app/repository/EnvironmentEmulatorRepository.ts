@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {CodeEditorRouteResolver} from "./routeResolvers/CodeEditorRouteResolver";
 import {Injectable} from "@angular/core";
 import {EnvEmulatorRouteResolver} from "./routeResolvers/EnvEmulatorRouteResolver";
-import {map, reduce} from "rxjs/operators";
+import {map, timeout} from "rxjs/operators";
 import {IResponse} from "../model/http/response/IResponse";
 
 @Injectable({
@@ -15,36 +15,34 @@ export class EnvironmentEmulatorRepository {
     private envRouteResolver: EnvEmulatorRouteResolver,
   ) {}
 
-  public BuildAndRunProject(codeProjectUuid: string, model) {
+  public BuildAndRunProject(codeProjectUuid: string, model, defaultTimeout: number = 16000) {
     return this.httpClient.post(this.routeResolver.runProject(codeProjectUuid), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {})
+        timeout(defaultTimeout),
+        map((response: IResponse) => response.data)
       );
   }
 
-  public buildAndRunSingleFile(model) {
+  public buildAndRunSingleFile(model, defaultTimeout: number = 16000) {
     return this.httpClient.post(this.envRouteResolver.singleFileBuildAndRun(), model)
       .pipe(
-      reduce((acc, res: any) => {
-        return res.data;
-      }, {})
+        timeout(defaultTimeout),
+        map((response: IResponse) => response.data)
     );
   }
 
   public buildState(model) {
     return this.httpClient.post(this.envRouteResolver.buildState(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {})
+        timeout(5000),
+        map((response: IResponse) => response.data)
       );
   }
 
   public getEnvironments() {
     return this.httpClient.get(this.envRouteResolver.getEnvironment())
       .pipe(
+        timeout(5000),
         map((response: IResponse) => response.data)
       );
   }

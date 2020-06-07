@@ -125,6 +125,11 @@
       font-style: italic;
       text-align: center;
     }
+
+    .unsplash-user-info {
+      color: $appBlack;
+      margin-top: 10px;
+    }
   }
 }
 
@@ -132,4 +137,10 @@
   position: absolute;
   bottom: 35px;
   margin-bottom: 0;
+}
+
+@media all and (max-width: 700px) {
+  .block-action {
+    margin-left: 15px !important;
+  }
 }

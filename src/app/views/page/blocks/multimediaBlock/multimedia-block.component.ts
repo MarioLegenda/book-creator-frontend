@@ -10,10 +10,11 @@ import {httpRemoveBlock} from "../../../../store/page/httpActions";
 import {Store} from "@ngrx/store";
 import {EmbedUnsplashDialogComponent} from "../../modals/embedUnsplashImage/embed-unsplash-modal.component";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
-import {catchError, reduce} from "rxjs/operators";
+import {catchError, map, reduce} from "rxjs/operators";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MultimediaHelpModalComponent} from "../../modals/multimediaBlock/multimedia-help-modal.component";
+import {IResponse} from "../../../../model/http/response/IResponse";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -76,9 +77,7 @@ export class MultimediaBlockComponent implements OnInit {
 
         this.fileUploadRepository.deleteMultimediaBlockImage(model)
           .pipe(
-            reduce((acc, res: any) => {
-              return res.data;
-            }, {}),
+            map((response: IResponse) => response.data),
             // @ts-ignore
             catchError((e: any) => {
               if (Object.keys(e.error).length === 0) {

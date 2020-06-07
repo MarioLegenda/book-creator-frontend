@@ -174,7 +174,7 @@
   </div>
 
   <cms-block-errors
-    *ngIf="blockErrors"
+    *ngIf="blockErrors.length !== 0"
     [errors]="blockErrors">
   </cms-block-errors>
 

@@ -25,6 +25,7 @@ export class PublishComponent implements OnInit {
   noHtagsSelected: boolean = false;
   publishInProgress: boolean = false;
   isAlreadyPublished: boolean = false;
+  publishError: boolean = false;
 
   publishedUrl: string = null;
   codeProjects: any[] = [];
@@ -83,6 +84,7 @@ export class PublishComponent implements OnInit {
     this.publishInProgress = true;
     this.publicAction().then(() => {
       this.publishInProgress = false;
+      this.publishError = false;
 
       const dialogRef = this.dialog.open(PublishBlogModalComponent, {
         width: '480px',
@@ -95,6 +97,8 @@ export class PublishComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(() => {
       });
+    }).catch(() => {
+      this.publishError = true;
     });
   }
 

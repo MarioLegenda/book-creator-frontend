@@ -5,17 +5,16 @@
     type="text"
     name="title"
     maxlength="200"
-    [(ngModel)]="cover"
-    (ngModelChange)="onChange($event)"
+    [(ngModel)]="model"
+    (ngModelChange)="onChange()"
     placeholder="Cover image url (Unsplash only)" />
 
-  <p
-    *ngIf="appContext.knowledgeSource.state !== 'draft'"
-    class="info col-xs-12 col-md-12 col-lg-12">* From a user experience point of view, it is better to add a cover image. Also, only blogs that have a cover image will be listed on the front page as the 'Latest blogs'</p>
+  <p class="info col-xs-12 col-md-12 col-lg-12">* From a user experience point of view, it is better to add a cover image. Also, only blogs that have a cover image will be listed on the front page as the 'Latest blogs'</p>
 
   <div
     *ngIf="hasCover"
     class="image-wrapper col-xs-12 col-md-12 col-lg-12">
-    <img [src]="realUrl" />
+    <img [src]="cover.urls.regular" />
+    <div class="unsplash-user-info">Photo by <a target="_blank" href="{{cover.user.publicProfile}}">{{cover.user.firstName}} {{cover.user.lastName}}</a> on <a target="_blank" href="https://unsplash.com">Unsplash</a>. If you want, you can <a target="_blank" href="{{cover.user.downloadLink}}">Download it</a></div>
   </div>
 </div>

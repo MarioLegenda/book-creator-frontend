@@ -17,15 +17,13 @@ import {actionTypes} from "../../../../store/account/actions";
 })
 export class AppComponent {
   account: Account;
-  isSubscribed: boolean = false;
   isBlogPage: boolean = false;
 
-  displayName = '';
   name = '';
   lastName = '';
   email = '';
   avatar = '';
-  // @ts-ignore
+
   @ViewChild('mainMenuRef', {static: true}) mainMenuRef: ElementRef;
 
   constructor(
@@ -99,16 +97,28 @@ export class AppComponent {
     this.document.location.href = '/';
   }
 
-  onSignOut() {
+  onSignOut(): void {
     this.accountProvider.logout();
 
     window.location.href = '/';
   }
 
-  onProfile() {
+  onProfile(): void {
     this.mainMenuRef.nativeElement.style = 'display: none';
 
     this.router.navigate(['/cms/management/user-section/profile']);
+  }
+
+  onBlogs(): void {
+    this.mainMenuRef.nativeElement.style = 'display: none';
+
+    this.router.navigate(['/cms/management/blogs/list']);
+  }
+
+  onCodeProjects(): void {
+    this.mainMenuRef.nativeElement.style = 'display: none';
+
+    this.router.navigate(['/cms/management/code-projects/list']);
   }
 
   onNewBlog() {

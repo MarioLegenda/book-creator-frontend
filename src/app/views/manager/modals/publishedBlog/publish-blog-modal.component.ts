@@ -30,6 +30,6 @@ export class PublishBlogModalComponent {
   }
 
   private redirectToProdSource(): void {
-    window.location.href = `${environment.apiProtocol}://${environment.apiUri}/blog/${this.model.slug}/${this.model.shortId}`;
+    window.location.href = `${environment.staticProtocol}://${environment.staticWeb}/blog/${this.model.slug}/${this.model.shortId}`;
   }
 }

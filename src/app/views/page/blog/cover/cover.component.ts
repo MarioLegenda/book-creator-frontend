@@ -20,53 +20,43 @@ export class CoverComponent implements OnInit {
     private store: Store<any>,
   ) {}
 
-  cover: any = '';
-  realUrl: string = '';
+  model: string = '';
+  cover: any = null;
   hasCover: boolean = false;
 
   ngOnInit() {
     this.initCover();
   }
 
-  onChange($event) {
-    if (!$event) {
-      this.hasCover = false;
-      this.cover = '';
-      this.realUrl = '';
-    }
-
-    if ($event) {
-      this.hasCover = true;
-    }
+  onChange() {
+    this.hasCover = false;
+    this.cover = null;
 
     const sourceUuid = this.appContext.knowledgeSource.uuid;
-
-    console.log(this.cover);
 
     this.blogRepository.updateBlog(HttpModel.updateBlog(
       sourceUuid,
       null,
       null,
-      this.cover,
+      this.model,
     )).subscribe((blog) => {
       const cover = blog.cover;
 
       if (!cover) return;
 
-      this.realUrl = cover.default;
+      this.cover = cover;
+      this.model = cover.original;
+      this.hasCover = true;
 
       changeState(this.appContext, this.store);
     });
   }
 
-  private initCover() {
+  private initCover(): void {
     if (!this.appContext.knowledgeSource.cover) return;
 
-    const original = this.appContext.knowledgeSource.cover.original;
-    const real = this.appContext.knowledgeSource.cover.default;
-
-    this.cover = original;
-    this.realUrl = real;
+    this.cover = this.appContext.knowledgeSource.cover;
+    this.model = this.cover.original;
     this.hasCover = true;
   }
 }

@@ -65,20 +65,32 @@ export class PlaygroundComponent {
 
     const state: string = (this.isSession) ? 'session': 'dev';
     const model = HttpModel.buildAndRunProject(code.code, state);
+    const defaultTimeout: string = this.project.environment.defaultTimeout + '';
+    const timeout = parseInt(`${defaultTimeout[0]}${defaultTimeout[1]}`) * 1000 + 2000;
 
-    this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, model).subscribe((data: IRunCodeResultEvent) => {
+    this.envEmulatorRepository.BuildAndRunProject(this.project.uuid, model, timeout).subscribe((data: IRunCodeResultEvent) => {
       this.resultAvailable = true;
       this.isRunning = false;
 
       this.resultCommunicator.next(data);
-    }, () => {
+    }, (e) => {
+      const defaultTimeout: string = this.project.environment.defaultTimeout + '';
+
+      let result = null;
+      let timeout = 0;
+
+      if (e.name && e.name === 'TimeoutError') {
+        result = 'timeout';
+        timeout = parseInt(`${defaultTimeout[0]}${defaultTimeout[1]}`);
+      }
+
       this.resultAvailable = true;
       this.isRunning = false;
 
       this.resultCommunicator.next({
         success: false,
-        result: null,
-        timeout: 0,
+        result: result,
+        timeout: timeout,
       });
     });
   }

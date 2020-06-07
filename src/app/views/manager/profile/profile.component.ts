@@ -65,7 +65,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.uploadedFile = files[0];
     this.imageTooBig = false;
     this.hasFile = true;
+
     const reader = new FileReader();
+
+    if (this.uploadedFile.type) {
+      if (!this.validateMimeType()) {
+        this.error = 17;
+        this.hasFile = false;
+        this.uploadedFile = null;
+
+        return;
+      }
+    }
 
     reader.readAsDataURL(this.uploadedFile);
 
@@ -248,5 +259,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (facebookProfile !== profile.facebookProfile) return true;
 
     return false;
+  }
+
+  private validateMimeType(): boolean {
+    const type: string = this.uploadedFile.type;
+
+    const re = new RegExp('jpeg|jpg|png|svg');
+
+    return re.test(type);
   }
 }

@@ -8,7 +8,7 @@
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
       <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 15">No file selected for upload.</div>
       <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 16">Mime type could not be determined.</div>
-      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 17">Invalid mime type. Supported mime types are jpg, jpeg, png and svg.</div>
+      <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 17">Invalid mime type. Supported mime types are jpg, jpeg, gif, png and svg.</div>
       <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 11">Internal error. Image could not be uploaded. We are very sorry about this and we are looking into it.</div>
       <div class="error col-xs-12 col-md-12 col-lg-12" *ngIf="uploadError && uploadError === 11">For some reason, the image could not be deleted. Please, refresh your browser and try again</div>
       <div class="error col-xs12 col-md-12 col-lg-12" *ngIf="imageTooBig">The uploaded image is too large. Permitted file size is 10MB.</div>
@@ -105,6 +105,8 @@
       <img
         class="col-xs-12 col-md-12 col-lg-12"
         [src]="unsplash.default" />
+
+      <div class="unsplash-user-info">Photo by <a target="_blank" href="{{unsplash.user.publicProfile}}">{{unsplash.user.firstName}} {{unsplash.user.lastName}}</a> on <a target="_blank" href="https://unsplash.com">Unsplash</a>. If you want, you can <a target="_blank" href="{{unsplash.user.downloadLink}}">Download it</a></div>
     </div>
 
     <div

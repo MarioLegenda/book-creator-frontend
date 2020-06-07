@@ -10,7 +10,7 @@
     color: black;
     font-size: 1.2em;
 
-    line-height: 1.1em;
+    line-height: 1.5em;
   }
 
   .editor-not-created-text {
@@ -79,5 +79,11 @@
     float: left;
 
     padding: 10px;
+  }
+}
+
+@media all and (max-width: 700px) {
+  .block-action {
+    margin-left: 20px !important;
   }
 }

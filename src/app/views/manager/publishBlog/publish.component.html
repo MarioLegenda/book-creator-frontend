@@ -86,7 +86,13 @@
     <div class="item actions-area col-xs-12 col-md-12 col-lg-12">
       <div
         *ngIf="noHtagsSelected"
-        class="error col-xs-12 col-md-12 col-lg-12">No hashtags selected. You have to select at least one hashtag.</div>
+        class="error col-xs-12 col-md-12 col-lg-12">No hashtags selected. You have to select at least one hashtag.
+      </div>
+
+      <div
+        *ngIf="publishError"
+        class="error col-xs-12 col-md-12 col-lg-12">An error occurred while trying to publish your blog. Please, try again later.
+      </div>
 
       <button
         class="button publish-button"

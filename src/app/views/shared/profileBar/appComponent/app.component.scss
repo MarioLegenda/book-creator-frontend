@@ -191,6 +191,15 @@
           text-decoration: none;
           cursor: pointer;
         }
+
+        i {
+          display: inline-block;
+          margin-left: 20px;
+        }
+      }
+
+      .new-blog {
+        color: black;
       }
 
       .in-dev {
@@ -213,13 +222,6 @@
     .options, .settings {
       a:last-child {
         margin-bottom: 0;
-      }
-    }
-
-    .overview {
-      i {
-        display: inline-block;
-        margin-left: 20px;
       }
     }
   }

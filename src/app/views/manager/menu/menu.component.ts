@@ -16,13 +16,6 @@ import {DOCUMENT} from "@angular/common";
 export class OverviewMenuComponent {
   type: string;
 
-  componentState = {
-    icons: {
-      'new': 'fa fa-plus',
-    },
-    newButton: true,
-  };
-
   constructor(
     private router: Router,
     private dialog: MatDialog,
