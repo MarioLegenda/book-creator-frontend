@@ -411,6 +411,11 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     }
 
     if (this.code === this.previousCode) {
+      this.testRunResult = null;
+      this.hasTestRunWindow = false;
+      this.blockErrors = [];
+      this.blockErrors.push('Code is unchanged');
+
       return;
     }
 
@@ -524,6 +529,19 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       }
 
       this.editorOptions = options;
+
+      if (this.emulator.name === "go" && !this.code) {
+        this.code = `package main
+
+func main() {
+}
+`;
+      }
+
+      if (this.emulator.name === "rust" && !this.code) {
+        this.code = `fn main() {
+}`;
+      }
     }, 1000);
   }
 }
