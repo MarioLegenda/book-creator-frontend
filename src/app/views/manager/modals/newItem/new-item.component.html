@@ -4,7 +4,7 @@
   </div>
 
   <div class="header">
-    <p>New knowledge source</p>
+    <p>Something new</p>
   </div>
 
   <div class="source-listing col-xs-12 col-md-12 col-lg-12">
@@ -17,6 +17,19 @@
       </div>
 
       <p class="title">Blog</p>
+    </div>
+  </div>
+
+  <div class="source-listing col-xs-12 col-md-12 col-lg-12">
+    <div
+      [ngClass]="{'disabled': disabled}"
+      class="item col-xs-12 col-md-12 col-lg-12"
+      (click)="onSelect('code-project')">
+      <div class="icon">
+        <i class="far fa-circle"></i>
+      </div>
+
+      <p class="title">Code project</p>
     </div>
   </div>
 </div>

@@ -1,19 +1,19 @@
 import {Component, Inject} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddKnowledgeSourceDialogComponent } from '../modals/newItem/new-item.component';
+import {NewItemComponent} from '../modals/newItem/new-item.component';
 import {NewCodeProjectDialogComponent} from "../../shared/modules/newCodeProjectModal/newCodeProject/new-code-project.component";
 import {CodeProjectsRepository} from "../../../repository/CodeProjectsRepository";
 import {DOCUMENT} from "@angular/common";
 
 @Component({
-  selector: 'cms-overview-menu',
+  selector: 'cms-management-menu',
   styleUrls: [
-    './../../shared/styles/menu.component.scss',
+    './menu.component.scss',
   ],
   templateUrl: './menu.component.html',
 })
-export class OverviewMenuComponent {
+export class ManagementMenuComponent {
   type: string;
 
   constructor(
@@ -33,33 +33,37 @@ export class OverviewMenuComponent {
     });
   }
 
-  addKsDialog(): void {
-    if (this.type === 'blogs') {
-      this.dialog.open(AddKnowledgeSourceDialogComponent, {
-        width: '400px',
-        data: {},
-      });
-    } else if (this.type === 'code-projects') {
-      const dialogRef = this.dialog.open(NewCodeProjectDialogComponent, {
-        width: '480px',
-        data: {
-          name: '',
-          description: '',
-          buttonText: 'Create',
-          title: 'New code project',
-          doHttpAction: true,
-        },
-      });
+  onNew() {
+    const dialogRef = this.dialog.open(NewItemComponent, {
+      width: '400px',
+      data: {},
+    });
 
-      dialogRef.afterClosed().subscribe((codeProject) => {
-        if (!codeProject) return;
+    dialogRef.afterClosed().subscribe((confirm) => {
+      if (!confirm) return;
 
-        this.router.navigate([
-          '/cms/code-editor',
-          codeProject.shortId,
-        ]);
-      });
-    }
+      if (confirm === 'open-code-project') {
+        const dialogRef = this.dialog.open(NewCodeProjectDialogComponent, {
+          width: '480px',
+          data: {
+            name: '',
+            description: '',
+            buttonText: 'Create',
+            title: 'New code project',
+            doHttpAction: true,
+          },
+        });
+
+        dialogRef.afterClosed().subscribe((codeProject) => {
+          if (!codeProject) return;
+
+          this.router.navigate([
+            '/cms/code-editor',
+            codeProject.shortId,
+          ]);
+        });
+      }
+    })
   }
 
   private determineType() {

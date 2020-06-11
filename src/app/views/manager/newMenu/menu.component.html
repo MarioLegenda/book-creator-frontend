@@ -1,0 +1,60 @@
+<div class="col-xs-2 col-md-2 col-lg-2 menu-wrapper">
+  <nav class="menu col-xs-12 col-md-12 col-lg-12">
+    <div class="add-new-wrapper col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <i (click)="onNew()" class="add-new fas fa-plus-circle"></i>
+    </div>
+
+    <div class="menu-entry col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         [ngClass]="{'entry': true, 'selected-menu-entry': type === 'blogs'}"
+         routerLink="./blogs/list">
+
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-blog"></i>
+      </div>
+
+      <a
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        Blogs
+      </a>
+    </div>
+
+<!--    <div class="menu-entry col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-cubes"></i>
+      </div>
+
+      <a
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12"
+        routerLink="./user-section/profile"
+        [ngClass]="{'selected': type === 'profile'}">
+        Blog series
+      </a>
+    </div>-->
+
+    <div class="menu-entry col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         [ngClass]="{'selected-menu-entry': type === 'code-projects'}"
+         routerLink="./code-projects/list">
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-project-diagram"></i>
+      </div>
+
+      <a
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        Code projects
+      </a>
+    </div>
+
+    <div class="menu-entry  col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         [ngClass]="{'selected-menu-entry': type === 'profile'}"
+         routerLink="./user-section/profile">
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-user-circle"></i>
+      </div>
+
+      <a
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        Profile
+      </a>
+    </div>
+  </nav>
+</div>

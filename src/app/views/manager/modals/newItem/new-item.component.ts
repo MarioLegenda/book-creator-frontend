@@ -6,21 +6,21 @@ import {PageRepository} from '../../../../repository/PageRepository';
 import {HttpModel} from "../../../../model/http/HttpModel";
 
 @Component({
-  selector: 'cms-add-knowledge-source-modal',
-  templateUrl: './add-knowledge-source.component.html',
+  selector: 'cms-add-item-component',
+  templateUrl: './new-item.component.html',
   styleUrls: [
     '../../../../main/global-dialog.component.scss',
-    './add-knowledge-source.component.scss'
+    './new-item.component.scss'
   ]
 })
-export class AddKnowledgeSourceDialogComponent {
+export class NewItemComponent {
   disabled: boolean = false;
 
   constructor(
     private router: Router,
     private blogRepository: BlogRepository,
     private pageRepository: PageRepository,
-    public dialogRef: MatDialogRef<AddKnowledgeSourceDialogComponent>,
+    public dialogRef: MatDialogRef<NewItemComponent>,
     @Inject(MAT_DIALOG_DATA) public model: any) {}
 
     close(): void {
@@ -34,6 +34,8 @@ export class AddKnowledgeSourceDialogComponent {
 
       if (type === 'blog') {
         this.createBlog();
+      } if (type === 'code-project') {
+        this.dialogRef.close('open-code-project');
       }
     }
 

@@ -4,13 +4,12 @@ import { BootstrapComponent } from '../bootstrap/bootstrap.component';
 import { CodeProjectsComponent } from '../codeProjects/listing/code-projects.component';
 import { ItemComponent as CPItem } from '../codeProjects/item/item.component';
 import { ItemComponent as KSItem } from '../blogs/item/item.component';
-import { AddKnowledgeSourceDialogComponent } from '../modals/addKnowledgeSource/add-knowledge-source.component';
+import { NewItemComponent } from '../modals/newItem/new-item.component';
 import { KnowledgeSourceListingComponent } from '../blogs/listing/knowledge-source-listing.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { OverviewMenuComponent } from '../menu/menu.component';
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
@@ -29,14 +28,14 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-published-modal.component";
 import {RemoveCodeProjectModalComponent} from "../modals/removeCodeProject/remove-code-project-modal.component";
 import {ListingFilterComponent} from "../shared/listingFilter/listing-filter.component";
+import {ManagementMenuComponent} from "../newMenu/menu.component";
 
 @NgModule({
   declarations: [
     BootstrapComponent,
-    OverviewMenuComponent,
     CodeProjectsComponent,
     CPItem,
-    AddKnowledgeSourceDialogComponent,
+    NewItemComponent,
     KnowledgeSourceListingComponent,
     KSItem,
     RemoveConfirmDialogComponent,
@@ -49,7 +48,8 @@ import {ListingFilterComponent} from "../shared/listingFilter/listing-filter.com
     PublishBlogModalComponent,
     NotifyIfPublishedModal,
     RemoveCodeProjectModalComponent,
-    ListingFilterComponent
+    ListingFilterComponent,
+    ManagementMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -69,7 +69,7 @@ import {ListingFilterComponent} from "../shared/listingFilter/listing-filter.com
     {useClass: RemoveItemService, provide: RemoveItemService},
   ],
   entryComponents: [
-    AddKnowledgeSourceDialogComponent,
+    NewItemComponent,
     RemoveConfirmDialogComponent,
     UnsubscribeDialog,
     PublishBlogModalComponent,

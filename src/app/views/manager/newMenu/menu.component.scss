@@ -1,0 +1,68 @@
+@import '../../../../styles/variables';
+
+.menu-wrapper {
+  margin-top: 80px;
+  float: left;
+  border-radius: 5px;
+
+  .add-new-wrapper {
+    margin-bottom: 40px;
+
+    .add-new {
+      font-size: 2.5em;
+      color: $mainAppColor;
+      margin-left: 40%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .menu-entry {
+    float: right;
+    padding: 15px;
+    margin-bottom: 40px;
+
+    border-top: 4px solid $almostWhiteGray;
+
+    .entry {
+      display: block;
+      color: $appBlack;
+      text-decoration: none;
+      text-align: center;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .menu-icon-wrapper {
+      float: right;
+
+      .menu-icon {
+        display: inline-block !important;
+        color: $lightestGray;
+        font-size: 1.2em;
+        margin-left: 45%;
+      }
+    }
+
+    &:hover .menu-icon {
+      color: $mainAppColor !important;
+    }
+
+    &:hover {
+      border-top: 4px solid $mainAppColor;
+      cursor: pointer;
+    }
+  }
+
+  .selected-menu-entry {
+    border-top: 4px solid $mainAppColor !important;
+
+    .menu-icon {
+      color: $mainAppColor !important;
+    }
+  }
+}
