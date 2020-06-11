@@ -91,4 +91,15 @@
       color: $lightestGray;
     }
   }
+
+  .write-loading-button {
+    width: 63px;
+  }
+
+  .write-loading {
+    display: inline-block;
+    color: $mainAppColor;
+    font-size: 1.2em;
+    margin-left: 18px;
+  }
 }

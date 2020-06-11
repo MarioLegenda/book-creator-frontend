@@ -530,7 +530,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
 
       this.editorOptions = options;
 
-      if (this.emulator.name === "go" && !this.code) {
+      if (this.emulator && this.emulator.name === "go" && !this.code) {
         this.code = `package main
 
 func main() {
@@ -538,7 +538,7 @@ func main() {
 `;
       }
 
-      if (this.emulator.name === "rust" && !this.code) {
+      if (this.emulator && this.emulator.name === "rust" && !this.code) {
         this.code = `fn main() {
 }`;
       }

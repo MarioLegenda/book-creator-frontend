@@ -19,6 +19,8 @@ import {MainHeaderBlock} from "../../../model/app/MainHeaderBlock";
 import {SubheaderBlock} from "../../../model/app/SubheaderBlock";
 import {QuoteBlock} from "../../../model/app/QuoteBlock";
 import {clearStateAction} from "../../../store/globalReducers";
+import {HttpModel} from "../../../model/http/HttpModel";
+import {PageRepository} from "../../../repository/PageRepository";
 @Component({
   selector: 'cms-work-area',
   styleUrls: [
@@ -42,7 +44,8 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<any>,
     private componentTracker: ComponentTracker,
-    private appContextInitializer: AppContextInitializer
+    private appContextInitializer: AppContextInitializer,
+    private pageRepository: PageRepository,
   ) {}
 
   ngOnInit(): void {
@@ -130,7 +133,27 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
     previous.position = current.position;
     current.position = temp;
 
-    this.store.dispatch(httpUpdateBlockPosition({
+    const pageUuid: string = this.sourceContext.page.uuid;
+    const blockUuid: string = previous.blockUuid;
+    const position: number = previous.position;
+
+    const model = HttpModel.updatePosition(pageUuid, blockUuid, position);
+
+    this.pageRepository.updatePosition(model).subscribe(() => {
+      changeState(this.sourceContext, this.store);
+
+      const pageUuid: string = this.sourceContext.page.uuid;
+      const blockUuid: string = current.blockUuid;
+      const position: number = current.position;
+
+      const model = HttpModel.updatePosition(pageUuid, blockUuid, position);
+
+      this.pageRepository.updatePosition(model).subscribe(() => {
+
+      })
+    });
+
+/*    this.store.dispatch(httpUpdateBlockPosition({
       pageUuid: this.sourceContext.page.uuid,
       blockUuid: previous.blockUuid,
       position: previous.position,
@@ -140,7 +163,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
       pageUuid: this.sourceContext.page.uuid,
       blockUuid: current.blockUuid,
       position: current.position,
-    }));
+    }));*/
 
     changeState(this.sourceContext, this.store);
 

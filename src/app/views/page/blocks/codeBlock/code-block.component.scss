@@ -109,9 +109,14 @@
 
   .code-block {
     position: relative;
+    height: 400px;
 
     border-radius: 5px;
     border: 1px dashed $lightestGray;
+
+    .real-code-editor {
+      height: 400px;
+    }
 
     .test-run-button-wrapper {
       width: 110px;

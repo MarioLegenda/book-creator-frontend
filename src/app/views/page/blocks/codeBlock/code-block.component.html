@@ -137,6 +137,7 @@
     <ngx-gist *ngIf="isGist" [gistId]="gistData.username + '/' + gistData.gistId"></ngx-gist>
 
     <ngx-monaco-editor
+      class="real-code-editor"
       *ngIf="isCode && editorOptions"
       [options]="editorOptions"
       [(ngModel)]="code"

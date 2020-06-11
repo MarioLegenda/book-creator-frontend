@@ -43,11 +43,16 @@
 
   <div class="actions col-xs-12 col-md-12 col-lg-12">
     <a
+      *ngIf="!writeLoading"
       (click)="onWrite()"
       class="item-button">
       Write
       <i class="icon fas fa-wifi"></i>
     </a>
+
+    <span *ngIf="writeLoading" class="item-button write-loading-button">
+      <i class="write-loading fas fa-atom fa-spin"></i>
+    </span>
 
     <a
       [ngClass]="{'item-button': true, 'preview-disabled': noTitle}"

@@ -27,6 +27,7 @@ export class ItemComponent {
   noTitle: boolean = false;
   realTitle: string = '';
   isPublished: boolean = false;
+  writeLoading: boolean = false;
 
   constructor(
     private blogRepository: BlogRepository,
@@ -55,6 +56,8 @@ export class ItemComponent {
 
       dialog.afterClosed().subscribe((confirm: boolean) => {
         if (confirm) {
+          this.writeLoading = true;
+
           const shortId: string = this.item.shortId;
           const pageShortId: string = this.item.pageShortId;
 
@@ -64,6 +67,8 @@ export class ItemComponent {
 
       return;
     }
+
+    this.writeLoading = true;
 
     const shortId: string = this.item.shortId;
     const pageShortId: string = this.item.pageShortId;
