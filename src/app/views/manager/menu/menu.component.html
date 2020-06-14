@@ -1,38 +1,47 @@
-<div class="col-xs-12 col-md-12 col-lg-12">
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 menu-wrapper">
   <nav class="menu col-xs-12 col-md-12 col-lg-12">
-    <div class="menu-entry">
+    <div class="add-new-wrapper col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <i (click)="onNew()" class="add-new fas fa-plus-circle"></i>
+    </div>
+
+    <div class="menu-entry col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         [ngClass]="{'selected-menu-entry': type === 'blogs'}"
+         routerLink="./blogs/list">
+
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-blog"></i>
+      </div>
+
       <a
-        class="entry"
-        routerLink="./blogs/list"
-        [ngClass]="{'entry': true, 'selected': type === 'blogs'}">
-        Blogs
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        BLOGS
       </a>
     </div>
 
-    <div class="menu-entry">
+    <div class="menu-entry col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         [ngClass]="{'selected-menu-entry': type === 'code-projects'}"
+         routerLink="./code-projects/list">
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-project-diagram"></i>
+      </div>
+
       <a
-        class="entry"
-        routerLink="./code-projects/list"
-        [ngClass]="{'selected': type === 'code-projects'}">
-        Code projects
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        CODE PROJECTS
       </a>
     </div>
 
-    <div class="menu-entry">
-      <a
-        class="entry"
-        routerLink="./user-section/profile"
-        [ngClass]="{'selected': type === 'profile'}">
-        Profile
-      </a>
-    </div>
+    <div class="menu-entry  col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         [ngClass]="{'selected-menu-entry': type === 'profile'}"
+         routerLink="./user-section/profile">
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-user-circle"></i>
+      </div>
 
-    <div
-      *ngIf="type === 'blogs' || type === 'code-projects'"
-      (click)="addKsDialog()"
-      class="new-action">
-      NEW
-      <i class="icon fas fa-plus"></i>
+      <a
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        PROFILE
+      </a>
     </div>
   </nav>
 </div>

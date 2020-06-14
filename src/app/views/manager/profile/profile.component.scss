@@ -179,3 +179,10 @@
     color: $lightestGray !important;
   }
 }
+
+@media all and (max-width: 570px) {
+  .upload-widget {
+    width: 90% !important;
+    margin: 40px 0 40px 0 !important;
+  }
+}

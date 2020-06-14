@@ -1,8 +1,13 @@
 @import '../../../../styles/variables';
 
+.publish-content {
+  margin: 40px 0 0 0;
+  float: right;
+}
+
 .publish-wrapper {
   margin: 40px auto;
-  float: none;
+  float: right;
 
   .item {
     margin-bottom: 40px;

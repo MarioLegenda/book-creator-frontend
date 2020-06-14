@@ -28,7 +28,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {NotifyIfPublishedModal} from "../modals/notifyIfPublished/notify-if-published-modal.component";
 import {RemoveCodeProjectModalComponent} from "../modals/removeCodeProject/remove-code-project-modal.component";
 import {ListingFilterComponent} from "../shared/listingFilter/listing-filter.component";
-import {ManagementMenuComponent} from "../newMenu/menu.component";
+import {ManagementMenuComponent} from "../menu/menu.component";
 
 @NgModule({
   declarations: [

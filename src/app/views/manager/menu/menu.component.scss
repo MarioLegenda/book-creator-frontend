@@ -9,9 +9,9 @@
     margin-bottom: 40px;
 
     .add-new {
-      font-size: 2.5em;
+      font-size: 2em;
       color: $mainAppColor;
-      margin-left: 40%;
+      margin-left: 35%;
 
       &:hover {
         cursor: pointer;
@@ -24,13 +24,12 @@
     padding: 15px;
     margin-bottom: 40px;
 
-    border-top: 4px solid $almostWhiteGray;
-
     .entry {
       display: block;
       color: $appBlack;
       text-decoration: none;
       text-align: center;
+      font-size: 0.8em;
 
       &:hover {
         text-decoration: none;
@@ -39,6 +38,7 @@
 
     .menu-icon-wrapper {
       float: right;
+      margin-bottom: 10px;
 
       .menu-icon {
         display: inline-block !important;
@@ -53,16 +53,61 @@
     }
 
     &:hover {
-      border-top: 4px solid $mainAppColor;
       cursor: pointer;
     }
   }
 
   .selected-menu-entry {
-    border-top: 4px solid $mainAppColor !important;
-
     .menu-icon {
       color: $mainAppColor !important;
     }
+  }
+}
+
+@media all and (max-width: 670px) {
+  .add-new-wrapper {
+    .add-new {
+      margin-left: 35% !important;
+    }
+  }
+
+  .menu-icon-wrapper {
+    .menu-icon {
+      margin-left: 35% !important;
+    }
+  }
+}
+
+@media all and (max-width: 500px) {
+  .add-new-wrapper {
+    .add-new {
+      margin-left: 30% !important;
+    }
+  }
+
+  .menu-icon-wrapper {
+    .menu-icon {
+      margin-left: 35% !important;
+    }
+  }
+}
+
+@media all and (max-width: 420px) {
+  .add-new-wrapper {
+    .add-new {
+      margin-left: 30% !important;
+    }
+  }
+
+  .menu-icon-wrapper {
+    .menu-icon {
+      margin-left: 30% !important;
+    }
+  }
+}
+
+@media all and (max-width: 460px) {
+  .entry {
+    display: none !important;
   }
 }
