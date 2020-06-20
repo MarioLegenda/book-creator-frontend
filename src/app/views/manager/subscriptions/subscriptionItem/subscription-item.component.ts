@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {SubscriptionRepository} from "../../../../repository/SubscriptionRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {UnsubscribeDialog} from "../../modals/unsubscribeDialog/unsubscribe-dialog.component";
@@ -15,10 +15,13 @@ import {SubscriptionState} from "../../../../library/SubscriptionState";
 export class SubscriptionItem {
   @Input('subscriptionMetadata') subscriptionMetadata: any;
 
-  status = null;
+  status: string = null;
   subscription = null;
   selected: boolean = false;
   requestInFlight: boolean = false;
+  statusText: string = '';
+  statusClass: string = '';
+  statusButtonClass: string = '';
 
   constructor(
     private subscriptionRepository: SubscriptionRepository,
@@ -27,6 +30,9 @@ export class SubscriptionItem {
 
   ngOnInit() {
     this.status = this.subscriptionMetadata.status;
+    this.parseStatusText();
+    this.parseStatusClass();
+    this.parseStatusButtonClass();
   }
 
   onSelectEntry() {
@@ -48,7 +54,7 @@ export class SubscriptionItem {
   }
 
   onUnsubscribe() {
-    if (this.subscriptionMetadata.status === SubscriptionState.PENDING_UNSUBSCRIPTION) return;
+    if (this.requestInFlight) return;
 
     const dialogRef = this.dialog.open(UnsubscribeDialog, {
       width: '50%',
@@ -58,6 +64,8 @@ export class SubscriptionItem {
     dialogRef.afterClosed().subscribe((confirm) => {
       if (!confirm) return;
 
+      this.requestInFlight = true;
+
       const model = HttpModel.updateSubscriptionStatus(
         this.subscriptionMetadata.uuid,
         SubscriptionState.PENDING_UNSUBSCRIPTION,
@@ -65,7 +73,32 @@ export class SubscriptionItem {
 
       this.subscriptionRepository.updateSubscriptionStatus(model).subscribe(() => {
         this.status = SubscriptionState.PENDING_UNSUBSCRIPTION;
+
+        this.parseStatusClass();
+        this.parseStatusText();
+
+        this.requestInFlight = false;
       });
+    });
+  }
+
+  onReactivate() {
+    if (this.requestInFlight) return;
+
+    this.requestInFlight = true;
+
+    const model = HttpModel.updateSubscriptionStatus(
+      this.subscriptionMetadata.uuid,
+      SubscriptionState.ACTIVE,
+    );
+
+    this.subscriptionRepository.updateSubscriptionStatus(model).subscribe(() => {
+      this.status = SubscriptionState.ACTIVE;
+
+      this.parseStatusClass();
+      this.parseStatusText();
+
+      this.requestInFlight = false;
     });
   }
 
@@ -84,35 +117,29 @@ export class SubscriptionItem {
     return currency.toUpperCase();
   }
 
-  parseStatus(status: string): string {
-    if (status === SubscriptionState.ACTIVE) {
-      return 'active';
+  parseStatusText(): void {
+    if (this.status === SubscriptionState.ACTIVE) {
+      this.statusText = 'active';
     }
 
-    if (status === SubscriptionState.PENDING_UNSUBSCRIPTION) {
-      return 'unsubscribed but active'
+    if (this.status === SubscriptionState.PENDING_UNSUBSCRIPTION) {
+      this.statusText = 'unsubscribed but active'
     }
-
-    return '';
   }
 
-  parseStatusClass(status: string) {
-    if (status === SubscriptionState.ACTIVE) {
-      return 'active-status';
+  parseStatusClass(): void {
+    if (this.status === SubscriptionState.ACTIVE) {
+      this.statusClass = 'active-status';
     }
 
-    if (status === SubscriptionState.PENDING_UNSUBSCRIPTION) {
-      return 'pending-status'
+    if (this.status === SubscriptionState.PENDING_UNSUBSCRIPTION) {
+      this.statusClass = 'pending-status'
     }
-
-    return '';
   }
 
-  parseStatusButtonClass(status: string): string {
-    if (status === SubscriptionState.PENDING_UNSUBSCRIPTION) {
-      return 'button-disabled';
+  parseStatusButtonClass(): void {
+    if (this.status === SubscriptionState.PENDING_UNSUBSCRIPTION) {
+      this.statusButtonClass = 'reactivate-button';
     }
-
-    return '';
   }
 }

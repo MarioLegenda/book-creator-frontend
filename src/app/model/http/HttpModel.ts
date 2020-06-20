@@ -498,11 +498,13 @@ export class HttpModel {
   static buildAndRunProject(
     content: string,
     state: string,
+    executionType: string = 'private'
   ) {
     return {
       data: {
         content,
         state,
+        executionType,
       }
     }
   }
@@ -529,6 +531,7 @@ export class HttpModel {
     code: string,
     environment: string,
     state: string,
+    executionType: string = 'private',
   ) {
     return {
       data: {
@@ -537,6 +540,7 @@ export class HttpModel {
         code,
         environment,
         state,
+        executionType,
       }
     }
   }

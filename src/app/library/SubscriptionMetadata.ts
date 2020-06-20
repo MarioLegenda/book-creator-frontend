@@ -1,6 +1,6 @@
 export class SubscriptionMetadata {
   private readonly types = {
-    infinite_editor_session_anually: {
+    infinite_editor_session_annually: {
       settingsList: {
         title: 'Infinite editor session',
       }
@@ -10,24 +10,24 @@ export class SubscriptionMetadata {
         title: 'Infinite editor session'
       }
     },
-    '10_code_project_monthly': {
+    timeout_reader_increase_monthly: {
       settingsList: {
-        title: '10 code project imports per blog',
+        title: 'Increase timeout for readers',
       }
     },
-    '10_code_project_anually': {
+    timeout_reader_increase_annually: {
       settingsList: {
-        title: '10 code project imports per blog',
+        title: 'Increase timeout for readers',
       }
     },
-    timeout_increase_monthly: {
+    timeout_author_increase_monthly: {
       settingsList: {
-        title: 'Up to 20 seconds code execution timeout for your readers',
+        title: 'Increased timeout for authors and their readers',
       }
     },
-    timeout_increase_anually: {
+    timeout_author_increase_annually: {
       settingsList: {
-        title: 'Up to 20 seconds code execution timeout for your readers',
+        title: 'Increased timeout for authors and their readers',
       }
     }
   };

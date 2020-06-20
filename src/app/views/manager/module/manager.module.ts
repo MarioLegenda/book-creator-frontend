@@ -19,9 +19,9 @@ import {MatSelectModule} from "@angular/material/select";
 import {NewCodeProjectModule} from "../../shared/modules/newCodeProjectModal/new-code-project.module";
 import {RemoveItemService} from "../shared/RemoveItemService";
 import {ProfileComponent} from "../profile/profile.component";
-import {SettingsComponent} from "../settings/settings.component";
+import {SubscriptionComponent} from "../subscriptions/subscription.component";
 import {PublishComponent} from "../publishBlog/publish.component";
-import {SubscriptionItem} from "../settings/subscriptionItem/subscription-item.component";
+import {SubscriptionItem} from "../subscriptions/subscriptionItem/subscription-item.component";
 import {UnsubscribeDialog} from "../modals/unsubscribeDialog/unsubscribe-dialog.component";
 import {PublishBlogModalComponent} from "../modals/publishedBlog/publish-blog-modal.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
@@ -42,7 +42,7 @@ import {ManagementMenuComponent} from "../menu/menu.component";
     UnsubscribeDialog,
     SearchComponent,
     ProfileComponent,
-    SettingsComponent,
+    SubscriptionComponent,
     PublishComponent,
     SubscriptionItem,
     PublishBlogModalComponent,

@@ -5,6 +5,7 @@ import { KnowledgeSourceListingComponent } from '../blogs/listing/knowledge-sour
 import { CodeProjectsComponent } from '../codeProjects/listing/code-projects.component';
 import {ProfileComponent} from "../profile/profile.component";
 import {PublishComponent} from "../publishBlog/publish.component";
+import {SubscriptionComponent} from "../subscriptions/subscription.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'user-section/profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'user-section/subscriptions',
+        component: SubscriptionComponent,
       },
       {
         path: 'blog/publish/:sourceShortId',

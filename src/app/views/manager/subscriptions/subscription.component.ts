@@ -7,11 +7,11 @@ import {SubscriptionMetadata} from "../../../library/SubscriptionMetadata";
 @Component({
   selector: 'cms-user-section-profile',
   styleUrls: [
-    './settings.component.scss',
+    './subscription.component.scss',
   ],
-  templateUrl: './settings.component.html',
+  templateUrl: './subscription.component.html',
 })
-export class SettingsComponent implements OnInit {
+export class SubscriptionComponent implements OnInit {
   subscriptions = [];
   noSubscriptions = null;
 
@@ -21,11 +21,11 @@ export class SettingsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.loadSubscriptions();
+    this.loadSubscriptions();
   }
 
   private loadSubscriptions(): void {
-    const subscriptions = this.accountProvider.getAccount().subscriptions;
+    const subscriptions: any = this.accountProvider.getAccount().subscriptions;
 
     if (subscriptions.length === 0) {
       this.noSubscriptions = true;
@@ -33,7 +33,9 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    this.subscriptionRepository.getActiveSubscriptions(HttpModel.getActiveSubscriptions(subscriptions))
+    const subscriptionUuids = subscriptions.map(s => s.subscriptionUuid);
+
+    this.subscriptionRepository.getActiveSubscriptions(HttpModel.getActiveSubscriptions(subscriptionUuids))
       .subscribe((res) => {
         if (res.length === 0) {
           this.noSubscriptions = true;

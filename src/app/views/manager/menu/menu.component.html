@@ -43,5 +43,18 @@
         PROFILE
       </a>
     </div>
+
+    <div class="menu-entry  col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         [ngClass]="{'selected-menu-entry': type === 'profile'}"
+         routerLink="./user-section/subscriptions">
+      <div class="menu-icon-wrapper col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <i class="menu-icon fas fa-money-check-alt"></i>
+      </div>
+
+      <a
+        class="entry col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        SUBSCRIPTIONS
+      </a>
+    </div>
   </nav>
 </div>

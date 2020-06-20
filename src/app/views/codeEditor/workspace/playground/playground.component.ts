@@ -64,7 +64,8 @@ export class PlaygroundComponent {
     this.previousCode = code.code;
 
     const state: string = (this.isSession) ? 'session': 'dev';
-    const model = HttpModel.buildAndRunProject(code.code, state);
+    const executionType: string = (this.isSession) ? 'public' : 'private';
+    const model = HttpModel.buildAndRunProject(code.code, state, executionType);
     const defaultTimeout: string = this.project.environment.defaultTimeout + '';
     const timeout = parseInt(`${defaultTimeout[0]}${defaultTimeout[1]}`) * 1000 + 2000;
 

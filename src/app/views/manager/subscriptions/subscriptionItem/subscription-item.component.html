@@ -2,7 +2,7 @@
   <h1
     [ngClass]="{'request-in-flight': requestInFlight}"
     (click)="onSelectEntry()">
-    {{subscriptionMetadata.title}} <span [ngClass]="['title-highlight', parseStatusClass(status)]">/ {{parseStatus(status)}}</span>
+    {{subscriptionMetadata.title}} <span [ngClass]="['title-highlight', statusClass]">/ {{statusText}}</span>
     <i class="chevron fas" [ngClass]="{'fa-chevron-left': !this.selected, 'fa-chevron-down': this.selected}"></i>
   </h1>
 
@@ -27,8 +27,12 @@
       <p class="item col-xs-5 col-md-5 col-lg-5">{{subscription.currentPeriodEnd}}</p>
     </div>
 
-    <div class="unsubscribe col-xs-12 col-md-12 col-lg-12">
-      <button [ngClass]="['button', parseStatusButtonClass(status)]" (click)="onUnsubscribe()">Unsubscribe</button>
+    <div *ngIf="status === 'active'" class="unsubscribe col-xs-12 col-md-12 col-lg-12">
+      <button [ngClass]="{'button': true, 'button-disabled': requestInFlight}" (click)="onUnsubscribe()">Unsubscribe</button>
+    </div>
+
+    <div *ngIf="status === 'pending_unsubscription'" class="unsubscribe col-xs-12 col-md-12 col-lg-12">
+      <button [ngClass]="{'button': true, 'button-disabled': requestInFlight, 'reactivate-button': true}" (click)="onReactivate()">Reactivate</button>
     </div>
   </div>
 </div>
