@@ -29,6 +29,7 @@ export class SubscriptionItem {
   ) {}
 
   ngOnInit() {
+    console.log(this.subscriptionMetadata);
     this.status = this.subscriptionMetadata.status;
     this.parseStatusText();
     this.parseStatusClass();
@@ -48,6 +49,8 @@ export class SubscriptionItem {
 
     this.subscriptionRepository.getStripeSubscription(model).subscribe((subscription) => {
       this.subscription = subscription;
+
+      console.log(this.subscription);
 
       this.requestInFlight = false;
     });

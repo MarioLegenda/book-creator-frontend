@@ -34,6 +34,22 @@
     }
   }
 
+  .faq {
+    float: none;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 40px;
+
+    border: 1px solid $almostWhiteGray;
+    border-radius: 10px;
+    padding: 20px;
+
+    .bolder {
+      color: black;
+      font-weight: bolder;
+    }
+  }
+
   .request-in-flight {
     color: $lightestGray;
 
@@ -55,6 +71,8 @@
   }
 
   .content-item {
+    float: none;
+    overflow: hidden;
     padding: 10px 10px 5px 10px;
     border-bottom: 1px solid $almostWhiteGray;
 

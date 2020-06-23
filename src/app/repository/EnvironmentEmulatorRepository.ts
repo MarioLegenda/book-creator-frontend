@@ -18,7 +18,7 @@ export class EnvironmentEmulatorRepository {
   public BuildAndRunProject(codeProjectUuid: string, model, defaultTimeout: number = 16000) {
     return this.httpClient.post(this.routeResolver.runProject(codeProjectUuid), model)
       .pipe(
-        timeout(defaultTimeout),
+        timeout(60000),
         map((response: IResponse) => response.data)
       );
   }
@@ -26,7 +26,7 @@ export class EnvironmentEmulatorRepository {
   public buildAndRunSingleFile(model, defaultTimeout: number = 16000) {
     return this.httpClient.post(this.envRouteResolver.singleFileBuildAndRun(), model)
       .pipe(
-        timeout(defaultTimeout),
+        timeout(60000),
         map((response: IResponse) => response.data)
     );
   }

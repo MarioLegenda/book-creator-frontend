@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-md-12 col-lg-12 subscription">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subscription">
   <h1
     [ngClass]="{'request-in-flight': requestInFlight}"
     (click)="onSelectEntry()">
@@ -6,26 +6,39 @@
     <i class="chevron fas" [ngClass]="{'fa-chevron-left': !this.selected, 'fa-chevron-down': this.selected}"></i>
   </h1>
 
-  <div *ngIf="selected && subscription" class="content col-xs-12 col-md-12 col-lg-12">
+  <div *ngIf="selected && subscription" class="content col-sm-12 col-xs-12 col-lg-12 col-md-12">
     <div class="content-item col-xs-12 col-lg-12 col-md-12">
       <p class="item col-xs-6 col-md-6 col-lg-6">Cost:</p>
       <p class="item duration col-xs-5 col-md-5 col-lg-5">{{parseCost(subscription.amount)}} {{parseCurrency(subscription.currency)}} / paid {{parseDuration(subscription.interval)}}</p>
     </div>
 
-    <div class="content-item col-xs-12 col-lg-12 col-md-12">
+    <div class="content-item col-sm-12 col-xs-12 col-lg-12 col-md-12">
       <p class="item col-xs-6 col-md-6 col-lg-6">Subscribed on:</p>
       <p class="item col-xs-5 col-md-5 col-lg-5">{{subscription.createdAt}}</p>
     </div>
 
-    <div class="content-item col-xs-12 col-lg-12 col-md-12">
+    <div class="content-item col-sm-12 col-xs-12 col-lg-12 col-md-12">
       <p class="item col-xs-6 col-md-6 col-lg-6">Current charging period start:</p>
       <p class="item col-xs-5 col-md-5 col-lg-5">{{subscription.currentPeriodStart}}</p>
     </div>
 
-    <div class="content-item col-xs-12 col-lg-12 col-md-12">
+    <div class="content-item col-sm-12 col-xs-12 col-lg-12 col-md-12">
       <p class="item col-xs-6 col-md-6 col-lg-6">Current charging period end:</p>
       <p class="item col-xs-5 col-md-5 col-lg-5">{{subscription.currentPeriodEnd}}</p>
     </div>
+
+    <p *ngIf="status === 'active'" class="faq col-xs-10 col-sm-10 col-lg-10 col-md-10">
+      If you decide to unsubscribe, you will still be able to use the features of this
+      subscription until the end of the charging period which is
+      <span class="bolder">{{subscription.currentPeriodEnd}}</span>
+      for this subscription.
+    </p>
+
+    <p *ngIf="status === 'pending_unsubscription'" class="faq col-xs-10 col-sm-10 col-lg-10 col-md-10">
+      This subscription will end and be removed on
+      <span class="bolder">{{subscription.currentPeriodEnd}}</span>. You can still use the
+      features of this subscription until that date. If you wish to reactivate, click the <span class="bolder">Reactivate</span> button.
+    </p>
 
     <div *ngIf="status === 'active'" class="unsubscribe col-xs-12 col-md-12 col-lg-12">
       <button [ngClass]="{'button': true, 'button-disabled': requestInFlight}" (click)="onUnsubscribe()">Unsubscribe</button>
