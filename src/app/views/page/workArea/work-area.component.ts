@@ -126,47 +126,20 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<any>) {
+    if (event.previousIndex === event.currentIndex) return;
+
     const previous: any = this.components[event.previousIndex];
     const current: any = this.components[event.currentIndex];
 
-    const temp = previous.position;
-    previous.position = current.position;
-    current.position = temp;
-
     const pageUuid: string = this.sourceContext.page.uuid;
     const blockUuid: string = previous.blockUuid;
-    const position: number = previous.position;
+    const position: number = event.previousIndex - event.currentIndex;
 
     const model = HttpModel.updatePosition(pageUuid, blockUuid, position);
 
-    this.pageRepository.updatePosition(model).subscribe(() => {
-      changeState(this.sourceContext, this.store);
-
-      const pageUuid: string = this.sourceContext.page.uuid;
-      const blockUuid: string = current.blockUuid;
-      const position: number = current.position;
-
-      const model = HttpModel.updatePosition(pageUuid, blockUuid, position);
-
-      this.pageRepository.updatePosition(model).subscribe(() => {
-
-      })
-    });
-
-/*    this.store.dispatch(httpUpdateBlockPosition({
-      pageUuid: this.sourceContext.page.uuid,
-      blockUuid: previous.blockUuid,
-      position: previous.position,
-    }));
-
-    this.store.dispatch(httpUpdateBlockPosition({
-      pageUuid: this.sourceContext.page.uuid,
-      blockUuid: current.blockUuid,
-      position: current.position,
-    }));*/
+    this.pageRepository.updatePosition(model).subscribe(() => {});
 
     changeState(this.sourceContext, this.store);
-
     moveItemInArray(this.components, event.previousIndex, event.currentIndex);
   }
 
