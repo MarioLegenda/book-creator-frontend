@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {RemoveConfirmDialogComponent} from "../../modals/removeConfirm/remove-confirm-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {debounceTime} from "rxjs/operators";
@@ -9,6 +9,8 @@ import {QuoteBlock} from "../../../../model/app/QuoteBlock";
 import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {QuoteHelpModalComponent} from "../../modals/quoteHelp/quote-help-modal.component";
+import {_switchPositionFlow} from "../../shared/_switchPositionFlow";
+import {PositionMap} from "../../../../logic/PageComponent/PositionMap";
 
 @Component({
   selector: 'cms-quote-block',
@@ -29,10 +31,13 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
 
+  @Output('positionChangeObserver') positionChangeObserver: EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}> = new EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}>();
+
   constructor(
     private dialog: MatDialog,
     private store: Store<any>,
     private deviceDetector: DeviceDetectorService,
+    private positionMap: PositionMap,
   ) {}
 
   ngOnInit() {
@@ -84,6 +89,10 @@ export class QuoteBlockComponent implements OnInit, OnDestroy {
 
   onChange() {
     this.typeAheadSource.next();
+  }
+
+  onSwitchPosition() {
+    _switchPositionFlow.call(this);
   }
 
   remove() {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FileUploadRepository} from "../../../../repository/FileUploadRepository";
 import {HttpModel} from "../../../../model/http/HttpModel";
 import {MultimediaBlockModel} from "../../../../model/app/MultimediaBlockModel";
@@ -15,6 +15,8 @@ import {DeviceDetectorService} from "ngx-device-detector";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MultimediaHelpModalComponent} from "../../modals/multimediaBlock/multimedia-help-modal.component";
 import {IResponse} from "../../../../model/http/response/IResponse";
+import {_switchPositionFlow} from "../../shared/_switchPositionFlow";
+import {PositionMap} from "../../../../logic/PageComponent/PositionMap";
 
 @Component({
   selector: 'cms-multimedia-block',
@@ -38,6 +40,8 @@ export class MultimediaBlockComponent implements OnInit {
   imageReadFailed: boolean = false;
   contentUploaded: boolean = false;
 
+  @Output('positionChangeObserver') positionChangeObserver: EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}> = new EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}>();
+
   constructor(
     private rebelCdnRepository: FileUploadRepository,
     private pageRepository: PageRepository,
@@ -46,6 +50,7 @@ export class MultimediaBlockComponent implements OnInit {
     private fileUploadRepository: FileUploadRepository,
     private deviceDetector: DeviceDetectorService,
     private domSanitizer: DomSanitizer,
+    private positionMap: PositionMap,
   ) {}
 
   ngOnInit() {
@@ -144,6 +149,10 @@ export class MultimediaBlockComponent implements OnInit {
 
   fileChange(files: FileList) {
     this.initFileChangeFlow(files);
+  }
+
+  onSwitchPosition() {
+    _switchPositionFlow.call(this);
   }
 
   private loadInitialData() {

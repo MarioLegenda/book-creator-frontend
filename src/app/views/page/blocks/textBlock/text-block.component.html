@@ -2,7 +2,7 @@
   (mouseenter)="componentHovered()"
   (mouseleave)="componentUnHovered()"
   (click)="componentTouched()"
-  class="text-block-wrapper col-lg-12 col-md-12 col-xs-12">
+  class="text-block-wrapper col-lg-12 col-sm-12 col-md-12 col-xs-12">
 
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
@@ -69,6 +69,17 @@
 
         <div class="icon-group">
           <i (click)="onCompressBlock()" class="icon fas fa-compress"></i>
+        </div>
+      </div>
+
+      <div
+        *ngIf="expanded"
+        matTooltip="Switch position"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <div class="icon-group">
+          <i (click)="onSwitchPosition()" class="icon fas fa-random"></i>
         </div>
       </div>
 

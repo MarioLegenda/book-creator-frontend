@@ -114,7 +114,10 @@ export class ViewActionSubscriber {
   }
 
   private removeBlock(action) {
-    this.componentTracker.remove(action.position);
+    this.componentTracker.remove({
+      position: action.position,
+      positionMap: action.positionMap,
+    });
   }
 
   private addMultimediaBlock(action) {

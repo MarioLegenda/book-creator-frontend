@@ -1,10 +1,11 @@
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {reduce} from "rxjs/operators";
+import {map, reduce} from "rxjs/operators";
 import {RouteResolver} from "./routeResolvers/RouteResolver";
 import {BlockRouteResolver} from "./routeResolvers/BlockRouteResolver";
 import {IPageData} from "../logic/PageComponent/context/IPageData";
 import {Observable} from "rxjs";
+import {IResponse} from "../model/http/response/IResponse";
 
 @Injectable({
   providedIn: 'root',
@@ -85,90 +86,70 @@ export class PageRepository {
   addMultimediaBlock(model) {
     return this.httpClient.put(this.blockRouteResolver.addNewMultimediaBlock(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   updateMultimediaBlock(model) {
     return this.httpClient.post(this.blockRouteResolver.updateMultimediaBlock(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   removeMultimediaBlock(model) {
     return this.httpClient.post(this.blockRouteResolver.removeMultimediaBlock(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   updatePosition(model) {
     return this.httpClient.post(this.blockRouteResolver.updatePosition(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   addMainHeader(model) {
     return this.httpClient.put(this.blockRouteResolver.addMainHeader(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   updateMainHeader(model) {
     return this.httpClient.post(this.blockRouteResolver.updateMainHeader(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   addSubheader(model) {
     return this.httpClient.put(this.blockRouteResolver.addSubheader(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   updateSubheader(model) {
     return this.httpClient.post(this.blockRouteResolver.updateSubheader(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   addQuoteBlock(model) {
     return this.httpClient.put(this.blockRouteResolver.addQuoteBlock(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 
   updateQuoteBlock(model) {
     return this.httpClient.post(this.blockRouteResolver.updateQuoteBlock(), model)
       .pipe(
-        reduce((acc, res: any) => {
-          return res.data;
-        }, {}),
+        map((response: IResponse) => response.data),
       );
   }
 }

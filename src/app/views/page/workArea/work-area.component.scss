@@ -52,6 +52,16 @@
   }
 }
 
+.position-indicator {
+  position: absolute;
+
+  top: 100px; left: -30px;
+
+  font-size: 2em;
+
+  color: $lightestGray;
+}
+
 .drag-preview {
   padding: 30px;
   float: left;

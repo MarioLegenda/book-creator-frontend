@@ -15,4 +15,8 @@ export class PositionMap {
 
     return this.max;
   }
+
+  getMax(): number {
+    return this.max;
+  }
 }

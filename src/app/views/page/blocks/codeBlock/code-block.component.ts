@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {
   httpRemoveBlock,
@@ -23,6 +23,8 @@ import {changeState} from "../../../../logic/utilFns";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ErrorCodes} from "../../../../error/ErrorCodes";
 import {CodeBlockHelpModalComponent} from "../../modals/codeBlockHelp/code-block-help-modal.component";
+import {_switchPositionFlow} from "../../shared/_switchPositionFlow";
+import {PositionMap} from "../../../../logic/PageComponent/PositionMap";
 
 @Component({
   selector: 'cms-code-block',
@@ -40,6 +42,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     private codeProjectsRepository: CodeProjectsRepository,
     private blogRepository: BlogRepository,
     private deviceDetector: DeviceDetectorService,
+    private positionMap: PositionMap,
   ) {}
 
   hovered: boolean = false;
@@ -71,6 +74,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   @Input('component') component: CodeBlockModel;
   @Input('componentDropped') componentDropped: Subject<any>;
   @Input('appContext') appContext: AppContext;
+  @Output('positionChangeObserver') positionChangeObserver: EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}> = new EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}>();
 
   ngOnInit() {
     this.code = this.component.text;
@@ -290,6 +294,10 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   onTestRunWindowClose() {
     this.hasTestRunWindow = false;
     this.testRunResult = null;
+  }
+
+  onSwitchPosition() {
+    _switchPositionFlow.call(this);
   }
 
   private createUpdateModel() {

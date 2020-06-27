@@ -1,0 +1,29 @@
+<div class="dialog">
+  <div class="close-dialog">
+    <i (click)="close()" class="fas fa-times"></i>
+  </div>
+
+  <div class="header">
+    <i class="fas fa-link icon"></i>
+    <p>Change position</p>
+  </div>
+
+  <p class="col-xs-12 col-md-12 col-lg-12 col-sm-12 current-position-info">Current position is <span class="actual-position">{{model.currentPosition}}</span></p>
+
+  <div class="dialog-content form-group col-xs-12 col-md-12 col-lg-12 col-sm-12">
+    <input cdkFocusInitial [(ngModel)]="selectedPosition"  placeholder="Position" class="form-input form-control position-input">
+  </div>
+
+  <div
+    *ngFor="let error of errors"
+    class="error col-xs-12 col-md-12 col-lg-12">
+    <p>{{error}}</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button
+      [disabled]="!isValidPosition()"
+      class="btn create"
+      (click)="changePosition()">Change</button>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {httpRemoveBlock, httpUpdateTextBlock} from "../../../../store/page/httpActions";
 import * as BaloonEditor from "@ckeditor/ckeditor5-build-balloon";
@@ -13,6 +13,10 @@ import {AppContext} from "../../../../logic/PageComponent/context/AppContext";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {TextBlockHelpModalComponent} from "../../modals/textBlockHelp/text-block-help-modal.component";
+import {PageRepository} from "../../../../repository/PageRepository";
+import {PositionChangeModalComponent} from "../../modals/changePosition/position-change-modal.component";
+import {PositionMap} from "../../../../logic/PageComponent/PositionMap";
+import {_switchPositionFlow} from "../../shared/_switchPositionFlow";
 
 @Component({
   selector: 'cms-view-text-block',
@@ -55,6 +59,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
   @Input('index') index: number;
   @Input('component') component: TextBlockModel;
   @Input('appContext') appContext: AppContext;
+  @Output('positionChangeObserver') positionChangeObserver: EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}> = new EventEmitter<{uuid: string, nextPosition: number, currentPosition: number}>()
 
   private typeAheadSource = new Subject();
   private typeAheadObservable = null;
@@ -63,6 +68,7 @@ export class TextBlockComponent implements OnDestroy, OnInit {
     private store: Store<any>,
     public dialog: MatDialog,
     private deviceDetector: DeviceDetectorService,
+    private positionMap: PositionMap,
   ) {}
 
   ngOnInit() {
@@ -90,6 +96,10 @@ export class TextBlockComponent implements OnDestroy, OnInit {
 
   onCompressBlock() {
     this.expanded = false;
+  }
+
+  onSwitchPosition() {
+    _switchPositionFlow.call(this);
   }
 
   addInternalName() {

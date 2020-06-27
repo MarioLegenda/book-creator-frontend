@@ -30,8 +30,8 @@ export class ComponentTracker {
     this.componentSubject.next(component);
   }
 
-  remove(position: number): void {
-    this.positionSubject.next(position);
+  remove(positionData: any): void {
+    this.positionSubject.next(positionData);
   }
 
   getNextPosition(): number {

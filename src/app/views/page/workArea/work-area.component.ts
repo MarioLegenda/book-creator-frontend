@@ -4,7 +4,7 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {
   httpCreateCodeBlock, httpCreateMainHeader,
   httpCreateMultimediaBlock, httpCreateQuoteBlock, httpCreateSubheader,
-  httpCreateTextBlock, httpUpdateBlockPosition,
+  httpCreateTextBlock,
 } from 'src/app/store/page/httpActions';
 import {Store} from '@ngrx/store';
 import {addPosition, changeState} from "../../../logic/utilFns";
@@ -21,6 +21,7 @@ import {QuoteBlock} from "../../../model/app/QuoteBlock";
 import {clearStateAction} from "../../../store/globalReducers";
 import {HttpModel} from "../../../model/http/HttpModel";
 import {PageRepository} from "../../../repository/PageRepository";
+import {_reorderByPosition} from "./_reorderByPosition";
 @Component({
   selector: 'cms-work-area',
   styleUrls: [
@@ -31,6 +32,8 @@ import {PageRepository} from "../../../repository/PageRepository";
 })
 export class WorkAreaComponent implements OnInit, OnDestroy {
   components = [];
+
+  maxPosition: number = 0;
 
   droppedSubject = new Subject();
 
@@ -56,10 +59,12 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
       this.addComponentType(component);
     });
 
-    this.componentTracker.positionSubscribe((position) => {
+    this.componentTracker.positionSubscribe(({position, positionMap}) => {
       const idx = this.components.findIndex(val => val.position === position);
 
       this.components.splice(idx, 1);
+
+      _reorderByPosition.call(this, positionMap);
     });
 
     this.appContextInitializer.whenInit((sourceContext: AppContext) => {
@@ -121,15 +126,14 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
     changeState(this.sourceContext, this.store);
   }
 
-  onDropped(component) {
+  onDropped(component): void {
     this.droppedSubject.next(component.blockUuid);
   }
 
-  drop(event: CdkDragDrop<any>) {
+  drop(event: CdkDragDrop<any>): void {
     if (event.previousIndex === event.currentIndex) return;
 
     const previous: any = this.components[event.previousIndex];
-    const current: any = this.components[event.currentIndex];
 
     const pageUuid: string = this.sourceContext.page.uuid;
     const blockUuid: string = previous.blockUuid;
@@ -137,10 +141,43 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
 
     const model = HttpModel.updatePosition(pageUuid, blockUuid, position);
 
-    this.pageRepository.updatePosition(model).subscribe(() => {});
+    this.pageRepository.updatePosition(model).subscribe((res) => {
+      const positionMap = res.positionMap;
+
+      _reorderByPosition.call(this, positionMap);
+    });
 
     changeState(this.sourceContext, this.store);
     moveItemInArray(this.components, event.previousIndex, event.currentIndex);
+  }
+
+  onPositionChange($event: {uuid: string, nextPosition: number, currentPosition: number}): void {
+    const nextPosition: number = $event.nextPosition;
+    const blockUuid: string = $event.uuid;
+
+    const currentIdx: number = this.components.findIndex(c => c.blockUuid === blockUuid);
+    const nextIdx: number = this.components.findIndex(c => c.position === nextPosition);
+
+    const previous: any = this.components[currentIdx];
+
+    const pageUuid: string = this.sourceContext.page.uuid;
+    const modelBlockUuid: string = previous.blockUuid;
+    const position: number = currentIdx - nextIdx;
+
+    const model = HttpModel.updatePosition(pageUuid, modelBlockUuid, position);
+
+    this.pageRepository.updatePosition(model).subscribe((res) => {
+      const positionMap = res.positionMap;
+
+      for (const map of positionMap) {
+        const idx: number = this.components.findIndex(c => c.blockUuid === map.uuid);
+
+        this.components[idx].position = map.position;
+      }
+    });
+
+    changeState(this.sourceContext, this.store);
+    moveItemInArray(this.components, currentIdx, nextIdx);
   }
 
   trackByFn(_, item) {

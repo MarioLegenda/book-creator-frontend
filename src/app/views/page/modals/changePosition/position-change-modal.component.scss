@@ -1,0 +1,26 @@
+@import '../../../../../styles/variables';
+
+.current-position-info {
+  background-color: $almostWhiteGray;
+  padding: 10px;
+  border-radius: 5px;
+  color: $appBlack;
+  float: right;
+
+  margin-bottom: 40px;
+
+  .actual-position {
+    color: black;
+    font-weight: bolder;
+  }
+}
+
+.position-input {
+  width: 180px !important;
+  height: 100px !important;
+  text-align: center;
+  font-size: 2em;
+  color: $appBlack;
+
+  margin: 0 auto;
+}

@@ -300,12 +300,16 @@ export class HttpActionSubscriber {
     const model = HttpModel.removeBlock(pageUuid, blockUuid);
 
     if (action.blockType === ComponentType.MULTIMEDIA_BLOCK_TYPE) {
-      this.pageRepository.removeMultimediaBlock(model).subscribe(() => {
+      this.pageRepository.removeMultimediaBlock(model).subscribe((res: any) => {
+        action.positionMap = res.positionMap;
+
         this.store.dispatch(viewTextBlockRemoved(action));
         changeState(this.pageContextInitializer.getContext(), this.store);
       });
     } else {
-      this.pageRepository.removeBlock(model).subscribe(() => {
+      this.pageRepository.removeBlock(model).subscribe((res: any) => {
+        action.positionMap = res.data.positionMap;
+
         this.store.dispatch(viewTextBlockRemoved(action));
         changeState(this.pageContextInitializer.getContext(), this.store);
       });

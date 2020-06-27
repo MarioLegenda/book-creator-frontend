@@ -2,7 +2,7 @@
   (mouseenter)="componentHovered()"
   (mouseleave)="componentUnHovered()"
   (click)="componentTouched()"
-  class="multimedia-block-wrapper col-lg-12 col-md-12 col-xs-12">
+  class="multimedia-block-wrapper col-lg-12 col-sm-12 col-md-12 col-xs-12">
 
   <div class="block-metadata col-xs-12 col-lg-12 col-md-12">
     <div class="block-actions col-lg-12 col-md-12 col-xs-12">
@@ -56,6 +56,16 @@
           class="icon fab fa-youtube"
           matTooltip="Embed a Youtube video">
         </i>
+      </div>
+
+      <div
+        matTooltip="Switch position"
+        [style.visibility]="(hovered) ? 'visible' : 'hidden'"
+        class="block-action col-lg-1 col-md-1 col-xs-1">
+
+        <div class="icon-group">
+          <i (click)="onSwitchPosition()" class="icon fas fa-random"></i>
+        </div>
       </div>
 
       <div

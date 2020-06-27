@@ -53,6 +53,7 @@ import {TextBlockHelpModalComponent} from "../modals/textBlockHelp/text-block-he
 import {MultimediaHelpModalComponent} from "../modals/multimediaBlock/multimedia-help-modal.component";
 import {CodeBlockHelpModalComponent} from "../modals/codeBlockHelp/code-block-help-modal.component";
 import {QuoteHelpModalComponent} from "../modals/quoteHelp/quote-help-modal.component";
+import {PositionChangeModalComponent} from "../modals/changePosition/position-change-modal.component";
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import {QuoteHelpModalComponent} from "../modals/quoteHelp/quote-help-modal.comp
     MultimediaHelpModalComponent,
     CodeBlockHelpModalComponent,
     QuoteHelpModalComponent,
+    PositionChangeModalComponent,
   ],
   imports: [
     MatCardModule,
@@ -134,6 +136,7 @@ import {QuoteHelpModalComponent} from "../modals/quoteHelp/quote-help-modal.comp
     MultimediaHelpModalComponent,
     CodeBlockHelpModalComponent,
     QuoteHelpModalComponent,
+    PositionChangeModalComponent,
   ]
 })
 export class PageModule { }
