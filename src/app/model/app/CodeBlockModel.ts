@@ -14,6 +14,7 @@ export class CodeBlockModel {
     public position: number,
     public internalName: string,
     public comment: string,
+    public codeResult: string,
     public blockType: string = ComponentType.CODE_BLOCK_TYPE,
   ) {}
 }

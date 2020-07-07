@@ -190,8 +190,12 @@
   </cms-block-errors>
 
   <cms-block-info
+    (codeResultNullified)="onCodeResultNullified()"
     [emulator]="emulator"
     [readOnly]="readonly"
+    [codeResult]="codeResult"
+    [pageUuid]="appContext.page.uuid"
+    [blockUuid]="component.blockUuid"
     [isGist]="isGist"
     [isCode]="isCode"
     [codeProject]="codeProject">
@@ -200,6 +204,10 @@
   <cms-test-run-result
     *ngIf="hasTestRunWindow"
     (testRunCloseEvent)="onTestRunWindowClose()"
+    (testRunResultSaved)="onTestRunResultSaved($event)"
+    [currentResult]="codeResult"
+    [pageUuid]="appContext.page.uuid"
+    [blockUuid]="component.blockUuid"
     [result]="testRunResult">
   </cms-test-run-result>
 </div>

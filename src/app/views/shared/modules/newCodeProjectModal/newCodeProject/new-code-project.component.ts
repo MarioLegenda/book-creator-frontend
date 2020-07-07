@@ -38,7 +38,9 @@ export class NewCodeProjectDialogComponent implements OnInit {
         this.selected = this.model.environment.name;
       }
 
-      this.environments = data as any;
+      const environments = data as any;
+
+      this.environments = environments.filter(e => e.name !== 'haskell' && e.name !== 'c' && e.name !== 'c++');
     });
   }
 

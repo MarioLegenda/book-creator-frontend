@@ -31,6 +31,7 @@ export class MainHelpModalComponent {
   @ViewChild('readonly') readonly: TemplateRef<any>;
   @ViewChild('runCode') runCode: TemplateRef<any>;
   @ViewChild('runCodeProject') runCodeProject: TemplateRef<any>;
+  @ViewChild('saveCodeResult') saveCodeResult: TemplateRef<any>;
   @ViewChild('quoteBlock') quoteBlock: TemplateRef<any>;
   @ViewChild('rearrangingBlocks') rearrangingBlocks: TemplateRef<any>;
 

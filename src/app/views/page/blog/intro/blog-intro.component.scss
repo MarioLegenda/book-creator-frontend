@@ -4,6 +4,10 @@
   float: none;
   position: relative;
 
+  .block-name {
+    color: $lightGray;
+  }
+
   .title-input {
     float: none;
     display: block;
@@ -22,5 +26,11 @@
     &:focus {
       border-bottom: 1px solid $mainAppColor;
     }
+  }
+
+  .info {
+    font-size: 0.8em;
+    font-style: italic;
+    margin-top: 5px;
   }
 }

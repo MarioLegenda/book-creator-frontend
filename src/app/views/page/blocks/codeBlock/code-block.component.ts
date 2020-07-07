@@ -60,6 +60,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
   codeProject = null;
   isCode: boolean = true;
   isCodeRunning: boolean = false;
+  codeResult: string = null;
 
   code: string = '';
 
@@ -85,6 +86,7 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     this.emulator = this.component.emulator;
     this.internalName = this.component.internalName;
     this.comment = this.component.comment;
+    this.codeResult = this.component.codeResult;
 
     if (this.component.codeProjectUuid) {
       this.importCodeProject(this.component.codeProjectUuid, false);
@@ -291,9 +293,21 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
     });
   }
 
-  onTestRunWindowClose() {
+  onTestRunWindowClose(): void {
     this.hasTestRunWindow = false;
     this.testRunResult = null;
+  }
+
+  onTestRunResultSaved($event: string): void {
+    this.codeResult = $event;
+
+    changeState(this.appContext, this.store);
+  }
+
+  onCodeResultNullified(): void {
+    this.codeResult = null;
+
+    changeState(this.appContext, this.store);
   }
 
   onSwitchPosition() {
@@ -533,7 +547,11 @@ export class CodeBlockComponent implements OnInit, OnDestroy {
       };
 
       if (this.emulator) {
-        options.language = this.emulator.language;
+        if (this.emulator.language === 'c') {
+          options.language = 'cpp';
+        } else {
+          options.language = this.emulator.language;
+        }
       }
 
       this.editorOptions = options;
@@ -549,6 +567,36 @@ func main() {
       if (this.emulator && this.emulator.name === "rust" && !this.code) {
         this.code = `fn main() {
 }`;
+      }
+
+      if (this.emulator && this.emulator.name === 'php74' && !this.code) {
+        this.code = `<?php
+
+echo "What's up?"
+
+?>
+        `
+        this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+      }
+
+      if (this.emulator && this.emulator.name === 'c' && !this.code) {
+        this.code = `#include <stdio.h>
+
+int main() {
+    printf("What's up?");
+}
+        `
+        this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
+      }
+
+      if (this.emulator && this.emulator.name === 'c++' && !this.code) {
+        this.code = `#include <iostream>
+
+int main() {
+    std::cout << "What's up";
+    return 0;
+}`
+        this.store.dispatch(httpUpdateCodeBlock(this.createUpdateModel()));
       }
     }, 1000);
   }

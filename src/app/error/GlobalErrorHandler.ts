@@ -20,13 +20,12 @@ export class GlobalErrorHandler implements ErrorHandler {
     const data = {
       message: 'Angular frontend error occurred',
       device: this.deviceDetectorService.getDeviceInfo(),
-      errorMessage: error.toString(),
+      errorMessage: JSON.stringify(error),
       stack: (error.stack) ? error.stack : null,
     };
 
     this.loggerRepository.remoteLog(HttpModel.remoteLog(data)).subscribe(() => {});
 
-    console.error(error);
     if (!environment.production) {
       throw new Error(error);
     }

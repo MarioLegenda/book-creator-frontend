@@ -711,9 +711,17 @@ export class HttpModel {
     }
   }
 
-  static queryFiltersModel(filters: string[]) {
+  static updateCodeResult(
+    pageUuid: string,
+    blockUuid: string,
+    codeResult: string = null,
+  ) {
     return {
-      filters,
+      data: {
+        pageUuid,
+        blockUuid,
+        codeResult,
+      }
     }
   }
 }

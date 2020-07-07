@@ -23,7 +23,7 @@ import {MetadataPlaceholderComponent} from "../blocks/textBlock/metadataPlacehol
 import {CodeBlockComponent} from "../blocks/codeBlock/code-block.component";
 import {MonacoEditorModule} from "ngx-monaco-editor";
 import {AddGithubGistDialogComponent} from "../modals/addGithubGist/add-github-gist-modal.component";
-import {InfoComponent} from "../blocks/info/info.component";
+import {InfoComponent} from "../blocks/codeBlock/info/info.component";
 import {TestRunResultComponent} from "../blocks/testRun/test-run-result.component";
 import {RemoveConfirmDialogComponent} from "../modals/removeConfirm/remove-confirm-modal.component";
 import {SelectEnvironmentDialog} from "../modals/selectEnvironment/select-environment.component";

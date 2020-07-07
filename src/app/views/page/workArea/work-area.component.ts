@@ -210,6 +210,7 @@ export class WorkAreaComponent implements OnInit, OnDestroy {
         component.position,
         component.internalName,
         component.comment,
+        component.codeResult,
       ));
     } else if (ComponentType.isMultimediaBlock(component)) {
       this.components.push(new MultimediaBlockModel(

@@ -97,7 +97,7 @@
       <button
         class="button publish-button"
         [ngClass]="{'publish-in-progress': publishInProgress}"
-        (click)="onPublish()">{{(this.isAlreadyPublished) ? 'Republish' : 'Publish' }} <i class="icon fas fa-wifi"></i>
+        (click)="onPublish()">{{(this.isAlreadyPublished) ? 'Republish' : 'Publish' }} <i class="icon fas" [ngClass]="{'fa-wifi': !publishInProgress, 'fa-atom': publishInProgress, 'fa-spin': publishInProgress}"></i>
       </button>
 
       <button

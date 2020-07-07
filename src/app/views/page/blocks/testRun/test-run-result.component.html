@@ -3,12 +3,22 @@
 
   <i
     (click)="onClose()"
-    class="close-icon fas fa-times"
-  ></i>
+    class="close-icon fas fa-times"></i>
 
   <pre *ngIf="result.success && result.result !== ''" class="result-block">{{result.result}}</pre>
   <pre *ngIf="result.success && result.result === ''" class="result-block">The result is a success but there is nothing to show.</pre>
 
   <p *ngIf="!result.success && result.result !== 'timeout'" class="error col-xs-12 col-md-12 col-lg-12">There has been an error executing your code. Please, try again later.</p>
   <p *ngIf="!result.success && result.result === 'timeout'" class="error col-xs-12 col-md-12 col-lg-12">Executing code timed out. Current timeout is {{result.timeout}} seconds.</p>
+
+  <button
+    (click)="onUpdateCodeResult()"
+    *ngIf="result.success && result !== ''"
+    [ngClass]="{'disabled': requestInFlight || resultUnchanged}"
+    class="button">
+    Save result
+  </button>
+
+  <p class="status" *ngIf="resultUnchanged && !saved">Unchanged</p>
+  <p class="status" *ngIf="saved">Saved</p>
 </div>

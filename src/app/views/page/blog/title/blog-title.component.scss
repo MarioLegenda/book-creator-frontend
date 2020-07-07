@@ -4,6 +4,10 @@
   float: none;
   position: relative;
 
+  .block-name {
+    color: $lightGray;
+  }
+
   .title-input {
     float: none;
     display: block;

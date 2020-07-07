@@ -23,6 +23,7 @@ export class BlockRouteResolver {
     updateSubheader: `${this.bookApiUri}/api/v1/pages/header/update-subheader-block`,
     addQuoteBlock: `${this.bookApiUri}/api/v1/pages/quote/add-new-block`,
     updateQuoteBlock: `${this.bookApiUri}/api/v1/pages/quote/update-block`,
+    updateCodeResult: `${this.bookApiUri}/api/v1/pages/code-block/update-code-result`,
   };
 
   addNewTextBlock(): string {
@@ -83,5 +84,9 @@ export class BlockRouteResolver {
 
   updateQuoteBlock(): string {
     return this.routes.updateQuoteBlock;
+  }
+
+  updateCodeResult(): string {
+    return this.routes.updateCodeResult;
   }
 }

@@ -152,4 +152,11 @@ export class PageRepository {
         map((response: IResponse) => response.data),
       );
   }
+
+  updateCodeResult(model) {
+    return this.httpClient.post(this.blockRouteResolver.updateCodeResult(), model)
+      .pipe(
+        map((response: IResponse) => response.data),
+      );
+  }
 }

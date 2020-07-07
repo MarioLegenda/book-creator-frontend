@@ -86,6 +86,11 @@
 
         <div class="subline col-xs-12 col-md-12 col-lg-12">
           <i class="fas fa-circle"></i>
+          <a (click)="onNavigation('saveCodeResult')">Save code result</a>
+        </div>
+
+        <div class="subline col-xs-12 col-md-12 col-lg-12">
+          <i class="fas fa-circle"></i>
           <a (click)="onNavigation('runCodeProject')">Importing and running a code project</a>
         </div>
 
@@ -223,6 +228,15 @@
       <h2 #runCode class="subheader col-xs-12 col-md-12 col-lg-12">Run your code</h2>
 
       <img class="animation" src="/static/how_to_run_your_code.gif" />
+
+      <h2 #saveCodeResult class="subheader col-xs-12 col-md-12 col-lg-12">Save code result</h2>
+
+      <p class="paragraph">Result of any code block that you execute in the CMS can be saved.
+      The saved result will be shown to the readers on the published blog. Note that you can save
+      an error result as well as a success result. Basically, anything that goes to stdout/stderr of the
+      code that you run.</p>
+
+      <img class="animation" src="/static/how_to_save_code.gif" />
 
       <h2 #runCodeProject class="subheader col-xs-12 col-md-12 col-lg-12">Import and run a code project</h2>
 

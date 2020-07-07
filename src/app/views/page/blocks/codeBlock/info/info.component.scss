@@ -1,0 +1,78 @@
+@import '../../../../../../styles/variables';
+
+.info-wrapper {
+  .info-collection {
+    margin-top: 40px;
+  }
+
+  .info-entry {
+    border-bottom: 1px solid $lightestGray;
+
+    margin-bottom: 20px;
+  }
+
+  .designation {
+    width: 50px;
+    float: left;
+
+    i {
+      color: $lightGray;
+    }
+  }
+
+  .message {
+    float: left;
+    color: $textColor;
+    font-size: 0.9em;
+  }
+
+  .highlight {
+    font-weight: bold;
+  }
+
+  .text-highlight {
+    font-style: italic;
+    color: $mainAppColor;
+  }
+
+  .code-result-wrapper {
+    margin-top: 40px;
+
+    .no-code-result {
+      text-align: center;
+      color: $lightGray;
+      font-size: 1em;
+      font-style: italic;
+    }
+
+    .result-block {
+      max-height: 300px;
+    }
+  }
+
+  .button {
+    float: right;
+    padding: 5px;
+    border: 1px solid $almostWhiteGray;
+    border-radius: 10px;
+    color: black;
+
+    &:hover {
+      border: 1px solid $mainAppColor;
+      background-color: white;
+      color: black;
+    }
+  }
+
+  .disabled {
+    border: 1px solid $almostWhiteGray;
+    color: $almostWhiteGray;
+
+    &:hover {
+      cursor: not-allowed;
+      border: 1px solid $almostWhiteGray;
+      background-color: white;
+      color: $almostWhiteGray;
+    }
+  }
+}
